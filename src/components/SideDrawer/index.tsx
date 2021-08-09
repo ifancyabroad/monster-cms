@@ -1,4 +1,4 @@
-import { createStyles, Drawer, Hidden, List, ListItem, ListItemText, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, Divider, Drawer, Hidden, List, ListItem, ListItemText, makeStyles, Theme } from "@material-ui/core";
 import { DRAWER_WIDTH } from "../../constants";
 import { closeSidedrawer } from "../../features/sidedrawer/sidedrawerSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 flexShrink: 0,
             },
         },
+        toolbar: theme.mixins.toolbar,
         drawerPaper: {
             width: DRAWER_WIDTH,
         },
@@ -28,6 +29,8 @@ export const SideDrawer: React.FC = () => {
 
     const drawer = (
         <div>
+            <div className={classes.toolbar} />
+            <Divider />
             <List>
                 {['Monster 1', 'Monster 2', 'Monster 3', 'Monster 4'].map((text, index) => (
                     <ListItem button key={text}>
