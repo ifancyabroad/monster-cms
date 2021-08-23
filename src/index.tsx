@@ -7,14 +7,17 @@ import { store } from './app/store';
 import { ThemeProvider } from '@material-ui/core';
 import theme from './theme';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { AuthProvider } from './provider/AuthProvider';
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
-				<App />
-			</ThemeProvider>
+			<AuthProvider>
+				<ThemeProvider theme={theme}>
+					<CssBaseline />
+					<App />
+				</ThemeProvider>
+			</AuthProvider>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')

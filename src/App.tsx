@@ -1,4 +1,4 @@
-import { Header, Main, SideDrawer } from "./components";
+import { Header, LoginModal, Main, SideDrawer } from "./components";
 
 function App() {
 	return (
@@ -6,6 +6,7 @@ function App() {
 			<Header />
 			<SideDrawer />
 			<Main />
+			<LoginModal />
 		</div>
 	);
 }

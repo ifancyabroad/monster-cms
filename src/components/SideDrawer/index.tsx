@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const SideDrawer: React.FC = () => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
-    const mobileOpen = useAppSelector((state) => state.sidedrawer.open)
+    const mobileOpen = useAppSelector((state) => state.sidedrawer.open);
 
     const handleDrawerToggle = () => {
         dispatch(closeSidedrawer());

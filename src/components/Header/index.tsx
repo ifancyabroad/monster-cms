@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { AppBar, Button, createStyles, IconButton, makeStyles, Theme, Toolbar, Typography } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import { useAppDispatch } from "../../app/hooks";
 import { DRAWER_WIDTH } from "../../constants";
+import { openLoginModal } from "../../features/loginModal/loginModalSlice";
 import { openSidedrawer } from "../../features/sidedrawer/sidedrawerSlice";
+import { AuthContext } from "../../context/AuthContext";
+import { auth } from "../../firebaseSetup";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,10 +31,19 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Header = () => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
+    const user = useContext(AuthContext);
 
     const handleDrawerToggle = () => {
         dispatch(openSidedrawer());
     };
+
+    const handleOpenLogin = () => {
+        dispatch(openLoginModal());
+    };
+
+    const signOut = async () => {
+        await auth.signOut();
+      };
 
     return (
         <AppBar className={classes.root} position="fixed">
@@ -47,7 +60,12 @@ export const Header = () => {
                 <Typography variant="h6" className={classes.title}>
                     Monster Manual
                 </Typography>
-                <Button color="inherit">Login</Button>
+                {
+                    user ? (
+                        <Button color="inherit" type="button" onClick={signOut}>Logout</Button>
+                    ) : (
+                        <Button color="inherit" type="button" onClick={handleOpenLogin}>Login</Button>
+                    )}
             </Toolbar>
         </AppBar>
     );
