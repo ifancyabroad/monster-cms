@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import loginModalReducer from '../features/loginModal/loginModalSlice'
+import modalsReducer from '../features/modals/modalsSlice'
 import sidedrawerReducer from '../features/sidedrawer/sidedrawerSlice'
+import monstersReducer from '../features/monsters/monstersSlice'
 
 export const store = configureStore({
   reducer: {
-    loginModal: loginModalReducer,
+    modals: modalsReducer,
     sidedrawer: sidedrawerReducer,
+    monsters: monstersReducer,
   },
 })
 

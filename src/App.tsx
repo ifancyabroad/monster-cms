@@ -1,13 +1,24 @@
-import { Header, LoginModal, Main, SideDrawer } from "./components";
+import { Header, LoginModal, Monster, MonsterModal, SideDrawer } from "./components";
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+} from "react-router-dom";
 
 function App() {
 	return (
-		<div style={{display: "flex"}}>
-			<Header />
-			<SideDrawer />
-			<Main />
-			<LoginModal />
-		</div>
+		<Router>
+			<div style={{ display: "flex" }}>
+				<Header />
+				<SideDrawer />
+				<Switch>
+					<Route exact={true} path="/" />
+					<Route path="/:id" component={Monster} />
+				</Switch>
+				<LoginModal />
+				<MonsterModal />
+			</div>
+		</Router>
 	);
 }
 

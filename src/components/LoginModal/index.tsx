@@ -6,13 +6,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { closeLoginModal } from '../../features/loginModal/loginModalSlice';
+import { closeLoginModal } from '../../features/modals/modalsSlice';
 import { useRef, useState } from 'react';
 import { auth } from '../../firebaseSetup';
 
 export const LoginModal: React.FC = () => {
     const dispatch = useAppDispatch();
-    const open = useAppSelector((state) => state.loginModal.open);
+    const open = useAppSelector((state) => state.modals.loginModalOpen);
     const [isLoading, setIsLoading] = useState(false);
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);

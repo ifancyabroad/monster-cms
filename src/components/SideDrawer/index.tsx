@@ -1,7 +1,11 @@
-import { createStyles, Divider, Drawer, Hidden, List, ListItem, ListItemText, makeStyles, Theme } from "@material-ui/core";
+import { useState } from "react";
+import { Collapse, createStyles, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Theme } from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Add';
 import { DRAWER_WIDTH } from "../../constants";
 import { closeSidedrawer } from "../../features/sidedrawer/sidedrawerSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { openMonsterModal } from "../../features/modals/modalsSlice";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -15,6 +19,9 @@ const useStyles = makeStyles((theme: Theme) =>
         drawerPaper: {
             width: DRAWER_WIDTH,
         },
+        nested: {
+            paddingLeft: theme.spacing(4),
+        },
     }),
 );
 
@@ -22,21 +29,49 @@ export const SideDrawer: React.FC = () => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const mobileOpen = useAppSelector((state) => state.sidedrawer.open);
+    const monstersList = useAppSelector((state) => state.monsters.monsters);
+    const [monstersOpen, setMonstersOpen] = useState(true);
 
     const handleDrawerToggle = () => {
         dispatch(closeSidedrawer());
     };
+
+    const handleClick = () => {
+        setMonstersOpen(!monstersOpen);
+    };
+
+    const addMonster = () => {
+        dispatch(openMonsterModal());
+    }
 
     const drawer = (
         <div>
             <div className={classes.toolbar} />
             <Divider />
             <List>
-                {['Monster 1', 'Monster 2', 'Monster 3', 'Monster 4'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                <ListItem button onClick={handleClick}>
+                    <ListItemText>Monsters</ListItemText>
+                    <ListItemSecondaryAction>
+                        <IconButton aria-label="add" color="primary" onClick={addMonster}>
+                            <AddIcon />
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
+                <Collapse in={monstersOpen} unmountOnExit>
+                    <List>
+                        {monstersList.map((monster, index) => (
+                            <ListItem button key={index} className={classes.nested} component={Link} to={`/${monster.id}`}>
+                                <ListItemText primary={monster.name} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </Collapse>
+                <ListItem button>
+                    <ListItemText>Items</ListItemText>
+                </ListItem>
+                <ListItem button>
+                    <ListItemText>Abilities</ListItemText>
+                </ListItem>
             </List>
         </div>
     );

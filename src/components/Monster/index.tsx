@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const Main: React.FC = () => {
+export const Monster: React.FC = () => {
     const classes = useStyles();
 
     return (

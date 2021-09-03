@@ -8,14 +8,17 @@ import { ThemeProvider } from '@material-ui/core';
 import theme from './theme';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { AuthProvider } from './provider/AuthProvider';
+import { DatabaseListener } from './components/DatabaseListener';
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<AuthProvider>
 				<ThemeProvider theme={theme}>
-					<CssBaseline />
-					<App />
+					<DatabaseListener>
+						<CssBaseline />
+						<App />
+					</DatabaseListener>
 				</ThemeProvider>
 			</AuthProvider>
 		</Provider>

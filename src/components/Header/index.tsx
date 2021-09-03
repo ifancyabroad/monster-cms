@@ -3,7 +3,7 @@ import { AppBar, Button, createStyles, IconButton, makeStyles, Theme, Toolbar, T
 import { Menu } from "@material-ui/icons";
 import { useAppDispatch } from "../../app/hooks";
 import { DRAWER_WIDTH } from "../../constants";
-import { openLoginModal } from "../../features/loginModal/loginModalSlice";
+import { openLoginModal } from "../../features/modals/modalsSlice";
 import { openSidedrawer } from "../../features/sidedrawer/sidedrawerSlice";
 import { AuthContext } from "../../context/AuthContext";
 import { auth } from "../../firebaseSetup";
