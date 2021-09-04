@@ -1,27 +1,35 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { dbMonsters } from '../../firebaseSetup';
-import { Monster } from '../../types';
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
+import { dbMonsters, stImages } from '../../firebaseSetup';
+import { IMonster, ISaveMonster } from '../../types';
 
-interface MonstersState {
-    monsters: Monster[];
+interface IMonstersState {
+    monsters: IMonster[];
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error?: string;
   }
 
-const initialState: MonstersState = {
+const initialState: IMonstersState = {
     monsters: [],
     status: 'idle',
 }
 
-export const fetchMonsters = createAsyncThunk('monsters/fetchMonsters', async (monsters: Monster[]) => monsters);
+export const fetchMonsters = createAsyncThunk('monsters/fetchMonsters', async (payload: IMonster[]) => payload);
 
-export const saveMonster = createAsyncThunk('monsters/saveMonster', async (monster: Omit<Monster, "id">) => {
+export const saveMonster = createAsyncThunk('monsters/saveMonster', async (payload: ISaveMonster) => {
     try {
-        return await dbMonsters.push(monster);
+        await stImages.child(payload.image.name).put(payload.image);
+        return await dbMonsters.push(payload.monster);
     } catch (error) {
         console.error(error);
     }
 })
+
+export const monstersSelector = (state: RootState) => state.monsters.monsters;
+export const selectMonsterById = createSelector(
+    monstersSelector,
+    (monsters) => (id: string) => monsters.find(monster => monster.id === id)
+);
 
 export const monstersSlice = createSlice({
     name: 'monsters',

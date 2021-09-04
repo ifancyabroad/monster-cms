@@ -1,4 +1,4 @@
-export interface Monster {
+export interface IBaseMonster {
     defense: {
         armour: number;
         magicResistance: number;
@@ -6,7 +6,6 @@ export interface Monster {
     challenge: number;
     expValue: number;
     goldValue: number;
-    id: string;
     name: string;
     portrait: string;
     skills: string[];
@@ -17,4 +16,13 @@ export interface Monster {
         intelligence: number;
         strength: number;
     };
+}
+
+export interface IMonster extends IBaseMonster {
+    id: string;
+}
+
+export interface ISaveMonster {
+    monster: IBaseMonster;
+    image: File;
 }

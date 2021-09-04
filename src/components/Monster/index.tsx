@@ -1,4 +1,9 @@
 import { createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { selectMonsterById } from "../../features/monsters/monstersSlice";
+import { stImages } from "../../firebaseSetup";
 import { StatsTable } from "./StatsTable";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -16,16 +21,31 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+interface IRouteParams {
+    id: string
+}
+
 export const Monster: React.FC = () => {
     const classes = useStyles();
+    let { id } = useParams<IRouteParams>();
+    const monster = useSelector(selectMonsterById)(id);
+    const [monsterImage, setMonsterImage] = useState<string>();
+
+    if (!monster) {
+        return null;
+    }
+
+    stImages.child(monster.portrait).getDownloadURL()
+        .then((url: string) => setMonsterImage(url))
+        .catch(error => console.log(error));
 
     return (
         <main className={classes.root}>
             <div className={classes.toolbar} />
             <Typography variant="h2" gutterBottom>
-                Lorem Ipsum
+                {monster.name}
             </Typography>
-            <img className={classes.image} src={"https://via.placeholder.com/800x600"} alt={"Placeholder"} />
+            <img className={classes.image} src={monsterImage} alt={monster.name} />
             <Grid container spacing={3}>
                 <Grid item sm={12} md={4}>
                     <StatsTable />

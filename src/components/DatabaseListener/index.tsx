@@ -2,14 +2,14 @@ import { Fragment, useEffect } from "react";
 import { dbMonsters } from "../../firebaseSetup";
 import { useAppDispatch } from "../../app/hooks";
 import { fetchMonsters } from "../../features/monsters/monstersSlice";
-import { Monster } from "../../types";
+import { IMonster } from "../../types";
 
 export const DatabaseListener: React.FC = ({ children }) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         dbMonsters.on("value", (snapshot) => {
-            const monsters = [] as Monster[];
+            const monsters = [] as IMonster[];
             snapshot.forEach((childSnapshot) => {
                 const monster = {
                     ...childSnapshot.val(),

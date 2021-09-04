@@ -23,7 +23,24 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const defaultFormValues = {
+interface IFormValues {
+    name: string;
+    portrait: string;
+    strength: number;
+    dexterity: number;
+    constitution: number;
+    intelligence: number;
+    initiative: number;
+    armour: number;
+    magicResistance: number;
+    skills: string[];
+    challenge: number;
+    expValue: number;
+    goldValue: number;
+    image: File | null;
+}
+
+const defaultFormValues: IFormValues = {
     name: "",
     portrait: "",
     strength: 5,
@@ -40,7 +57,8 @@ const defaultFormValues = {
     ],
     challenge: 1,
     expValue: 100,
-    goldValue: 200
+    goldValue: 200,
+    image: null
 }
 
 export const MonsterModal: React.FC = () => {
@@ -56,6 +74,16 @@ export const MonsterModal: React.FC = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.currentTarget;
+        if (name === "image") {
+            const image = e.currentTarget.files?.item(0) || null;
+            const portrait = image?.name || "";
+            setFormValues({
+                ...formValues,
+                image,
+                portrait
+            });
+            return;
+        }
         setFormValues({
             ...formValues,
             [name]: value,
@@ -64,27 +92,29 @@ export const MonsterModal: React.FC = () => {
 
     const handleSaveMonster = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const { armour, challenge, constitution, dexterity, expValue, goldValue, initiative, intelligence, magicResistance, name, strength } = formValues
-        const monster = {
-            defense: {
-                armour,
-                magicResistance
-            },
-            challenge,
-            expValue,
-            goldValue,
-            name,
-            portrait: "",
-            skills: [],
-            stats: {
-                constitution,
-                dexterity,
-                initiative,
-                intelligence,
-                strength
+        const { armour, challenge, constitution, dexterity, expValue, goldValue, image, initiative, intelligence, magicResistance, name, portrait, strength } = formValues;
+        if (image) {
+            const monster = {
+                defense: {
+                    armour,
+                    magicResistance
+                },
+                challenge,
+                expValue,
+                goldValue,
+                name,
+                portrait,
+                skills: [],
+                stats: {
+                    constitution,
+                    dexterity,
+                    initiative,
+                    intelligence,
+                    strength
+                }
             }
+            dispatch(saveMonster({ monster, image }))
         }
-        dispatch(saveMonster(monster))
     };
 
     return (
@@ -101,6 +131,17 @@ export const MonsterModal: React.FC = () => {
                             value={formValues.name}
                             onChange={handleChange}
                             fullWidth
+                            required
+                        />
+                    </Box>
+                    <Box my={3}>
+                        <TextField
+                            name="image"
+                            type="file"
+                            label="Image"
+                            onChange={handleChange}
+                            fullWidth
+                            required
                         />
                     </Box>
                     <Box my={3}>
