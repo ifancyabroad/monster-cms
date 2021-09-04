@@ -1,9 +1,9 @@
 import { createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectMonsterById } from "../../features/monsters/monstersSlice";
-import { stImages } from "../../firebaseSetup";
+import { useAppDispatch } from "../../app/hooks";
+import { clearMonsterImagePath, fetchMonsterImagePath, selectMonsterById, selectMonsterImagePath } from "../../features/monsters/monstersSlice";
 import { StatsTable } from "./StatsTable";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,17 +27,24 @@ interface IRouteParams {
 
 export const Monster: React.FC = () => {
     const classes = useStyles();
+    const dispatch = useAppDispatch();
     let { id } = useParams<IRouteParams>();
     const monster = useSelector(selectMonsterById)(id);
-    const [monsterImage, setMonsterImage] = useState<string>();
+    const monsterImagePath = useSelector(selectMonsterImagePath);
+
+    useEffect(() => {
+        if (monster?.portrait) {
+            dispatch(fetchMonsterImagePath(monster.portrait))
+        }
+
+        return () => {
+            dispatch(clearMonsterImagePath());
+        }
+    }, [dispatch, monster]);
 
     if (!monster) {
         return null;
     }
-
-    stImages.child(monster.portrait).getDownloadURL()
-        .then((url: string) => setMonsterImage(url))
-        .catch(error => console.log(error));
 
     return (
         <main className={classes.root}>
@@ -45,7 +52,7 @@ export const Monster: React.FC = () => {
             <Typography variant="h2" gutterBottom>
                 {monster.name}
             </Typography>
-            <img className={classes.image} src={monsterImage} alt={monster.name} />
+            {monsterImagePath && <img className={classes.image} src={monsterImagePath} alt={monster.name} />}
             <Grid container spacing={3}>
                 <Grid item sm={12} md={4}>
                     <StatsTable />

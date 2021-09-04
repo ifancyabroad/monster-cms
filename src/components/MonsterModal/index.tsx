@@ -10,6 +10,7 @@ import { closeMonsterModal } from '../../features/modals/modalsSlice';
 import { useState } from 'react';
 import { Box, createStyles, makeStyles, Theme } from '@material-ui/core';
 import { saveMonster } from '../../features/monsters/monstersSlice';
+import { ISaveMonster } from '../../types';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,41 +24,31 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-interface IFormValues {
-    name: string;
-    portrait: string;
-    strength: number;
-    dexterity: number;
-    constitution: number;
-    intelligence: number;
-    initiative: number;
-    armour: number;
-    magicResistance: number;
-    skills: string[];
-    challenge: number;
-    expValue: number;
-    goldValue: number;
-    image: File | null;
-}
-
-const defaultFormValues: IFormValues = {
-    name: "",
-    portrait: "",
-    strength: 5,
-    dexterity: 5,
-    constitution: 5,
-    intelligence: 5,
-    initiative: 5,
-    armour: 5,
-    magicResistance: 5,
-    skills: [
-        "Jab",
-        "Quick Fingers",
-        "Go For The Eyes"
-    ],
-    challenge: 1,
-    expValue: 100,
-    goldValue: 200,
+const defaultFormValues: ISaveMonster = {
+    monster: {
+        challenge: 1,
+        defense: {
+            armour: 5,
+            magicResistance: 5,
+        },
+        description: "",
+        expValue: 100,
+        goldValue: 200,
+        name: "",
+        portrait: "",
+        skills: [
+            "Jab",
+            "Quick Fingers",
+            "Go For The Eyes"
+        ],
+        stats: {
+            strength: 5,
+            dexterity: 5,
+            constitution: 5,
+            intelligence: 5,
+            initiative: 5,
+        }
+    },
     image: null
 }
 
@@ -74,47 +65,59 @@ export const MonsterModal: React.FC = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.currentTarget;
-        if (name === "image") {
-            const image = e.currentTarget.files?.item(0) || null;
-            const portrait = image?.name || "";
-            setFormValues({
-                ...formValues,
-                image,
-                portrait
-            });
-            return;
-        }
         setFormValues({
             ...formValues,
-            [name]: value,
+            monster: {
+                ...formValues.monster,
+                [name]: value,
+            }
+        });
+    }
+
+    const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const image = e.currentTarget.files?.item(0) || null;
+        const portrait = image?.name || "";
+        setFormValues({
+            ...formValues,
+            image,
+            monster: {
+                ...formValues.monster,
+                portrait
+            }
+        });
+    }
+
+    const handleChangeDefense = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.currentTarget;
+        setFormValues({
+            ...formValues,
+            monster: {
+                ...formValues.monster,
+                defense: {
+                    ...formValues.monster.defense,
+                    [name]: value,
+                }
+            }
+        });
+    }
+
+    const handleChangeStats = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.currentTarget;
+        setFormValues({
+            ...formValues,
+            monster: {
+                ...formValues.monster,
+                stats: {
+                    ...formValues.monster.stats,
+                    [name]: value,
+                }
+            }
         });
     }
 
     const handleSaveMonster = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const { armour, challenge, constitution, dexterity, expValue, goldValue, image, initiative, intelligence, magicResistance, name, portrait, strength } = formValues;
-        if (image) {
-            const monster = {
-                defense: {
-                    armour,
-                    magicResistance
-                },
-                challenge,
-                expValue,
-                goldValue,
-                name,
-                portrait,
-                skills: [],
-                stats: {
-                    constitution,
-                    dexterity,
-                    initiative,
-                    intelligence,
-                    strength
-                }
-            }
-            dispatch(saveMonster({ monster, image }))
-        }
+        dispatch(saveMonster(formValues));
     };
 
     return (
@@ -128,7 +131,7 @@ export const MonsterModal: React.FC = () => {
                             autoFocus
                             name="name"
                             label="Name"
-                            value={formValues.name}
+                            value={formValues.monster.name}
                             onChange={handleChange}
                             fullWidth
                             required
@@ -139,7 +142,7 @@ export const MonsterModal: React.FC = () => {
                             name="image"
                             type="file"
                             label="Image"
-                            onChange={handleChange}
+                            onChange={handleChangeImage}
                             fullWidth
                             required
                         />
@@ -152,8 +155,8 @@ export const MonsterModal: React.FC = () => {
                                 name="strength"
                                 label="Strength"
                                 type="number"
-                                value={formValues.strength}
-                                onChange={handleChange}
+                                value={formValues.monster.stats.strength}
+                                onChange={handleChangeStats}
                                 className={classes.numberField}
                                 required
                             />
@@ -162,8 +165,8 @@ export const MonsterModal: React.FC = () => {
                                 name="dexterity"
                                 label="Dexterity"
                                 type="number"
-                                value={formValues.dexterity}
-                                onChange={handleChange}
+                                value={formValues.monster.stats.dexterity}
+                                onChange={handleChangeStats}
                                 className={classes.numberField}
                                 required
                             />
@@ -172,8 +175,8 @@ export const MonsterModal: React.FC = () => {
                                 name="constitution"
                                 label="Constitution"
                                 type="number"
-                                value={formValues.constitution}
-                                onChange={handleChange}
+                                value={formValues.monster.stats.constitution}
+                                onChange={handleChangeStats}
                                 className={classes.numberField}
                                 required
                             />
@@ -182,8 +185,8 @@ export const MonsterModal: React.FC = () => {
                                 name="intelligence"
                                 label="Intelligence"
                                 type="number"
-                                value={formValues.intelligence}
-                                onChange={handleChange}
+                                value={formValues.monster.stats.intelligence}
+                                onChange={handleChangeStats}
                                 className={classes.numberField}
                                 required
                             />
@@ -192,8 +195,8 @@ export const MonsterModal: React.FC = () => {
                                 name="initiative"
                                 label="Initiative"
                                 type="number"
-                                value={formValues.initiative}
-                                onChange={handleChange}
+                                value={formValues.monster.stats.initiative}
+                                onChange={handleChangeStats}
                                 className={classes.numberField}
                                 required
                             />
@@ -207,8 +210,8 @@ export const MonsterModal: React.FC = () => {
                                 name="armour"
                                 label="Armour"
                                 type="number"
-                                value={formValues.armour}
-                                onChange={handleChange}
+                                value={formValues.monster.defense.armour}
+                                onChange={handleChangeDefense}
                                 className={classes.numberField}
                                 required
                             />
@@ -217,8 +220,8 @@ export const MonsterModal: React.FC = () => {
                                 name="magicResistance"
                                 label="Magic Resistance"
                                 type="number"
-                                value={formValues.magicResistance}
-                                onChange={handleChange}
+                                value={formValues.monster.defense.magicResistance}
+                                onChange={handleChangeDefense}
                                 className={classes.numberField}
                                 required
                             />
@@ -232,7 +235,7 @@ export const MonsterModal: React.FC = () => {
                                 name="expValue"
                                 label="Experience"
                                 type="number"
-                                value={formValues.expValue}
+                                value={formValues.monster.expValue}
                                 onChange={handleChange}
                                 className={classes.numberField}
                                 required
@@ -242,7 +245,7 @@ export const MonsterModal: React.FC = () => {
                                 name="goldValue"
                                 label="Gold"
                                 type="number"
-                                value={formValues.goldValue}
+                                value={formValues.monster.goldValue}
                                 onChange={handleChange}
                                 className={classes.numberField}
                                 required
@@ -256,7 +259,7 @@ export const MonsterModal: React.FC = () => {
                             name="challenge"
                             label="Rating"
                             type="number"
-                            value={formValues.challenge}
+                            value={formValues.monster.challenge}
                             onChange={handleChange}
                             className={classes.numberField}
                             required

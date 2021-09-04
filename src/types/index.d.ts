@@ -1,21 +1,26 @@
+export interface IDefense {
+    armour: number;
+    magicResistance: number;
+}
+
+export interface IStats {
+    constitution: number;
+    dexterity: number;
+    initiative: number;
+    intelligence: number;
+    strength: number;
+}
+
 export interface IBaseMonster {
-    defense: {
-        armour: number;
-        magicResistance: number;
-    };
     challenge: number;
+    defense: IDefense;
+    description: string;
     expValue: number;
     goldValue: number;
     name: string;
     portrait: string;
     skills: string[];
-    stats: {
-        constitution: number;
-        dexterity: number;
-        initiative: number;
-        intelligence: number;
-        strength: number;
-    };
+    stats: IStats;
 }
 
 export interface IMonster extends IBaseMonster {
@@ -24,5 +29,5 @@ export interface IMonster extends IBaseMonster {
 
 export interface ISaveMonster {
     monster: IBaseMonster;
-    image: File;
+    image: File | null;
 }
