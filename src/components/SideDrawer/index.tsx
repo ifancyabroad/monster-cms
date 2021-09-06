@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Collapse, createStyles, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Theme } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import { DRAWER_WIDTH } from "../../constants";
@@ -6,6 +6,7 @@ import { closeSidedrawer } from "../../features/sidedrawer/sidedrawerSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { openMonsterModal } from "../../features/modals/modalsSlice";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const SideDrawer: React.FC = () => {
     const classes = useStyles();
+    const user = useContext(AuthContext);
     const dispatch = useAppDispatch();
     const mobileOpen = useAppSelector((state) => state.sidedrawer.open);
     const monstersList = useAppSelector((state) => state.monsters.monsters);
@@ -51,11 +53,15 @@ export const SideDrawer: React.FC = () => {
             <List>
                 <ListItem button onClick={handleClick}>
                     <ListItemText>Monsters</ListItemText>
-                    <ListItemSecondaryAction>
-                        <IconButton aria-label="add" color="primary" onClick={addMonster}>
-                            <AddIcon />
-                        </IconButton>
-                    </ListItemSecondaryAction>
+                    {
+                        user && (
+                            <ListItemSecondaryAction>
+                                <IconButton aria-label="add" color="primary" onClick={addMonster}>
+                                    <AddIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        )
+                    }
                 </ListItem>
                 <Collapse in={monstersOpen} unmountOnExit>
                     <List>
