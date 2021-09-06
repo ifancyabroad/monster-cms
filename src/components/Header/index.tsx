@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { AppBar, Button, createStyles, IconButton, makeStyles, Theme, Toolbar, Typography } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import { useAppDispatch } from "../../app/hooks";
-import { DRAWER_WIDTH } from "../../constants";
+import { DRAWER_WIDTH } from "../../utils/constants";
 import { openLoginModal } from "../../features/modals/modalsSlice";
 import { openSidedrawer } from "../../features/sidedrawer/sidedrawerSlice";
 import { AuthContext } from "../../context/AuthContext";

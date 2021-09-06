@@ -1,4 +1,4 @@
-import { createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, createStyles, Grid, makeStyles, Paper, Theme, Typography } from "@material-ui/core";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -17,6 +17,14 @@ const useStyles = makeStyles((theme: Theme) =>
         image: {
             marginBottom: theme.spacing(3),
             maxWidth: "100%"
+        },
+        individualStat: {
+            padding: theme.spacing(2, 3),
+        },
+        individualStatValue: {
+            height: "80px",
+            width: "80px",
+            color: theme.palette.getContrastText(theme.palette.primary.main)
         }
     }),
 );
@@ -54,20 +62,81 @@ export const Monster: React.FC = () => {
             </Typography>
             {monsterImagePath && <img className={classes.image} src={monsterImagePath} alt={monster.name} />}
             <Grid container spacing={3}>
-                <Grid item sm={12} md={4}>
-                    <StatsTable />
+                    <Grid item xs={12} md={4}>
+                        <Paper variant="outlined" className={classes.individualStat}>
+                            <Box display="flex" justifyContent="space-between" alignItems="center">
+                                <Typography variant="h5" component="h2">
+                                    Challenge
+                                </Typography>
+                                <Typography variant="h5" component="h2">
+                                    <Box
+                                        display="flex"
+                                        alignItems="center"
+                                        justifyContent="center"
+                                        bgcolor="primary.main"
+                                        borderRadius="50%"
+                                        fontWeight="fontWeightBold"
+                                        className={classes.individualStatValue}
+                                    >
+                                        {monster.challenge}
+                                    </Box>
+                                </Typography>
+                            </Box>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Paper variant="outlined" className={classes.individualStat}>
+                            <Box display="flex" justifyContent="space-between" alignItems="center">
+                                <Typography variant="h5" component="h2">
+                                    Experience
+                                </Typography>
+                                <Typography variant="h5" component="h2">
+                                    <Box
+                                        display="flex"
+                                        alignItems="center"
+                                        justifyContent="center"
+                                        bgcolor="primary.main"
+                                        borderRadius="50%"
+                                        fontWeight="fontWeightBold"
+                                        className={classes.individualStatValue}
+                                    >
+                                        {monster.expValue}
+                                    </Box>
+                                </Typography>
+                            </Box>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                     <Paper variant="outlined" className={classes.individualStat}>
+                            <Box display="flex" justifyContent="space-between" alignItems="center">
+                                <Typography variant="h5" component="h2">
+                                    Gold
+                                </Typography>
+                                <Typography variant="h5" component="h2">
+                                    <Box
+                                        display="flex"
+                                        alignItems="center"
+                                        justifyContent="center"
+                                        bgcolor="primary.main"
+                                        borderRadius="50%"
+                                        fontWeight="fontWeightBold"
+                                        className={classes.individualStatValue}
+                                    >
+                                        {monster.goldValue}
+                                    </Box>
+                                </Typography>
+                            </Box>
+                        </Paper>
                 </Grid>
-                <Grid item sm={12} md={8}>
+                <Grid item xs={6} md={3}>
+                    <StatsTable stats={monster.stats} />
+                </Grid>
+                <Grid item xs={6} md={3}>
+                    <StatsTable stats={monster.defense} />
+                </Grid>
+                <Grid item xs={12} md={6}>
                     <Typography paragraph>
-                        Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                        facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                        tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                        consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-                        vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-                        hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-                        tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-                        nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-                        accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
+                        {monster.description}
                     </Typography>
                 </Grid>
             </Grid>

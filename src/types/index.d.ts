@@ -1,9 +1,13 @@
-export interface IDefense {
+export interface IDictionary<T> {
+	[K: string]: T;
+}
+
+export type TDefense = {
     armour: number;
     magicResistance: number;
 }
 
-export interface IStats {
+export type TStats = {
     constitution: number;
     dexterity: number;
     initiative: number;
@@ -13,14 +17,14 @@ export interface IStats {
 
 export interface IBaseMonster {
     challenge: number;
-    defense: IDefense;
+    defense: TDefense;
     description: string;
     expValue: number;
     goldValue: number;
     name: string;
     portrait: string;
     skills: string[];
-    stats: IStats;
+    stats: TStats;
 }
 
 export interface IMonster extends IBaseMonster {
