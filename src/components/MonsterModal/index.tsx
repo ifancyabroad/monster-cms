@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { closeMonsterModal } from '../../features/modals/modalsSlice';
 import { useState } from 'react';
-import { Box, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { Box, createStyles, FormControl, makeStyles, Theme, Typography } from '@material-ui/core';
 import { saveMonster } from '../../features/monsters/monstersSlice';
 import { ISaveMonster } from '../../types';
 
@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme: Theme) =>
             '&:last-of-type': {
                 marginRight: theme.spacing(0)
             }
+        },
+        uploadFileName: {
+            marginLeft: theme.spacing(2)
         }
     }),
 );
@@ -42,11 +45,11 @@ const defaultFormValues: ISaveMonster = {
             "Go For The Eyes"
         ],
         stats: {
-            strength: 5,
-            dexterity: 5,
-            constitution: 5,
-            intelligence: 5,
-            initiative: 5,
+            strength: 10,
+            dexterity: 10,
+            constitution: 10,
+            intelligence: 10,
+            initiative: 10,
         }
     },
     image: null
@@ -127,6 +130,24 @@ export const MonsterModal: React.FC = () => {
                 <DialogContent>
                     <DialogContentText>Add a new monster to the database.</DialogContentText>
                     <Box my={3}>
+                        <FormControl>
+                            <input 
+                                accept="image/*" 
+                                style={{ display: "none" }}
+                                id="contained-button-file"
+                                multiple 
+                                type="file"
+                                onChange={handleChangeImage}
+                            /> 
+                            <label htmlFor="contained-button-file">
+                                <Button variant="contained" component="span">
+                                    Upload Image
+                                </Button>
+                                {formValues.monster.portrait && <Typography display="inline" className={classes.uploadFileName}>{formValues.monster.portrait}</Typography>}
+                            </label> 
+                        </FormControl>
+                    </Box>
+                    <Box my={3}>
                         <TextField
                             autoFocus
                             name="name"
@@ -135,16 +156,26 @@ export const MonsterModal: React.FC = () => {
                             onChange={handleChange}
                             fullWidth
                             required
+                            inputProps={{
+                                minLength: 3,
+                                maxLength: 25
+                            }}
                         />
                     </Box>
                     <Box my={3}>
                         <TextField
-                            name="image"
-                            type="file"
-                            label="Image"
-                            onChange={handleChangeImage}
+                            autoFocus
+                            name="description"
+                            label="Description"
+                            value={formValues.monster.description}
+                            onChange={handleChange}
                             fullWidth
-                            required
+                            multiline
+                            minRows={4}
+                            inputProps={{
+                                minLength: 3,
+                                maxLength: 25
+                            }}
                         />
                     </Box>
                     <Box my={3}>
@@ -159,6 +190,10 @@ export const MonsterModal: React.FC = () => {
                                 onChange={handleChangeStats}
                                 className={classes.numberField}
                                 required
+                                inputProps={{
+                                    min: 1,
+                                    max: 30
+                                }}
                             />
                             <TextField
                                 margin="dense"
@@ -169,6 +204,10 @@ export const MonsterModal: React.FC = () => {
                                 onChange={handleChangeStats}
                                 className={classes.numberField}
                                 required
+                                inputProps={{
+                                    min: 1,
+                                    max: 30
+                                }}
                             />
                             <TextField
                                 margin="dense"
@@ -179,6 +218,10 @@ export const MonsterModal: React.FC = () => {
                                 onChange={handleChangeStats}
                                 className={classes.numberField}
                                 required
+                                inputProps={{
+                                    min: 1,
+                                    max: 30
+                                }}
                             />
                             <TextField
                                 margin="dense"
@@ -189,6 +232,10 @@ export const MonsterModal: React.FC = () => {
                                 onChange={handleChangeStats}
                                 className={classes.numberField}
                                 required
+                                inputProps={{
+                                    min: 1,
+                                    max: 30
+                                }}
                             />
                             <TextField
                                 margin="dense"
@@ -199,6 +246,10 @@ export const MonsterModal: React.FC = () => {
                                 onChange={handleChangeStats}
                                 className={classes.numberField}
                                 required
+                                inputProps={{
+                                    min: 1,
+                                    max: 30
+                                }}
                             />
                         </Box>
                     </Box>
@@ -214,6 +265,10 @@ export const MonsterModal: React.FC = () => {
                                 onChange={handleChangeDefense}
                                 className={classes.numberField}
                                 required
+                                inputProps={{
+                                    min: 1,
+                                    max: 30
+                                }}
                             />
                             <TextField
                                 margin="dense"
@@ -224,6 +279,10 @@ export const MonsterModal: React.FC = () => {
                                 onChange={handleChangeDefense}
                                 className={classes.numberField}
                                 required
+                                inputProps={{
+                                    min: 1,
+                                    max: 30
+                                }}
                             />
                         </Box>
                     </Box>
@@ -239,6 +298,10 @@ export const MonsterModal: React.FC = () => {
                                 onChange={handleChange}
                                 className={classes.numberField}
                                 required
+                                inputProps={{
+                                    min: 0,
+                                    max: 100000
+                                }}
                             />
                             <TextField
                                 margin="dense"
@@ -249,6 +312,10 @@ export const MonsterModal: React.FC = () => {
                                 onChange={handleChange}
                                 className={classes.numberField}
                                 required
+                                inputProps={{
+                                    min: 0,
+                                    max: 10000
+                                }}
                             />
                         </Box>
                     </Box>
@@ -263,6 +330,10 @@ export const MonsterModal: React.FC = () => {
                             onChange={handleChange}
                             className={classes.numberField}
                             required
+                            inputProps={{
+                                min: 0,
+                                max: 20
+                            }}
                         />
                     </Box>
                 </DialogContent>
