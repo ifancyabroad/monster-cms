@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { Box, createStyles, FormControl, makeStyles, Theme, Typography } from '@material-ui/core';
 import { saveMonster } from '../../features/monsters/monstersSlice';
 import { ISaveMonster } from '../../types';
+import { StatGroup } from './StatGroup';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -30,15 +31,21 @@ const useStyles = makeStyles((theme: Theme) =>
 const defaultFormValues: ISaveMonster = {
     monster: {
         challenge: 1,
-        defense: {
-            armour: 5,
-            magicResistance: 5,
+        resistances: {
+            physical: 5,
+            arcane: 5,
+            cold: 5,
+            fire: 5,
+            divine: 5,
+            unholy: 5
         },
         description: "",
-        expValue: 100,
-        goldValue: 200,
         name: "",
         portrait: "",
+        rewards: {
+            experience: 100,
+            gold: 200,
+        },
         skills: [
             "Jab",
             "Quick Fingers",
@@ -49,7 +56,8 @@ const defaultFormValues: ISaveMonster = {
             dexterity: 10,
             constitution: 10,
             intelligence: 10,
-            initiative: 10,
+            wisdom: 10,
+            charisma: 10
         }
     },
     image: null
@@ -90,14 +98,14 @@ export const MonsterModal: React.FC = () => {
         });
     }
 
-    const handleChangeDefense = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeResistances = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.currentTarget;
         setFormValues({
             ...formValues,
             monster: {
                 ...formValues.monster,
-                defense: {
-                    ...formValues.monster.defense,
+                resistances: {
+                    ...formValues.monster.resistances,
                     [name]: value,
                 }
             }
@@ -112,6 +120,20 @@ export const MonsterModal: React.FC = () => {
                 ...formValues.monster,
                 stats: {
                     ...formValues.monster.stats,
+                    [name]: value,
+                }
+            }
+        });
+    }
+
+    const handleChangeRewards = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.currentTarget;
+        setFormValues({
+            ...formValues,
+            monster: {
+                ...formValues.monster,
+                rewards: {
+                    ...formValues.monster.rewards,
                     [name]: value,
                 }
             }
@@ -178,147 +200,27 @@ export const MonsterModal: React.FC = () => {
                             }}
                         />
                     </Box>
-                    <Box my={3}>
-                        <DialogContentText variant="subtitle1" component="h5">Stats</DialogContentText>
-                        <Box display="flex" flexWrap="wrap">
-                            <TextField
-                                margin="dense"
-                                name="strength"
-                                label="Strength"
-                                type="number"
-                                value={formValues.monster.stats.strength}
-                                onChange={handleChangeStats}
-                                className={classes.numberField}
-                                required
-                                inputProps={{
-                                    min: 1,
-                                    max: 30
-                                }}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="dexterity"
-                                label="Dexterity"
-                                type="number"
-                                value={formValues.monster.stats.dexterity}
-                                onChange={handleChangeStats}
-                                className={classes.numberField}
-                                required
-                                inputProps={{
-                                    min: 1,
-                                    max: 30
-                                }}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="constitution"
-                                label="Constitution"
-                                type="number"
-                                value={formValues.monster.stats.constitution}
-                                onChange={handleChangeStats}
-                                className={classes.numberField}
-                                required
-                                inputProps={{
-                                    min: 1,
-                                    max: 30
-                                }}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="intelligence"
-                                label="Intelligence"
-                                type="number"
-                                value={formValues.monster.stats.intelligence}
-                                onChange={handleChangeStats}
-                                className={classes.numberField}
-                                required
-                                inputProps={{
-                                    min: 1,
-                                    max: 30
-                                }}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="initiative"
-                                label="Initiative"
-                                type="number"
-                                value={formValues.monster.stats.initiative}
-                                onChange={handleChangeStats}
-                                className={classes.numberField}
-                                required
-                                inputProps={{
-                                    min: 1,
-                                    max: 30
-                                }}
-                            />
-                        </Box>
-                    </Box>
-                    <Box my={3}>
-                        <DialogContentText component="h6">Defense</DialogContentText>
-                        <Box display="flex" flexWrap="wrap">
-                            <TextField
-                                margin="dense"
-                                name="armour"
-                                label="Armour"
-                                type="number"
-                                value={formValues.monster.defense.armour}
-                                onChange={handleChangeDefense}
-                                className={classes.numberField}
-                                required
-                                inputProps={{
-                                    min: 1,
-                                    max: 30
-                                }}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="magicResistance"
-                                label="Magic Resistance"
-                                type="number"
-                                value={formValues.monster.defense.magicResistance}
-                                onChange={handleChangeDefense}
-                                className={classes.numberField}
-                                required
-                                inputProps={{
-                                    min: 1,
-                                    max: 30
-                                }}
-                            />
-                        </Box>
-                    </Box>
-                    <Box my={3}>
-                        <DialogContentText component="h6">Rewards</DialogContentText>
-                        <Box display="flex" flexWrap="wrap">
-                            <TextField
-                                margin="dense"
-                                name="expValue"
-                                label="Experience"
-                                type="number"
-                                value={formValues.monster.expValue}
-                                onChange={handleChange}
-                                className={classes.numberField}
-                                required
-                                inputProps={{
-                                    min: 0,
-                                    max: 100000
-                                }}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="goldValue"
-                                label="Gold"
-                                type="number"
-                                value={formValues.monster.goldValue}
-                                onChange={handleChange}
-                                className={classes.numberField}
-                                required
-                                inputProps={{
-                                    min: 0,
-                                    max: 10000
-                                }}
-                            />
-                        </Box>
-                    </Box>
+                    <StatGroup
+                        title="Stats"
+                        stats={formValues.monster.stats}
+                        min={1}
+                        max={30}
+                        handleChange={handleChangeStats}
+                    />
+                    <StatGroup
+                        title="Resistances"
+                        stats={formValues.monster.resistances}
+                        min={0}
+                        max={100}
+                        handleChange={handleChangeResistances}
+                    />
+                    <StatGroup
+                        title="Rewards"
+                        stats={formValues.monster.rewards}
+                        min={0}
+                        max={9999}
+                        handleChange={handleChangeRewards}
+                    />
                     <Box my={3}>
                         <DialogContentText component="h6">Difficulty Rating</DialogContentText>
                         <TextField
