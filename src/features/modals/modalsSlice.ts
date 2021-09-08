@@ -1,13 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ModalsState {
 	loginModalOpen: boolean;
-	monsterModalOpen: boolean;
+	monsterModal: {
+		open: boolean;
+		monsterID?: string;
+	}
 }
 
 const initialState: ModalsState = {
 	loginModalOpen: false,
-	monsterModalOpen: false, 
+	monsterModal: {
+		open: false
+	}
 }
 
 export const modalsSlice = createSlice({
@@ -20,11 +25,13 @@ export const modalsSlice = createSlice({
 		closeLoginModal: (state) => {
 			state.loginModalOpen = false
 		},
-		openMonsterModal: (state) => {
-			state.monsterModalOpen = true
+		openMonsterModal: (state, action: PayloadAction<string | undefined>) => {
+			state.monsterModal.open = true
+			state.monsterModal.monsterID = action.payload
 		},
 		closeMonsterModal: (state) => {
-			state.monsterModalOpen = false
+			state.monsterModal.open = false
+			state.monsterModal.monsterID = undefined
 		},
 	},
 })

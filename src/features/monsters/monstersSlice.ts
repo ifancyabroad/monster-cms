@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { dbMonsters, stImages } from '../../firebaseSetup';
-import { IMonster, ISaveMonster } from '../../types';
+import { IMonster, ISaveMonster, IUpdateMonster } from '../../types';
 
 interface IMonstersState {
     monsters: IMonster[];
@@ -32,6 +32,20 @@ export const saveMonster = createAsyncThunk('monsters/saveMonster', async (paylo
             await stImages.child(payload.image.name).put(payload.image);
         }
         return await dbMonsters.push(payload.monster);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+export const updateMonster = createAsyncThunk('monsters/updateMonster', async (payload: IUpdateMonster) => {
+    try {
+        if (payload.image && payload.oldImage) {
+            await stImages.child(payload.oldImage).delete();
+        }
+        if (payload.image) {
+            await stImages.child(payload.image.name).put(payload.image);
+        }
+        return await dbMonsters.child(payload.id).update(payload.monster);
     } catch (error) {
         console.error(error);
     }
@@ -69,7 +83,7 @@ export const monstersSlice = createSlice({
         }
     },
     extraReducers: builder => {
-        builder.addCase(fetchMonsters.pending, (state, action) => {
+        builder.addCase(fetchMonsters.pending, (state) => {
             state.status = 'loading';
         })
         builder.addCase(fetchMonsters.fulfilled, (state, action) => {
@@ -80,7 +94,7 @@ export const monstersSlice = createSlice({
             state.status = 'failed';
             state.error = action.error.message;
         })
-        builder.addCase(fetchMonsterImagePath.pending, (state, action) => {
+        builder.addCase(fetchMonsterImagePath.pending, (state) => {
             state.status = 'loading';
         })
         builder.addCase(fetchMonsterImagePath.fulfilled, (state, action) => {
@@ -91,7 +105,7 @@ export const monstersSlice = createSlice({
             state.status = 'failed';
             state.error = action.error.message;
         })
-        builder.addCase(saveMonster.pending, (state, action) => {
+        builder.addCase(saveMonster.pending, (state) => {
             state.status = 'loading';
         })
         builder.addCase(saveMonster.fulfilled, (state) => {
@@ -101,13 +115,23 @@ export const monstersSlice = createSlice({
             state.status = 'failed';
             state.error = action.error.message;
         })
-        builder.addCase(deleteMonster.pending, (state, action) => {
+        builder.addCase(deleteMonster.pending, (state) => {
             state.status = 'loading';
         })
         builder.addCase(deleteMonster.fulfilled, (state) => {
             state.status = 'succeeded';
         })
         builder.addCase(deleteMonster.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message;
+        })
+        builder.addCase(updateMonster.pending, (state) => {
+            state.status = 'loading';
+        })
+        builder.addCase(updateMonster.fulfilled, (state) => {
+            state.status = 'succeeded';
+        })
+        builder.addCase(updateMonster.rejected, (state, action) => {
             state.status = 'failed';
             state.error = action.error.message;
         })

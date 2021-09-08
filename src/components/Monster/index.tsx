@@ -8,6 +8,7 @@ import { getResistancesArray, getStatsArray } from "../../utils";
 import { IndividualStat } from "./IndividualStat";
 import { StatsTable } from "./StatsTable";
 import { Delete, Edit } from '@material-ui/icons';
+import { openMonsterModal } from "../../features/modals/modalsSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -50,7 +51,7 @@ export const Monster: React.FC = () => {
     }
 
     const handleUpdateMonster = () => {
-
+        dispatch(openMonsterModal(monster.id));
     }
 
     const handleDeleteMonster = () => {
@@ -74,6 +75,11 @@ export const Monster: React.FC = () => {
                 </Box>
             </Box>
             {monsterImagePath && <img className={classes.image} src={monsterImagePath} alt={monster.name} />}
+            <Grid item xs={12}>
+                <Typography paragraph>
+                    {monster.description || "No description available."}
+                </Typography>
+            </Grid>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={4}>
                     <IndividualStat
@@ -98,11 +104,6 @@ export const Monster: React.FC = () => {
                 </Grid>
                 <Grid item xs={6} md={3}>
                     <StatsTable title="Resistances" stats={getResistancesArray(monster.resistances)} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Typography paragraph>
-                        {monster.description || "No description available."}
-                    </Typography>
                 </Grid>
             </Grid>
         </main>

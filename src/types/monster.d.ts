@@ -35,3 +35,8 @@ export interface ISaveMonster {
     monster: IBaseMonster;
     image: File | null;
 }
+
+export interface IUpdateMonster extends ISaveMonster {
+    id: string;
+    oldImage?: string;
+}

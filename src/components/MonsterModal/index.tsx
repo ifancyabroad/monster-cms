@@ -7,10 +7,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { closeMonsterModal } from '../../features/modals/modalsSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, createStyles, FormControl, makeStyles, Theme, Typography } from '@material-ui/core';
-import { saveMonster } from '../../features/monsters/monstersSlice';
-import { ISaveMonster } from '../../types';
+import { saveMonster, selectMonsterById, updateMonster } from '../../features/monsters/monstersSlice';
+import { IBaseMonster, ISaveMonster } from '../../types';
 import { StatGroup } from './StatGroup';
 import { getResistancesArray, getRewardsArray, getStatsArray } from '../../utils';
 
@@ -29,47 +29,60 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const defaultFormValues: ISaveMonster = {
-    monster: {
-        challenge: 1,
-        resistances: {
-            physical: 5,
-            arcane: 5,
-            cold: 5,
-            fire: 5,
-            divine: 5,
-            unholy: 5
-        },
-        description: "",
-        name: "",
-        portrait: "",
-        rewards: {
-            experience: 100,
-            gold: 200,
-        },
-        skills: [
-            "Jab",
-            "Quick Fingers",
-            "Go For The Eyes"
-        ],
-        stats: {
-            strength: 10,
-            dexterity: 10,
-            constitution: 10,
-            intelligence: 10,
-            wisdom: 10,
-            charisma: 10
-        }
+const defaultMonsterValues: IBaseMonster = {
+    challenge: 1,
+    resistances: {
+        physical: 5,
+        arcane: 5,
+        cold: 5,
+        fire: 5,
+        divine: 5,
+        unholy: 5
     },
-    image: null
+    description: "",
+    name: "",
+    portrait: "",
+    rewards: {
+        experience: 100,
+        gold: 200,
+    },
+    skills: [
+        "Jab",
+        "Quick Fingers",
+        "Go For The Eyes"
+    ],
+    stats: {
+        strength: 10,
+        dexterity: 10,
+        constitution: 10,
+        intelligence: 10,
+        wisdom: 10,
+        charisma: 10
+    }
 }
 
 export const MonsterModal: React.FC = () => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
-    const open = useAppSelector((state) => state.modals.monsterModalOpen);
+    const open = useAppSelector((state) => state.modals.monsterModal.open);
+    const monsterID = useAppSelector((state) => state.modals.monsterModal.monsterID);
     const isLoading = useAppSelector((state) => state.monsters.status === "loading");
-    const [formValues, setFormValues] = useState(defaultFormValues);
+    const monstersByID = useAppSelector(selectMonsterById);
+    const monsterValues = monsterID ? monstersByID(monsterID) : defaultMonsterValues;
+    const [formValues, setFormValues] = useState<ISaveMonster>({
+        monster: defaultMonsterValues,
+        image: null,
+    });
+
+    const title = monsterID ? "Update Monster" : "Add Monster";
+    const subtitle = monsterID ? `Updating ${monsterValues?.name}` : "Add a new monster to the database.";
+
+    useEffect(() => {
+        setFormValues({
+            monster: monsterValues || defaultMonsterValues,
+            image: null,
+        })
+    }, [monsterValues])
 
     const handleClose = () => {
         dispatch(closeMonsterModal());
@@ -143,15 +156,24 @@ export const MonsterModal: React.FC = () => {
 
     const handleSaveMonster = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(saveMonster(formValues));
+        if (monsterID) {
+            dispatch(updateMonster({
+                ...formValues,
+                id: monsterID,
+                oldImage: monsterValues?.portrait
+            }));
+        } else {
+            dispatch(saveMonster(formValues));
+        }
+        dispatch(closeMonsterModal());
     };
 
     return (
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Add Monster</DialogTitle>
+            <DialogTitle id="form-dialog-title">{title}</DialogTitle>
             <form onSubmit={handleSaveMonster}>
                 <DialogContent>
-                    <DialogContentText>Add a new monster to the database.</DialogContentText>
+                    <DialogContentText>{subtitle}</DialogContentText>
                     <Box my={3}>
                         <FormControl>
                             <input 
@@ -166,7 +188,7 @@ export const MonsterModal: React.FC = () => {
                                 <Button variant="contained" component="span">
                                     Upload Image
                                 </Button>
-                                {formValues.monster.portrait && <Typography display="inline" className={classes.uploadFileName}>{formValues.monster.portrait}</Typography>}
+                                {formValues.image && <Typography display="inline" className={classes.uploadFileName}>{formValues.image.name}</Typography>}
                             </label> 
                         </FormControl>
                     </Box>
