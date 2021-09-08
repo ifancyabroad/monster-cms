@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Collapse, createStyles, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Theme } from "@material-ui/core";
-import AddIcon from '@material-ui/icons/Add';
+import { Add } from '@material-ui/icons';
 import { DRAWER_WIDTH } from "../../utils/constants";
 import { closeSidedrawer } from "../../features/sidedrawer/sidedrawerSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -57,7 +57,7 @@ export const SideDrawer: React.FC = () => {
                         user && (
                             <ListItemSecondaryAction>
                                 <IconButton aria-label="add" color="primary" onClick={addMonster}>
-                                    <AddIcon />
+                                    <Add />
                                 </IconButton>
                             </ListItemSecondaryAction>
                         )

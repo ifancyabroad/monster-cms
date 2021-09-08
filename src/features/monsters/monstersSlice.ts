@@ -37,6 +37,17 @@ export const saveMonster = createAsyncThunk('monsters/saveMonster', async (paylo
     }
 });
 
+export const deleteMonster = createAsyncThunk('monsters/deleteMonster', async (payload: IMonster) => {
+    try {
+        if (payload.portrait) {
+            await stImages.child(payload.portrait).delete();
+        }
+        return await dbMonsters.child(payload.id).remove();
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 export const monstersSelector = (state: RootState) => state.monsters;
 
 export const selectMonsterById = createSelector(
@@ -87,6 +98,16 @@ export const monstersSlice = createSlice({
             state.status = 'succeeded';
         })
         builder.addCase(saveMonster.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message;
+        })
+        builder.addCase(deleteMonster.pending, (state, action) => {
+            state.status = 'loading';
+        })
+        builder.addCase(deleteMonster.fulfilled, (state) => {
+            state.status = 'succeeded';
+        })
+        builder.addCase(deleteMonster.rejected, (state, action) => {
             state.status = 'failed';
             state.error = action.error.message;
         })

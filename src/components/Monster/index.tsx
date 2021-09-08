@@ -1,12 +1,13 @@
-import { createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, createStyles, Grid, IconButton, makeStyles, Theme, Typography } from "@material-ui/core";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { clearMonsterImagePath, fetchMonsterImagePath, selectMonsterById, selectMonsterImagePath } from "../../features/monsters/monstersSlice";
+import { clearMonsterImagePath, deleteMonster, fetchMonsterImagePath, selectMonsterById, selectMonsterImagePath } from "../../features/monsters/monstersSlice";
 import { getResistancesArray, getStatsArray } from "../../utils";
 import { IndividualStat } from "./IndividualStat";
 import { StatsTable } from "./StatsTable";
+import { Delete, Edit } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -48,12 +49,30 @@ export const Monster: React.FC = () => {
         return null;
     }
 
+    const handleUpdateMonster = () => {
+
+    }
+
+    const handleDeleteMonster = () => {
+        dispatch(deleteMonster(monster));
+    }
+
     return (
         <main className={classes.root}>
             <div className={classes.toolbar} />
-            <Typography variant="h2" gutterBottom>
-                {monster.name}
-            </Typography>
+            <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap" mb={2}>
+                <Typography variant="h2">
+                    {monster.name}
+                </Typography>
+                <Box display="flex">
+                    <IconButton aria-label="add" color="primary" onClick={handleUpdateMonster}>
+                        <Edit fontSize="large" />
+                    </IconButton>
+                    <IconButton aria-label="add" color="primary" onClick={handleDeleteMonster}>
+                        <Delete fontSize="large" />
+                    </IconButton>
+                </Box>
+            </Box>
             {monsterImagePath && <img className={classes.image} src={monsterImagePath} alt={monster.name} />}
             <Grid container spacing={3}>
                 <Grid item xs={12} md={4}>
