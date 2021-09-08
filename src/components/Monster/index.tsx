@@ -74,14 +74,14 @@ export const Monster: React.FC = () => {
                     />
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <StatsTable stats={monster.stats} />
+                    <StatsTable title="Base Stats" stats={monster.stats} />
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <StatsTable stats={monster.resistances} />
+                    <StatsTable title="Resistances" stats={monster.resistances} />
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <Typography paragraph>
-                        {monster.description}
+                        {monster.description || "No description available."}
                     </Typography>
                 </Grid>
             </Grid>
