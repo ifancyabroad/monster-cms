@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { clearMonsterImagePath, fetchMonsterImagePath, selectMonsterById, selectMonsterImagePath } from "../../features/monsters/monstersSlice";
+import { getResistancesArray, getStatsArray } from "../../utils";
 import { IndividualStat } from "./IndividualStat";
 import { StatsTable } from "./StatsTable";
 
@@ -74,10 +75,10 @@ export const Monster: React.FC = () => {
                     />
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <StatsTable title="Base Stats" stats={monster.stats} />
+                    <StatsTable title="Base Stats" stats={getStatsArray(monster.stats)} />
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <StatsTable title="Resistances" stats={monster.resistances} />
+                    <StatsTable title="Resistances" stats={getResistancesArray(monster.resistances)} />
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <Typography paragraph>

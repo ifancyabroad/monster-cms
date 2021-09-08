@@ -1,6 +1,4 @@
 import { createStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Theme, withStyles } from "@material-ui/core";
-import { IDictionary } from "../../types";
-import { getStatsArray } from "../../utils";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -11,9 +9,15 @@ const StyledTableCell = withStyles((theme: Theme) =>
     }),
 )(TableCell);
 
+interface ITableStat {
+    key: string;
+    name: string;
+    value: number;
+}
+
 interface IProps {
     title: string;
-    stats: IDictionary<number>;
+    stats: ITableStat[];
 }
 
 export const StatsTable: React.FC<IProps> = ({ title, stats }) => {
@@ -26,7 +30,7 @@ export const StatsTable: React.FC<IProps> = ({ title, stats }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {getStatsArray(stats).map((stat) => (
+                    {stats.map((stat) => (
                         <TableRow key={stat.name}>
                             <TableCell component="th" scope="row">
                                 {stat.name}

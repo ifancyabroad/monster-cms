@@ -1,24 +1,19 @@
-export type TResistances = {
-    arcane: number;
-    cold: number;
-    divine: number;
-    fire: number;
-    physical: number;
-    unholy: number
-}
+import { RESISTANCES, REWARDS, STATS } from "../utils";
+
+export type TStat = typeof STATS[number];
+export type TResistance = typeof RESISTANCES[number];
+export type TReward = typeof REWARDS[number];
 
 export type TStats = {
-    charisma: number;
-    constitution: number;
-    dexterity: number;
-    intelligence: number;
-    strength: number;
-    wisdom: number;
+    [key in TStat]: number;
+}
+
+export type TResistances = {
+    [key in TResistance]: number;
 }
 
 export type TRewards = {
-    experience: number;
-    gold: number;
+    [key in TReward]: number;
 }
 
 export interface IBaseMonster {

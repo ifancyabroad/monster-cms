@@ -12,6 +12,7 @@ import { Box, createStyles, FormControl, makeStyles, Theme, Typography } from '@
 import { saveMonster } from '../../features/monsters/monstersSlice';
 import { ISaveMonster } from '../../types';
 import { StatGroup } from './StatGroup';
+import { getResistancesArray, getRewardsArray, getStatsArray } from '../../utils';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -202,21 +203,21 @@ export const MonsterModal: React.FC = () => {
                     </Box>
                     <StatGroup
                         title="Stats"
-                        stats={formValues.monster.stats}
+                        stats={getStatsArray(formValues.monster.stats)}
                         min={1}
                         max={30}
                         handleChange={handleChangeStats}
                     />
                     <StatGroup
                         title="Resistances"
-                        stats={formValues.monster.resistances}
+                        stats={getResistancesArray(formValues.monster.resistances)}
                         min={0}
                         max={100}
                         handleChange={handleChangeResistances}
                     />
                     <StatGroup
                         title="Rewards"
-                        stats={formValues.monster.rewards}
+                        stats={getRewardsArray(formValues.monster.rewards)}
                         min={0}
                         max={9999}
                         handleChange={handleChangeRewards}
