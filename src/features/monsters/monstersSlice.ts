@@ -40,6 +40,7 @@ export const saveMonster = createAsyncThunk('monsters/saveMonster', async (paylo
         return await dbMonsters.child(key).set(payload.monster);
     } catch (error) {
         console.error(error);
+        throw error;
     }
 });
 
@@ -54,6 +55,7 @@ export const updateMonster = createAsyncThunk('monsters/updateMonster', async (p
         return await dbMonsters.child(payload.id).update(payload.monster);
     } catch (error) {
         console.error(error);
+        throw error;
     }
 });
 
@@ -65,6 +67,7 @@ export const deleteMonster = createAsyncThunk('monsters/deleteMonster', async (p
         return await dbMonsters.child(payload.id).remove();
     } catch (error) {
         console.error(error);
+        throw error;
     }
 });
 

@@ -160,19 +160,20 @@ export const MonsterModal: React.FC = () => {
         });
     }
 
-    const handleSaveMonster = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (monster) {
-            dispatch(updateMonster({
-                ...formValues,
-                id: monster.id,
-                oldImage: monster?.portrait
-            }));
-        } else {
-            dispatch(saveMonster(formValues));
+    const handleSaveMonster = async (e: React.FormEvent<HTMLFormElement>) => {
+        try {
+            e.preventDefault();
+            if (monster) {
+                const payload = { ...formValues, id: monster.id, oldImage: monster.portrait };
+                await dispatch(updateMonster(payload)).unwrap();
+            } else {
+                await dispatch(saveMonster(formValues)).unwrap();
+            }
+            dispatch(closeMonsterModal());
+            setFormValues(defaultFormValues);
+        } catch (error) {
+            // TODO: Show error popup
         }
-        dispatch(closeMonsterModal());
-        setFormValues(defaultFormValues);
     };
 
     return (

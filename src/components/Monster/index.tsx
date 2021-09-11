@@ -54,8 +54,12 @@ export const Monster: React.FC = () => {
         dispatch(openMonsterModal(monster));
     }
 
-    const handleDeleteMonster = () => {
-        dispatch(deleteMonster(monster));
+    const handleDeleteMonster = async () => {
+        try {
+            await dispatch(deleteMonster(monster)).unwrap();
+        } catch (error) {
+            // TODO: Show error popup
+        }
     }
 
     return (
