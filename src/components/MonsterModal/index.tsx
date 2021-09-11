@@ -7,10 +7,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { closeMonsterModal } from '../../features/modals/modalsSlice';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Box, createStyles, FormControl, makeStyles, Theme, Typography } from '@material-ui/core';
-import { saveMonster, selectMonsterById, updateMonster } from '../../features/monsters/monstersSlice';
-import { IBaseMonster, ISaveMonster } from '../../types';
+import { saveMonster, updateMonster } from '../../features/monsters/monstersSlice';
+import { IBaseMonster, IMonster, ISaveMonster } from '../../types';
 import { StatGroup } from './StatGroup';
 import { getResistancesArray, getRewardsArray, getStatsArray } from '../../utils';
 
@@ -61,28 +61,34 @@ const defaultMonsterValues: IBaseMonster = {
     }
 }
 
+const defaultFormValues: ISaveMonster = {
+    monster: defaultMonsterValues,
+    image: null
+}
+
+const getBaseMonsterValues = (monster: IMonster) => {
+    const { id, ...baseMonster } = monster;
+    return baseMonster as IBaseMonster;
+}
+
 export const MonsterModal: React.FC = () => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const open = useAppSelector((state) => state.modals.monsterModal.open);
-    const monsterID = useAppSelector((state) => state.modals.monsterModal.monsterID);
+    const monster = useAppSelector((state) => state.modals.monsterModal.monster);
     const isLoading = useAppSelector((state) => state.monsters.status === "loading");
-    const monstersByID = useAppSelector(selectMonsterById);
-    const monsterValues = monsterID ? monstersByID(monsterID) : defaultMonsterValues;
-    const [formValues, setFormValues] = useState<ISaveMonster>({
-        monster: defaultMonsterValues,
-        image: null,
-    });
+    const [formValues, setFormValues] = useState(defaultFormValues);
+    const monsterValues = useMemo(() => monster && getBaseMonsterValues(monster), [monster]);
 
-    const title = monsterID ? "Update Monster" : "Add Monster";
-    const subtitle = monsterID ? `Updating ${monsterValues?.name}` : "Add a new monster to the database.";
+    const title = monster ? "Update Monster" : "Add Monster";
+    const subtitle = monster ? `Updating ${monster?.name}` : "Add a new monster to the database.";
 
     useEffect(() => {
         setFormValues({
             monster: monsterValues || defaultMonsterValues,
             image: null,
         })
-    }, [monsterValues])
+    }, [monsterValues]);
 
     const handleClose = () => {
         dispatch(closeMonsterModal());
@@ -156,16 +162,17 @@ export const MonsterModal: React.FC = () => {
 
     const handleSaveMonster = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (monsterID) {
+        if (monster) {
             dispatch(updateMonster({
                 ...formValues,
-                id: monsterID,
-                oldImage: monsterValues?.portrait
+                id: monster.id,
+                oldImage: monster?.portrait
             }));
         } else {
             dispatch(saveMonster(formValues));
         }
         dispatch(closeMonsterModal());
+        setFormValues(defaultFormValues);
     };
 
     return (

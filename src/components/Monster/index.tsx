@@ -51,7 +51,7 @@ export const Monster: React.FC = () => {
     }
 
     const handleUpdateMonster = () => {
-        dispatch(openMonsterModal(monster.id));
+        dispatch(openMonsterModal(monster));
     }
 
     const handleDeleteMonster = () => {

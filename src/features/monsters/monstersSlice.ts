@@ -2,6 +2,7 @@ import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store';
 import { dbMonsters, stImages } from '../../firebaseSetup';
 import { IMonster, ISaveMonster, IUpdateMonster } from '../../types';
+import { getKeyFromName } from '../../utils';
 
 interface IMonstersState {
     monsters: IMonster[];
@@ -31,7 +32,12 @@ export const saveMonster = createAsyncThunk('monsters/saveMonster', async (paylo
         if (payload.image) {
             await stImages.child(payload.image.name).put(payload.image);
         }
-        return await dbMonsters.push(payload.monster);
+        const key = getKeyFromName(payload.monster.name);
+        const data = await dbMonsters.child(key).get();
+        if (data.exists()) {
+            throw new Error("Monster already exists");
+        }
+        return await dbMonsters.child(key).set(payload.monster);
     } catch (error) {
         console.error(error);
     }
