@@ -5,10 +5,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { closeLoginModal } from '../../features/modals/modalsSlice';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { closeLoginModal } from '../../../features/modals/modalsSlice';
 import { useRef, useState } from 'react';
-import { auth } from '../../firebaseSetup';
+import { auth } from '../../../firebaseSetup';
 
 export const LoginModal: React.FC = () => {
     const dispatch = useAppDispatch();

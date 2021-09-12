@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { clearMonsterImagePath, deleteMonster, fetchMonsterImagePath, selectMonsterById, selectMonsterImagePath } from "../../features/monsters/monstersSlice";
+import { clearMonsterImagePath, fetchMonsterImagePath, selectMonsterById, selectMonsterImagePath } from "../../features/monsters/monstersSlice";
 import { getResistancesArray, getStatsArray } from "../../utils";
 import { IndividualStat } from "./IndividualStat";
 import { StatsTable } from "./StatsTable";
 import { Delete, Edit } from '@material-ui/icons';
-import { openMonsterModal } from "../../features/modals/modalsSlice";
+import { openDeleteMonsterModal, openMonsterModal } from "../../features/modals/modalsSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -55,11 +55,7 @@ export const Monster: React.FC = () => {
     }
 
     const handleDeleteMonster = async () => {
-        try {
-            await dispatch(deleteMonster(monster)).unwrap();
-        } catch (error) {
-            // TODO: Show error popup
-        }
+        dispatch(openDeleteMonsterModal(monster));
     }
 
     return (

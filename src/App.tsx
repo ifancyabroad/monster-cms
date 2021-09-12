@@ -1,4 +1,4 @@
-import { Header, LoginModal, Monster, MonsterModal, SideDrawer } from "./components";
+import { DeleteMonsterModal, Header, LoginModal, Monster, MonsterModal, SideDrawer } from "./components";
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -17,6 +17,7 @@ function App() {
 				</Switch>
 				<LoginModal />
 				<MonsterModal />
+				<DeleteMonsterModal />
 			</div>
 		</Router>
 	);

@@ -5,14 +5,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { closeMonsterModal } from '../../features/modals/modalsSlice';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { closeMonsterModal } from '../../../features/modals/modalsSlice';
 import { useEffect, useMemo, useState } from 'react';
 import { Box, createStyles, FormControl, makeStyles, Theme, Typography } from '@material-ui/core';
-import { saveMonster, updateMonster } from '../../features/monsters/monstersSlice';
-import { IBaseMonster, IMonster, ISaveMonster } from '../../types';
+import { saveMonster, updateMonster } from '../../../features/monsters/monstersSlice';
+import { IBaseMonster, IMonster, ISaveMonster } from '../../../types';
 import { StatGroup } from './StatGroup';
-import { getResistancesArray, getRewardsArray, getStatsArray } from '../../utils';
+import { getResistancesArray, getRewardsArray, getStatsArray } from '../../../utils';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
