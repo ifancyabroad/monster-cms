@@ -38,7 +38,7 @@ export const Monster: React.FC = () => {
 
     useEffect(() => {
         if (monster?.portrait) {
-            dispatch(fetchMonsterImagePath(monster.portrait))
+            dispatch(fetchMonsterImagePath(monster))
         }
 
         return () => {

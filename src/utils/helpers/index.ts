@@ -19,4 +19,4 @@ export const getRewardsArray = (stats: TRewards) => REWARDS.map(stat => ({
     value: stats[stat]
 }));
 
-export const getKeyFromName = (name: string) => name.toLowerCase().replaceAll(" ", "-").trim();
+export const getKeyFromName = (name: string) => name.toLowerCase().replaceAll(" ", "_").trim();

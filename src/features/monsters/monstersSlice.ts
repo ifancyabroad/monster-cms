@@ -19,23 +19,24 @@ const initialState: IMonstersState = {
 
 export const fetchMonsters = createAsyncThunk('monsters/fetchMonsters', async (payload: IMonster[]) => payload);
 
-export const fetchMonsterImagePath = createAsyncThunk('monsters/fetchMonsterImagePath', async (payload: string) => {
+export const fetchMonsterImagePath = createAsyncThunk('monsters/fetchMonsterImagePath', async (payload: IMonster) => {
     try {
-        return await stImages.child(payload).getDownloadURL();
+        return await stImages.child(payload.id).child(payload.portrait).getDownloadURL();
     } catch (error) {
         console.error(error);
+        throw error;
     }
 });
 
 export const saveMonster = createAsyncThunk('monsters/saveMonster', async (payload: ISaveMonster) => {
     try {
-        if (payload.image) {
-            await stImages.child(payload.image.name).put(payload.image);
-        }
         const key = getKeyFromName(payload.monster.name);
         const data = await dbMonsters.child(key).get();
         if (data.exists()) {
             throw new Error("Monster already exists");
+        }
+        if (payload.image) {
+            await stImages.child(key).child(payload.image.name).put(payload.image);
         }
         return await dbMonsters.child(key).set(payload.monster);
     } catch (error) {
@@ -47,10 +48,10 @@ export const saveMonster = createAsyncThunk('monsters/saveMonster', async (paylo
 export const updateMonster = createAsyncThunk('monsters/updateMonster', async (payload: IUpdateMonster) => {
     try {
         if (payload.image && payload.oldImage) {
-            await stImages.child(payload.oldImage).delete();
+            await stImages.child(payload.id).child(payload.oldImage).delete();
         }
         if (payload.image) {
-            await stImages.child(payload.image.name).put(payload.image);
+            await stImages.child(payload.id).child(payload.image.name).put(payload.image);
         }
         return await dbMonsters.child(payload.id).update(payload.monster);
     } catch (error) {
@@ -62,7 +63,7 @@ export const updateMonster = createAsyncThunk('monsters/updateMonster', async (p
 export const deleteMonster = createAsyncThunk('monsters/deleteMonster', async (payload: IMonster) => {
     try {
         if (payload.portrait) {
-            await stImages.child(payload.portrait).delete();
+            await stImages.child(payload.id).child(payload.portrait).delete();
         }
         return await dbMonsters.child(payload.id).remove();
     } catch (error) {
