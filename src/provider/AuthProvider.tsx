@@ -4,15 +4,15 @@ import firebase from "firebase/app";
 import { auth } from "../firebaseSetup";
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<firebase.User | null>(null);
+	const [user, setUser] = useState<firebase.User | null>(null);
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
-      setUser(firebaseUser);
-    });
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+			setUser(firebaseUser);
+		});
 
-    return unsubscribe;
-  }, []);
+		return unsubscribe;
+	}, []);
 
-  return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
 };

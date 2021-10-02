@@ -5,38 +5,38 @@ export type TResistance = typeof RESISTANCES[number];
 export type TReward = typeof REWARDS[number];
 
 export type TStats = {
-    [key in TStat]: number;
-}
+	[key in TStat]: number;
+};
 
 export type TResistances = {
-    [key in TResistance]: number;
-}
+	[key in TResistance]: number;
+};
 
 export type TRewards = {
-    [key in TReward]: number;
-}
+	[key in TReward]: number;
+};
 
 export interface IBaseMonster {
-    challenge: number;
-    resistances: TResistances;
-    description: string;
-    name: string;
-    portrait: string;
-    rewards: TRewards;
-    skills: string[];
-    stats: TStats;
+	challenge: number;
+	resistances: TResistances;
+	description: string;
+	name: string;
+	portrait: string;
+	rewards: TRewards;
+	skills: string[];
+	stats: TStats;
 }
 
 export interface IMonster extends IBaseMonster {
-    id: string;
+	id: string;
 }
 
 export interface ISaveMonster {
-    monster: IBaseMonster;
-    image: File | null;
+	monster: IBaseMonster;
+	image: File | null;
 }
 
 export interface IUpdateMonster extends ISaveMonster {
-    id: string;
-    oldImage?: string;
+	id: string;
+	oldImage?: string;
 }
