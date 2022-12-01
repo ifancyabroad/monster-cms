@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IMonster } from "../../types";
+import { IMonster, ISkill } from "../../types";
 
 interface ModalsState {
 	loginModalOpen: boolean;
@@ -11,6 +11,14 @@ interface ModalsState {
 		open: boolean;
 		monster?: IMonster;
 	};
+	skillModal: {
+		open: boolean;
+		skill?: ISkill;
+	};
+	deleteSkillModal: {
+		open: boolean;
+		skill?: ISkill;
+	};
 }
 
 const initialState: ModalsState = {
@@ -19,6 +27,12 @@ const initialState: ModalsState = {
 		open: false,
 	},
 	deleteMonsterModal: {
+		open: false,
+	},
+	skillModal: {
+		open: false,
+	},
+	deleteSkillModal: {
 		open: false,
 	},
 };
@@ -55,6 +69,25 @@ export const modalsSlice = createSlice({
 			state.deleteMonsterModal.open = false;
 			state.deleteMonsterModal.monster = undefined;
 		},
+		openSkillModal: (state, action: PayloadAction<ISkill | undefined>) => {
+			state.skillModal.open = true;
+			state.skillModal.skill = action.payload;
+		},
+		closeSkillModal: (state) => {
+			state.skillModal.open = false;
+			state.skillModal.skill = undefined;
+		},
+		openDeleteSkillModal: (
+			state,
+			action: PayloadAction<ISkill | undefined>
+		) => {
+			state.deleteSkillModal.open = true;
+			state.deleteSkillModal.skill = action.payload;
+		},
+		closeDeleteSkillModal: (state) => {
+			state.deleteSkillModal.open = false;
+			state.deleteSkillModal.skill = undefined;
+		},
 	},
 });
 
@@ -66,6 +99,10 @@ export const {
 	closeMonsterModal,
 	openDeleteMonsterModal,
 	closeDeleteMonsterModal,
+	openSkillModal,
+	closeSkillModal,
+	openDeleteSkillModal,
+	closeDeleteSkillModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

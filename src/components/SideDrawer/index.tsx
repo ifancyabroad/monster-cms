@@ -17,7 +17,10 @@ import { Add } from "@material-ui/icons";
 import { DRAWER_WIDTH } from "../../utils/constants";
 import { closeSidedrawer } from "../../features/sidedrawer/sidedrawerSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { openMonsterModal } from "../../features/modals/modalsSlice";
+import {
+	openMonsterModal,
+	openSkillModal,
+} from "../../features/modals/modalsSlice";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -45,18 +48,28 @@ export const SideDrawer: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const mobileOpen = useAppSelector((state) => state.sidedrawer.open);
 	const monstersList = useAppSelector((state) => state.monsters.monsters);
+	const skillsList = useAppSelector((state) => state.skills.skills);
 	const [monstersOpen, setMonstersOpen] = useState(true);
+	const [skillsOpen, setSkillsOpen] = useState(true);
 
 	const handleDrawerToggle = () => {
 		dispatch(closeSidedrawer());
 	};
 
-	const handleClick = () => {
+	const handleMonstersClick = () => {
 		setMonstersOpen(!monstersOpen);
+	};
+
+	const handleSkillsClick = () => {
+		setSkillsOpen(!monstersOpen);
 	};
 
 	const addMonster = () => {
 		dispatch(openMonsterModal());
+	};
+
+	const addSkill = () => {
+		dispatch(openSkillModal());
 	};
 
 	const drawer = (
@@ -64,7 +77,7 @@ export const SideDrawer: React.FC = () => {
 			<div className={classes.toolbar} />
 			<Divider />
 			<List>
-				<ListItem button onClick={handleClick}>
+				<ListItem button onClick={handleMonstersClick}>
 					<ListItemText>Monsters</ListItemText>
 					{user && (
 						<ListItemSecondaryAction>
@@ -96,9 +109,35 @@ export const SideDrawer: React.FC = () => {
 				<ListItem button>
 					<ListItemText>Items</ListItemText>
 				</ListItem>
-				<ListItem button>
-					<ListItemText>Abilities</ListItemText>
+				<ListItem button onClick={handleSkillsClick}>
+					<ListItemText>Skills</ListItemText>
+					{user && (
+						<ListItemSecondaryAction>
+							<IconButton
+								aria-label="add"
+								color="primary"
+								onClick={addSkill}
+							>
+								<Add />
+							</IconButton>
+						</ListItemSecondaryAction>
+					)}
 				</ListItem>
+				<Collapse in={skillsOpen} unmountOnExit>
+					<List>
+						{skillsList.map((skill, index) => (
+							<ListItem
+								button
+								key={index}
+								className={classes.nested}
+								component={Link}
+								to={`/${skill.id}`}
+							>
+								<ListItemText primary={skill.name} />
+							</ListItem>
+						))}
+					</List>
+				</Collapse>
 			</List>
 		</div>
 	);

@@ -5,6 +5,7 @@ import {
 	Monster,
 	MonsterModal,
 	SideDrawer,
+	SkillModal,
 } from "./components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -21,6 +22,7 @@ function App() {
 				<LoginModal />
 				<MonsterModal />
 				<DeleteMonsterModal />
+				<SkillModal />
 			</div>
 		</Router>
 	);

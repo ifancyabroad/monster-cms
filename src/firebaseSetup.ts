@@ -20,3 +20,4 @@ firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const stImages = firebase.storage().ref("images");
 export const dbMonsters = firebase.database().ref("monsters");
+export const dbSkills = firebase.database().ref("skills");
