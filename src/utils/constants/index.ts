@@ -1,44 +1,46 @@
+import { DamageType, Reward, Stat } from "../../enums";
+
 export const DRAWER_WIDTH = 240;
 
 export const STATS = [
-	"strength",
-	"dexterity",
-	"constitution",
-	"intelligence",
-	"wisdom",
-	"charisma",
+	Stat.Strength,
+	Stat.Dexterity,
+	Stat.Constitution,
+	Stat.Intelligence,
+	Stat.Wisdom,
+	Stat.Charisma,
 ] as const;
 
 export const RESISTANCES = [
-	"physical",
-	"arcane",
-	"cold",
-	"fire",
-	"divine",
-	"unholy",
+	DamageType.Physical,
+	DamageType.Arcane,
+	DamageType.Cold,
+	DamageType.Fire,
+	DamageType.Divine,
+	DamageType.Unholy,
 ] as const;
 
-export const REWARDS = ["experience", "gold"] as const;
+export const REWARDS = [Reward.Experience, Reward.Gold] as const;
 
 export const STATS_NAME_MAP = {
-	charisma: "Charisma",
-	constitution: "Constitution",
-	dexterity: "Dexterity",
-	intelligence: "Intelligence",
-	strength: "Strength",
-	wisdom: "Wisdom",
+	[Stat.Charisma]: "Charisma",
+	[Stat.Constitution]: "Constitution",
+	[Stat.Dexterity]: "Dexterity",
+	[Stat.Intelligence]: "Intelligence",
+	[Stat.Strength]: "Strength",
+	[Stat.Wisdom]: "Wisdom",
 };
 
 export const RESISTANCES_NAME_MAP = {
-	arcane: "Arcane",
-	cold: "Cold",
-	divine: "Divine",
-	fire: "Fire",
-	physical: "Physical",
-	unholy: "Unholy",
+	[DamageType.Arcane]: "Arcane",
+	[DamageType.Cold]: "Cold",
+	[DamageType.Divine]: "Divine",
+	[DamageType.Fire]: "Fire",
+	[DamageType.Physical]: "Physical",
+	[DamageType.Unholy]: "Unholy",
 };
 
 export const REWARDS_NAME_MAP = {
-	experience: "Experience",
-	gold: "Gold",
+	[Reward.Experience]: "Experience",
+	[Reward.Gold]: "Gold",
 };

@@ -1,5 +1,4 @@
 import {
-	DeleteMonsterModal,
 	Header,
 	LoginModal,
 	Monster,
@@ -21,7 +20,6 @@ function App() {
 				</Switch>
 				<LoginModal />
 				<MonsterModal />
-				<DeleteMonsterModal />
 				<SkillModal />
 			</div>
 		</Router>

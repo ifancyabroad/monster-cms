@@ -1,4 +1,4 @@
-import { TStats, TResistances, TRewards } from "../../types";
+import { TStats, TDamageTypes, TRewards } from "../../types";
 import {
 	RESISTANCES,
 	RESISTANCES_NAME_MAP,
@@ -15,7 +15,7 @@ export const getStatsArray = (stats: TStats) =>
 		value: stats[stat],
 	}));
 
-export const getResistancesArray = (stats: TResistances) =>
+export const getResistancesArray = (stats: TDamageTypes) =>
 	RESISTANCES.map((stat) => ({
 		key: stat,
 		name: RESISTANCES_NAME_MAP[stat],
