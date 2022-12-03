@@ -1,24 +1,12 @@
-import { RESISTANCES, REWARDS, STATS } from "../utils";
+import { DamageType, Reward, Stat } from "../enums";
 
 export interface IDictionary<T> {
 	[K: string]: T;
 }
 
-export type TStat = typeof STATS[number];
-export type TResistance = typeof RESISTANCES[number];
-export type TReward = typeof REWARDS[number];
-
-export type TStats = {
-	[key in TStat]: number;
-};
-
-export type TResistances = {
-	[key in TResistance]: number;
-};
-
-export type TRewards = {
-	[key in TReward]: number;
-};
+export type TStats = Record<Stat, number>;
+export type TDamageTypes = Record<DamageType, number>;
+export type TRewards = Record<Reward, number>;
 
 export * from "./monster";
 export * from "./skill";

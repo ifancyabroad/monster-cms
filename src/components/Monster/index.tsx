@@ -10,9 +10,10 @@ import {
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
 	clearMonsterImagePath,
+	deleteMonster,
 	fetchMonsterImagePath,
 	selectMonsterById,
 	selectMonsterImagePath,
@@ -22,9 +23,11 @@ import { IndividualStat } from "./IndividualStat";
 import { StatsTable } from "./StatsTable";
 import { Delete, Edit } from "@material-ui/icons";
 import {
-	openDeleteMonsterModal,
+	closeConfirmationModal,
+	openConfirmationModal,
 	openMonsterModal,
 } from "../../features/modals/modalsSlice";
+import { ConfirmationModal } from "../Modals";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -51,6 +54,12 @@ export const Monster: React.FC = () => {
 	let { id } = useParams<IRouteParams>();
 	const monster = useSelector(selectMonsterById)(id);
 	const monsterImagePath = useSelector(selectMonsterImagePath);
+	const confirmationModalOpen = useAppSelector(
+		(state) => state.modals.confirmationModalOpen
+	);
+	const isLoading = useAppSelector(
+		(state) => state.monsters.status === "loading"
+	);
 
 	useEffect(() => {
 		if (monster?.portrait) {
@@ -71,7 +80,20 @@ export const Monster: React.FC = () => {
 	};
 
 	const handleDeleteMonster = async () => {
-		dispatch(openDeleteMonsterModal(monster));
+		dispatch(openConfirmationModal());
+	};
+
+	const handleCloseConfirmationModal = () => {
+		dispatch(closeConfirmationModal());
+	};
+
+	const handleConfirmDeleteMonster = async () => {
+		try {
+			await dispatch(deleteMonster(monster)).unwrap();
+			dispatch(closeConfirmationModal());
+		} catch (error) {
+			// TODO: Show error popup
+		}
 	};
 
 	return (
@@ -143,6 +165,15 @@ export const Monster: React.FC = () => {
 					/>
 				</Grid>
 			</Grid>
+
+			<ConfirmationModal
+				open={confirmationModalOpen}
+				title="Are you sure?"
+				content={`This action will permanently delete ${monster.name} from the database.`}
+				handleClose={handleCloseConfirmationModal}
+				handleConfirm={handleConfirmDeleteMonster}
+				disabled={isLoading}
+			/>
 		</main>
 	);
 };
