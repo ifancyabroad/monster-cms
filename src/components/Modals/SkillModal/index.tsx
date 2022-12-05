@@ -6,8 +6,11 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { closeSkillModal } from "../../../features/modals/modalsSlice";
-import { useEffect, useMemo, useState } from "react";
+import {
+	closeSkillModal,
+	openEffectModal,
+} from "../../../features/modals/modalsSlice";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import {
 	Box,
 	createStyles,
@@ -20,9 +23,10 @@ import {
 	Typography,
 } from "@material-ui/core";
 import { saveSkill, updateSkill } from "../../../features/skills/skillsSlice";
-import { IBaseSkill, ISaveSkill, ISkill } from "../../../types";
-import { CharacterClass, EffectType } from "../../../enums";
+import { IBaseSkill, ISaveSkill, ISkill, ISkillEffect } from "../../../types";
+import { CharacterClass, DamageType } from "../../../enums";
 import { RESISTANCES, RESISTANCES_NAME_MAP } from "../../../utils";
+import { EffectModal } from "../EffectModal";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -51,16 +55,8 @@ const defaultSkillValues: IBaseSkill = {
 	description: "",
 	icon: "",
 	class: "basic",
-	damageType: "physical",
-	effects: [
-		{
-			type: EffectType.Damage,
-			modifier: "strength",
-			multiplier: 1,
-			min: 1,
-			max: 6,
-		},
-	],
+	damageType: DamageType.Physical,
+	effects: [],
 	price: 0,
 	maxUses: 0,
 	level: 0,
@@ -110,7 +106,6 @@ export const SkillModal: React.FC = () => {
 		e: React.ChangeEvent<{ name?: string; value: unknown }>
 	) => {
 		const { name, value } = e.target;
-		console.log(name, value);
 		setFormValues({
 			...formValues,
 			skill: {
@@ -129,6 +124,20 @@ export const SkillModal: React.FC = () => {
 			skill: {
 				...formValues.skill,
 				icon,
+			},
+		});
+	};
+
+	const handleOpenEffectModal = () => {
+		dispatch(openEffectModal());
+	};
+
+	const handleAddEffect = (effect: ISkillEffect) => {
+		setFormValues({
+			...formValues,
+			skill: {
+				...formValues.skill,
+				effects: formValues.skill.effects.concat(effect),
 			},
 		});
 	};
@@ -155,176 +164,213 @@ export const SkillModal: React.FC = () => {
 	};
 
 	return (
-		<Dialog
-			open={open}
-			onClose={handleClose}
-			aria-labelledby="form-dialog-title"
-		>
-			<DialogTitle id="form-dialog-title">{title}</DialogTitle>
-			<form onSubmit={handleSaveSkill}>
-				<DialogContent>
-					<DialogContentText>{subtitle}</DialogContentText>
-					<Box my={3}>
-						<FormControl>
-							<input
-								accept="image/*"
-								style={{ display: "none" }}
-								id="contained-button-file"
-								multiple
-								type="file"
-								onChange={handleChangeImage}
-							/>
-							<label htmlFor="contained-button-file">
-								<Button variant="contained" component="span">
-									Upload Image
-								</Button>
-								{formValues.image && (
-									<Typography
-										display="inline"
-										className={classes.uploadFileName}
+		<Fragment>
+			<Dialog
+				open={open}
+				onClose={handleClose}
+				aria-labelledby="form-dialog-title"
+			>
+				<DialogTitle id="form-dialog-title">{title}</DialogTitle>
+				<form onSubmit={handleSaveSkill}>
+					<DialogContent>
+						<DialogContentText>{subtitle}</DialogContentText>
+						<Box my={3}>
+							<FormControl>
+								<input
+									accept="image/*"
+									style={{ display: "none" }}
+									id="contained-button-file"
+									multiple
+									type="file"
+									onChange={handleChangeImage}
+								/>
+								<label htmlFor="contained-button-file">
+									<Button
+										variant="contained"
+										component="span"
 									>
-										{formValues.image.name}
-									</Typography>
-								)}
-							</label>
-						</FormControl>
-					</Box>
-					<Box my={3}>
-						<TextField
-							autoFocus
-							name="name"
-							label="Name"
-							value={formValues.skill.name}
-							onChange={handleChange}
-							fullWidth
-							required
-							inputProps={{
-								minLength: 3,
-								maxLength: 25,
-							}}
-						/>
-					</Box>
-					<Box my={3}>
-						<TextField
-							autoFocus
-							name="description"
-							label="Description"
-							value={formValues.skill.description}
-							onChange={handleChange}
-							fullWidth
-							multiline
-							minRows={4}
-							inputProps={{
-								minLength: 3,
-								maxLength: 25,
-							}}
-						/>
-					</Box>
-					<Box my={3}>
-						<DialogContentText variant="subtitle1" component="h5">
-							Skill Type
-						</DialogContentText>
-						<Box display="flex">
-							<FormControl className={classes.dropdown}>
-								<InputLabel id="skill-class-label">
-									Class
-								</InputLabel>
-								<Select
-									labelId="skill-class-label"
-									name="class"
-									value={formValues.skill.class}
-									onChange={handleChange}
-								>
-									<MenuItem value="basic">Basic</MenuItem>
-									<MenuItem value={CharacterClass.Warrior}>
-										Warrior
-									</MenuItem>
-									<MenuItem value={CharacterClass.Rogue}>
-										Rogue
-									</MenuItem>
-									<MenuItem value={CharacterClass.Mage}>
-										Mage
-									</MenuItem>
-								</Select>
+										Upload Image
+									</Button>
+									{formValues.image && (
+										<Typography
+											display="inline"
+											className={classes.uploadFileName}
+										>
+											{formValues.image.name}
+										</Typography>
+									)}
+								</label>
 							</FormControl>
-							<FormControl className={classes.dropdown}>
-								<InputLabel id="skill-damage-type-label">
-									Damage Type
-								</InputLabel>
-								<Select
-									labelId="skill-damage-type-label"
-									name="damageType"
-									value={formValues.skill.damageType}
-									onChange={handleChange}
-								>
-									{RESISTANCES.map((resistance) => (
-										<MenuItem value={resistance}>
-											{RESISTANCES_NAME_MAP[resistance]}
+						</Box>
+						<Box my={3}>
+							<TextField
+								autoFocus
+								name="name"
+								label="Name"
+								value={formValues.skill.name}
+								onChange={handleChange}
+								fullWidth
+								required
+								inputProps={{
+									minLength: 3,
+									maxLength: 25,
+								}}
+							/>
+						</Box>
+						<Box my={3}>
+							<TextField
+								autoFocus
+								name="description"
+								label="Description"
+								value={formValues.skill.description}
+								onChange={handleChange}
+								fullWidth
+								multiline
+								minRows={4}
+								inputProps={{
+									minLength: 3,
+									maxLength: 25,
+								}}
+							/>
+						</Box>
+						<Box my={3}>
+							<DialogContentText
+								variant="subtitle1"
+								component="h5"
+							>
+								Skill Type
+							</DialogContentText>
+							<Box display="flex">
+								<FormControl className={classes.dropdown}>
+									<InputLabel id="skill-class-label">
+										Class
+									</InputLabel>
+									<Select
+										labelId="skill-class-label"
+										name="class"
+										value={formValues.skill.class}
+										onChange={handleChange}
+									>
+										<MenuItem value="basic">Basic</MenuItem>
+										<MenuItem
+											value={CharacterClass.Warrior}
+										>
+											Warrior
 										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
+										<MenuItem value={CharacterClass.Rogue}>
+											Rogue
+										</MenuItem>
+										<MenuItem value={CharacterClass.Mage}>
+											Mage
+										</MenuItem>
+									</Select>
+								</FormControl>
+								<FormControl className={classes.dropdown}>
+									<InputLabel id="skill-damage-type-label">
+										Damage Type
+									</InputLabel>
+									<Select
+										labelId="skill-damage-type-label"
+										name="damageType"
+										value={formValues.skill.damageType}
+										onChange={handleChange}
+									>
+										{RESISTANCES.map((resistance) => (
+											<MenuItem
+												key={resistance}
+												value={resistance}
+											>
+												{
+													RESISTANCES_NAME_MAP[
+														resistance
+													]
+												}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</Box>
 						</Box>
-					</Box>
-					<Box my={3}>
-						<DialogContentText component="h6">
-							Skill Properties
-						</DialogContentText>
-						<Box display="flex" flexWrap="wrap">
-							<TextField
-								margin="dense"
-								name="price"
-								label="Price"
-								type="number"
-								value={formValues.skill.price}
-								onChange={handleChange}
-								className={classes.numberField}
-								required
-								inputProps={{
-									min: 0,
-									max: 9999,
-								}}
-							/>
-							<TextField
-								margin="dense"
-								name="maxUses"
-								label="Max Uses"
-								type="number"
-								value={formValues.skill.maxUses}
-								onChange={handleChange}
-								className={classes.numberField}
-								required
-								inputProps={{
-									min: 0,
-									max: 9999,
-								}}
-							/>
-							<TextField
-								margin="dense"
-								name="level"
-								label="Level"
-								type="number"
-								value={formValues.skill.level}
-								onChange={handleChange}
-								className={classes.numberField}
-								required
-								inputProps={{
-									min: 0,
-									max: 30,
-								}}
-							/>
+						<Box my={3}>
+							<DialogContentText component="h6">
+								Skill Properties
+							</DialogContentText>
+							<Box display="flex" flexWrap="wrap">
+								<TextField
+									margin="dense"
+									name="price"
+									label="Price"
+									type="number"
+									value={formValues.skill.price}
+									onChange={handleChange}
+									className={classes.numberField}
+									required
+									inputProps={{
+										min: 0,
+										max: 9999,
+									}}
+								/>
+								<TextField
+									margin="dense"
+									name="maxUses"
+									label="Max Uses"
+									type="number"
+									value={formValues.skill.maxUses}
+									onChange={handleChange}
+									className={classes.numberField}
+									required
+									inputProps={{
+										min: 0,
+										max: 9999,
+									}}
+								/>
+								<TextField
+									margin="dense"
+									name="level"
+									label="Level"
+									type="number"
+									value={formValues.skill.level}
+									onChange={handleChange}
+									className={classes.numberField}
+									required
+									inputProps={{
+										min: 0,
+										max: 30,
+									}}
+								/>
+							</Box>
 						</Box>
-					</Box>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleClose} color="primary">
-						Cancel
-					</Button>
-					<Button type="submit" color="primary" disabled={isLoading}>
-						Save
-					</Button>
-				</DialogActions>
-			</form>
-		</Dialog>
+						<Box my={3}>
+							<DialogContentText component="h6">
+								Skill Effects
+							</DialogContentText>
+							{formValues.skill.effects.map((effect) => (
+								<span key={effect.type}>{effect.type}</span>
+							))}
+						</Box>
+					</DialogContent>
+					<DialogActions>
+						<Button
+							onClick={handleOpenEffectModal}
+							color="secondary"
+						>
+							Add Effect
+						</Button>
+						<Button onClick={handleClose} color="primary">
+							Cancel
+						</Button>
+						<Button
+							type="submit"
+							color="primary"
+							disabled={isLoading}
+						>
+							Save
+						</Button>
+					</DialogActions>
+				</form>
+			</Dialog>
+
+			<EffectModal onAddEffect={handleAddEffect} />
+		</Fragment>
 	);
 };

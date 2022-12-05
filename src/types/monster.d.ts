@@ -1,8 +1,8 @@
-import { TResistances, TRewards, TStats } from ".";
+import { TDamageTypes, TRewards, TStats } from ".";
 
 export interface IBaseMonster {
 	challenge: number;
-	resistances: TResistances;
+	resistances: TDamageTypes;
 	description: string;
 	name: string;
 	portrait: string;
