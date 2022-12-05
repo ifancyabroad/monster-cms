@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IMonster, ISkill } from "../../types";
+import { IMonster, ISkill, ISkillEffect } from "../../types";
 
 interface ModalsState {
 	loginModalOpen: boolean;
@@ -12,6 +12,10 @@ interface ModalsState {
 		open: boolean;
 		skill?: ISkill;
 	};
+	effectModal: {
+		open: boolean;
+		effect?: ISkillEffect;
+	};
 }
 
 const initialState: ModalsState = {
@@ -21,6 +25,9 @@ const initialState: ModalsState = {
 		open: false,
 	},
 	skillModal: {
+		open: false,
+	},
+	effectModal: {
 		open: false,
 	},
 };
@@ -60,6 +67,17 @@ export const modalsSlice = createSlice({
 			state.skillModal.open = false;
 			state.skillModal.skill = undefined;
 		},
+		openEffectModal: (
+			state,
+			action: PayloadAction<ISkillEffect | undefined>
+		) => {
+			state.effectModal.open = true;
+			state.effectModal.effect = action.payload;
+		},
+		closeEffectModal: (state) => {
+			state.effectModal.open = false;
+			state.effectModal.effect = undefined;
+		},
 	},
 });
 
@@ -73,6 +91,8 @@ export const {
 	closeMonsterModal,
 	openSkillModal,
 	closeSkillModal,
+	openEffectModal,
+	closeEffectModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

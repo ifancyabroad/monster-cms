@@ -1,4 +1,4 @@
-import { DamageType, Reward, Stat } from "../../enums";
+import { DamageType, EffectType, Reward, Stat } from "../../enums";
 
 export const DRAWER_WIDTH = 240;
 
@@ -43,4 +43,22 @@ export const RESISTANCES_NAME_MAP = {
 export const REWARDS_NAME_MAP = {
 	[Reward.Experience]: "Experience",
 	[Reward.Gold]: "Gold",
+};
+
+export const EFFECTS = [
+	EffectType.Damage,
+	EffectType.Heal,
+	EffectType.Buff,
+	EffectType.Debuff,
+	EffectType.Stun,
+	EffectType.Poison,
+] as const;
+
+export const EFFECTS_NAME_MAP = {
+	[EffectType.Damage]: "Damage",
+	[EffectType.Heal]: "Heal",
+	[EffectType.Buff]: "Buff",
+	[EffectType.Debuff]: "Debuff",
+	[EffectType.Stun]: "Stun",
+	[EffectType.Poison]: "Poison",
 };
