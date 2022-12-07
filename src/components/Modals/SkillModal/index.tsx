@@ -15,6 +15,7 @@ import {
 	Box,
 	createStyles,
 	FormControl,
+	Grid,
 	InputLabel,
 	makeStyles,
 	MenuItem,
@@ -24,9 +25,10 @@ import {
 } from "@material-ui/core";
 import { saveSkill, updateSkill } from "../../../features/skills/skillsSlice";
 import { IBaseSkill, ISaveSkill, ISkill, ISkillEffect } from "../../../types";
-import { CharacterClass, DamageType } from "../../../enums";
+import { CharacterClass, DamageType, EffectType, Stat } from "../../../enums";
 import { RESISTANCES, RESISTANCES_NAME_MAP } from "../../../utils";
 import { EffectModal } from "../EffectModal";
+import { EffectCard } from "./EffectCard";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -56,7 +58,15 @@ const defaultSkillValues: IBaseSkill = {
 	icon: "",
 	class: "basic",
 	damageType: DamageType.Physical,
-	effects: [],
+	effects: [
+		{
+			type: EffectType.Damage,
+			modifier: Stat.Strength,
+			multiplier: 1,
+			min: 1,
+			max: 6,
+		},
+	],
 	price: 0,
 	maxUses: 0,
 	level: 0,
@@ -138,6 +148,27 @@ export const SkillModal: React.FC = () => {
 			skill: {
 				...formValues.skill,
 				effects: formValues.skill.effects.concat(effect),
+			},
+		});
+	};
+
+	const handleUpdateEffect = (effect: ISkillEffect) => {
+		setFormValues({
+			...formValues,
+			skill: {
+				...formValues.skill,
+				effects: formValues.skill.effects.concat(effect),
+			},
+		});
+	};
+
+	const handleRemoveEffect = (effect: ISkillEffect) => {
+		console.log("remove");
+		setFormValues({
+			...formValues,
+			skill: {
+				...formValues.skill,
+				effects: formValues.skill.effects.filter((e) => e !== effect),
 			},
 		});
 	};
@@ -344,9 +375,18 @@ export const SkillModal: React.FC = () => {
 							<DialogContentText component="h6">
 								Skill Effects
 							</DialogContentText>
-							{formValues.skill.effects.map((effect) => (
-								<span key={effect.type}>{effect.type}</span>
-							))}
+							<Grid container spacing={3}>
+								{formValues.skill.effects.map(
+									(effect, index) => (
+										<Grid key={index} item xs={12} sm={6}>
+											<EffectCard
+												effect={effect}
+												onRemove={handleRemoveEffect}
+											/>
+										</Grid>
+									)
+								)}
+							</Grid>
 						</Box>
 					</DialogContent>
 					<DialogActions>
@@ -370,7 +410,10 @@ export const SkillModal: React.FC = () => {
 				</form>
 			</Dialog>
 
-			<EffectModal onAddEffect={handleAddEffect} />
+			<EffectModal
+				onAddEffect={handleAddEffect}
+				onUpdateEffect={handleUpdateEffect}
+			/>
 		</Fragment>
 	);
 };

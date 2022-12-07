@@ -44,9 +44,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
 	onAddEffect: (effect: ISkillEffect) => void;
+	onUpdateEffect: (effect: ISkillEffect) => void;
 }
 
-export const EffectModal: React.FC<IProps> = ({ onAddEffect }) => {
+export const EffectModal: React.FC<IProps> = ({
+	onAddEffect,
+	onUpdateEffect,
+}) => {
 	const classes = useStyles();
 	const dispatch = useAppDispatch();
 	const open = useAppSelector((state) => state.modals.effectModal.open);
@@ -75,27 +79,19 @@ export const EffectModal: React.FC<IProps> = ({ onAddEffect }) => {
 	const handleAddEffect = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		switch (effectType) {
-			case EffectType.Damage:
-				onAddEffect(state.damageEffectForm);
-				break;
-			case EffectType.Heal:
-				onAddEffect(state.healEffectForm);
-				break;
-			case EffectType.Buff:
-				onAddEffect(state.buffEffectForm);
-				break;
-			case EffectType.Debuff:
-				onAddEffect(state.debuffEffectForm);
-				break;
-			case EffectType.Stun:
-				onAddEffect(state.stunEffectForm);
-				break;
-			case EffectType.Poison:
-				onAddEffect(state.poisonEffectForm);
-				break;
-			default:
-				break;
+		const formValues = {
+			[EffectType.Damage]: state.damageEffectForm,
+			[EffectType.Heal]: state.healEffectForm,
+			[EffectType.Buff]: state.buffEffectForm,
+			[EffectType.Debuff]: state.debuffEffectForm,
+			[EffectType.Stun]: state.stunEffectForm,
+			[EffectType.Poison]: state.poisonEffectForm,
+		}[effectType];
+
+		if (effect) {
+			onAddEffect(formValues);
+		} else {
+			onUpdateEffect(formValues);
 		}
 
 		dispatch(closeEffectModal());
