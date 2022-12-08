@@ -37,12 +37,7 @@ import { ConfirmationModal } from "../Modals";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
-		root: {
-			flexGrow: 1,
-			padding: theme.spacing(3),
-		},
-		// necessary for content to be below app bar
-		toolbar: theme.mixins.toolbar,
+		root: {},
 		image: {
 			marginBottom: theme.spacing(3),
 			maxWidth: "100%",
@@ -106,8 +101,7 @@ export const Monster: React.FC = () => {
 	};
 
 	return (
-		<main className={classes.root}>
-			<div className={classes.toolbar} />
+		<div className={classes.root}>
 			<Box
 				display="flex"
 				justifyContent="space-between"
@@ -242,6 +236,6 @@ export const Monster: React.FC = () => {
 				handleConfirm={handleConfirmDeleteMonster}
 				disabled={isLoading}
 			/>
-		</main>
+		</div>
 	);
 };

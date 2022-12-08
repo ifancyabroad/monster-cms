@@ -1,9 +1,8 @@
 import {
-	Header,
+	HOCLayout,
 	LoginModal,
 	Monster,
 	MonsterModal,
-	SideDrawer,
 	SkillModal,
 } from "./components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -11,17 +10,15 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
 	return (
 		<Router>
-			<div style={{ display: "flex" }}>
-				<Header />
-				<SideDrawer />
+			<HOCLayout>
 				<Switch>
 					<Route exact={true} path="/" />
 					<Route path="/:id" component={Monster} />
 				</Switch>
-				<LoginModal />
-				<MonsterModal />
-				<SkillModal />
-			</div>
+			</HOCLayout>
+			<LoginModal />
+			<MonsterModal />
+			<SkillModal />
 		</Router>
 	);
 }
