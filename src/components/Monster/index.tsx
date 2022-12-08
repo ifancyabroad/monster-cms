@@ -1,9 +1,11 @@
 import {
 	Box,
 	createStyles,
+	Divider,
 	Grid,
 	IconButton,
 	makeStyles,
+	Paper,
 	Theme,
 	Typography,
 } from "@material-ui/core";
@@ -18,8 +20,12 @@ import {
 	selectMonsterById,
 	selectMonsterImagePath,
 } from "../../features/monsters/monstersSlice";
-import { getResistancesArray, getStatsArray } from "../../utils";
-import { IndividualStat } from "./IndividualStat";
+import {
+	getAuxillaryResistancesArray,
+	getElementalResistancesArray,
+	getPhysicalResistancesArray,
+	getStatsArray,
+} from "../../utils";
 import { StatsTable } from "./StatsTable";
 import { Delete, Edit } from "@material-ui/icons";
 import {
@@ -40,6 +46,9 @@ const useStyles = makeStyles((theme: Theme) =>
 		image: {
 			marginBottom: theme.spacing(3),
 			maxWidth: "100%",
+		},
+		paper: {
+			marginBottom: theme.spacing(3),
 		},
 	})
 );
@@ -131,40 +140,99 @@ export const Monster: React.FC = () => {
 					alt={monster.name}
 				/>
 			)}
-			<Grid item xs={12}>
-				<Typography paragraph>
+
+			<Box marginBottom={4}>
+				<Typography
+					variant="body2"
+					color="textSecondary"
+					component="h5"
+					gutterBottom
+				>
+					Description
+				</Typography>
+				<Typography variant="h5" paragraph>
 					{monster.description || "No description available."}
 				</Typography>
-			</Grid>
-			<Grid container spacing={3}>
-				<Grid item xs={12} md={4}>
-					<IndividualStat
-						title="Challenge"
-						value={monster.challenge}
-					/>
+				<Divider />
+			</Box>
+
+			<Box marginBottom={4}>
+				<Typography
+					variant="body2"
+					color="textSecondary"
+					component="h5"
+					gutterBottom
+				>
+					Attributes
+				</Typography>
+				<Paper className={classes.paper}>
+					<Box
+						display="flex"
+						justifyContent="space-around"
+						flexWrap="wrap"
+						gridGap={16}
+						padding={2}
+					>
+						{getStatsArray(monster.stats).map((stat) => (
+							<Box textAlign="center">
+								<Typography>{stat.name}</Typography>
+								<Typography variant="h5" component="p">
+									{stat.value}
+								</Typography>
+							</Box>
+						))}
+
+						<Box textAlign="center">
+							<Typography color="primary">Challenge</Typography>
+							<Typography
+								color="primary"
+								variant="h5"
+								component="p"
+							>
+								{monster.challenge}
+							</Typography>
+						</Box>
+					</Box>
+				</Paper>
+				<Divider />
+			</Box>
+
+			<Box marginBottom={4}>
+				<Typography
+					variant="body2"
+					color="textSecondary"
+					component="h5"
+					gutterBottom
+				>
+					Resistances
+				</Typography>
+				<Grid container spacing={3}>
+					<Grid item xs={12} sm={6} md={4}>
+						<StatsTable
+							title="Physical"
+							stats={getPhysicalResistancesArray(
+								monster.resistances
+							)}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6} md={4}>
+						<StatsTable
+							title="Elemental"
+							stats={getElementalResistancesArray(
+								monster.resistances
+							)}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6} md={4}>
+						<StatsTable
+							title="Auxillary"
+							stats={getAuxillaryResistancesArray(
+								monster.resistances
+							)}
+						/>
+					</Grid>
 				</Grid>
-				<Grid item xs={12} md={4}>
-					<IndividualStat
-						title="Experience"
-						value={monster.rewards.experience}
-					/>
-				</Grid>
-				<Grid item xs={12} md={4}>
-					<IndividualStat title="Gold" value={monster.rewards.gold} />
-				</Grid>
-				<Grid item xs={6} md={3}>
-					<StatsTable
-						title="Base Stats"
-						stats={getStatsArray(monster.stats)}
-					/>
-				</Grid>
-				<Grid item xs={6} md={3}>
-					<StatsTable
-						title="Resistances"
-						stats={getResistancesArray(monster.resistances)}
-					/>
-				</Grid>
-			</Grid>
+			</Box>
 
 			<ConfirmationModal
 				open={confirmationModalOpen}

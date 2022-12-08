@@ -1,4 +1,4 @@
-import { TDamageTypes, TRewards, TStats } from ".";
+import { TDamageTypes, TStats } from ".";
 
 export interface IBaseMonster {
 	challenge: number;
@@ -6,7 +6,6 @@ export interface IBaseMonster {
 	description: string;
 	name: string;
 	portrait: string;
-	rewards: TRewards;
 	skills: string[];
 	stats: TStats;
 }

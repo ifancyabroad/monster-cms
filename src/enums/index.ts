@@ -23,15 +23,14 @@ export enum Stat {
 }
 
 export enum DamageType {
-	Physical = "physical",
-	Arcane = "arcane",
+	Slashing = "slashing",
+	Crushing = "crushing",
+	Piercing = "piercing",
 	Cold = "cold",
 	Fire = "fire",
-	Divine = "divine",
-	Unholy = "unholy",
-}
-
-export enum Reward {
-	Experience = "experience",
-	Gold = "gold",
+	Lighting = "lighting",
+	Radiant = "radiant",
+	Necrotic = "necrotic",
+	Poison = "poison",
+	Acid = "acid",
 }

@@ -1,4 +1,4 @@
-import { DamageType, EffectType, Reward, Stat } from "../../enums";
+import { DamageType, EffectType, Stat } from "../../enums";
 
 export const DRAWER_WIDTH = 240;
 
@@ -12,15 +12,36 @@ export const STATS = [
 ] as const;
 
 export const RESISTANCES = [
-	DamageType.Physical,
-	DamageType.Arcane,
+	DamageType.Slashing,
+	DamageType.Crushing,
+	DamageType.Piercing,
 	DamageType.Cold,
 	DamageType.Fire,
-	DamageType.Divine,
-	DamageType.Unholy,
+	DamageType.Lighting,
+	DamageType.Radiant,
+	DamageType.Necrotic,
+	DamageType.Poison,
+	DamageType.Acid,
 ] as const;
 
-export const REWARDS = [Reward.Experience, Reward.Gold] as const;
+export const PHYSICAL_RESISTANCES = [
+	DamageType.Slashing,
+	DamageType.Crushing,
+	DamageType.Piercing,
+] as const;
+
+export const ELEMENTAL_RESISTANCES = [
+	DamageType.Cold,
+	DamageType.Fire,
+	DamageType.Lighting,
+] as const;
+
+export const AUXILLARY_RESISTANCES = [
+	DamageType.Radiant,
+	DamageType.Necrotic,
+	DamageType.Poison,
+	DamageType.Acid,
+] as const;
 
 export const STATS_NAME_MAP = {
 	[Stat.Charisma]: "Charisma",
@@ -32,17 +53,16 @@ export const STATS_NAME_MAP = {
 };
 
 export const RESISTANCES_NAME_MAP = {
-	[DamageType.Arcane]: "Arcane",
+	[DamageType.Slashing]: "Slashing",
+	[DamageType.Crushing]: "Crushing",
+	[DamageType.Piercing]: "Piercing",
 	[DamageType.Cold]: "Cold",
-	[DamageType.Divine]: "Divine",
 	[DamageType.Fire]: "Fire",
-	[DamageType.Physical]: "Physical",
-	[DamageType.Unholy]: "Unholy",
-};
-
-export const REWARDS_NAME_MAP = {
-	[Reward.Experience]: "Experience",
-	[Reward.Gold]: "Gold",
+	[DamageType.Lighting]: "Lighting",
+	[DamageType.Radiant]: "Radiant",
+	[DamageType.Necrotic]: "Necrotic",
+	[DamageType.Poison]: "Poison",
+	[DamageType.Acid]: "Acid",
 };
 
 export const EFFECTS = [

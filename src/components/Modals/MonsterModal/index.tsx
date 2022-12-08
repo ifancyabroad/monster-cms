@@ -22,11 +22,8 @@ import {
 } from "../../../features/monsters/monstersSlice";
 import { IBaseMonster, IMonster, ISaveMonster } from "../../../types";
 import { StatGroup } from "./StatGroup";
-import {
-	getResistancesArray,
-	getRewardsArray,
-	getStatsArray,
-} from "../../../utils";
+import { getResistancesArray, getStatsArray } from "../../../utils";
+import { DamageType } from "../../../enums";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -46,20 +43,20 @@ const useStyles = makeStyles((theme: Theme) =>
 const defaultMonsterValues: IBaseMonster = {
 	challenge: 1,
 	resistances: {
-		physical: 5,
-		arcane: 5,
-		cold: 5,
-		fire: 5,
-		divine: 5,
-		unholy: 5,
+		[DamageType.Slashing]: 0,
+		[DamageType.Crushing]: 0,
+		[DamageType.Piercing]: 0,
+		[DamageType.Fire]: 0,
+		[DamageType.Cold]: 0,
+		[DamageType.Lighting]: 0,
+		[DamageType.Radiant]: 0,
+		[DamageType.Necrotic]: 0,
+		[DamageType.Poison]: 0,
+		[DamageType.Acid]: 0,
 	},
 	description: "",
 	name: "",
 	portrait: "",
-	rewards: {
-		experience: 100,
-		gold: 200,
-	},
 	skills: ["Jab", "Quick Fingers", "Go For The Eyes"],
 	stats: {
 		strength: 10,
@@ -167,20 +164,6 @@ export const MonsterModal: React.FC = () => {
 		});
 	};
 
-	const handleChangeRewards = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.currentTarget;
-		setFormValues({
-			...formValues,
-			monster: {
-				...formValues.monster,
-				rewards: {
-					...formValues.monster.rewards,
-					[name]: value,
-				},
-			},
-		});
-	};
-
 	const handleSaveMonster = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
@@ -282,13 +265,6 @@ export const MonsterModal: React.FC = () => {
 						min={0}
 						max={100}
 						handleChange={handleChangeResistances}
-					/>
-					<StatGroup
-						title="Rewards"
-						stats={getRewardsArray(formValues.monster.rewards)}
-						min={0}
-						max={9999}
-						handleChange={handleChangeRewards}
 					/>
 					<Box my={3}>
 						<DialogContentText component="h6">

@@ -57,7 +57,7 @@ const defaultSkillValues: IBaseSkill = {
 	description: "",
 	icon: "",
 	class: "basic",
-	damageType: DamageType.Physical,
+	damageType: DamageType.Slashing,
 	effects: [
 		{
 			type: EffectType.Damage,
