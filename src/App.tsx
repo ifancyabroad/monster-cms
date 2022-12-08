@@ -3,6 +3,7 @@ import {
 	LoginModal,
 	Monster,
 	MonsterModal,
+	Settings,
 	SkillModal,
 } from "./components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -13,7 +14,8 @@ function App() {
 			<HOCLayout>
 				<Switch>
 					<Route exact={true} path="/" />
-					<Route path="/:id" component={Monster} />
+					<Route path="/settings" component={Settings} />
+					<Route path="/monsters/:id" component={Monster} />
 				</Switch>
 			</HOCLayout>
 			<LoginModal />
