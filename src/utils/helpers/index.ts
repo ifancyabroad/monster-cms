@@ -1,9 +1,10 @@
-import { TStats, TDamageTypes, TRewards } from "../../types";
+import { TStats, TDamageTypes } from "../../types";
 import {
+	AUXILLARY_RESISTANCES,
+	ELEMENTAL_RESISTANCES,
+	PHYSICAL_RESISTANCES,
 	RESISTANCES,
 	RESISTANCES_NAME_MAP,
-	REWARDS,
-	REWARDS_NAME_MAP,
 	STATS,
 	STATS_NAME_MAP,
 } from "../constants";
@@ -22,10 +23,24 @@ export const getResistancesArray = (stats: TDamageTypes) =>
 		value: stats[stat],
 	}));
 
-export const getRewardsArray = (stats: TRewards) =>
-	REWARDS.map((stat) => ({
+export const getPhysicalResistancesArray = (stats: TDamageTypes) =>
+	PHYSICAL_RESISTANCES.map((stat) => ({
 		key: stat,
-		name: REWARDS_NAME_MAP[stat],
+		name: RESISTANCES_NAME_MAP[stat],
+		value: stats[stat],
+	}));
+
+export const getElementalResistancesArray = (stats: TDamageTypes) =>
+	ELEMENTAL_RESISTANCES.map((stat) => ({
+		key: stat,
+		name: RESISTANCES_NAME_MAP[stat],
+		value: stats[stat],
+	}));
+
+export const getAuxillaryResistancesArray = (stats: TDamageTypes) =>
+	AUXILLARY_RESISTANCES.map((stat) => ({
+		key: stat,
+		name: RESISTANCES_NAME_MAP[stat],
 		value: stats[stat],
 	}));
 
