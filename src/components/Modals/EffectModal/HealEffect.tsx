@@ -12,7 +12,7 @@ import {
 	Theme,
 } from "@material-ui/core";
 import { STATS, STATS_NAME_MAP } from "../../../utils";
-import { defaultDamageEffectValues } from "./effectReducer";
+import { defaultHealEffectValues } from "./effectReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -33,9 +33,9 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export const DamageEffect: React.FC = () => {
+export const HealEffect: React.FC = () => {
 	const classes = useStyles();
-	const [formValues, setFormValues] = useState(defaultDamageEffectValues);
+	const [formValues, setFormValues] = useState(defaultHealEffectValues);
 
 	const handleChange = (
 		e: React.ChangeEvent<{ name?: string; value: unknown }>
@@ -61,6 +61,7 @@ export const DamageEffect: React.FC = () => {
 							name="modifier"
 							value={formValues.modifier}
 							onChange={handleChange}
+							disabled
 						>
 							{STATS.map((stat) => (
 								<MenuItem value={stat}>

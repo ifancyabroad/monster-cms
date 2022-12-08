@@ -11,7 +11,7 @@ export interface IDamageEffect {
 
 export interface IHealEffect {
 	type: EffectType.Heal;
-	modifier: Stat.Intelligence;
+	modifier: Stat.Wisdom;
 	multiplier: number;
 	min: number;
 	max: number;

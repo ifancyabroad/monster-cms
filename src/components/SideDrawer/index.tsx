@@ -77,6 +77,9 @@ export const SideDrawer: React.FC = () => {
 			<div className={classes.toolbar} />
 			<Divider />
 			<List>
+				<ListItem button component={Link} to="/settings">
+					<ListItemText>Settings</ListItemText>
+				</ListItem>
 				<ListItem button onClick={handleMonstersClick}>
 					<ListItemText>Monsters</ListItemText>
 					{user && (
@@ -99,7 +102,7 @@ export const SideDrawer: React.FC = () => {
 								key={index}
 								className={classes.nested}
 								component={Link}
-								to={`/${monster.id}`}
+								to={`/monsters/${monster.id}`}
 							>
 								<ListItemText primary={monster.name} />
 							</ListItem>
@@ -107,7 +110,7 @@ export const SideDrawer: React.FC = () => {
 					</List>
 				</Collapse>
 				<ListItem button>
-					<ListItemText>Items</ListItemText>
+					<ListItemText>Items (coming soon)</ListItemText>
 				</ListItem>
 				<ListItem button onClick={handleSkillsClick}>
 					<ListItemText>Skills</ListItemText>
@@ -131,13 +134,16 @@ export const SideDrawer: React.FC = () => {
 								key={index}
 								className={classes.nested}
 								component={Link}
-								to={`/${skill.id}`}
+								to={`/skills/${skill.id}`}
 							>
 								<ListItemText primary={skill.name} />
 							</ListItem>
 						))}
 					</List>
 				</Collapse>
+				<ListItem button>
+					<ListItemText>Classes (coming soon)</ListItemText>
+				</ListItem>
 			</List>
 		</div>
 	);

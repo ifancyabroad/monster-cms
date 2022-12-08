@@ -23,7 +23,7 @@ interface IEffectState {
 	poisonEffectForm: IPoisonEffect;
 }
 
-const defaultDamageEffectValues: IDamageEffect = {
+export const defaultDamageEffectValues: IDamageEffect = {
 	type: EffectType.Damage,
 	modifier: Stat.Strength,
 	multiplier: 1,
@@ -31,15 +31,15 @@ const defaultDamageEffectValues: IDamageEffect = {
 	max: 6,
 };
 
-const defaultHealEffectValues: IHealEffect = {
+export const defaultHealEffectValues: IHealEffect = {
 	type: EffectType.Heal,
-	modifier: Stat.Intelligence,
+	modifier: Stat.Wisdom,
 	multiplier: 1,
 	min: 1,
 	max: 6,
 };
 
-const defaultBuffEffectValues: IBuffEffect = {
+export const defaultBuffEffectValues: IBuffEffect = {
 	type: EffectType.Buff,
 	modifiers: {
 		stats: {
@@ -51,7 +51,7 @@ const defaultBuffEffectValues: IBuffEffect = {
 	duration: 5,
 };
 
-const defaultDebuffEffectValues: IDebuffEffect = {
+export const defaultDebuffEffectValues: IDebuffEffect = {
 	type: EffectType.Debuff,
 	modifiers: {
 		stats: {
@@ -63,13 +63,13 @@ const defaultDebuffEffectValues: IDebuffEffect = {
 	duration: 5,
 };
 
-const defaultStunEffectValues: IStunEffect = {
+export const defaultStunEffectValues: IStunEffect = {
 	type: EffectType.Stun,
 	accuracy: 50,
 	duration: 3,
 };
 
-const defaultPoisonEffectValues: IPoisonEffect = {
+export const defaultPoisonEffectValues: IPoisonEffect = {
 	type: EffectType.Poison,
 	accuracy: 50,
 	duration: 5,

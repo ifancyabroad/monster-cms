@@ -22,6 +22,7 @@ import { EFFECTS, EFFECTS_NAME_MAP } from "../../../utils";
 import { EffectType } from "../../../enums";
 import { DamageEffect } from "./DamageEffect";
 import { effectReducer, initialState } from "./effectReducer";
+import { HealEffect } from "./HealEffect";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -126,8 +127,16 @@ export const EffectModal: React.FC<IProps> = ({
 							</Select>
 						</FormControl>
 					</Box>
-
-					<DamageEffect />
+					{
+						{
+							[EffectType.Damage]: <DamageEffect />,
+							[EffectType.Heal]: <HealEffect />,
+							[EffectType.Buff]: <DamageEffect />,
+							[EffectType.Debuff]: <DamageEffect />,
+							[EffectType.Stun]: <DamageEffect />,
+							[EffectType.Poison]: <DamageEffect />,
+						}[effectType]
+					}
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} color="primary">
