@@ -23,6 +23,8 @@ import { EffectType } from "../../../enums";
 import { DamageEffect } from "./DamageEffect";
 import { effectReducer, initialState } from "./effectReducer";
 import { HealEffect } from "./HealEffect";
+import { BuffEffect } from "./BuffEffect";
+import { EffectContext } from "./effectContext";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -60,6 +62,11 @@ export const EffectModal: React.FC<IProps> = ({
 	const [state, localDispatch] = useReducer(effectReducer, initialState);
 	const title = effect ? "Update Effect" : "Add Effect";
 
+	const providerState = {
+		state,
+		dispatch: localDispatch,
+	};
+
 	useEffect(() => {
 		if (effect) {
 			localDispatch({ type: effect.type, payload: effect });
@@ -90,9 +97,9 @@ export const EffectModal: React.FC<IProps> = ({
 		}[effectType];
 
 		if (effect) {
-			onAddEffect(formValues);
-		} else {
 			onUpdateEffect(formValues);
+		} else {
+			onAddEffect(formValues);
 		}
 
 		dispatch(closeEffectModal());
@@ -127,16 +134,18 @@ export const EffectModal: React.FC<IProps> = ({
 							</Select>
 						</FormControl>
 					</Box>
-					{
+					<EffectContext.Provider value={providerState}>
 						{
-							[EffectType.Damage]: <DamageEffect />,
-							[EffectType.Heal]: <HealEffect />,
-							[EffectType.Buff]: <DamageEffect />,
-							[EffectType.Debuff]: <DamageEffect />,
-							[EffectType.Stun]: <DamageEffect />,
-							[EffectType.Poison]: <DamageEffect />,
-						}[effectType]
-					}
+							{
+								[EffectType.Damage]: <DamageEffect />,
+								[EffectType.Heal]: <HealEffect />,
+								[EffectType.Buff]: <BuffEffect />,
+								[EffectType.Debuff]: <DamageEffect />,
+								[EffectType.Stun]: <DamageEffect />,
+								[EffectType.Poison]: <DamageEffect />,
+							}[effectType]
+						}
+					</EffectContext.Provider>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} color="primary">

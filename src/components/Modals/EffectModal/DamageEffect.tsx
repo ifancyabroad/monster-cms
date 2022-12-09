@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import {
 	Box,
 	createStyles,
@@ -12,7 +12,7 @@ import {
 	Theme,
 } from "@material-ui/core";
 import { STATS, STATS_NAME_MAP } from "../../../utils";
-import { defaultDamageEffectValues } from "./effectReducer";
+import { useEffectContext } from "./effectContext";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -35,15 +35,22 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const DamageEffect: React.FC = () => {
 	const classes = useStyles();
-	const [formValues, setFormValues] = useState(defaultDamageEffectValues);
+	const {
+		state: { damageEffectForm },
+		dispatch,
+	} = useEffectContext();
 
 	const handleChange = (
 		e: React.ChangeEvent<{ name?: string; value: unknown }>
 	) => {
 		const { name, value } = e.target;
-		setFormValues({
-			...formValues,
-			[name as string]: value,
+
+		dispatch({
+			type: damageEffectForm.type,
+			payload: {
+				...damageEffectForm,
+				[name as string]: value,
+			},
 		});
 	};
 
@@ -59,7 +66,7 @@ export const DamageEffect: React.FC = () => {
 						<Select
 							labelId="modifier-label"
 							name="modifier"
-							value={formValues.modifier}
+							value={damageEffectForm.modifier}
 							onChange={handleChange}
 						>
 							{STATS.map((stat) => (
@@ -78,7 +85,7 @@ export const DamageEffect: React.FC = () => {
 						name="multiplier"
 						label="Multiplier"
 						type="number"
-						value={formValues.multiplier}
+						value={damageEffectForm.multiplier}
 						onChange={handleChange}
 						className={classes.numberField}
 						required
@@ -92,7 +99,7 @@ export const DamageEffect: React.FC = () => {
 						name="min"
 						label="Minimum Roll"
 						type="number"
-						value={formValues.min}
+						value={damageEffectForm.min}
 						onChange={handleChange}
 						className={classes.numberField}
 						required
@@ -106,7 +113,7 @@ export const DamageEffect: React.FC = () => {
 						name="max"
 						label="Maximum Roll"
 						type="number"
-						value={formValues.max}
+						value={damageEffectForm.max}
 						onChange={handleChange}
 						className={classes.numberField}
 						required
