@@ -168,7 +168,7 @@ export const Monster: React.FC = () => {
 						padding={2}
 					>
 						{getStatsArray(monster.stats).map((stat) => (
-							<Box textAlign="center">
+							<Box key={stat.key} textAlign="center">
 								<Typography>{stat.name}</Typography>
 								<Typography variant="h5" component="p">
 									{stat.value}
