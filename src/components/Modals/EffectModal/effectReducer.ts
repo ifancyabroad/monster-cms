@@ -9,12 +9,12 @@ import {
 	IStunEffect,
 } from "../../../types";
 
-interface IUpdateFormAction {
+export interface IUpdateFormAction {
 	type: EffectType;
 	payload: ISkillEffect;
 }
 
-interface IEffectState {
+export interface IEffectState {
 	damageEffectForm: IDamageEffect;
 	healEffectForm: IHealEffect;
 	buffEffectForm: IBuffEffect;
@@ -23,7 +23,7 @@ interface IEffectState {
 	poisonEffectForm: IPoisonEffect;
 }
 
-export const defaultDamageEffectValues: IDamageEffect = {
+const defaultDamageEffectValues: IDamageEffect = {
 	type: EffectType.Damage,
 	modifier: Stat.Strength,
 	multiplier: 1,
@@ -31,7 +31,7 @@ export const defaultDamageEffectValues: IDamageEffect = {
 	max: 6,
 };
 
-export const defaultHealEffectValues: IHealEffect = {
+const defaultHealEffectValues: IHealEffect = {
 	type: EffectType.Heal,
 	modifier: Stat.Wisdom,
 	multiplier: 1,
@@ -39,37 +39,33 @@ export const defaultHealEffectValues: IHealEffect = {
 	max: 6,
 };
 
-export const defaultBuffEffectValues: IBuffEffect = {
+const defaultBuffEffectValues: IBuffEffect = {
 	type: EffectType.Buff,
 	modifiers: {
-		stats: {
-			[Stat.Strength]: 5,
-		},
+		stats: {},
 		resistances: {},
 	},
 	accuracy: 100,
 	duration: 5,
 };
 
-export const defaultDebuffEffectValues: IDebuffEffect = {
+const defaultDebuffEffectValues: IDebuffEffect = {
 	type: EffectType.Debuff,
 	modifiers: {
-		stats: {
-			[Stat.Strength]: 5,
-		},
+		stats: {},
 		resistances: {},
 	},
 	accuracy: 100,
 	duration: 5,
 };
 
-export const defaultStunEffectValues: IStunEffect = {
+const defaultStunEffectValues: IStunEffect = {
 	type: EffectType.Stun,
 	accuracy: 50,
 	duration: 3,
 };
 
-export const defaultPoisonEffectValues: IPoisonEffect = {
+const defaultPoisonEffectValues: IPoisonEffect = {
 	type: EffectType.Poison,
 	accuracy: 50,
 	duration: 5,
