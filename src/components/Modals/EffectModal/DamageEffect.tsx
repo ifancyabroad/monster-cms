@@ -70,7 +70,7 @@ export const DamageEffect: React.FC = () => {
 							onChange={handleChange}
 						>
 							{STATS.map((stat) => (
-								<MenuItem value={stat}>
+								<MenuItem key={stat} value={stat}>
 									{STATS_NAME_MAP[stat]}
 								</MenuItem>
 							))}
