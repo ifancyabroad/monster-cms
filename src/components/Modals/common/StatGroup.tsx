@@ -26,7 +26,12 @@ export const StatGroup: React.FC<IProps> = ({
 			<DialogContentText variant="subtitle1" component="h5" gutterBottom>
 				{title}
 			</DialogContentText>
-			<Box display="flex" flexWrap="wrap">
+			<Box
+				sx={{
+					display: "flex",
+					flexWrap: "wrap",
+				}}
+			>
 				{stats.map((stat) => (
 					<TextField
 						sx={{

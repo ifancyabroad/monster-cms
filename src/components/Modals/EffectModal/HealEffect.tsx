@@ -31,7 +31,7 @@ export const HealEffect: React.FC = () => {
 				>
 					Effect Properties
 				</DialogContentText>
-				<Box display="flex">
+				<Box sx={{ display: "flex" }}>
 					<TextField
 						sx={{
 							width: "30ch",
@@ -52,7 +52,12 @@ export const HealEffect: React.FC = () => {
 				</Box>
 			</Box>
 			<Box my={3}>
-				<Box display="flex" flexWrap="wrap">
+				<Box
+					sx={{
+						display: "flex",
+						flexWrap: "wrap",
+					}}
+				>
 					<TextField
 						sx={{
 							marginRight: 2,

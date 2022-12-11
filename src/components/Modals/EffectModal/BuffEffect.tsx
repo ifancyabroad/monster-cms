@@ -128,7 +128,12 @@ export const BuffEffect: React.FC = () => {
 				/>
 			</Box>
 			<Box my={3}>
-				<Box display="flex" flexWrap="wrap">
+				<Box
+					sx={{
+						display: "flex",
+						flexWrap: "wrap",
+					}}
+				>
 					<TextField
 						sx={{
 							marginRight: 2,

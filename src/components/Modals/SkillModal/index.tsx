@@ -196,8 +196,8 @@ export const SkillModal: React.FC = () => {
 										<Typography
 											sx={{
 												marginLeft: 2,
+												display: "inline",
 											}}
-											display="inline"
 										>
 											{formValues.image.name}
 										</Typography>
@@ -244,7 +244,7 @@ export const SkillModal: React.FC = () => {
 							>
 								Skill Type
 							</DialogContentText>
-							<Box display="flex">
+							<Box sx={{ display: "flex" }}>
 								<TextField
 									sx={{
 										marginRight: 2,
@@ -296,10 +296,15 @@ export const SkillModal: React.FC = () => {
 							>
 								Skill Properties
 							</DialogContentText>
-							<Box display="flex" flexWrap="wrap">
+							<Box
+								sx={{
+									display: "flex",
+									flexWrap: "wrap",
+								}}
+							>
 								<TextField
 									sx={{
-										marginRight: 0,
+										marginRight: 2,
 										width: "20ch",
 									}}
 									margin="dense"
@@ -316,7 +321,7 @@ export const SkillModal: React.FC = () => {
 								/>
 								<TextField
 									sx={{
-										marginRight: 0,
+										marginRight: 2,
 										width: "20ch",
 									}}
 									margin="dense"

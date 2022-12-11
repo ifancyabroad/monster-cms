@@ -193,8 +193,8 @@ export const MonsterModal: React.FC = () => {
 									<Typography
 										sx={{
 											marginLeft: 2,
+											display: "inline",
 										}}
-										display="inline"
 									>
 										{formValues.image.name}
 									</Typography>
