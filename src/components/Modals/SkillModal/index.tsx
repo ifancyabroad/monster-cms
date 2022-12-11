@@ -1,10 +1,3 @@
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
 	closeSkillModal,
@@ -13,44 +6,24 @@ import {
 import { Fragment, useEffect, useMemo, useState } from "react";
 import {
 	Box,
-	createStyles,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
 	FormControl,
 	Grid,
-	InputLabel,
-	makeStyles,
 	MenuItem,
-	Select,
-	Theme,
+	TextField,
 	Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { saveSkill, updateSkill } from "../../../features/skills/skillsSlice";
 import { IBaseSkill, ISaveSkill, ISkill, ISkillEffect } from "../../../types";
 import { CharacterClass, DamageType, EffectType, Stat } from "../../../enums";
 import { RESISTANCES, RESISTANCES_NAME_MAP } from "../../../utils";
 import { EffectModal } from "../EffectModal";
 import { EffectCard } from "./EffectCard";
-
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		dropdown: {
-			marginRight: theme.spacing(2),
-			width: "30ch",
-			"&:last-of-type": {
-				marginRight: theme.spacing(0),
-			},
-		},
-		numberField: {
-			marginRight: theme.spacing(2),
-			width: "20ch",
-			"&:last-of-type": {
-				marginRight: theme.spacing(0),
-			},
-		},
-		uploadFileName: {
-			marginLeft: theme.spacing(2),
-		},
-	})
-);
 
 const defaultSkillValues: IBaseSkill = {
 	name: "",
@@ -83,7 +56,6 @@ const getBaseSkillValues = (skill: ISkill) => {
 };
 
 export const SkillModal: React.FC = () => {
-	const classes = useStyles();
 	const dispatch = useAppDispatch();
 	const open = useAppSelector((state) => state.modals.skillModal.open);
 	const skill = useAppSelector((state) => state.modals.skillModal.skill);
@@ -112,9 +84,7 @@ export const SkillModal: React.FC = () => {
 		dispatch(closeSkillModal());
 	};
 
-	const handleChange = (
-		e: React.ChangeEvent<{ name?: string; value: unknown }>
-	) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setFormValues({
 			...formValues,
@@ -224,8 +194,10 @@ export const SkillModal: React.FC = () => {
 									</Button>
 									{formValues.image && (
 										<Typography
+											sx={{
+												marginLeft: 2,
+											}}
 											display="inline"
-											className={classes.uploadFileName}
 										>
 											{formValues.image.name}
 										</Typography>
@@ -268,73 +240,74 @@ export const SkillModal: React.FC = () => {
 							<DialogContentText
 								variant="subtitle1"
 								component="h5"
+								gutterBottom
 							>
 								Skill Type
 							</DialogContentText>
 							<Box display="flex">
-								<FormControl className={classes.dropdown}>
-									<InputLabel id="skill-class-label">
-										Class
-									</InputLabel>
-									<Select
-										labelId="skill-class-label"
-										name="class"
-										value={formValues.skill.class}
-										onChange={handleChange}
-									>
-										<MenuItem value="basic">Basic</MenuItem>
+								<TextField
+									sx={{
+										marginRight: 2,
+										width: "30ch",
+									}}
+									select
+									label="Class"
+									name="class"
+									value={formValues.skill.class}
+									onChange={handleChange}
+								>
+									<MenuItem value="basic">Basic</MenuItem>
+									<MenuItem value={CharacterClass.Warrior}>
+										Warrior
+									</MenuItem>
+									<MenuItem value={CharacterClass.Rogue}>
+										Rogue
+									</MenuItem>
+									<MenuItem value={CharacterClass.Mage}>
+										Mage
+									</MenuItem>
+								</TextField>
+								<TextField
+									sx={{
+										width: "30ch",
+									}}
+									select
+									label="Damage Type"
+									name="damageType"
+									value={formValues.skill.damageType}
+									onChange={handleChange}
+								>
+									{RESISTANCES.map((resistance) => (
 										<MenuItem
-											value={CharacterClass.Warrior}
+											key={resistance}
+											value={resistance}
 										>
-											Warrior
+											{RESISTANCES_NAME_MAP[resistance]}
 										</MenuItem>
-										<MenuItem value={CharacterClass.Rogue}>
-											Rogue
-										</MenuItem>
-										<MenuItem value={CharacterClass.Mage}>
-											Mage
-										</MenuItem>
-									</Select>
-								</FormControl>
-								<FormControl className={classes.dropdown}>
-									<InputLabel id="skill-damage-type-label">
-										Damage Type
-									</InputLabel>
-									<Select
-										labelId="skill-damage-type-label"
-										name="damageType"
-										value={formValues.skill.damageType}
-										onChange={handleChange}
-									>
-										{RESISTANCES.map((resistance) => (
-											<MenuItem
-												key={resistance}
-												value={resistance}
-											>
-												{
-													RESISTANCES_NAME_MAP[
-														resistance
-													]
-												}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
+									))}
+								</TextField>
 							</Box>
 						</Box>
 						<Box my={3}>
-							<DialogContentText component="h6">
+							<DialogContentText
+								variant="subtitle1"
+								component="h5"
+								gutterBottom
+							>
 								Skill Properties
 							</DialogContentText>
 							<Box display="flex" flexWrap="wrap">
 								<TextField
+									sx={{
+										marginRight: 0,
+										width: "20ch",
+									}}
 									margin="dense"
 									name="price"
 									label="Price"
 									type="number"
 									value={formValues.skill.price}
 									onChange={handleChange}
-									className={classes.numberField}
 									required
 									inputProps={{
 										min: 0,
@@ -342,13 +315,16 @@ export const SkillModal: React.FC = () => {
 									}}
 								/>
 								<TextField
+									sx={{
+										marginRight: 0,
+										width: "20ch",
+									}}
 									margin="dense"
 									name="maxUses"
 									label="Max Uses"
 									type="number"
 									value={formValues.skill.maxUses}
 									onChange={handleChange}
-									className={classes.numberField}
 									required
 									inputProps={{
 										min: 0,
@@ -356,13 +332,15 @@ export const SkillModal: React.FC = () => {
 									}}
 								/>
 								<TextField
+									sx={{
+										width: "20ch",
+									}}
 									margin="dense"
 									name="level"
 									label="Level"
 									type="number"
 									value={formValues.skill.level}
 									onChange={handleChange}
-									className={classes.numberField}
 									required
 									inputProps={{
 										min: 0,
@@ -372,7 +350,11 @@ export const SkillModal: React.FC = () => {
 							</Box>
 						</Box>
 						<Box my={3}>
-							<DialogContentText component="h6">
+							<DialogContentText
+								variant="subtitle1"
+								component="h5"
+								gutterBottom
+							>
 								Skill Effects
 							</DialogContentText>
 							<Grid container spacing={3}>

@@ -2,13 +2,10 @@ import {
 	Card,
 	CardActions,
 	CardContent,
-	createStyles,
 	IconButton,
-	makeStyles,
-	Theme,
 	Typography,
-} from "@material-ui/core";
-import { Delete, Edit } from "@material-ui/icons";
+} from "@mui/material";
+import { Delete, Edit } from "@mui/icons-material";
 import { useAppDispatch } from "../../../../app/hooks";
 import { EffectType } from "../../../../enums";
 import { openEffectModal } from "../../../../features/modals/modalsSlice";
@@ -21,22 +18,12 @@ import { HealEffect } from "./HealEffect";
 import { PoisonEffect } from "./PoisonEffect";
 import { StunEffect } from "./StunEffect";
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {},
-		title: {
-			fontSize: 14,
-		},
-	})
-);
-
 interface IProps {
 	effect: ISkillEffect;
 	onRemove: (effect: ISkillEffect) => void;
 }
 
 export const EffectCard: React.FC<IProps> = ({ effect, onRemove }) => {
-	const classes = useStyles();
 	const dispatch = useAppDispatch();
 
 	const getEffectDetails = () => {
@@ -67,10 +54,12 @@ export const EffectCard: React.FC<IProps> = ({ effect, onRemove }) => {
 	};
 
 	return (
-		<Card className={classes.root} variant="outlined">
+		<Card variant="outlined">
 			<CardContent>
 				<Typography
-					className={classes.title}
+					sx={{
+						fontSize: 14,
+					}}
 					color="textSecondary"
 					gutterBottom
 				>

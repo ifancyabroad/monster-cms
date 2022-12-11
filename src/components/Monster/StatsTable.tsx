@@ -1,5 +1,4 @@
 import {
-	createStyles,
 	Paper,
 	Table,
 	TableBody,
@@ -7,18 +6,7 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	Theme,
-	withStyles,
-} from "@material-ui/core";
-
-const StyledTableCell = withStyles((theme: Theme) =>
-	createStyles({
-		head: {
-			backgroundColor: theme.palette.common.black,
-			color: theme.palette.common.white,
-		},
-	})
-)(TableCell);
+} from "@mui/material";
 
 interface ITableStat {
 	key: string;
@@ -37,7 +25,15 @@ export const StatsTable: React.FC<IProps> = ({ title, stats }) => {
 			<Table aria-label="stats table">
 				<TableHead>
 					<TableRow>
-						<StyledTableCell colSpan={2}>{title}</StyledTableCell>
+						<TableCell
+							sx={{
+								backgroundColor: "common.black",
+								color: "common.white",
+							}}
+							colSpan={2}
+						>
+							{title}
+						</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>

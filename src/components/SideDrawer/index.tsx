@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import {
+	Box,
 	Collapse,
-	createStyles,
 	Divider,
 	Drawer,
 	Hidden,
@@ -10,10 +10,8 @@ import {
 	ListItem,
 	ListItemSecondaryAction,
 	ListItemText,
-	makeStyles,
-	Theme,
-} from "@material-ui/core";
-import { Add } from "@material-ui/icons";
+} from "@mui/material";
+import { Add } from "@mui/icons-material";
 import { DRAWER_WIDTH } from "../../utils/constants";
 import { closeSidedrawer } from "../../features/sidedrawer/sidedrawerSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -24,26 +22,7 @@ import {
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {
-			[theme.breakpoints.up("sm")]: {
-				width: DRAWER_WIDTH,
-				flexShrink: 0,
-			},
-		},
-		toolbar: theme.mixins.toolbar,
-		drawerPaper: {
-			width: DRAWER_WIDTH,
-		},
-		nested: {
-			paddingLeft: theme.spacing(4),
-		},
-	})
-);
-
 export const SideDrawer: React.FC = () => {
-	const classes = useStyles();
 	const user = useContext(AuthContext);
 	const dispatch = useAppDispatch();
 	const mobileOpen = useAppSelector((state) => state.sidedrawer.open);
@@ -74,7 +53,7 @@ export const SideDrawer: React.FC = () => {
 
 	const drawer = (
 		<div>
-			<div className={classes.toolbar} />
+			<Box sx={(theme) => theme.mixins.toolbar} />
 			<Divider />
 			<List>
 				<ListItem button component={Link} to="/settings">
@@ -98,9 +77,11 @@ export const SideDrawer: React.FC = () => {
 					<List>
 						{monstersList.map((monster, index) => (
 							<ListItem
+								sx={{
+									paddingLeft: 4,
+								}}
 								button
 								key={index}
-								className={classes.nested}
 								component={Link}
 								to={`/monsters/${monster.id}`}
 							>
@@ -130,9 +111,11 @@ export const SideDrawer: React.FC = () => {
 					<List>
 						{skillsList.map((skill, index) => (
 							<ListItem
+								sx={{
+									paddingLeft: 4,
+								}}
 								button
 								key={index}
-								className={classes.nested}
 								component={Link}
 								to={`/skills/${skill.id}`}
 							>
@@ -148,14 +131,26 @@ export const SideDrawer: React.FC = () => {
 		</div>
 	);
 	return (
-		<nav className={classes.root} aria-label="monsters list">
+		<Box
+			sx={{
+				width: {
+					sm: DRAWER_WIDTH,
+				},
+				flexShrink: {
+					sm: 0,
+				},
+			}}
+			aria-label="monsters list"
+		>
 			<Hidden smUp implementation="css">
 				<Drawer
 					variant="temporary"
 					open={mobileOpen}
 					onClose={handleDrawerToggle}
-					classes={{
-						paper: classes.drawerPaper,
+					PaperProps={{
+						sx: {
+							width: DRAWER_WIDTH,
+						},
 					}}
 					ModalProps={{
 						keepMounted: true, // Better open performance on mobile.
@@ -166,8 +161,10 @@ export const SideDrawer: React.FC = () => {
 			</Hidden>
 			<Hidden xsDown implementation="css">
 				<Drawer
-					classes={{
-						paper: classes.drawerPaper,
+					PaperProps={{
+						sx: {
+							width: DRAWER_WIDTH,
+						},
 					}}
 					variant="permanent"
 					open
@@ -175,6 +172,6 @@ export const SideDrawer: React.FC = () => {
 					{drawer}
 				</Drawer>
 			</Hidden>
-		</nav>
+		</Box>
 	);
 };
