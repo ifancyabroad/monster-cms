@@ -4,7 +4,6 @@ import {
 	Collapse,
 	Divider,
 	Drawer,
-	Hidden,
 	IconButton,
 	List,
 	ListItem,
@@ -142,36 +141,34 @@ export const SideDrawer: React.FC = () => {
 			}}
 			aria-label="monsters list"
 		>
-			<Hidden smUp implementation="css">
-				<Drawer
-					variant="temporary"
-					open={mobileOpen}
-					onClose={handleDrawerToggle}
-					PaperProps={{
-						sx: {
-							width: DRAWER_WIDTH,
-						},
-					}}
-					ModalProps={{
-						keepMounted: true, // Better open performance on mobile.
-					}}
-				>
-					{drawer}
-				</Drawer>
-			</Hidden>
-			<Hidden xsDown implementation="css">
-				<Drawer
-					PaperProps={{
-						sx: {
-							width: DRAWER_WIDTH,
-						},
-					}}
-					variant="permanent"
-					open
-				>
-					{drawer}
-				</Drawer>
-			</Hidden>
+			<Drawer
+				sx={{ display: { sm: "none", xs: "block" } }}
+				variant="temporary"
+				open={mobileOpen}
+				onClose={handleDrawerToggle}
+				PaperProps={{
+					sx: {
+						width: DRAWER_WIDTH,
+					},
+				}}
+				ModalProps={{
+					keepMounted: true, // Better open performance on mobile.
+				}}
+			>
+				{drawer}
+			</Drawer>
+			<Drawer
+				sx={{ display: { xs: "none", sm: "block" } }}
+				variant="permanent"
+				PaperProps={{
+					sx: {
+						width: DRAWER_WIDTH,
+					},
+				}}
+				open
+			>
+				{drawer}
+			</Drawer>
 		</Box>
 	);
 };
