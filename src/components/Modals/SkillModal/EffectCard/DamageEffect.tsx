@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import { IDamageEffect } from "../../../../types";
 
 export const DamageEffect: React.FC<IDamageEffect> = ({

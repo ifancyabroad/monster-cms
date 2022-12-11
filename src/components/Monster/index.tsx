@@ -1,14 +1,11 @@
 import {
 	Box,
-	createStyles,
 	Divider,
 	Grid,
 	IconButton,
-	makeStyles,
 	Paper,
-	Theme,
 	Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -27,7 +24,7 @@ import {
 	getStatsArray,
 } from "../../utils";
 import { StatsTable } from "./StatsTable";
-import { Delete, Edit } from "@material-ui/icons";
+import { Delete, Edit } from "@mui/icons-material";
 import {
 	closeConfirmationModal,
 	openConfirmationModal,
@@ -35,25 +32,11 @@ import {
 } from "../../features/modals/modalsSlice";
 import { ConfirmationModal } from "../Modals";
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {},
-		image: {
-			marginBottom: theme.spacing(3),
-			maxWidth: "100%",
-		},
-		paper: {
-			marginBottom: theme.spacing(3),
-		},
-	})
-);
-
 interface IRouteParams {
 	id: string;
 }
 
 export const Monster: React.FC = () => {
-	const classes = useStyles();
 	const dispatch = useAppDispatch();
 	let { id } = useParams<IRouteParams>();
 	const monster = useSelector(selectMonsterById)(id);
@@ -101,7 +84,7 @@ export const Monster: React.FC = () => {
 	};
 
 	return (
-		<div className={classes.root}>
+		<div>
 			<Box
 				display="flex"
 				justifyContent="space-between"
@@ -128,8 +111,12 @@ export const Monster: React.FC = () => {
 				</Box>
 			</Box>
 			{monsterImagePath && (
-				<img
-					className={classes.image}
+				<Box
+					component="img"
+					sx={{
+						marginBottom: 3,
+						maxWidth: "100%",
+					}}
 					src={monsterImagePath}
 					alt={monster.name}
 				/>
@@ -159,13 +146,19 @@ export const Monster: React.FC = () => {
 				>
 					Attributes
 				</Typography>
-				<Paper className={classes.paper}>
+				<Paper
+					sx={{
+						marginBottom: 3,
+					}}
+				>
 					<Box
-						display="flex"
-						justifyContent="space-around"
-						flexWrap="wrap"
-						gridGap={16}
-						padding={2}
+						sx={{
+							display: "flex",
+							justifyContent: "space-around",
+							flexWrap: "wrap",
+							gridGap: 16,
+							padding: 2,
+						}}
 					>
 						{getStatsArray(monster.stats).map((stat) => (
 							<Box key={stat.key} textAlign="center">

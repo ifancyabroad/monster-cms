@@ -1,48 +1,15 @@
-import TextField from "@material-ui/core/TextField";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import { Fragment } from "react";
-import {
-	Box,
-	createStyles,
-	FormControl,
-	InputLabel,
-	makeStyles,
-	MenuItem,
-	Select,
-	Theme,
-} from "@material-ui/core";
+import { Box, DialogContentText, MenuItem, TextField } from "@mui/material";
 import { STATS, STATS_NAME_MAP } from "../../../utils";
 import { useEffectContext } from "./effectContext";
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		dropdown: {
-			marginRight: theme.spacing(2),
-			width: "30ch",
-			"&:last-of-type": {
-				marginRight: theme.spacing(0),
-			},
-		},
-		numberField: {
-			marginRight: theme.spacing(2),
-			width: "20ch",
-			"&:last-of-type": {
-				marginRight: theme.spacing(0),
-			},
-		},
-	})
-);
-
 export const DamageEffect: React.FC = () => {
-	const classes = useStyles();
 	const {
 		state: { damageEffectForm },
 		dispatch,
 	} = useEffectContext();
 
-	const handleChange = (
-		e: React.ChangeEvent<{ name?: string; value: unknown }>
-	) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 
 		dispatch({
@@ -57,37 +24,45 @@ export const DamageEffect: React.FC = () => {
 	return (
 		<Fragment>
 			<Box my={3}>
-				<DialogContentText component="h6">
+				<DialogContentText
+					variant="subtitle1"
+					component="h5"
+					gutterBottom
+				>
 					Effect Properties
 				</DialogContentText>
 				<Box display="flex">
-					<FormControl className={classes.dropdown}>
-						<InputLabel id="modifier-label">Modifier</InputLabel>
-						<Select
-							labelId="modifier-label"
-							name="modifier"
-							value={damageEffectForm.modifier}
-							onChange={handleChange}
-						>
-							{STATS.map((stat) => (
-								<MenuItem key={stat} value={stat}>
-									{STATS_NAME_MAP[stat]}
-								</MenuItem>
-							))}
-						</Select>
-					</FormControl>
+					<TextField
+						sx={{
+							width: "30ch",
+						}}
+						select
+						label="Modifier"
+						name="modifier"
+						value={damageEffectForm.modifier}
+						onChange={handleChange}
+					>
+						{STATS.map((stat) => (
+							<MenuItem key={stat} value={stat}>
+								{STATS_NAME_MAP[stat]}
+							</MenuItem>
+						))}
+					</TextField>
 				</Box>
 			</Box>
 			<Box my={3}>
 				<Box display="flex" flexWrap="wrap">
 					<TextField
+						sx={{
+							marginRight: 2,
+							width: "20ch",
+						}}
 						margin="dense"
 						name="multiplier"
 						label="Multiplier"
 						type="number"
 						value={damageEffectForm.multiplier}
 						onChange={handleChange}
-						className={classes.numberField}
 						required
 						inputProps={{
 							min: 0,
@@ -95,13 +70,16 @@ export const DamageEffect: React.FC = () => {
 						}}
 					/>
 					<TextField
+						sx={{
+							marginRight: 2,
+							width: "20ch",
+						}}
 						margin="dense"
 						name="min"
 						label="Minimum Roll"
 						type="number"
 						value={damageEffectForm.min}
 						onChange={handleChange}
-						className={classes.numberField}
 						required
 						inputProps={{
 							min: 1,
@@ -109,13 +87,15 @@ export const DamageEffect: React.FC = () => {
 						}}
 					/>
 					<TextField
+						sx={{
+							width: "20ch",
+						}}
 						margin="dense"
 						name="max"
 						label="Maximum Roll"
 						type="number"
 						value={damageEffectForm.max}
 						onChange={handleChange}
-						className={classes.numberField}
 						required
 						inputProps={{
 							min: 1,

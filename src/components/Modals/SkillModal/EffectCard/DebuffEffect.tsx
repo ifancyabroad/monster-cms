@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import { IDebuffEffect } from "../../../../types";
 
 export const DebuffEffect: React.FC<IDebuffEffect> = ({

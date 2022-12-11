@@ -1,22 +1,17 @@
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { closeEffectModal } from "../../../features/modals/modalsSlice";
 import { useEffect, useReducer, useState } from "react";
 import {
 	Box,
-	createStyles,
-	FormControl,
-	InputLabel,
-	makeStyles,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
 	MenuItem,
-	Select,
-	Theme,
-} from "@material-ui/core";
+	TextField,
+} from "@mui/material";
 import { ISkillEffect } from "../../../types";
 import { EFFECTS, EFFECTS_NAME_MAP } from "../../../utils";
 import { EffectType } from "../../../enums";
@@ -25,25 +20,6 @@ import { effectReducer, initialState } from "./effectReducer";
 import { HealEffect } from "./HealEffect";
 import { BuffEffect } from "./BuffEffect";
 import { EffectContext } from "./effectContext";
-
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		dropdown: {
-			marginRight: theme.spacing(2),
-			width: "30ch",
-			"&:last-of-type": {
-				marginRight: theme.spacing(0),
-			},
-		},
-		numberField: {
-			marginRight: theme.spacing(2),
-			width: "20ch",
-			"&:last-of-type": {
-				marginRight: theme.spacing(0),
-			},
-		},
-	})
-);
 
 interface IProps {
 	onAddEffect: (effect: ISkillEffect) => void;
@@ -54,7 +30,6 @@ export const EffectModal: React.FC<IProps> = ({
 	onAddEffect,
 	onUpdateEffect,
 }) => {
-	const classes = useStyles();
 	const dispatch = useAppDispatch();
 	const open = useAppSelector((state) => state.modals.effectModal.open);
 	const effect = useAppSelector((state) => state.modals.effectModal.effect);
@@ -77,9 +52,7 @@ export const EffectModal: React.FC<IProps> = ({
 		dispatch(closeEffectModal());
 	};
 
-	const handleChangeType = (
-		e: React.ChangeEvent<{ name?: string; value: unknown }>
-	) => {
+	const handleChangeType = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
 		setEffectType(value as EffectType);
 	};
@@ -115,24 +88,29 @@ export const EffectModal: React.FC<IProps> = ({
 			<form onSubmit={handleAddEffect}>
 				<DialogContent>
 					<Box mb={3}>
-						<DialogContentText variant="subtitle1" component="h5">
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
 							Effect Type
 						</DialogContentText>
-						<FormControl className={classes.dropdown}>
-							<InputLabel id="effect-type-label">Type</InputLabel>
-							<Select
-								labelId="effect-type-label"
-								name="effectType"
-								value={effectType}
-								onChange={handleChangeType}
-							>
-								{EFFECTS.map((effect, index) => (
-									<MenuItem key={index} value={effect}>
-										{EFFECTS_NAME_MAP[effect]}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
+						<TextField
+							sx={{
+								width: "30ch",
+							}}
+							select
+							label="Type"
+							name="effectType"
+							value={effectType}
+							onChange={handleChangeType}
+						>
+							{EFFECTS.map((effect, index) => (
+								<MenuItem key={index} value={effect}>
+									{EFFECTS_NAME_MAP[effect]}
+								</MenuItem>
+							))}
+						</TextField>
 					</Box>
 					<EffectContext.Provider value={providerState}>
 						{

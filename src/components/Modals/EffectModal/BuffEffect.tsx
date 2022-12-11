@@ -1,33 +1,12 @@
-import TextField from "@material-ui/core/TextField";
 import { Fragment, useState } from "react";
-import { Box, createStyles, makeStyles, Theme } from "@material-ui/core";
+import { Box, TextField } from "@mui/material";
 import { getResistancesArray, getStatsArray } from "../../../utils";
 import { StatGroup } from "../common";
 import { DamageType, Stat } from "../../../enums";
 import { TDamageTypes, TStats } from "../../../types";
 import { useEffectContext } from "./effectContext";
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		dropdown: {
-			marginRight: theme.spacing(2),
-			width: "30ch",
-			"&:last-of-type": {
-				marginRight: theme.spacing(0),
-			},
-		},
-		numberField: {
-			marginRight: theme.spacing(2),
-			width: "20ch",
-			"&:last-of-type": {
-				marginRight: theme.spacing(0),
-			},
-		},
-	})
-);
-
 export const BuffEffect: React.FC = () => {
-	const classes = useStyles();
 	const {
 		state: { buffEffectForm },
 		dispatch,
@@ -151,13 +130,16 @@ export const BuffEffect: React.FC = () => {
 			<Box my={3}>
 				<Box display="flex" flexWrap="wrap">
 					<TextField
+						sx={{
+							marginRight: 2,
+							width: "20ch",
+						}}
 						margin="dense"
 						name="accuracy"
 						label="Accuracy"
 						type="number"
 						value={buffEffectForm.accuracy}
 						onChange={handleChange}
-						className={classes.numberField}
 						required
 						inputProps={{
 							min: 1,
@@ -165,13 +147,15 @@ export const BuffEffect: React.FC = () => {
 						}}
 					/>
 					<TextField
+						sx={{
+							width: "20ch",
+						}}
 						margin="dense"
 						name="duration"
 						label="Duration"
 						type="number"
 						value={buffEffectForm.duration}
 						onChange={handleChange}
-						className={classes.numberField}
 						required
 						inputProps={{
 							min: 1,

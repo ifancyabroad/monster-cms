@@ -1,15 +1,6 @@
 import { useContext } from "react";
-import {
-	AppBar,
-	Button,
-	createStyles,
-	IconButton,
-	makeStyles,
-	Theme,
-	Toolbar,
-	Typography,
-} from "@material-ui/core";
-import { Menu } from "@material-ui/icons";
+import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
+import { Menu } from "@mui/icons-material";
 import { useAppDispatch } from "../../app/hooks";
 import { DRAWER_WIDTH } from "../../utils/constants";
 import { openLoginModal } from "../../features/modals/modalsSlice";
@@ -17,28 +8,7 @@ import { openSidedrawer } from "../../features/sidedrawer/sidedrawerSlice";
 import { AuthContext } from "../../context/AuthContext";
 import { auth } from "../../firebaseSetup";
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {
-			[theme.breakpoints.up("sm")]: {
-				width: `calc(100% - ${DRAWER_WIDTH}px)`,
-				marginLeft: DRAWER_WIDTH,
-			},
-		},
-		menuButton: {
-			marginRight: theme.spacing(2),
-			[theme.breakpoints.up("sm")]: {
-				display: "none",
-			},
-		},
-		title: {
-			flexGrow: 1,
-		},
-	})
-);
-
 export const Header = () => {
-	const classes = useStyles();
 	const dispatch = useAppDispatch();
 	const user = useContext(AuthContext);
 
@@ -55,18 +25,38 @@ export const Header = () => {
 	};
 
 	return (
-		<AppBar className={classes.root} position="fixed">
-			<Toolbar>
+		<AppBar
+			sx={{
+				width: {
+					sm: `calc(100% - ${DRAWER_WIDTH}px)`,
+				},
+				marginLeft: {
+					sm: DRAWER_WIDTH,
+				},
+			}}
+			position="fixed"
+		>
+			<Toolbar
+				sx={{
+					backgroundColor: "primary.main",
+					color: "common.black",
+				}}
+			>
 				<IconButton
+					sx={{
+						marginRight: 2,
+						display: {
+							sm: "none",
+						},
+					}}
 					color="inherit"
 					aria-label="open drawer"
 					edge="start"
 					onClick={handleDrawerToggle}
-					className={classes.menuButton}
 				>
 					<Menu />
 				</IconButton>
-				<Typography variant="h6" className={classes.title}>
+				<Typography sx={{ flexGrow: 1 }} variant="h6">
 					Monster Manual
 				</Typography>
 				{user ? (

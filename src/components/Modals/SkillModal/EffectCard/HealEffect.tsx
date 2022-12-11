@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import { IHealEffect } from "../../../../types";
 
 export const HealEffect: React.FC<IHealEffect> = ({

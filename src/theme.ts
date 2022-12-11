@@ -1,4 +1,4 @@
-import { createTheme } from "@material-ui/core/styles";
+import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
 	palette: {
@@ -24,7 +24,7 @@ const theme = createTheme({
 		success: {
 			main: "#4caf50",
 		},
-		type: "dark",
+		mode: "dark",
 	},
 });
 

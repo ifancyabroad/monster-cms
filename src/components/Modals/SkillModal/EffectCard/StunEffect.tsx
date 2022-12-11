@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import { IStunEffect } from "../../../../types";
 
 export const StunEffect: React.FC<IStunEffect> = ({ accuracy, duration }) => {
