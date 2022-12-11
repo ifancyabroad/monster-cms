@@ -86,14 +86,16 @@ export const Monster: React.FC = () => {
 	return (
 		<div>
 			<Box
-				display="flex"
-				justifyContent="space-between"
-				alignItems="center"
-				flexWrap="wrap"
-				mb={2}
+				sx={{
+					display: "flex",
+					justifyContent: "space-between",
+					alignItems: "center",
+					flexWrap: "wrap",
+					marginBottom: 2,
+				}}
 			>
 				<Typography variant="h2">{monster.name}</Typography>
-				<Box display="flex">
+				<Box sx={{ display: "flex" }}>
 					<IconButton
 						aria-label="add"
 						color="primary"
