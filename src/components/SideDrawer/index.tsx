@@ -39,7 +39,7 @@ export const SideDrawer: React.FC = () => {
 	};
 
 	const handleSkillsClick = () => {
-		setSkillsOpen(!monstersOpen);
+		setSkillsOpen(!skillsOpen);
 	};
 
 	const addMonster = () => {
