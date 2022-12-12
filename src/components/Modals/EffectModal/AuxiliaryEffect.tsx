@@ -1,11 +1,10 @@
 import { Fragment } from "react";
 import { Box, DialogContentText, MenuItem, TextField } from "@mui/material";
-import { STATS, STATS_NAME_MAP } from "../../../utils";
 import { useEffectContext } from "./effectContext";
 
-export const HealEffect: React.FC = () => {
+export const AuxiliaryEffect: React.FC = () => {
 	const {
-		state: { healEffectForm },
+		state: { auxiliaryEffectForm },
 		dispatch,
 	} = useEffectContext();
 
@@ -13,9 +12,9 @@ export const HealEffect: React.FC = () => {
 		const { name, value } = e.target;
 
 		dispatch({
-			type: healEffectForm.type,
+			type: auxiliaryEffectForm.type,
 			payload: {
-				...healEffectForm,
+				...auxiliaryEffectForm,
 				[name as string]: value,
 			},
 		});
@@ -31,24 +30,20 @@ export const HealEffect: React.FC = () => {
 				>
 					Effect Properties
 				</DialogContentText>
-				<Box sx={{ display: "flex" }}>
+				<Box>
 					<TextField
 						sx={{
 							width: "30ch",
 						}}
 						select
 						margin="dense"
-						label="Modifier"
-						name="modifier"
-						value={healEffectForm.modifier}
+						label="Type"
+						name="effect"
+						value={auxiliaryEffectForm.effect}
 						onChange={handleChange}
-						disabled
 					>
-						{STATS.map((stat) => (
-							<MenuItem key={stat} value={stat}>
-								{STATS_NAME_MAP[stat]}
-							</MenuItem>
-						))}
+						<MenuItem value="stun">Stun</MenuItem>
+						<MenuItem value="poison">Poison</MenuItem>
 					</TextField>
 				</Box>
 			</Box>
@@ -56,57 +51,39 @@ export const HealEffect: React.FC = () => {
 				<Box
 					sx={{
 						display: "flex",
-						flexWrap: "wrap",
 					}}
 				>
 					<TextField
 						sx={{
 							marginRight: 2,
-							width: "20ch",
+							width: "30ch",
 						}}
 						margin="dense"
-						name="min"
-						label="Minimum Roll"
+						name="accuracy"
+						label="Accuracy"
 						type="number"
-						value={healEffectForm.min}
+						value={auxiliaryEffectForm.accuracy}
 						onChange={handleChange}
 						required
 						inputProps={{
 							min: 1,
-							max: 99,
+							max: 100,
 						}}
 					/>
 					<TextField
 						sx={{
-							marginRight: 2,
-							width: "20ch",
+							width: "30ch",
 						}}
 						margin="dense"
-						name="max"
-						label="Maximum Roll"
+						name="duration"
+						label="Duration"
 						type="number"
-						value={healEffectForm.max}
+						value={auxiliaryEffectForm.duration}
 						onChange={handleChange}
 						required
 						inputProps={{
 							min: 1,
-							max: 99,
-						}}
-					/>
-					<TextField
-						sx={{
-							width: "20ch",
-						}}
-						margin="dense"
-						name="multiplier"
-						label="Multiplier"
-						type="number"
-						value={healEffectForm.multiplier}
-						onChange={handleChange}
-						required
-						inputProps={{
-							min: 0,
-							max: 99,
+							max: 100,
 						}}
 					/>
 				</Box>

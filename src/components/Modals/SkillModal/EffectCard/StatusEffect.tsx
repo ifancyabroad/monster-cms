@@ -1,9 +1,10 @@
 import { Typography } from "@mui/material";
 import { DamageType, Stat } from "../../../../enums";
-import { IBuffEffect } from "../../../../types";
+import { IStatusEffect } from "../../../../types";
 
-export const BuffEffect: React.FC<IBuffEffect> = ({
+export const StatusEffect: React.FC<IStatusEffect> = ({
 	modifiers,
+	target,
 	accuracy,
 	duration,
 }) => {
@@ -19,8 +20,9 @@ export const BuffEffect: React.FC<IBuffEffect> = ({
 
 	return (
 		<Typography variant="body2" component="p">
-			stat modifiers: {statModifiers}, resistance modifiers:{" "}
-			{resistanceModifiers}, accuracy: {accuracy}, duration: {duration}
+			target: {target}, stat modifiers: {statModifiers}, resistance
+			modifiers: {resistanceModifiers}, accuracy: {accuracy}, duration:{" "}
+			{duration}
 		</Typography>
 	);
 };

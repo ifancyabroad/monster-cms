@@ -1,10 +1,19 @@
 export enum EffectType {
 	Damage = "damage",
 	Heal = "heal",
-	Buff = "buff",
-	Debuff = "debuff",
-	Stun = "stun",
+	Status = "status",
+	Auxiliary = "auxiliary",
+}
+
+export enum Target {
+	Self = "self",
+	Ally = "ally",
+	Enemy = "enemy",
+}
+
+export enum AuxiliaryEffect {
 	Poison = "poison",
+	Stun = "stun",
 }
 
 export enum CharacterClass {

@@ -1,14 +1,14 @@
 import { Fragment, useState } from "react";
-import { Box, TextField } from "@mui/material";
+import { Box, MenuItem, TextField } from "@mui/material";
 import { getResistancesArray, getStatsArray } from "../../../utils";
 import { StatGroup } from "../common";
 import { DamageType, Stat } from "../../../enums";
 import { TDamageTypes, TStats } from "../../../types";
 import { useEffectContext } from "./effectContext";
 
-export const BuffEffect: React.FC = () => {
+export const StatusEffect: React.FC = () => {
 	const {
-		state: { buffEffectForm },
+		state: { statusEffectForm },
 		dispatch,
 	} = useEffectContext();
 	const [stats, setStats] = useState<TStats>({
@@ -37,9 +37,9 @@ export const BuffEffect: React.FC = () => {
 	) => {
 		const { name, value } = e.target;
 		dispatch({
-			type: buffEffectForm.type,
+			type: statusEffectForm.type,
 			payload: {
-				...buffEffectForm,
+				...statusEffectForm,
 				[name as string]: value,
 			},
 		});
@@ -54,7 +54,7 @@ export const BuffEffect: React.FC = () => {
 		});
 
 		const newStats = {
-			...buffEffectForm.modifiers.stats,
+			...statusEffectForm.modifiers.stats,
 			[name as string]: value,
 		};
 
@@ -65,11 +65,11 @@ export const BuffEffect: React.FC = () => {
 		});
 
 		dispatch({
-			type: buffEffectForm.type,
+			type: statusEffectForm.type,
 			payload: {
-				...buffEffectForm,
+				...statusEffectForm,
 				modifiers: {
-					...buffEffectForm.modifiers,
+					...statusEffectForm.modifiers,
 					stats: newStats,
 				},
 			},
@@ -87,7 +87,7 @@ export const BuffEffect: React.FC = () => {
 		});
 
 		const newResistances = {
-			...buffEffectForm.modifiers.resistances,
+			...statusEffectForm.modifiers.resistances,
 			[name as string]: value,
 		};
 
@@ -98,11 +98,11 @@ export const BuffEffect: React.FC = () => {
 		});
 
 		dispatch({
-			type: buffEffectForm.type,
+			type: statusEffectForm.type,
 			payload: {
-				...buffEffectForm,
+				...statusEffectForm,
 				modifiers: {
-					...buffEffectForm.modifiers,
+					...statusEffectForm.modifiers,
 					resistances: newResistances,
 				},
 			},
@@ -111,6 +111,23 @@ export const BuffEffect: React.FC = () => {
 
 	return (
 		<Fragment>
+			<Box my={3}>
+				<TextField
+					sx={{
+						width: "20ch",
+					}}
+					select
+					margin="dense"
+					name="target"
+					label="Target"
+					value={statusEffectForm.target}
+					onChange={handleChange}
+					required
+				>
+					<MenuItem value="self">Self</MenuItem>
+					<MenuItem value="enemy">Enemy</MenuItem>
+				</TextField>
+			</Box>
 			<Box my={3}>
 				<StatGroup
 					title="Stats"
@@ -131,19 +148,18 @@ export const BuffEffect: React.FC = () => {
 				<Box
 					sx={{
 						display: "flex",
-						flexWrap: "wrap",
 					}}
 				>
 					<TextField
 						sx={{
 							marginRight: 2,
-							width: "20ch",
+							width: "30ch",
 						}}
 						margin="dense"
 						name="accuracy"
 						label="Accuracy"
 						type="number"
-						value={buffEffectForm.accuracy}
+						value={statusEffectForm.accuracy}
 						onChange={handleChange}
 						required
 						inputProps={{
@@ -153,13 +169,13 @@ export const BuffEffect: React.FC = () => {
 					/>
 					<TextField
 						sx={{
-							width: "20ch",
+							width: "30ch",
 						}}
 						margin="dense"
 						name="duration"
 						label="Duration"
 						type="number"
-						value={buffEffectForm.duration}
+						value={statusEffectForm.duration}
 						onChange={handleChange}
 						required
 						inputProps={{

@@ -18,8 +18,9 @@ import { EffectType } from "../../../enums";
 import { DamageEffect } from "./DamageEffect";
 import { effectReducer, initialState } from "./effectReducer";
 import { HealEffect } from "./HealEffect";
-import { BuffEffect } from "./BuffEffect";
+import { StatusEffect } from "./StatusEffect";
 import { EffectContext } from "./effectContext";
+import { AuxiliaryEffect } from "./AuxiliaryEffect";
 
 interface IProps {
 	onAddEffect: (effect: ISkillEffect) => void;
@@ -63,10 +64,8 @@ export const EffectModal: React.FC<IProps> = ({
 		const formValues = {
 			[EffectType.Damage]: state.damageEffectForm,
 			[EffectType.Heal]: state.healEffectForm,
-			[EffectType.Buff]: state.buffEffectForm,
-			[EffectType.Debuff]: state.debuffEffectForm,
-			[EffectType.Stun]: state.stunEffectForm,
-			[EffectType.Poison]: state.poisonEffectForm,
+			[EffectType.Status]: state.statusEffectForm,
+			[EffectType.Auxiliary]: state.auxiliaryEffectForm,
 		}[effectType];
 
 		if (effect) {
@@ -100,6 +99,7 @@ export const EffectModal: React.FC<IProps> = ({
 								width: "30ch",
 							}}
 							select
+							margin="dense"
 							label="Type"
 							name="effectType"
 							value={effectType}
@@ -117,10 +117,8 @@ export const EffectModal: React.FC<IProps> = ({
 							{
 								[EffectType.Damage]: <DamageEffect />,
 								[EffectType.Heal]: <HealEffect />,
-								[EffectType.Buff]: <BuffEffect />,
-								[EffectType.Debuff]: <DamageEffect />,
-								[EffectType.Stun]: <DamageEffect />,
-								[EffectType.Poison]: <DamageEffect />,
+								[EffectType.Status]: <StatusEffect />,
+								[EffectType.Auxiliary]: <AuxiliaryEffect />,
 							}[effectType]
 						}
 					</EffectContext.Provider>
