@@ -6,7 +6,7 @@ import {
 	Paper,
 	Typography,
 } from "@mui/material";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -157,21 +157,37 @@ export const Monster: React.FC = () => {
 						sx={{
 							display: "flex",
 							justifyContent: "space-around",
-							flexWrap: "wrap",
+							flexWrap: {
+								xs: "wrap",
+								lg: "nowrap",
+							},
 							gridGap: 16,
 							padding: 2,
 						}}
 					>
 						{getStatsArray(monster.stats).map((stat) => (
-							<Box key={stat.key} textAlign="center">
-								<Typography>{stat.name}</Typography>
-								<Typography variant="h5" component="p">
-									{stat.value}
-								</Typography>
-							</Box>
+							<Fragment>
+								<Box
+									key={stat.key}
+									sx={{ textAlign: "center", flex: 1 }}
+								>
+									<Typography>{stat.name}</Typography>
+									<Typography variant="h5" component="p">
+										{stat.value}
+									</Typography>
+								</Box>
+
+								<Divider
+									sx={{
+										display: { xs: "none", lg: "block" },
+									}}
+									orientation="vertical"
+									flexItem
+								/>
+							</Fragment>
 						))}
 
-						<Box textAlign="center">
+						<Box sx={{ textAlign: "center", flex: 1 }}>
 							<Typography color="primary">Challenge</Typography>
 							<Typography
 								color="primary"
