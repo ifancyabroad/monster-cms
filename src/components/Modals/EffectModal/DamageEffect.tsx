@@ -1,6 +1,11 @@
 import { Fragment } from "react";
 import { Box, DialogContentText, MenuItem, TextField } from "@mui/material";
-import { STATS, STATS_NAME_MAP } from "../../../utils";
+import {
+	RESISTANCES,
+	RESISTANCES_NAME_MAP,
+	STATS,
+	STATS_NAME_MAP,
+} from "../../../utils";
 import { useEffectContext } from "./effectContext";
 
 export const DamageEffect: React.FC = () => {
@@ -34,9 +39,11 @@ export const DamageEffect: React.FC = () => {
 				<Box sx={{ display: "flex" }}>
 					<TextField
 						sx={{
+							marginRight: 2,
 							width: "30ch",
 						}}
 						select
+						margin="dense"
 						label="Modifier"
 						name="modifier"
 						value={damageEffectForm.modifier}
@@ -45,6 +52,23 @@ export const DamageEffect: React.FC = () => {
 						{STATS.map((stat) => (
 							<MenuItem key={stat} value={stat}>
 								{STATS_NAME_MAP[stat]}
+							</MenuItem>
+						))}
+					</TextField>
+					<TextField
+						sx={{
+							width: "30ch",
+						}}
+						select
+						margin="dense"
+						label="Damage Type"
+						name="damageType"
+						value={damageEffectForm.damageType}
+						onChange={handleChange}
+					>
+						{RESISTANCES.map((resistance) => (
+							<MenuItem key={resistance} value={resistance}>
+								{RESISTANCES_NAME_MAP[resistance]}
 							</MenuItem>
 						))}
 					</TextField>
@@ -57,23 +81,6 @@ export const DamageEffect: React.FC = () => {
 						flexWrap: "wrap",
 					}}
 				>
-					<TextField
-						sx={{
-							marginRight: 2,
-							width: "20ch",
-						}}
-						margin="dense"
-						name="multiplier"
-						label="Multiplier"
-						type="number"
-						value={damageEffectForm.multiplier}
-						onChange={handleChange}
-						required
-						inputProps={{
-							min: 0,
-							max: 99,
-						}}
-					/>
 					<TextField
 						sx={{
 							marginRight: 2,
@@ -93,6 +100,7 @@ export const DamageEffect: React.FC = () => {
 					/>
 					<TextField
 						sx={{
+							marginRight: 2,
 							width: "20ch",
 						}}
 						margin="dense"
@@ -104,6 +112,22 @@ export const DamageEffect: React.FC = () => {
 						required
 						inputProps={{
 							min: 1,
+							max: 99,
+						}}
+					/>
+					<TextField
+						sx={{
+							width: "20ch",
+						}}
+						margin="dense"
+						name="multiplier"
+						label="Multiplier"
+						type="number"
+						value={damageEffectForm.multiplier}
+						onChange={handleChange}
+						required
+						inputProps={{
+							min: 0,
 							max: 99,
 						}}
 					/>

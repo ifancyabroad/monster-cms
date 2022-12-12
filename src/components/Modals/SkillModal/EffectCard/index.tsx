@@ -11,12 +11,10 @@ import { EffectType } from "../../../../enums";
 import { openEffectModal } from "../../../../features/modals/modalsSlice";
 import { ISkillEffect } from "../../../../types";
 import { EFFECTS_NAME_MAP } from "../../../../utils";
-import { BuffEffect } from "./BuffEffect";
+import { StatusEffect } from "./StatusEffect";
 import { DamageEffect } from "./DamageEffect";
-import { DebuffEffect } from "./DebuffEffect";
 import { HealEffect } from "./HealEffect";
-import { PoisonEffect } from "./PoisonEffect";
-import { StunEffect } from "./StunEffect";
+import { AuxiliaryEffect } from "./AuxiliaryEffect";
 
 interface IProps {
 	effect: ISkillEffect;
@@ -32,14 +30,10 @@ export const EffectCard: React.FC<IProps> = ({ effect, onRemove }) => {
 				return <DamageEffect {...effect} />;
 			case EffectType.Heal:
 				return <HealEffect {...effect} />;
-			case EffectType.Buff:
-				return <BuffEffect {...effect} />;
-			case EffectType.Debuff:
-				return <DebuffEffect {...effect} />;
-			case EffectType.Stun:
-				return <StunEffect {...effect} />;
-			case EffectType.Poison:
-				return <PoisonEffect {...effect} />;
+			case EffectType.Status:
+				return <StatusEffect {...effect} />;
+			case EffectType.Auxiliary:
+				return <AuxiliaryEffect {...effect} />;
 			default:
 				return null;
 		}

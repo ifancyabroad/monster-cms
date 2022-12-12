@@ -1,12 +1,16 @@
-import { EffectType, Stat } from "../../../enums";
 import {
-	IBuffEffect,
+	AuxiliaryEffect,
+	DamageType,
+	EffectType,
+	Stat,
+	Target,
+} from "../../../enums";
+import {
+	IAuxiliaryEffect,
 	IDamageEffect,
-	IDebuffEffect,
 	IHealEffect,
-	IPoisonEffect,
 	ISkillEffect,
-	IStunEffect,
+	IStatusEffect,
 } from "../../../types";
 
 export interface IUpdateFormAction {
@@ -17,14 +21,13 @@ export interface IUpdateFormAction {
 export interface IEffectState {
 	damageEffectForm: IDamageEffect;
 	healEffectForm: IHealEffect;
-	buffEffectForm: IBuffEffect;
-	debuffEffectForm: IDebuffEffect;
-	stunEffectForm: IStunEffect;
-	poisonEffectForm: IPoisonEffect;
+	statusEffectForm: IStatusEffect;
+	auxiliaryEffectForm: IAuxiliaryEffect;
 }
 
 const defaultDamageEffectValues: IDamageEffect = {
 	type: EffectType.Damage,
+	damageType: DamageType.Slashing,
 	modifier: Stat.Strength,
 	multiplier: 1,
 	min: 1,
@@ -39,8 +42,9 @@ const defaultHealEffectValues: IHealEffect = {
 	max: 6,
 };
 
-const defaultBuffEffectValues: IBuffEffect = {
-	type: EffectType.Buff,
+const defaultStatusEffectValues: IStatusEffect = {
+	type: EffectType.Status,
+	target: Target.Enemy,
 	modifiers: {
 		stats: {},
 		resistances: {},
@@ -49,36 +53,18 @@ const defaultBuffEffectValues: IBuffEffect = {
 	duration: 5,
 };
 
-const defaultDebuffEffectValues: IDebuffEffect = {
-	type: EffectType.Debuff,
-	modifiers: {
-		stats: {},
-		resistances: {},
-	},
-	accuracy: 100,
-	duration: 5,
-};
-
-const defaultStunEffectValues: IStunEffect = {
-	type: EffectType.Stun,
+const defaultAuxiliaryEffectValues: IAuxiliaryEffect = {
+	type: EffectType.Auxiliary,
+	effect: AuxiliaryEffect.Stun,
 	accuracy: 50,
 	duration: 3,
-};
-
-const defaultPoisonEffectValues: IPoisonEffect = {
-	type: EffectType.Poison,
-	accuracy: 50,
-	duration: 5,
-	damage: 5,
 };
 
 export const initialState: IEffectState = {
 	damageEffectForm: defaultDamageEffectValues,
 	healEffectForm: defaultHealEffectValues,
-	buffEffectForm: defaultBuffEffectValues,
-	debuffEffectForm: defaultDebuffEffectValues,
-	stunEffectForm: defaultStunEffectValues,
-	poisonEffectForm: defaultPoisonEffectValues,
+	statusEffectForm: defaultStatusEffectValues,
+	auxiliaryEffectForm: defaultAuxiliaryEffectValues,
 };
 
 export const effectReducer = (
@@ -97,25 +83,15 @@ export const effectReducer = (
 				...state,
 				healEffectForm: payload,
 			};
-		case EffectType.Buff:
+		case EffectType.Status:
 			return {
 				...state,
-				buffEffectForm: payload,
+				statusEffectForm: payload,
 			};
-		case EffectType.Debuff:
+		case EffectType.Auxiliary:
 			return {
 				...state,
-				debuffEffectForm: payload,
-			};
-		case EffectType.Stun:
-			return {
-				...state,
-				stunEffectForm: payload,
-			};
-		case EffectType.Poison:
-			return {
-				...state,
-				poisonEffectForm: payload,
+				auxiliaryEffectForm: payload,
 			};
 		default:
 			throw Error("Unknown action: " + type);

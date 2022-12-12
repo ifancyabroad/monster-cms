@@ -1,8 +1,9 @@
 import { TDamageTypes, TStats } from ".";
-import { CharacterClass, DamageType, EffectType, Stat } from "../enums";
+import { CharacterClass, DamageType, EffectType, Stat, Target } from "../enums";
 
 export interface IDamageEffect {
 	type: EffectType.Damage;
+	damageType: DamageType;
 	modifier: Stat;
 	multiplier: number;
 	min: number;
@@ -17,8 +18,9 @@ export interface IHealEffect {
 	max: number;
 }
 
-export interface IBuffEffect {
-	type: EffectType.Buff;
+export interface IStatusEffect {
+	type: EffectType.Status;
+	target: Target;
 	modifiers: {
 		stats: Partial<TStats>;
 		resistances: Partial<TDamageTypes>;
@@ -27,43 +29,24 @@ export interface IBuffEffect {
 	duration: number;
 }
 
-export interface IDebuffEffect {
-	type: EffectType.Debuff;
-	modifiers: {
-		stats: Partial<TStats>;
-		resistances: Partial<TDamageTypes>;
-	};
+export interface IAuxiliaryEffect {
+	type: EffectType.Auxiliary;
+	effect: AuxiliaryEffect;
 	accuracy: number;
 	duration: number;
-}
-
-export interface IStunEffect {
-	type: EffectType.Stun;
-	accuracy: number;
-	duration: number;
-}
-
-export interface IPoisonEffect {
-	type: EffectType.Poison;
-	accuracy: number;
-	duration: number;
-	damage: number;
 }
 
 export type ISkillEffect =
 	| IDamageEffect
 	| IHealEffect
-	| IBuffEffect
-	| IDebuffEffect
-	| IStunEffect
-	| IPoisonEffect;
+	| IStatusEffect
+	| IAuxiliaryEffect;
 
 export interface IBaseSkill {
 	class: "basic" | CharacterClass;
 	name: string;
 	description: string;
 	icon: string;
-	damageType: DamageType;
 	effects: ISkillEffect[];
 	price: number;
 	maxUses: number;

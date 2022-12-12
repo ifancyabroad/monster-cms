@@ -21,7 +21,6 @@ import {
 import { saveSkill, updateSkill } from "../../../features/skills/skillsSlice";
 import { IBaseSkill, ISaveSkill, ISkill, ISkillEffect } from "../../../types";
 import { CharacterClass, DamageType, EffectType, Stat } from "../../../enums";
-import { RESISTANCES, RESISTANCES_NAME_MAP } from "../../../utils";
 import { EffectModal } from "../EffectModal";
 import { EffectCard } from "./EffectCard";
 
@@ -30,10 +29,10 @@ const defaultSkillValues: IBaseSkill = {
 	description: "",
 	icon: "",
 	class: "basic",
-	damageType: DamageType.Slashing,
 	effects: [
 		{
 			type: EffectType.Damage,
+			damageType: DamageType.Slashing,
 			modifier: Stat.Strength,
 			multiplier: 1,
 			min: 1,
@@ -251,6 +250,7 @@ export const SkillModal: React.FC = () => {
 										width: "30ch",
 									}}
 									select
+									margin="dense"
 									label="Class"
 									name="class"
 									value={formValues.skill.class}
@@ -270,75 +270,6 @@ export const SkillModal: React.FC = () => {
 								<TextField
 									sx={{
 										width: "30ch",
-									}}
-									select
-									label="Damage Type"
-									name="damageType"
-									value={formValues.skill.damageType}
-									onChange={handleChange}
-								>
-									{RESISTANCES.map((resistance) => (
-										<MenuItem
-											key={resistance}
-											value={resistance}
-										>
-											{RESISTANCES_NAME_MAP[resistance]}
-										</MenuItem>
-									))}
-								</TextField>
-							</Box>
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Skill Properties
-							</DialogContentText>
-							<Box
-								sx={{
-									display: "flex",
-									flexWrap: "wrap",
-								}}
-							>
-								<TextField
-									sx={{
-										marginRight: 2,
-										width: "20ch",
-									}}
-									margin="dense"
-									name="price"
-									label="Price"
-									type="number"
-									value={formValues.skill.price}
-									onChange={handleChange}
-									required
-									inputProps={{
-										min: 0,
-										max: 9999,
-									}}
-								/>
-								<TextField
-									sx={{
-										marginRight: 2,
-										width: "20ch",
-									}}
-									margin="dense"
-									name="maxUses"
-									label="Max Uses"
-									type="number"
-									value={formValues.skill.maxUses}
-									onChange={handleChange}
-									required
-									inputProps={{
-										min: 0,
-										max: 9999,
-									}}
-								/>
-								<TextField
-									sx={{
-										width: "20ch",
 									}}
 									margin="dense"
 									name="level"
@@ -360,9 +291,57 @@ export const SkillModal: React.FC = () => {
 								component="h5"
 								gutterBottom
 							>
+								Skill Properties
+							</DialogContentText>
+							<Box
+								sx={{
+									display: "flex",
+								}}
+							>
+								<TextField
+									sx={{
+										marginRight: 2,
+										width: "30ch",
+									}}
+									margin="dense"
+									name="price"
+									label="Price"
+									type="number"
+									value={formValues.skill.price}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 0,
+										max: 9999,
+									}}
+								/>
+								<TextField
+									sx={{
+										width: "30ch",
+									}}
+									margin="dense"
+									name="maxUses"
+									label="Max Uses"
+									type="number"
+									value={formValues.skill.maxUses}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 0,
+										max: 9999,
+									}}
+								/>
+							</Box>
+						</Box>
+						<Box my={3}>
+							<DialogContentText
+								variant="subtitle1"
+								component="h5"
+								gutterBottom
+							>
 								Skill Effects
 							</DialogContentText>
-							<Grid container spacing={3}>
+							<Grid container spacing={2}>
 								{formValues.skill.effects.map(
 									(effect, index) => (
 										<Grid key={index} item xs={12} sm={6}>
