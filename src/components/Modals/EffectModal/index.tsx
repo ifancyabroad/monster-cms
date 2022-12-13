@@ -9,6 +9,7 @@ import {
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
+	Grid,
 	MenuItem,
 	TextField,
 } from "@mui/material";
@@ -83,6 +84,8 @@ export const EffectModal: React.FC<IProps> = ({
 		<Dialog
 			open={open}
 			onClose={handleClose}
+			maxWidth="sm"
+			fullWidth
 			aria-labelledby="form-dialog-title"
 		>
 			<DialogTitle id="form-dialog-title">{title}</DialogTitle>
@@ -96,23 +99,25 @@ export const EffectModal: React.FC<IProps> = ({
 						>
 							Effect Type
 						</DialogContentText>
-						<TextField
-							sx={{
-								width: "30ch",
-							}}
-							select
-							margin="dense"
-							label="Type"
-							name="effectType"
-							value={effectType}
-							onChange={handleChangeType}
-						>
-							{EFFECTS.map((effect, index) => (
-								<MenuItem key={index} value={effect}>
-									{EFFECTS_NAME_MAP[effect]}
-								</MenuItem>
-							))}
-						</TextField>
+						<Grid container spacing={2}>
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Type"
+									name="effectType"
+									value={effectType}
+									onChange={handleChangeType}
+								>
+									{EFFECTS.map((effect, index) => (
+										<MenuItem key={index} value={effect}>
+											{EFFECTS_NAME_MAP[effect]}
+										</MenuItem>
+									))}
+								</TextField>
+							</Grid>
+						</Grid>
 					</Box>
 					<EffectContext.Provider value={providerState}>
 						{

@@ -1,4 +1,4 @@
-import { Box, DialogContentText, TextField } from "@mui/material";
+import { Box, DialogContentText, Grid, TextField } from "@mui/material";
 
 interface ITableStat {
 	key: string;
@@ -26,36 +26,27 @@ export const StatGroup: React.FC<IProps> = ({
 			<DialogContentText variant="subtitle1" component="h5" gutterBottom>
 				{title}
 			</DialogContentText>
-			<Box
-				sx={{
-					display: "flex",
-					flexWrap: "wrap",
-				}}
-			>
+			<Grid container spacing={2}>
 				{stats.map((stat) => (
-					<TextField
-						sx={{
-							marginRight: 2,
-							width: "20ch",
-							"&:last-of-type": {
-								marginRight: 0,
-							},
-						}}
-						key={stat.key}
-						margin="dense"
-						name={stat.key}
-						label={stat.name}
-						type="number"
-						value={stat.value}
-						onChange={handleChange}
-						required
-						inputProps={{
-							min,
-							max,
-						}}
-					/>
+					<Grid item xs={6} md={4}>
+						<TextField
+							key={stat.key}
+							fullWidth
+							margin="dense"
+							name={stat.key}
+							label={stat.name}
+							type="number"
+							value={stat.value}
+							onChange={handleChange}
+							required
+							inputProps={{
+								min,
+								max,
+							}}
+						/>
+					</Grid>
 				))}
-			</Box>
+			</Grid>
 		</Box>
 	);
 };

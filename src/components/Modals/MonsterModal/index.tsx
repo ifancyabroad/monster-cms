@@ -10,6 +10,7 @@ import {
 	DialogContentText,
 	DialogTitle,
 	FormControl,
+	Grid,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -169,6 +170,8 @@ export const MonsterModal: React.FC = () => {
 		<Dialog
 			open={open}
 			onClose={handleClose}
+			maxWidth="sm"
+			fullWidth
 			aria-labelledby="form-dialog-title"
 		>
 			<DialogTitle id="form-dialog-title">{title}</DialogTitle>
@@ -257,22 +260,24 @@ export const MonsterModal: React.FC = () => {
 						>
 							Difficulty Rating
 						</DialogContentText>
-						<TextField
-							sx={{
-								width: "20ch",
-							}}
-							margin="dense"
-							name="challenge"
-							label="Rating"
-							type="number"
-							value={formValues.monster.challenge}
-							onChange={handleChange}
-							required
-							inputProps={{
-								min: 0,
-								max: 20,
-							}}
-						/>
+						<Grid container spacing={2}>
+							<Grid item xs={6} md={4}>
+								<TextField
+									fullWidth
+									margin="dense"
+									name="challenge"
+									label="Rating"
+									type="number"
+									value={formValues.monster.challenge}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 0,
+										max: 20,
+									}}
+								/>
+							</Grid>
+						</Grid>
 					</Box>
 				</DialogContent>
 				<DialogActions>
