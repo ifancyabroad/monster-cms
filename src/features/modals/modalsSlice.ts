@@ -15,6 +15,7 @@ interface ModalsState {
 	effectModal: {
 		open: boolean;
 		effect?: ISkillEffect;
+		index?: number;
 	};
 }
 
@@ -69,14 +70,16 @@ export const modalsSlice = createSlice({
 		},
 		openEffectModal: (
 			state,
-			action: PayloadAction<ISkillEffect | undefined>
+			action: PayloadAction<{ effect?: ISkillEffect; index?: number }>
 		) => {
 			state.effectModal.open = true;
-			state.effectModal.effect = action.payload;
+			state.effectModal.effect = action.payload.effect;
+			state.effectModal.index = action.payload.index;
 		},
 		closeEffectModal: (state) => {
 			state.effectModal.open = false;
 			state.effectModal.effect = undefined;
+			state.effectModal.index = undefined;
 		},
 	},
 });

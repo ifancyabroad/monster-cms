@@ -24,7 +24,7 @@ import { AuxiliaryEffect } from "./AuxiliaryEffect";
 
 interface IProps {
 	onAddEffect: (effect: ISkillEffect) => void;
-	onUpdateEffect: (effect: ISkillEffect) => void;
+	onUpdateEffect: (effect: ISkillEffect, index: number) => void;
 }
 
 export const EffectModal: React.FC<IProps> = ({
@@ -34,9 +34,11 @@ export const EffectModal: React.FC<IProps> = ({
 	const dispatch = useAppDispatch();
 	const open = useAppSelector((state) => state.modals.effectModal.open);
 	const effect = useAppSelector((state) => state.modals.effectModal.effect);
+	const index = useAppSelector((state) => state.modals.effectModal.index);
 	const [effectType, setEffectType] = useState(EffectType.Damage);
 	const [state, localDispatch] = useReducer(effectReducer, initialState);
 	const title = effect ? "Update Effect" : "Add Effect";
+	const confirm = effect ? "Update" : "Add";
 
 	const providerState = {
 		state,
@@ -68,8 +70,8 @@ export const EffectModal: React.FC<IProps> = ({
 			[EffectType.Auxiliary]: state.auxiliaryEffectForm,
 		}[effectType];
 
-		if (effect) {
-			onUpdateEffect(formValues);
+		if (effect && typeof index === "number") {
+			onUpdateEffect(formValues, index);
 		} else {
 			onAddEffect(formValues);
 		}
@@ -128,7 +130,7 @@ export const EffectModal: React.FC<IProps> = ({
 						Cancel
 					</Button>
 					<Button type="submit" color="primary">
-						Add
+						{confirm}
 					</Button>
 				</DialogActions>
 			</form>
