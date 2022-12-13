@@ -172,6 +172,8 @@ export const SkillModal: React.FC = () => {
 			<Dialog
 				open={open}
 				onClose={handleClose}
+				maxWidth="sm"
+				fullWidth
 				aria-labelledby="form-dialog-title"
 			>
 				<DialogTitle id="form-dialog-title">{title}</DialogTitle>
@@ -247,47 +249,48 @@ export const SkillModal: React.FC = () => {
 							>
 								Skill Type
 							</DialogContentText>
-							<Box sx={{ display: "flex" }}>
-								<TextField
-									sx={{
-										marginRight: 2,
-										width: "30ch",
-									}}
-									select
-									margin="dense"
-									label="Class"
-									name="class"
-									value={formValues.skill.class}
-									onChange={handleChange}
-								>
-									<MenuItem value="basic">Basic</MenuItem>
-									<MenuItem value={CharacterClass.Warrior}>
-										Warrior
-									</MenuItem>
-									<MenuItem value={CharacterClass.Rogue}>
-										Rogue
-									</MenuItem>
-									<MenuItem value={CharacterClass.Mage}>
-										Mage
-									</MenuItem>
-								</TextField>
-								<TextField
-									sx={{
-										width: "30ch",
-									}}
-									margin="dense"
-									name="level"
-									label="Level"
-									type="number"
-									value={formValues.skill.level}
-									onChange={handleChange}
-									required
-									inputProps={{
-										min: 0,
-										max: 30,
-									}}
-								/>
-							</Box>
+							<Grid container spacing={2}>
+								<Grid item xs={6}>
+									<TextField
+										fullWidth
+										select
+										margin="dense"
+										label="Class"
+										name="class"
+										value={formValues.skill.class}
+										onChange={handleChange}
+									>
+										<MenuItem value="basic">Basic</MenuItem>
+										<MenuItem
+											value={CharacterClass.Warrior}
+										>
+											Warrior
+										</MenuItem>
+										<MenuItem value={CharacterClass.Rogue}>
+											Rogue
+										</MenuItem>
+										<MenuItem value={CharacterClass.Mage}>
+											Mage
+										</MenuItem>
+									</TextField>
+								</Grid>
+								<Grid item xs={6}>
+									<TextField
+										fullWidth
+										margin="dense"
+										name="level"
+										label="Level"
+										type="number"
+										value={formValues.skill.level}
+										onChange={handleChange}
+										required
+										inputProps={{
+											min: 0,
+											max: 30,
+										}}
+									/>
+								</Grid>
+							</Grid>
 						</Box>
 						<Box my={3}>
 							<DialogContentText
@@ -297,45 +300,40 @@ export const SkillModal: React.FC = () => {
 							>
 								Skill Properties
 							</DialogContentText>
-							<Box
-								sx={{
-									display: "flex",
-								}}
-							>
-								<TextField
-									sx={{
-										marginRight: 2,
-										width: "30ch",
-									}}
-									margin="dense"
-									name="price"
-									label="Price"
-									type="number"
-									value={formValues.skill.price}
-									onChange={handleChange}
-									required
-									inputProps={{
-										min: 0,
-										max: 9999,
-									}}
-								/>
-								<TextField
-									sx={{
-										width: "30ch",
-									}}
-									margin="dense"
-									name="maxUses"
-									label="Max Uses"
-									type="number"
-									value={formValues.skill.maxUses}
-									onChange={handleChange}
-									required
-									inputProps={{
-										min: 0,
-										max: 9999,
-									}}
-								/>
-							</Box>
+							<Grid container spacing={2}>
+								<Grid item xs={6}>
+									<TextField
+										fullWidth
+										margin="dense"
+										name="price"
+										label="Price"
+										type="number"
+										value={formValues.skill.price}
+										onChange={handleChange}
+										required
+										inputProps={{
+											min: 0,
+											max: 9999,
+										}}
+									/>
+								</Grid>
+								<Grid item xs={6}>
+									<TextField
+										fullWidth
+										margin="dense"
+										name="maxUses"
+										label="Max Uses"
+										type="number"
+										value={formValues.skill.maxUses}
+										onChange={handleChange}
+										required
+										inputProps={{
+											min: 0,
+											max: 9999,
+										}}
+									/>
+								</Grid>
+							</Grid>
 						</Box>
 						<Box my={3}>
 							<DialogContentText

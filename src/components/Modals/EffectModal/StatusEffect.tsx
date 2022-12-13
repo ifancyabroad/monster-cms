@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Box, MenuItem, TextField } from "@mui/material";
+import { Box, Grid, MenuItem, TextField } from "@mui/material";
 import { getResistancesArray, getStatsArray } from "../../../utils";
 import { StatGroup } from "../common";
 import { DamageType, Stat } from "../../../enums";
@@ -112,21 +112,23 @@ export const StatusEffect: React.FC = () => {
 	return (
 		<Fragment>
 			<Box my={3}>
-				<TextField
-					sx={{
-						width: "20ch",
-					}}
-					select
-					margin="dense"
-					name="target"
-					label="Target"
-					value={statusEffectForm.target}
-					onChange={handleChange}
-					required
-				>
-					<MenuItem value="self">Self</MenuItem>
-					<MenuItem value="enemy">Enemy</MenuItem>
-				</TextField>
+				<Grid container spacing={2}>
+					<Grid item xs={6}>
+						<TextField
+							fullWidth
+							select
+							margin="dense"
+							name="target"
+							label="Target"
+							value={statusEffectForm.target}
+							onChange={handleChange}
+							required
+						>
+							<MenuItem value="self">Self</MenuItem>
+							<MenuItem value="enemy">Enemy</MenuItem>
+						</TextField>
+					</Grid>
+				</Grid>
 			</Box>
 			<Box my={3}>
 				<StatGroup
@@ -145,45 +147,40 @@ export const StatusEffect: React.FC = () => {
 				/>
 			</Box>
 			<Box my={3}>
-				<Box
-					sx={{
-						display: "flex",
-					}}
-				>
-					<TextField
-						sx={{
-							marginRight: 2,
-							width: "30ch",
-						}}
-						margin="dense"
-						name="accuracy"
-						label="Accuracy"
-						type="number"
-						value={statusEffectForm.accuracy}
-						onChange={handleChange}
-						required
-						inputProps={{
-							min: 1,
-							max: 100,
-						}}
-					/>
-					<TextField
-						sx={{
-							width: "30ch",
-						}}
-						margin="dense"
-						name="duration"
-						label="Duration"
-						type="number"
-						value={statusEffectForm.duration}
-						onChange={handleChange}
-						required
-						inputProps={{
-							min: 1,
-							max: 100,
-						}}
-					/>
-				</Box>
+				<Grid container spacing={2}>
+					<Grid item xs={6}>
+						<TextField
+							fullWidth
+							margin="dense"
+							name="accuracy"
+							label="Accuracy"
+							type="number"
+							value={statusEffectForm.accuracy}
+							onChange={handleChange}
+							required
+							inputProps={{
+								min: 1,
+								max: 100,
+							}}
+						/>
+					</Grid>
+					<Grid item xs={6}>
+						<TextField
+							fullWidth
+							margin="dense"
+							name="duration"
+							label="Duration"
+							type="number"
+							value={statusEffectForm.duration}
+							onChange={handleChange}
+							required
+							inputProps={{
+								min: 1,
+								max: 100,
+							}}
+						/>
+					</Grid>
+				</Grid>
 			</Box>
 		</Fragment>
 	);
