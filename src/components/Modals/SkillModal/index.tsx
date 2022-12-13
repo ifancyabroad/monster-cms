@@ -108,7 +108,7 @@ export const SkillModal: React.FC = () => {
 	};
 
 	const handleOpenEffectModal = () => {
-		dispatch(openEffectModal());
+		dispatch(openEffectModal({}));
 	};
 
 	const handleAddEffect = (effect: ISkillEffect) => {
@@ -121,23 +121,27 @@ export const SkillModal: React.FC = () => {
 		});
 	};
 
-	const handleUpdateEffect = (effect: ISkillEffect) => {
+	const handleUpdateEffect = (effect: ISkillEffect, index: number) => {
 		setFormValues({
 			...formValues,
 			skill: {
 				...formValues.skill,
-				effects: formValues.skill.effects.concat(effect),
+				effects: formValues.skill.effects.map((e, i) =>
+					index === i ? effect : e
+				),
 			},
 		});
 	};
 
-	const handleRemoveEffect = (effect: ISkillEffect) => {
-		console.log("remove");
+	const handleRemoveEffect = (effect: ISkillEffect, index: number) => {
+		const newEffects = [...formValues.skill.effects];
+		newEffects.splice(index, 1);
+
 		setFormValues({
 			...formValues,
 			skill: {
 				...formValues.skill,
-				effects: formValues.skill.effects.filter((e) => e !== effect),
+				effects: newEffects,
 			},
 		});
 	};
@@ -347,6 +351,7 @@ export const SkillModal: React.FC = () => {
 										<Grid key={index} item xs={12} sm={6}>
 											<EffectCard
 												effect={effect}
+												index={index}
 												onRemove={handleRemoveEffect}
 											/>
 										</Grid>

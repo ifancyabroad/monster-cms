@@ -18,10 +18,11 @@ import { AuxiliaryEffect } from "./AuxiliaryEffect";
 
 interface IProps {
 	effect: ISkillEffect;
-	onRemove: (effect: ISkillEffect) => void;
+	index: number;
+	onRemove: (effect: ISkillEffect, index: number) => void;
 }
 
-export const EffectCard: React.FC<IProps> = ({ effect, onRemove }) => {
+export const EffectCard: React.FC<IProps> = ({ effect, index, onRemove }) => {
 	const dispatch = useAppDispatch();
 
 	const getEffectDetails = () => {
@@ -40,11 +41,11 @@ export const EffectCard: React.FC<IProps> = ({ effect, onRemove }) => {
 	};
 
 	const handleOpenEffectModal = () => {
-		dispatch(openEffectModal(effect));
+		dispatch(openEffectModal({ effect, index }));
 	};
 
 	const handleRemoveEffect = () => {
-		onRemove(effect);
+		onRemove(effect, index);
 	};
 
 	return (
