@@ -83,7 +83,7 @@ export const CLASSES = [
 	CharacterClass.Common,
 	CharacterClass.Warrior,
 	CharacterClass.Mage,
-	CharacterClass.Warrior,
+	CharacterClass.Rogue,
 ] as const;
 
 export const CLASS_NAME_MAP = {
