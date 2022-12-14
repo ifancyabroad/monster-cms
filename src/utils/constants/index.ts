@@ -1,4 +1,4 @@
-import { DamageType, EffectType, Stat } from "../../enums";
+import { CharacterClass, DamageType, EffectType, Stat } from "../../enums";
 
 export const DRAWER_WIDTH = 240;
 
@@ -77,4 +77,18 @@ export const EFFECTS_NAME_MAP = {
 	[EffectType.Heal]: "Heal",
 	[EffectType.Status]: "Status",
 	[EffectType.Auxiliary]: "Auxiliary",
+};
+
+export const CLASSES = [
+	CharacterClass.Common,
+	CharacterClass.Warrior,
+	CharacterClass.Mage,
+	CharacterClass.Warrior,
+] as const;
+
+export const CLASS_NAME_MAP = {
+	[CharacterClass.Common]: "Common",
+	[CharacterClass.Warrior]: "Warrior",
+	[CharacterClass.Mage]: "Mage",
+	[CharacterClass.Rogue]: "Rogue",
 };
