@@ -43,7 +43,7 @@ export type ISkillEffect =
 	| IAuxiliaryEffect;
 
 export interface IBaseSkill {
-	class: "basic" | CharacterClass;
+	class: CharacterClass;
 	name: string;
 	description: string;
 	icon: string;

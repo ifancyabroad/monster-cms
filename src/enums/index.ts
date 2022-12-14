@@ -17,6 +17,7 @@ export enum AuxiliaryEffect {
 }
 
 export enum CharacterClass {
+	Common = "common",
 	Warrior = "warrior",
 	Rogue = "rogue",
 	Mage = "mage",

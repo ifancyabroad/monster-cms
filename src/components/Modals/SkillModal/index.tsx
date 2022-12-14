@@ -23,12 +23,13 @@ import { IBaseSkill, ISaveSkill, ISkill, ISkillEffect } from "../../../types";
 import { CharacterClass, DamageType, EffectType, Stat } from "../../../enums";
 import { EffectModal } from "../EffectModal";
 import { EffectCard } from "./EffectCard";
+import { CLASSES, CLASS_NAME_MAP } from "../../../utils";
 
 const defaultSkillValues: IBaseSkill = {
 	name: "",
 	description: "",
 	icon: "",
-	class: "basic",
+	class: CharacterClass.Common,
 	effects: [
 		{
 			type: EffectType.Damage,
@@ -260,18 +261,11 @@ export const SkillModal: React.FC = () => {
 										value={formValues.skill.class}
 										onChange={handleChange}
 									>
-										<MenuItem value="basic">Basic</MenuItem>
-										<MenuItem
-											value={CharacterClass.Warrior}
-										>
-											Warrior
-										</MenuItem>
-										<MenuItem value={CharacterClass.Rogue}>
-											Rogue
-										</MenuItem>
-										<MenuItem value={CharacterClass.Mage}>
-											Mage
-										</MenuItem>
+										{CLASSES.map((cl) => (
+											<MenuItem value={cl}>
+												{CLASS_NAME_MAP[cl]}
+											</MenuItem>
+										))}
 									</TextField>
 								</Grid>
 								<Grid item xs={6}>
