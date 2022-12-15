@@ -1,0 +1,17 @@
+import { Box, Typography } from "@mui/material";
+import { IWeaponDamageEffect } from "../../../types";
+
+export const WeaponDamageEffect: React.FC<IWeaponDamageEffect> = ({
+	multiplier,
+}) => {
+	return (
+		<Box component="ul" sx={{ margin: 0 }}>
+			<Typography component="li">
+				<Box component="span" sx={{ fontWeight: "medium" }}>
+					Multiplier:{" "}
+				</Box>
+				{multiplier}
+			</Typography>
+		</Box>
+	);
+};

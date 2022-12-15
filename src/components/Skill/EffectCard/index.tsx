@@ -16,6 +16,7 @@ import { HealEffect } from "./HealEffect";
 import { AuxiliaryEffect } from "./AuxiliaryEffect";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { WeaponDamageEffect } from "./WeaponDamageEffect";
 
 interface ExpandMoreProps extends IconButtonProps {
 	expand: boolean;
@@ -40,6 +41,8 @@ export const EffectCard: React.FC<ISkillEffect> = (effect) => {
 
 	const getEffectDetails = () => {
 		switch (effect.type) {
+			case EffectType.WeaponDamage:
+				return <WeaponDamageEffect {...effect} />;
 			case EffectType.Damage:
 				return <DamageEffect {...effect} />;
 			case EffectType.Heal:

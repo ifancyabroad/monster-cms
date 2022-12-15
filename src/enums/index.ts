@@ -1,4 +1,5 @@
 export enum EffectType {
+	WeaponDamage = "weaponDamage",
 	Damage = "damage",
 	Heal = "heal",
 	Status = "status",

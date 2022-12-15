@@ -1,6 +1,11 @@
 import { TDamageTypes, TStats } from ".";
 import { CharacterClass, DamageType, EffectType, Stat, Target } from "../enums";
 
+export interface IWeaponDamageEffect {
+	type: EffectType.WeaponDamage;
+	multiplier: number;
+}
+
 export interface IDamageEffect {
 	type: EffectType.Damage;
 	damageType: DamageType;
@@ -37,6 +42,7 @@ export interface IAuxiliaryEffect {
 }
 
 export type ISkillEffect =
+	| IWeaponDamageEffect
 	| IDamageEffect
 	| IHealEffect
 	| IStatusEffect
