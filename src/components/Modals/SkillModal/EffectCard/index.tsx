@@ -15,6 +15,7 @@ import { StatusEffect } from "./StatusEffect";
 import { DamageEffect } from "./DamageEffect";
 import { HealEffect } from "./HealEffect";
 import { AuxiliaryEffect } from "./AuxiliaryEffect";
+import { WeaponDamageEffect } from "./WeaponDamageEffect";
 
 interface IProps {
 	effect: ISkillEffect;
@@ -27,6 +28,8 @@ export const EffectCard: React.FC<IProps> = ({ effect, index, onRemove }) => {
 
 	const getEffectDetails = () => {
 		switch (effect.type) {
+			case EffectType.WeaponDamage:
+				return <WeaponDamageEffect {...effect} />;
 			case EffectType.Damage:
 				return <DamageEffect {...effect} />;
 			case EffectType.Heal:

@@ -22,6 +22,7 @@ import { HealEffect } from "./HealEffect";
 import { StatusEffect } from "./StatusEffect";
 import { EffectContext } from "./effectContext";
 import { AuxiliaryEffect } from "./AuxiliaryEffect";
+import { WeaponDamageEffect } from "./WeaponDamageEffect";
 
 interface IProps {
 	onAddEffect: (effect: ISkillEffect) => void;
@@ -65,6 +66,7 @@ export const EffectModal: React.FC<IProps> = ({
 		e.preventDefault();
 
 		const formValues = {
+			[EffectType.WeaponDamage]: state.weaponDamageEffectForm,
 			[EffectType.Damage]: state.damageEffectForm,
 			[EffectType.Heal]: state.healEffectForm,
 			[EffectType.Status]: state.statusEffectForm,
@@ -122,6 +124,9 @@ export const EffectModal: React.FC<IProps> = ({
 					<EffectContext.Provider value={providerState}>
 						{
 							{
+								[EffectType.WeaponDamage]: (
+									<WeaponDamageEffect />
+								),
 								[EffectType.Damage]: <DamageEffect />,
 								[EffectType.Heal]: <HealEffect />,
 								[EffectType.Status]: <StatusEffect />,

@@ -72,6 +72,7 @@ export const RESISTANCES_NAME_MAP = {
 };
 
 export const EFFECTS = [
+	EffectType.WeaponDamage,
 	EffectType.Damage,
 	EffectType.Heal,
 	EffectType.Status,
@@ -79,6 +80,7 @@ export const EFFECTS = [
 ] as const;
 
 export const EFFECTS_NAME_MAP = {
+	[EffectType.WeaponDamage]: "Weapon Damage",
 	[EffectType.Damage]: "Damage",
 	[EffectType.Heal]: "Heal",
 	[EffectType.Status]: "Status",

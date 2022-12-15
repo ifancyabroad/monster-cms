@@ -11,6 +11,7 @@ import {
 	IHealEffect,
 	ISkillEffect,
 	IStatusEffect,
+	IWeaponDamageEffect,
 } from "../../../types";
 
 export interface IUpdateFormAction {
@@ -19,11 +20,17 @@ export interface IUpdateFormAction {
 }
 
 export interface IEffectState {
+	weaponDamageEffectForm: IWeaponDamageEffect;
 	damageEffectForm: IDamageEffect;
 	healEffectForm: IHealEffect;
 	statusEffectForm: IStatusEffect;
 	auxiliaryEffectForm: IAuxiliaryEffect;
 }
+
+const defaultWeaponDamageEffectValues: IWeaponDamageEffect = {
+	type: EffectType.WeaponDamage,
+	multiplier: 1,
+};
 
 const defaultDamageEffectValues: IDamageEffect = {
 	type: EffectType.Damage,
@@ -61,6 +68,7 @@ const defaultAuxiliaryEffectValues: IAuxiliaryEffect = {
 };
 
 export const initialState: IEffectState = {
+	weaponDamageEffectForm: defaultWeaponDamageEffectValues,
 	damageEffectForm: defaultDamageEffectValues,
 	healEffectForm: defaultHealEffectValues,
 	statusEffectForm: defaultStatusEffectValues,
@@ -73,6 +81,11 @@ export const effectReducer = (
 ) => {
 	const { type, payload } = action;
 	switch (payload.type) {
+		case EffectType.WeaponDamage:
+			return {
+				...state,
+				weaponDamageEffectForm: payload,
+			};
 		case EffectType.Damage:
 			return {
 				...state,
