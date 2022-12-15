@@ -6,7 +6,7 @@ import {
 	styled,
 	Typography,
 } from "@mui/material";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -26,6 +26,7 @@ import {
 import { ConfirmationModal } from "../Modals";
 import { SkillPropertiesTable } from "./SkillPropertiesTable";
 import { EffectCard } from "./EffectCard";
+import { AuthContext } from "../../context/AuthContext";
 
 const Icon = styled("img")({
 	width: "64px",
@@ -38,6 +39,7 @@ interface IRouteParams {
 export const Skill: React.FC = () => {
 	const dispatch = useAppDispatch();
 	let { id } = useParams<IRouteParams>();
+	const user = useContext(AuthContext);
 	const skill = useSelector(selectSkillById)(id);
 	const skillImagePath = useSelector(selectSkillImagePath);
 	const confirmationModalOpen = useAppSelector(
@@ -94,22 +96,24 @@ export const Skill: React.FC = () => {
 				}}
 			>
 				<Typography variant="h2">{skill.name}</Typography>
-				<Box sx={{ display: "flex" }}>
-					<IconButton
-						aria-label="add"
-						color="primary"
-						onClick={handleUpdateSkill}
-					>
-						<Edit fontSize="large" />
-					</IconButton>
-					<IconButton
-						aria-label="add"
-						color="primary"
-						onClick={handleDeleteSkill}
-					>
-						<Delete fontSize="large" />
-					</IconButton>
-				</Box>
+				{user && (
+					<Box sx={{ display: "flex" }}>
+						<IconButton
+							aria-label="add"
+							color="primary"
+							onClick={handleUpdateSkill}
+						>
+							<Edit fontSize="large" />
+						</IconButton>
+						<IconButton
+							aria-label="add"
+							color="primary"
+							onClick={handleDeleteSkill}
+						>
+							<Delete fontSize="large" />
+						</IconButton>
+					</Box>
+				)}
 			</Box>
 
 			<Box
