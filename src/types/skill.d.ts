@@ -25,7 +25,6 @@ export interface IHealEffect {
 
 export interface IStatusEffect {
 	type: EffectType.Status;
-	target: Target;
 	modifiers: {
 		stats: Partial<TStats>;
 		resistances: Partial<TDamageTypes>;
@@ -57,6 +56,7 @@ export interface IBaseSkill {
 	price: number;
 	maxUses: number;
 	level: number;
+	target: Target;
 }
 
 export interface ISkill extends IBaseSkill {

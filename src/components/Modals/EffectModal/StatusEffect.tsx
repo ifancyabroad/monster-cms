@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Box, Grid, MenuItem, TextField } from "@mui/material";
+import { Box, Grid, TextField } from "@mui/material";
 import { getResistancesArray, getStatsArray } from "../../../utils";
 import { StatGroup } from "../common";
 import { DamageType, Stat } from "../../../enums";
@@ -111,25 +111,6 @@ export const StatusEffect: React.FC = () => {
 
 	return (
 		<Fragment>
-			<Box my={3}>
-				<Grid container spacing={2}>
-					<Grid item xs={6}>
-						<TextField
-							fullWidth
-							select
-							margin="dense"
-							name="target"
-							label="Target"
-							value={statusEffectForm.target}
-							onChange={handleChange}
-							required
-						>
-							<MenuItem value="self">Self</MenuItem>
-							<MenuItem value="enemy">Enemy</MenuItem>
-						</TextField>
-					</Grid>
-				</Grid>
-			</Box>
 			<Box my={3}>
 				<StatGroup
 					title="Stats"

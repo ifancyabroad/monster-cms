@@ -32,6 +32,16 @@ export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
 							scope="row"
 							sx={{ fontWeight: "medium" }}
 						>
+							Target
+						</TableCell>
+						<TableCell align="right">{skill.target}</TableCell>
+					</TableRow>
+					<TableRow>
+						<TableCell
+							component="th"
+							scope="row"
+							sx={{ fontWeight: "medium" }}
+						>
 							Level
 						</TableCell>
 						<TableCell align="right">{skill.level}</TableCell>

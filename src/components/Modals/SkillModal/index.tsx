@@ -20,7 +20,13 @@ import {
 } from "@mui/material";
 import { saveSkill, updateSkill } from "../../../features/skills/skillsSlice";
 import { IBaseSkill, ISaveSkill, ISkill, ISkillEffect } from "../../../types";
-import { CharacterClass, DamageType, EffectType, Stat } from "../../../enums";
+import {
+	CharacterClass,
+	DamageType,
+	EffectType,
+	Stat,
+	Target,
+} from "../../../enums";
 import { EffectModal } from "../EffectModal";
 import { EffectCard } from "./EffectCard";
 import { CLASSES, CLASS_NAME_MAP } from "../../../utils";
@@ -43,6 +49,7 @@ const defaultSkillValues: IBaseSkill = {
 	price: 0,
 	maxUses: 0,
 	level: 0,
+	target: Target.Enemy,
 };
 
 const defaultFormValues: ISaveSkill = {
@@ -268,6 +275,32 @@ export const SkillModal: React.FC = () => {
 										))}
 									</TextField>
 								</Grid>
+							</Grid>
+						</Box>
+						<Box my={3}>
+							<DialogContentText
+								variant="subtitle1"
+								component="h5"
+								gutterBottom
+							>
+								Skill Properties
+							</DialogContentText>
+							<Grid container spacing={2}>
+								<Grid item xs={6}>
+									<TextField
+										fullWidth
+										select
+										margin="dense"
+										name="target"
+										label="Target"
+										value={formValues.skill.target}
+										onChange={handleChange}
+										required
+									>
+										<MenuItem value="self">Self</MenuItem>
+										<MenuItem value="enemy">Enemy</MenuItem>
+									</TextField>
+								</Grid>
 								<Grid item xs={6}>
 									<TextField
 										fullWidth
@@ -284,17 +317,6 @@ export const SkillModal: React.FC = () => {
 										}}
 									/>
 								</Grid>
-							</Grid>
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Skill Properties
-							</DialogContentText>
-							<Grid container spacing={2}>
 								<Grid item xs={6}>
 									<TextField
 										fullWidth

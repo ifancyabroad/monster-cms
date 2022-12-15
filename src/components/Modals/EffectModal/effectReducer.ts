@@ -1,10 +1,4 @@
-import {
-	AuxiliaryEffect,
-	DamageType,
-	EffectType,
-	Stat,
-	Target,
-} from "../../../enums";
+import { AuxiliaryEffect, DamageType, EffectType, Stat } from "../../../enums";
 import {
 	IAuxiliaryEffect,
 	IDamageEffect,
@@ -51,7 +45,6 @@ const defaultHealEffectValues: IHealEffect = {
 
 const defaultStatusEffectValues: IStatusEffect = {
 	type: EffectType.Status,
-	target: Target.Enemy,
 	modifiers: {
 		stats: {},
 		resistances: {},
