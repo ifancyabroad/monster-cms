@@ -154,17 +154,17 @@ export const Skill: React.FC = () => {
 					marginBottom: 4,
 				}}
 			>
-				<Grid container spacing={3} marginBottom={3}>
-					<Grid item xs={12} md={3}>
-						<Typography
-							variant="body2"
-							color="textSecondary"
-							component="h5"
-							gutterBottom
-						>
-							Properties
-						</Typography>
+				<Typography
+					variant="body2"
+					color="textSecondary"
+					component="h5"
+					gutterBottom
+				>
+					Properties
+				</Typography>
 
+				<Grid container spacing={3} marginBottom={3}>
+					<Grid item xs={12} md={6} lg={3}>
 						<SkillPropertiesTable {...skill} />
 					</Grid>
 				</Grid>
@@ -184,7 +184,7 @@ export const Skill: React.FC = () => {
 
 				<Grid container spacing={2}>
 					{skill.effects.map((effect) => (
-						<Grid item xs={12} sm={6} md={4}>
+						<Grid item xs={12} md={6} lg={3}>
 							<EffectCard {...effect} />
 						</Grid>
 					))}
