@@ -6,7 +6,7 @@ import {
 	Paper,
 	Typography,
 } from "@mui/material";
-import { Fragment, useEffect } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -31,6 +31,7 @@ import {
 	openMonsterModal,
 } from "../../features/modals/modalsSlice";
 import { ConfirmationModal } from "../Modals";
+import { AuthContext } from "../../context/AuthContext";
 
 interface IRouteParams {
 	id: string;
@@ -39,6 +40,7 @@ interface IRouteParams {
 export const Monster: React.FC = () => {
 	const dispatch = useAppDispatch();
 	let { id } = useParams<IRouteParams>();
+	const user = useContext(AuthContext);
 	const monster = useSelector(selectMonsterById)(id);
 	const monsterImagePath = useSelector(selectMonsterImagePath);
 	const confirmationModalOpen = useAppSelector(
@@ -95,22 +97,24 @@ export const Monster: React.FC = () => {
 				}}
 			>
 				<Typography variant="h2">{monster.name}</Typography>
-				<Box sx={{ display: "flex" }}>
-					<IconButton
-						aria-label="add"
-						color="primary"
-						onClick={handleUpdateMonster}
-					>
-						<Edit fontSize="large" />
-					</IconButton>
-					<IconButton
-						aria-label="add"
-						color="primary"
-						onClick={handleDeleteMonster}
-					>
-						<Delete fontSize="large" />
-					</IconButton>
-				</Box>
+				{user && (
+					<Box sx={{ display: "flex" }}>
+						<IconButton
+							aria-label="add"
+							color="primary"
+							onClick={handleUpdateMonster}
+						>
+							<Edit fontSize="large" />
+						</IconButton>
+						<IconButton
+							aria-label="add"
+							color="primary"
+							onClick={handleDeleteMonster}
+						>
+							<Delete fontSize="large" />
+						</IconButton>
+					</Box>
+				)}
 			</Box>
 			{monsterImagePath && (
 				<Box
