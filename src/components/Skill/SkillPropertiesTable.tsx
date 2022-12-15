@@ -11,14 +11,14 @@ import { CLASS_NAME_MAP } from "../../utils";
 
 export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
 	return (
-		<TableContainer component={Paper} sx={{ maxWidth: 250 }}>
+		<TableContainer component={Paper}>
 			<Table aria-label="skill properties table">
 				<TableBody>
 					<TableRow>
 						<TableCell
 							component="th"
 							scope="row"
-							sx={{ fontWeight: 500 }}
+							sx={{ fontWeight: "medium" }}
 						>
 							Class
 						</TableCell>
@@ -30,7 +30,7 @@ export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
 						<TableCell
 							component="th"
 							scope="row"
-							sx={{ fontWeight: 500 }}
+							sx={{ fontWeight: "medium" }}
 						>
 							Level
 						</TableCell>
@@ -40,7 +40,7 @@ export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
 						<TableCell
 							component="th"
 							scope="row"
-							sx={{ fontWeight: 500 }}
+							sx={{ fontWeight: "medium" }}
 						>
 							Price
 						</TableCell>
@@ -50,7 +50,7 @@ export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
 						<TableCell
 							component="th"
 							scope="row"
-							sx={{ fontWeight: 500, border: 0 }}
+							sx={{ fontWeight: "medium", border: 0 }}
 						>
 							Max Uses
 						</TableCell>

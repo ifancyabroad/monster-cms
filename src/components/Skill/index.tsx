@@ -1,4 +1,11 @@
-import { Box, Divider, IconButton, styled, Typography } from "@mui/material";
+import {
+	Box,
+	Divider,
+	Grid,
+	IconButton,
+	styled,
+	Typography,
+} from "@mui/material";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -18,6 +25,7 @@ import {
 } from "../../features/modals/modalsSlice";
 import { ConfirmationModal } from "../Modals";
 import { SkillPropertiesTable } from "./SkillPropertiesTable";
+import { EffectCard } from "./EffectCard";
 
 const Icon = styled("img")({
 	width: "64px",
@@ -106,40 +114,77 @@ export const Skill: React.FC = () => {
 
 			<Box
 				sx={{
-					display: "flex",
-					alignItems: "flex-start",
-					gap: 2,
 					marginBottom: 4,
 				}}
 			>
-				{skillImagePath && (
-					<Icon src={skillImagePath} alt={skill.name} />
-				)}
-				<Box>
-					<Typography
-						variant="body2"
-						color="textSecondary"
-						component="h5"
-						gutterBottom
-					>
-						Description
-					</Typography>
-					<Typography variant="h5" paragraph>
-						{skill.description || "No description available."}
-					</Typography>
+				<Box
+					sx={{
+						display: "flex",
+						alignItems: "flex-start",
+						gap: 2,
+						marginBottom: 3,
+					}}
+				>
+					{skillImagePath && (
+						<Icon src={skillImagePath} alt={skill.name} />
+					)}
+					<Box>
+						<Typography
+							variant="body2"
+							color="textSecondary"
+							component="h5"
+							gutterBottom
+						>
+							Description
+						</Typography>
+						<Typography variant="h5" paragraph>
+							{skill.description || "No description available."}
+						</Typography>
+					</Box>
 				</Box>
 				<Divider />
 			</Box>
 
 			<Box
 				sx={{
-					display: "flex",
-					alignItems: "flex-start",
-					gap: 2,
 					marginBottom: 4,
 				}}
 			>
-				<SkillPropertiesTable {...skill} />
+				<Grid container spacing={3} marginBottom={3}>
+					<Grid item xs={12} md={3}>
+						<Typography
+							variant="body2"
+							color="textSecondary"
+							component="h5"
+							gutterBottom
+						>
+							Properties
+						</Typography>
+
+						<SkillPropertiesTable {...skill} />
+					</Grid>
+				</Grid>
+
+				<Divider />
+			</Box>
+
+			<Box>
+				<Typography
+					variant="body2"
+					color="textSecondary"
+					component="h5"
+					gutterBottom
+				>
+					Effects
+				</Typography>
+
+				<Grid container spacing={2}>
+					{skill.effects.map((effect) => (
+						<Grid item xs={12} sm={6} md={4}>
+							<EffectCard {...effect} />
+						</Grid>
+					))}
+				</Grid>
 			</Box>
 
 			<ConfirmationModal

@@ -7,6 +7,7 @@ import {
 	TextField,
 } from "@mui/material";
 import { useEffectContext } from "./effectContext";
+import { AUXILIARY_EFFECTS, AUXILIARY_EFFECTS_NAME_MAP } from "../../../utils";
 
 export const AuxiliaryEffect: React.FC = () => {
 	const {
@@ -47,8 +48,11 @@ export const AuxiliaryEffect: React.FC = () => {
 							value={auxiliaryEffectForm.effect}
 							onChange={handleChange}
 						>
-							<MenuItem value="stun">Stun</MenuItem>
-							<MenuItem value="poison">Poison</MenuItem>
+							{AUXILIARY_EFFECTS.map((effect) => (
+								<MenuItem value={effect}>
+									{AUXILIARY_EFFECTS_NAME_MAP[effect]}
+								</MenuItem>
+							))}
 						</TextField>
 					</Grid>
 				</Grid>
