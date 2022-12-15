@@ -4,7 +4,6 @@ import { IStatusEffect } from "../../../../types";
 
 export const StatusEffect: React.FC<IStatusEffect> = ({
 	modifiers,
-	target,
 	accuracy,
 	duration,
 }) => {
@@ -20,9 +19,8 @@ export const StatusEffect: React.FC<IStatusEffect> = ({
 
 	return (
 		<Typography variant="body2" component="p">
-			target: {target}, stat modifiers: {statModifiers}, resistance
-			modifiers: {resistanceModifiers}, accuracy: {accuracy}, duration:{" "}
-			{duration}
+			stat modifiers: {statModifiers}, resistance modifiers:{" "}
+			{resistanceModifiers}, accuracy: {accuracy}, duration: {duration}
 		</Typography>
 	);
 };
