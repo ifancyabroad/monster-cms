@@ -28,7 +28,7 @@ export const StatGroup: React.FC<IProps> = ({
 			</DialogContentText>
 			<Grid container spacing={2}>
 				{stats.map((stat) => (
-					<Grid item xs={6} md={4}>
+					<Grid key={stat.key} item xs={6} md={4}>
 						<TextField
 							key={stat.key}
 							fullWidth
