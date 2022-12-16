@@ -68,12 +68,14 @@ export const EffectCard: React.FC<IProps> = ({ effect, index, onRemove }) => {
 			<CardActions>
 				<IconButton
 					aria-label="Edit effect"
+					color="secondary"
 					onClick={handleOpenEffectModal}
 				>
 					<Edit fontSize="small" />
 				</IconButton>
 				<IconButton
 					aria-label="Delete effect"
+					color="warning"
 					onClick={handleRemoveEffect}
 				>
 					<Delete fontSize="small" />

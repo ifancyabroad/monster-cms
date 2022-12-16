@@ -24,37 +24,51 @@ export const StatusEffect: React.FC<IStatusEffect> = ({
 				</Box>
 				{duration} turns
 			</Typography>
-			<Typography component="li">
-				<Box component="span" sx={{ fontWeight: "medium" }}>
-					Stat Modifiers
-				</Box>
-				<Box component="ul">
-					{Object.keys(stats).map((stat) => (
-						<Typography component="li">
-							<Box component="span" sx={{ fontWeight: "medium" }}>
-								{STATS_NAME_MAP[stat as Stat]}:{" "}
-							</Box>
-							{stats[stat as Stat]}
-						</Typography>
-					))}
-				</Box>
-			</Typography>
-			<Typography component="li">
-				<Box component="span" sx={{ fontWeight: "medium" }}>
-					Resistance Modifiers
-				</Box>
-				<Box component="ul">
-					{Object.keys(resistances).map((resistance) => (
-						<Typography component="li">
-							<Box component="span" sx={{ fontWeight: "medium" }}>
-								{RESISTANCES_NAME_MAP[resistance as DamageType]}
-								:{" "}
-							</Box>
-							{resistances[resistance as DamageType]}%
-						</Typography>
-					))}
-				</Box>
-			</Typography>
+			{stats && (
+				<Typography component="li">
+					<Box component="span" sx={{ fontWeight: "medium" }}>
+						Stat Modifiers
+					</Box>
+					<Box component="ul">
+						{Object.keys(stats).map((stat) => (
+							<Typography key={stat} component="li">
+								<Box
+									component="span"
+									sx={{ fontWeight: "medium" }}
+								>
+									{STATS_NAME_MAP[stat as Stat]}:{" "}
+								</Box>
+								{stats[stat as Stat]}
+							</Typography>
+						))}
+					</Box>
+				</Typography>
+			)}
+			{resistances && (
+				<Typography component="li">
+					<Box component="span" sx={{ fontWeight: "medium" }}>
+						Resistance Modifiers
+					</Box>
+					<Box component="ul">
+						{Object.keys(resistances).map((resistance) => (
+							<Typography key={resistance} component="li">
+								<Box
+									component="span"
+									sx={{ fontWeight: "medium" }}
+								>
+									{
+										RESISTANCES_NAME_MAP[
+											resistance as DamageType
+										]
+									}
+									:{" "}
+								</Box>
+								{resistances[resistance as DamageType]}%
+							</Typography>
+						))}
+					</Box>
+				</Typography>
+			)}
 		</Box>
 	);
 };

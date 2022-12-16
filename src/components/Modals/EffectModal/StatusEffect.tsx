@@ -6,30 +6,40 @@ import { DamageType, Stat } from "../../../enums";
 import { TDamageTypes, TStats } from "../../../types";
 import { useEffectContext } from "./effectContext";
 
+const DEFAULT_STAT_VALUES = {
+	[Stat.Strength]: 0,
+	[Stat.Dexterity]: 0,
+	[Stat.Constitution]: 0,
+	[Stat.Intelligence]: 0,
+	[Stat.Wisdom]: 0,
+	[Stat.Charisma]: 0,
+};
+
+const DEFAULT_RESISTANCE_VALUES = {
+	[DamageType.Slashing]: 0,
+	[DamageType.Crushing]: 0,
+	[DamageType.Piercing]: 0,
+	[DamageType.Cold]: 0,
+	[DamageType.Fire]: 0,
+	[DamageType.Lighting]: 0,
+	[DamageType.Radiant]: 0,
+	[DamageType.Necrotic]: 0,
+	[DamageType.Poison]: 0,
+	[DamageType.Acid]: 0,
+};
+
 export const StatusEffect: React.FC = () => {
 	const {
 		state: { statusEffectForm },
 		dispatch,
 	} = useEffectContext();
 	const [stats, setStats] = useState<TStats>({
-		[Stat.Strength]: 0,
-		[Stat.Dexterity]: 0,
-		[Stat.Constitution]: 0,
-		[Stat.Intelligence]: 0,
-		[Stat.Wisdom]: 0,
-		[Stat.Charisma]: 0,
+		...DEFAULT_STAT_VALUES,
+		...statusEffectForm.modifiers.stats,
 	});
 	const [resistances, setResistances] = useState<TDamageTypes>({
-		[DamageType.Slashing]: 0,
-		[DamageType.Crushing]: 0,
-		[DamageType.Piercing]: 0,
-		[DamageType.Cold]: 0,
-		[DamageType.Fire]: 0,
-		[DamageType.Lighting]: 0,
-		[DamageType.Radiant]: 0,
-		[DamageType.Necrotic]: 0,
-		[DamageType.Poison]: 0,
-		[DamageType.Acid]: 0,
+		...DEFAULT_RESISTANCE_VALUES,
+		...statusEffectForm.modifiers.resistances,
 	});
 
 	const handleChange = (
@@ -37,7 +47,7 @@ export const StatusEffect: React.FC = () => {
 	) => {
 		const { name, value } = e.target;
 		dispatch({
-			type: statusEffectForm.type,
+			type: "UPDATE",
 			payload: {
 				...statusEffectForm,
 				[name as string]: value,
@@ -65,7 +75,7 @@ export const StatusEffect: React.FC = () => {
 		});
 
 		dispatch({
-			type: statusEffectForm.type,
+			type: "UPDATE",
 			payload: {
 				...statusEffectForm,
 				modifiers: {
@@ -98,7 +108,7 @@ export const StatusEffect: React.FC = () => {
 		});
 
 		dispatch({
-			type: statusEffectForm.type,
+			type: "UPDATE",
 			payload: {
 				...statusEffectForm,
 				modifiers: {

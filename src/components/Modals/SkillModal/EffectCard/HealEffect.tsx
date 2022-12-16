@@ -1,5 +1,6 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { IHealEffect } from "../../../../types";
+import { STATS_NAME_MAP } from "../../../../utils";
 
 export const HealEffect: React.FC<IHealEffect> = ({
 	modifier,
@@ -8,9 +9,25 @@ export const HealEffect: React.FC<IHealEffect> = ({
 	max,
 }) => {
 	return (
-		<Typography variant="body2" component="p">
-			modifier: {modifier}, multiplier: {multiplier}, minimum: {min},
-			maximum: {max}
-		</Typography>
+		<Box component="ul" sx={{ margin: 0 }}>
+			<Typography component="li" variant="body2">
+				<Box component="span" sx={{ fontWeight: "medium" }}>
+					Modifier:{" "}
+				</Box>
+				{STATS_NAME_MAP[modifier]}
+			</Typography>
+			<Typography component="li" variant="body2">
+				<Box component="span" sx={{ fontWeight: "medium" }}>
+					Multiplier:{" "}
+				</Box>
+				x{multiplier}
+			</Typography>
+			<Typography component="li" variant="body2">
+				<Box component="span" sx={{ fontWeight: "medium" }}>
+					Health:{" "}
+				</Box>
+				{min}-{max}
+			</Typography>
+		</Box>
 	);
 };

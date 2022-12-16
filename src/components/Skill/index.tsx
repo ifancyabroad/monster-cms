@@ -100,14 +100,14 @@ export const Skill: React.FC = () => {
 					<Box sx={{ display: "flex" }}>
 						<IconButton
 							aria-label="add"
-							color="primary"
+							color="secondary"
 							onClick={handleUpdateSkill}
 						>
 							<Edit fontSize="large" />
 						</IconButton>
 						<IconButton
 							aria-label="add"
-							color="primary"
+							color="warning"
 							onClick={handleDeleteSkill}
 						>
 							<Delete fontSize="large" />

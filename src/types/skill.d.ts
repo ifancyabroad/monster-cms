@@ -26,8 +26,8 @@ export interface IHealEffect {
 export interface IStatusEffect {
 	type: EffectType.Status;
 	modifiers: {
-		stats: Partial<TStats>;
-		resistances: Partial<TDamageTypes>;
+		stats?: Partial<TStats>;
+		resistances?: Partial<TDamageTypes>;
 	};
 	accuracy: number;
 	duration: number;

@@ -42,7 +42,7 @@ export const StatsTable: React.FC<IProps> = ({ title, stats }) => {
 							<TableCell component="th" scope="row">
 								{stat.name}
 							</TableCell>
-							<TableCell align="right">{stat.value}</TableCell>
+							<TableCell align="right">{stat.value}%</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

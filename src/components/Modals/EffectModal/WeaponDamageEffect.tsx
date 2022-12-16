@@ -12,7 +12,7 @@ export const WeaponDamageEffect: React.FC = () => {
 		const { name, value } = e.target;
 
 		dispatch({
-			type: weaponDamageEffectForm.type,
+			type: "UPDATE",
 			payload: {
 				...weaponDamageEffectForm,
 				[name as string]: value,

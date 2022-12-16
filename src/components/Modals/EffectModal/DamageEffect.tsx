@@ -24,7 +24,7 @@ export const DamageEffect: React.FC = () => {
 		const { name, value } = e.target;
 
 		dispatch({
-			type: damageEffectForm.type,
+			type: "UPDATE",
 			payload: {
 				...damageEffectForm,
 				[name as string]: value,

@@ -19,7 +19,7 @@ export const HealEffect: React.FC = () => {
 		const { name, value } = e.target;
 
 		dispatch({
-			type: healEffectForm.type,
+			type: "UPDATE",
 			payload: {
 				...healEffectForm,
 				[name as string]: value,

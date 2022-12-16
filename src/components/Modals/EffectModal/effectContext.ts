@@ -1,9 +1,9 @@
 import { createContext, Dispatch, useContext } from "react";
-import { IEffectState, IUpdateFormAction } from "./effectReducer";
+import { IEffectState, TEffectFormAction } from "./effectReducer";
 
 interface IContextProps {
 	state: IEffectState;
-	dispatch: Dispatch<IUpdateFormAction>;
+	dispatch: Dispatch<TEffectFormAction>;
 }
 
 export const EffectContext = createContext<IContextProps | null>(null);
