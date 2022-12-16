@@ -8,10 +8,14 @@ import {
 	IWeaponDamageEffect,
 } from "../../../types";
 
-export interface IUpdateFormAction {
-	type: EffectType;
-	payload: ISkillEffect;
-}
+export type TEffectFormAction =
+	| {
+			type: "UPDATE";
+			payload: ISkillEffect;
+	  }
+	| {
+			type: "RESET";
+	  };
 
 export interface IEffectState {
 	weaponDamageEffectForm: IWeaponDamageEffect;
@@ -70,36 +74,42 @@ export const initialState: IEffectState = {
 
 export const effectReducer = (
 	state: IEffectState,
-	action: IUpdateFormAction
+	action: TEffectFormAction
 ) => {
-	const { type, payload } = action;
-	switch (payload.type) {
-		case EffectType.WeaponDamage:
-			return {
-				...state,
-				weaponDamageEffectForm: payload,
-			};
-		case EffectType.Damage:
-			return {
-				...state,
-				damageEffectForm: payload,
-			};
-		case EffectType.Heal:
-			return {
-				...state,
-				healEffectForm: payload,
-			};
-		case EffectType.Status:
-			return {
-				...state,
-				statusEffectForm: payload,
-			};
-		case EffectType.Auxiliary:
-			return {
-				...state,
-				auxiliaryEffectForm: payload,
-			};
-		default:
-			throw Error("Unknown action: " + type);
+	if (action.type === "UPDATE") {
+		const { payload } = action;
+		switch (payload.type) {
+			case EffectType.WeaponDamage:
+				return {
+					...state,
+					weaponDamageEffectForm: payload,
+				};
+			case EffectType.Damage:
+				return {
+					...state,
+					damageEffectForm: payload,
+				};
+			case EffectType.Heal:
+				return {
+					...state,
+					healEffectForm: payload,
+				};
+			case EffectType.Status:
+				return {
+					...state,
+					statusEffectForm: payload,
+				};
+			case EffectType.Auxiliary:
+				return {
+					...state,
+					auxiliaryEffectForm: payload,
+				};
+		}
 	}
+
+	if (action.type === "RESET") {
+		return initialState;
+	}
+
+	throw Error("Unknown action");
 };

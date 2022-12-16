@@ -19,7 +19,7 @@ export const AuxiliaryEffect: React.FC = () => {
 		const { name, value } = e.target;
 
 		dispatch({
-			type: auxiliaryEffectForm.type,
+			type: "UPDATE",
 			payload: {
 				...auxiliaryEffectForm,
 				[name as string]: value,

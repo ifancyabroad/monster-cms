@@ -37,7 +37,7 @@ export const EffectModal: React.FC<IProps> = ({
 	const open = useAppSelector((state) => state.modals.effectModal.open);
 	const effect = useAppSelector((state) => state.modals.effectModal.effect);
 	const index = useAppSelector((state) => state.modals.effectModal.index);
-	const [effectType, setEffectType] = useState(EffectType.Damage);
+	const [effectType, setEffectType] = useState(EffectType.WeaponDamage);
 	const [state, localDispatch] = useReducer(effectReducer, initialState);
 	const title = effect ? "Update Effect" : "Add Effect";
 	const confirm = effect ? "Update" : "Add";
@@ -49,9 +49,16 @@ export const EffectModal: React.FC<IProps> = ({
 
 	useEffect(() => {
 		if (effect) {
-			localDispatch({ type: effect.type, payload: effect });
+			setEffectType(effect.type);
+			localDispatch({ type: "UPDATE", payload: effect });
 		}
 	}, [effect]);
+
+	useEffect(() => {
+		if (!open) {
+			localDispatch({ type: "RESET" });
+		}
+	}, [open]);
 
 	const handleClose = () => {
 		dispatch(closeEffectModal());

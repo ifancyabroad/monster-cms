@@ -101,14 +101,14 @@ export const Monster: React.FC = () => {
 					<Box sx={{ display: "flex" }}>
 						<IconButton
 							aria-label="add"
-							color="primary"
+							color="secondary"
 							onClick={handleUpdateMonster}
 						>
 							<Edit fontSize="large" />
 						</IconButton>
 						<IconButton
 							aria-label="add"
-							color="primary"
+							color="warning"
 							onClick={handleDeleteMonster}
 						>
 							<Delete fontSize="large" />
