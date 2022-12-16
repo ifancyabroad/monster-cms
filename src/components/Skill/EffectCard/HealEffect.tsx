@@ -20,7 +20,7 @@ export const HealEffect: React.FC<IHealEffect> = ({
 				<Box component="span" sx={{ fontWeight: "medium" }}>
 					Multiplier:{" "}
 				</Box>
-				{multiplier}
+				x{multiplier}
 			</Typography>
 			<Typography component="li">
 				<Box component="span" sx={{ fontWeight: "medium" }}>

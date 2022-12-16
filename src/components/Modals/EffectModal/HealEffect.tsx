@@ -105,6 +105,7 @@ export const HealEffect: React.FC = () => {
 							inputProps={{
 								min: 0,
 								max: 99,
+								step: ".01",
 							}}
 						/>
 					</Grid>
