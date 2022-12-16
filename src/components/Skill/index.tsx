@@ -183,8 +183,14 @@ export const Skill: React.FC = () => {
 				</Typography>
 
 				<Grid container spacing={2}>
-					{skill.effects.map((effect) => (
-						<Grid item xs={12} md={6} lg={3}>
+					{skill.effects.map((effect, index) => (
+						<Grid
+							key={`${effect.type}-${index}`}
+							item
+							xs={12}
+							md={6}
+							lg={3}
+						>
 							<EffectCard {...effect} />
 						</Grid>
 					))}

@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import { SkillsTable } from "./SkillsTable";
 
 export const Skills: React.FC = () => {
 	return (
@@ -6,7 +7,7 @@ export const Skills: React.FC = () => {
 			<Typography variant="h2" gutterBottom>
 				Skills
 			</Typography>
-			<Typography>Coming soon</Typography>
+			<SkillsTable />
 		</div>
 	);
 };

@@ -231,8 +231,7 @@ export const MonsterModal: React.FC = () => {
 							multiline
 							minRows={4}
 							inputProps={{
-								minLength: 3,
-								maxLength: 25,
+								maxLength: 200,
 							}}
 						/>
 					</Box>
@@ -248,7 +247,7 @@ export const MonsterModal: React.FC = () => {
 						stats={getResistancesArray(
 							formValues.monster.resistances
 						)}
-						min={0}
+						min={-1000}
 						max={100}
 						handleChange={handleChangeResistances}
 					/>

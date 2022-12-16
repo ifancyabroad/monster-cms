@@ -244,8 +244,7 @@ export const SkillModal: React.FC = () => {
 								multiline
 								minRows={4}
 								inputProps={{
-									minLength: 3,
-									maxLength: 25,
+									maxLength: 200,
 								}}
 							/>
 						</Box>
@@ -269,7 +268,7 @@ export const SkillModal: React.FC = () => {
 										onChange={handleChange}
 									>
 										{CLASSES.map((cl) => (
-											<MenuItem value={cl}>
+											<MenuItem key={cl} value={cl}>
 												{CLASS_NAME_MAP[cl]}
 											</MenuItem>
 										))}

@@ -115,14 +115,14 @@ export const StatusEffect: React.FC = () => {
 				<StatGroup
 					title="Stats"
 					stats={getStatsArray(stats)}
-					min={0}
+					min={-100}
 					max={30}
 					handleChange={handleChangeStats}
 				/>
 				<StatGroup
 					title="Resistances"
 					stats={getResistancesArray(resistances)}
-					min={0}
+					min={-1000}
 					max={100}
 					handleChange={handleChangeResistances}
 				/>

@@ -170,11 +170,8 @@ export const Monster: React.FC = () => {
 						}}
 					>
 						{getStatsArray(monster.stats).map((stat) => (
-							<Fragment>
-								<Box
-									key={stat.key}
-									sx={{ textAlign: "center", flex: 1 }}
-								>
+							<Fragment key={stat.key}>
+								<Box sx={{ textAlign: "center", flex: 1 }}>
 									<Typography>{stat.name}</Typography>
 									<Typography variant="h5" component="p">
 										{stat.value}
