@@ -2,14 +2,10 @@ import { Box, IconButton, TableCell, TableRow } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-	closeConfirmationModal,
-	openConfirmationModal,
-	openSkillModal,
-} from "../../features/modals/modalsSlice";
+import { openSkillModal } from "../../features/modals/modalsSlice";
 import { deleteSkill } from "../../features/skills/skillsSlice";
 import { ISkill } from "../../types";
 import { CLASS_NAME_MAP } from "../../utils";
@@ -17,9 +13,7 @@ import { ConfirmationModal } from "../Modals";
 
 export const SkillsTableRow: React.FC<ISkill> = (skill) => {
 	const dispatch = useAppDispatch();
-	const confirmationModalOpen = useAppSelector(
-		(state) => state.modals.confirmationModalOpen
-	);
+	const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
 	const isLoading = useAppSelector(
 		(state) => state.skills.status === "loading"
 	);
@@ -28,18 +22,18 @@ export const SkillsTableRow: React.FC<ISkill> = (skill) => {
 		dispatch(openSkillModal(skill));
 	};
 
-	const handleDeleteSkill = async () => {
-		dispatch(openConfirmationModal());
+	const handleDeleteSkill = () => {
+		setConfirmationModalOpen(true);
 	};
 
 	const handleCloseConfirmationModal = () => {
-		dispatch(closeConfirmationModal());
+		setConfirmationModalOpen(false);
 	};
 
 	const handleConfirmDeleteSkill = async () => {
 		try {
 			await dispatch(deleteSkill(skill)).unwrap();
-			dispatch(closeConfirmationModal());
+			setConfirmationModalOpen(false);
 		} catch (error) {
 			// TODO: Show error popup
 		}
