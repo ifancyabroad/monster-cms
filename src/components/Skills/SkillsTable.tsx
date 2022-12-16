@@ -1,6 +1,7 @@
 import {
 	Box,
 	IconButton,
+	InputAdornment,
 	Paper,
 	SxProps,
 	Table,
@@ -11,6 +12,7 @@ import {
 	TablePagination,
 	TableRow,
 	TableSortLabel,
+	TextField,
 	Toolbar,
 	Tooltip,
 	Typography,
@@ -21,6 +23,7 @@ import { ISkill } from "../../types";
 import { Fragment, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { SkillsTableRow } from "./SkillsTableRow";
+import SearchIcon from "@mui/icons-material/Search";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 	if (b[orderBy] < a[orderBy]) {
@@ -130,22 +133,38 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 	);
 };
 
-const EnhancedTableToolbar: React.FC = () => {
+interface IToolbarProps {
+	searchValue: string;
+	onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const EnhancedTableToolbar: React.FC<IToolbarProps> = ({
+	searchValue,
+	onSearchChange,
+}) => {
 	return (
 		<Toolbar
 			sx={{
+				p: 2,
 				pl: { sm: 2 },
 				pr: { xs: 1, sm: 1 },
+				display: "flex",
+				justifyContent: "space-between",
 			}}
 		>
-			<Typography
-				sx={{ flex: "1 1 100%" }}
-				variant="h6"
-				id="tableTitle"
-				component="div"
-			>
-				Skills List
-			</Typography>
+			<TextField
+				label="Search"
+				type="search"
+				value={searchValue}
+				onChange={onSearchChange}
+				InputProps={{
+					endAdornment: (
+						<InputAdornment position="end">
+							<SearchIcon />
+						</InputAdornment>
+					),
+				}}
+			/>
 			<Tooltip title="Filter list">
 				<IconButton>
 					<FilterListIcon />
@@ -161,6 +180,7 @@ export const SkillsTable: React.FC = () => {
 	const [orderBy, setOrderBy] = useState<keyof ISkill>("name");
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(25);
+	const [searched, setSearched] = useState<string>("");
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
@@ -182,6 +202,11 @@ export const SkillsTable: React.FC = () => {
 		setPage(0);
 	};
 
+	const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const { value } = event.target;
+		setSearched(value);
+	};
+
 	// Avoid a layout jump when reaching the last page with empty rows.
 	const emptyRows =
 		page > 0
@@ -192,7 +217,10 @@ export const SkillsTable: React.FC = () => {
 		<Fragment>
 			<Box sx={{ width: "100%" }}>
 				<Paper sx={{ width: "100%", mb: 2 }}>
-					<EnhancedTableToolbar />
+					<EnhancedTableToolbar
+						searchValue={searched}
+						onSearchChange={handleChangeSearch}
+					/>
 					<TableContainer>
 						<Table
 							sx={{ minWidth: 750 }}
@@ -206,6 +234,11 @@ export const SkillsTable: React.FC = () => {
 							<TableBody>
 								{skillsList
 									.slice()
+									.filter((row) =>
+										row.name
+											.toLowerCase()
+											.includes(searched.toLowerCase())
+									)
 									.sort(getComparator(order, orderBy))
 									.slice(
 										page * rowsPerPage,
