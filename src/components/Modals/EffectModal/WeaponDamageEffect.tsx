@@ -45,6 +45,7 @@ export const WeaponDamageEffect: React.FC = () => {
 							inputProps={{
 								min: 0,
 								max: 99,
+								step: ".01",
 							}}
 						/>
 					</Grid>

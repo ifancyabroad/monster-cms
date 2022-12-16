@@ -10,7 +10,7 @@ export const WeaponDamageEffect: React.FC<IWeaponDamageEffect> = ({
 				<Box component="span" sx={{ fontWeight: "medium" }}>
 					Multiplier:{" "}
 				</Box>
-				{multiplier}
+				x{multiplier}
 			</Typography>
 		</Box>
 	);
