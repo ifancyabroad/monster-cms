@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import {
 	Box,
 	Collapse,
@@ -6,7 +6,7 @@ import {
 	Drawer,
 	IconButton,
 	List,
-	ListItem,
+	ListItemButton,
 	ListItemSecondaryAction,
 	ListItemText,
 } from "@mui/material";
@@ -18,7 +18,7 @@ import {
 	openMonsterModal,
 	openSkillModal,
 } from "../../features/modals/modalsSlice";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 export const SideDrawer: React.FC = () => {
@@ -27,19 +27,11 @@ export const SideDrawer: React.FC = () => {
 	const mobileOpen = useAppSelector((state) => state.sidedrawer.open);
 	const monstersList = useAppSelector((state) => state.monsters.monsters);
 	const skillsList = useAppSelector((state) => state.skills.skills);
-	const [monstersOpen, setMonstersOpen] = useState(true);
-	const [skillsOpen, setSkillsOpen] = useState(true);
+	const isMonsters = useRouteMatch("/monsters");
+	const isSkills = useRouteMatch("/skills");
 
 	const handleDrawerToggle = () => {
 		dispatch(closeSidedrawer());
-	};
-
-	const handleMonstersClick = () => {
-		setMonstersOpen(!monstersOpen);
-	};
-
-	const handleSkillsClick = () => {
-		setSkillsOpen(!skillsOpen);
 	};
 
 	const addMonster = () => {
@@ -55,10 +47,10 @@ export const SideDrawer: React.FC = () => {
 			<Box sx={(theme) => theme.mixins.toolbar} />
 			<Divider />
 			<List>
-				<ListItem button component={Link} to="/settings">
+				<ListItemButton component={Link} to="/settings">
 					<ListItemText>Settings</ListItemText>
-				</ListItem>
-				<ListItem button onClick={handleMonstersClick}>
+				</ListItemButton>
+				<ListItemButton component={Link} to="/monsters">
 					<ListItemText>Monsters</ListItemText>
 					{user && (
 						<ListItemSecondaryAction>
@@ -71,28 +63,27 @@ export const SideDrawer: React.FC = () => {
 							</IconButton>
 						</ListItemSecondaryAction>
 					)}
-				</ListItem>
-				<Collapse in={monstersOpen} unmountOnExit>
+				</ListItemButton>
+				<Collapse in={Boolean(isMonsters)} unmountOnExit>
 					<List>
 						{monstersList.map((monster, index) => (
-							<ListItem
+							<ListItemButton
 								sx={{
 									paddingLeft: 4,
 								}}
-								button
 								key={index}
 								component={Link}
 								to={`/monsters/${monster.id}`}
 							>
 								<ListItemText primary={monster.name} />
-							</ListItem>
+							</ListItemButton>
 						))}
 					</List>
 				</Collapse>
-				<ListItem button>
+				<ListItemButton>
 					<ListItemText>Items (coming soon)</ListItemText>
-				</ListItem>
-				<ListItem button onClick={handleSkillsClick}>
+				</ListItemButton>
+				<ListItemButton component={Link} to="/skills">
 					<ListItemText>Skills</ListItemText>
 					{user && (
 						<ListItemSecondaryAction>
@@ -105,27 +96,26 @@ export const SideDrawer: React.FC = () => {
 							</IconButton>
 						</ListItemSecondaryAction>
 					)}
-				</ListItem>
-				<Collapse in={skillsOpen} unmountOnExit>
+				</ListItemButton>
+				<Collapse in={Boolean(isSkills)} unmountOnExit>
 					<List>
 						{skillsList.map((skill, index) => (
-							<ListItem
+							<ListItemButton
 								sx={{
 									paddingLeft: 4,
 								}}
-								button
 								key={index}
 								component={Link}
 								to={`/skills/${skill.id}`}
 							>
 								<ListItemText primary={skill.name} />
-							</ListItem>
+							</ListItemButton>
 						))}
 					</List>
 				</Collapse>
-				<ListItem button>
+				<ListItemButton>
 					<ListItemText>Classes (coming soon)</ListItemText>
-				</ListItem>
+				</ListItemButton>
 			</List>
 		</div>
 	);
