@@ -12,36 +12,15 @@ import {
 	TableSortLabel,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import { ISkill, ISkillFilters } from "../../types";
+import { ISkillFilters, TOrder, TSkillsOrderBy } from "../../types";
 import { Fragment, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { SkillsTableRow } from "./SkillsTableRow";
 import { SkillTableFilters } from "./SkillsTableFilters";
-import { getSkillType } from "../../utils";
-
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-	if (b[orderBy] < a[orderBy]) {
-		return -1;
-	}
-	if (b[orderBy] > a[orderBy]) {
-		return 1;
-	}
-	return 0;
-}
-
-type Order = "asc" | "desc";
-
-function getComparator<Key extends keyof any>(
-	order: Order,
-	orderBy: Key
-): (a: { [key in Key]: any }, b: { [key in Key]: any }) => number {
-	return order === "desc"
-		? (a, b) => descendingComparator(a, b, orderBy)
-		: (a, b) => -descendingComparator(a, b, orderBy);
-}
+import { applyFilters, getComparator } from "../../utils";
 
 interface HeadCell {
-	id: string;
+	id: TSkillsOrderBy;
 	label: string;
 	align?: "right";
 }
@@ -77,15 +56,18 @@ const headCells: readonly HeadCell[] = [
 ];
 
 interface EnhancedTableProps {
-	onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
-	order: Order;
-	orderBy: string;
+	onRequestSort: (
+		event: React.MouseEvent<unknown>,
+		property: TSkillsOrderBy
+	) => void;
+	order: TOrder;
+	orderBy: TSkillsOrderBy;
 }
 
 const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 	const { order, orderBy, onRequestSort } = props;
 	const createSortHandler =
-		(property: string) => (event: React.MouseEvent<unknown>) => {
+		(property: TSkillsOrderBy) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);
 		};
 
@@ -134,34 +116,15 @@ const defaultFilters: ISkillFilters = {
 
 export const SkillsTable: React.FC = () => {
 	const skillsList = useAppSelector((state) => state.skills.skills);
-	const [order, setOrder] = useState<Order>("asc");
-	const [orderBy, setOrderBy] = useState<string>("name");
+	const [order, setOrder] = useState<TOrder>("asc");
+	const [orderBy, setOrderBy] = useState<TSkillsOrderBy>("name");
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(25);
 	const [filters, setFilters] = useState<ISkillFilters>(defaultFilters);
 
-	const handleApplyFilters = (skill: ISkill) => {
-		const nameFilter = skill.name
-			.toLowerCase()
-			.includes(filters.name.toLowerCase());
-		const classFilter =
-			filters.class === "all" || skill.class === filters.class;
-		const typeFilter =
-			filters.type === "all" || getSkillType(skill) === filters.type;
-		const priceFilter = filters.price >= skill.price;
-		const levelFilter = filters.level >= skill.level;
-		return (
-			nameFilter &&
-			classFilter &&
-			typeFilter &&
-			priceFilter &&
-			levelFilter
-		);
-	};
-
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
-		property: string
+		property: TSkillsOrderBy
 	) => {
 		const isAsc = orderBy === property && order === "asc";
 		setOrder(isAsc ? "desc" : "asc");
@@ -225,7 +188,7 @@ export const SkillsTable: React.FC = () => {
 							<TableBody>
 								{skillsList
 									.slice()
-									.filter(handleApplyFilters)
+									.filter(applyFilters(filters))
 									.sort(getComparator(order, orderBy))
 									.slice(
 										page * rowsPerPage,

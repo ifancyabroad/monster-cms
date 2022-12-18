@@ -4,6 +4,8 @@ export interface IDictionary<T> {
 	[K: string]: T;
 }
 
+export type TOrder = "asc" | "desc";
+
 export type TStats = Record<Stat, number>;
 export type TDamageTypes = Record<DamageType, number>;
 
