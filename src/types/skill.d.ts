@@ -1,5 +1,12 @@
 import { TDamageTypes, TStats } from ".";
-import { CharacterClass, DamageType, EffectType, Stat, Target } from "../enums";
+import {
+	CharacterClass,
+	DamageType,
+	EffectType,
+	SkillType,
+	Stat,
+	Target,
+} from "../enums";
 
 export interface IWeaponDamageEffect {
 	type: EffectType.WeaponDamage;
@@ -71,4 +78,12 @@ export interface ISaveSkill {
 export interface IUpdateSkill extends ISaveSkill {
 	id: string;
 	oldImage?: string;
+}
+
+export interface ISkillFilters {
+	name: "";
+	class: CharacterClass | "all";
+	type: SkillType | "all";
+	value: number;
+	level: number;
 }

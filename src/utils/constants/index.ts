@@ -3,6 +3,7 @@ import {
 	CharacterClass,
 	DamageType,
 	EffectType,
+	SkillType,
 	Stat,
 } from "../../enums";
 
@@ -109,4 +110,22 @@ export const CLASS_NAME_MAP = {
 	[CharacterClass.Warrior]: "Warrior",
 	[CharacterClass.Mage]: "Mage",
 	[CharacterClass.Rogue]: "Rogue",
+};
+
+export const SKILL_TYPES = [
+	SkillType.WeaponAttack,
+	SkillType.Attack,
+	SkillType.Heal,
+	SkillType.Buff,
+	SkillType.Debuff,
+	SkillType.Other,
+] as const;
+
+export const SKILL_TYPE_NAME_MAP = {
+	[SkillType.WeaponAttack]: "Weapon Attack",
+	[SkillType.Attack]: "Attack",
+	[SkillType.Heal]: "Heal",
+	[SkillType.Buff]: "Buff",
+	[SkillType.Debuff]: "Debuff",
+	[SkillType.Other]: "Other",
 };

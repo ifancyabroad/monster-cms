@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { openSkillModal } from "../../features/modals/modalsSlice";
 import { deleteSkill } from "../../features/skills/skillsSlice";
 import { ISkill } from "../../types";
-import { CLASS_NAME_MAP } from "../../utils";
+import { CLASS_NAME_MAP, getSkillType, SKILL_TYPE_NAME_MAP } from "../../utils";
 import { ConfirmationModal } from "../Modals";
 
 export const SkillsTableRow: React.FC<ISkill> = (skill) => {
@@ -50,7 +50,9 @@ export const SkillsTableRow: React.FC<ISkill> = (skill) => {
 					{skill.name}
 				</TableCell>
 				<TableCell>{CLASS_NAME_MAP[skill.class]}</TableCell>
-				<TableCell>{skill.target}</TableCell>
+				<TableCell>
+					{SKILL_TYPE_NAME_MAP[getSkillType(skill)]}
+				</TableCell>
 				<TableCell align="right">{skill.maxUses}</TableCell>
 				<TableCell align="right">{skill.price}</TableCell>
 				<TableCell align="right">{skill.level}</TableCell>
