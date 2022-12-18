@@ -87,3 +87,5 @@ export interface ISkillFilters {
 	price: number;
 	level: number;
 }
+
+export type TSkillsOrderBy = keyof ISkill | "type";
