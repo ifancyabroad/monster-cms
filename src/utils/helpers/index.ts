@@ -1,4 +1,5 @@
-import { TStats, TDamageTypes } from "../../types";
+import { EffectType, SkillType, Target } from "../../enums";
+import { TStats, TDamageTypes, ISkill } from "../../types";
 import {
 	AUXILLARY_RESISTANCES,
 	ELEMENTAL_RESISTANCES,
@@ -46,3 +47,40 @@ export const getAuxillaryResistancesArray = (stats: TDamageTypes) =>
 
 export const getKeyFromName = (name: string) =>
 	name.toLowerCase().replaceAll(" ", "_").trim();
+
+export const getSkillType = (skill: ISkill) => {
+	const { effects, target } = skill;
+	const effectTypes = effects.map((effect) => effect.type);
+
+	if (target === Target.Enemy) {
+		if (effectTypes.includes(EffectType.WeaponDamage)) {
+			return SkillType.WeaponAttack;
+		}
+
+		if (effectTypes.includes(EffectType.Damage)) {
+			return SkillType.Attack;
+		}
+
+		if (
+			effectTypes.includes(EffectType.Status) ||
+			effectTypes.includes(EffectType.Auxiliary)
+		) {
+			return SkillType.Debuff;
+		}
+	}
+
+	if (target === Target.Self) {
+		if (effectTypes.includes(EffectType.Heal)) {
+			return SkillType.Heal;
+		}
+
+		if (
+			effectTypes.includes(EffectType.Status) ||
+			effectTypes.includes(EffectType.Auxiliary)
+		) {
+			return SkillType.Buff;
+		}
+	}
+
+	return SkillType.Other;
+};

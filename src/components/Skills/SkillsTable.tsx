@@ -1,7 +1,5 @@
 import {
 	Box,
-	IconButton,
-	InputAdornment,
 	Paper,
 	SxProps,
 	Table,
@@ -12,18 +10,13 @@ import {
 	TablePagination,
 	TableRow,
 	TableSortLabel,
-	TextField,
-	Toolbar,
-	Tooltip,
-	Typography,
 } from "@mui/material";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import { ISkill } from "../../types";
+import { ISkillFilters } from "../../types";
 import { Fragment, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { SkillsTableRow } from "./SkillsTableRow";
-import SearchIcon from "@mui/icons-material/Search";
+import { SkillTableFilters } from "./SkillsTableFilters";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 	if (b[orderBy] < a[orderBy]) {
@@ -47,7 +40,7 @@ function getComparator<Key extends keyof any>(
 }
 
 interface HeadCell {
-	id: keyof ISkill;
+	id: string;
 	label: string;
 	align?: "right";
 }
@@ -62,8 +55,8 @@ const headCells: readonly HeadCell[] = [
 		label: "Class",
 	},
 	{
-		id: "target",
-		label: "Target",
+		id: "type",
+		label: "Type",
 	},
 	{
 		id: "maxUses",
@@ -83,10 +76,7 @@ const headCells: readonly HeadCell[] = [
 ];
 
 interface EnhancedTableProps {
-	onRequestSort: (
-		event: React.MouseEvent<unknown>,
-		property: keyof ISkill
-	) => void;
+	onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
 	order: Order;
 	orderBy: string;
 }
@@ -94,7 +84,7 @@ interface EnhancedTableProps {
 const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 	const { order, orderBy, onRequestSort } = props;
 	const createSortHandler =
-		(property: keyof ISkill) => (event: React.MouseEvent<unknown>) => {
+		(property: string) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);
 		};
 
@@ -133,58 +123,25 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 	);
 };
 
-interface IToolbarProps {
-	searchValue: string;
-	onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-const EnhancedTableToolbar: React.FC<IToolbarProps> = ({
-	searchValue,
-	onSearchChange,
-}) => {
-	return (
-		<Toolbar
-			sx={{
-				p: 2,
-				pl: { sm: 2 },
-				pr: { xs: 1, sm: 1 },
-				display: "flex",
-				justifyContent: "space-between",
-			}}
-		>
-			<TextField
-				label="Search"
-				type="search"
-				value={searchValue}
-				onChange={onSearchChange}
-				InputProps={{
-					endAdornment: (
-						<InputAdornment position="end">
-							<SearchIcon />
-						</InputAdornment>
-					),
-				}}
-			/>
-			<Tooltip title="Filter list">
-				<IconButton>
-					<FilterListIcon />
-				</IconButton>
-			</Tooltip>
-		</Toolbar>
-	);
+const defaultFilters: ISkillFilters = {
+	name: "",
+	class: "all",
+	type: "all",
+	value: 10000,
+	level: 9,
 };
 
 export const SkillsTable: React.FC = () => {
 	const skillsList = useAppSelector((state) => state.skills.skills);
 	const [order, setOrder] = useState<Order>("asc");
-	const [orderBy, setOrderBy] = useState<keyof ISkill>("name");
+	const [orderBy, setOrderBy] = useState<string>("name");
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(25);
-	const [searched, setSearched] = useState<string>("");
+	const [filters, setFilters] = useState<ISkillFilters>(defaultFilters);
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
-		property: keyof ISkill
+		property: string
 	) => {
 		const isAsc = orderBy === property && order === "asc";
 		setOrder(isAsc ? "desc" : "asc");
@@ -202,9 +159,22 @@ export const SkillsTable: React.FC = () => {
 		setPage(0);
 	};
 
-	const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const { value } = event.target;
-		setSearched(value);
+	const handleChangeFilters = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { name, value } = event.target;
+		setFilters({
+			...filters,
+			[name]: value,
+		});
+	};
+
+	const handleChangeSlider = (event: Event, value: number | number[]) => {
+		const { name } = event.target as HTMLInputElement;
+		setFilters({
+			...filters,
+			[name]: value,
+		});
 	};
 
 	// Avoid a layout jump when reaching the last page with empty rows.
@@ -217,9 +187,10 @@ export const SkillsTable: React.FC = () => {
 		<Fragment>
 			<Box sx={{ width: "100%" }}>
 				<Paper sx={{ width: "100%", mb: 2 }}>
-					<EnhancedTableToolbar
-						searchValue={searched}
-						onSearchChange={handleChangeSearch}
+					<SkillTableFilters
+						filters={filters}
+						onChangeFilters={handleChangeFilters}
+						onChangeSlider={handleChangeSlider}
 					/>
 					<TableContainer>
 						<Table
@@ -237,7 +208,9 @@ export const SkillsTable: React.FC = () => {
 									.filter((row) =>
 										row.name
 											.toLowerCase()
-											.includes(searched.toLowerCase())
+											.includes(
+												filters.name.toLowerCase()
+											)
 									)
 									.sort(getComparator(order, orderBy))
 									.slice(

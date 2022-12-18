@@ -45,3 +45,12 @@ export enum DamageType {
 	Poison = "poison",
 	Acid = "acid",
 }
+
+export enum SkillType {
+	WeaponAttack = "weaponAttack",
+	Attack = "attack",
+	Heal = "heal",
+	Buff = "buff",
+	Debuff = "debuff",
+	Other = "other",
+}
