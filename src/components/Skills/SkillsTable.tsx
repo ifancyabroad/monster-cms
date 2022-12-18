@@ -12,11 +12,12 @@ import {
 	TableSortLabel,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import { ISkillFilters } from "../../types";
+import { ISkill, ISkillFilters } from "../../types";
 import { Fragment, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { SkillsTableRow } from "./SkillsTableRow";
 import { SkillTableFilters } from "./SkillsTableFilters";
+import { getSkillType } from "../../utils";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 	if (b[orderBy] < a[orderBy]) {
@@ -127,7 +128,7 @@ const defaultFilters: ISkillFilters = {
 	name: "",
 	class: "all",
 	type: "all",
-	value: 10000,
+	price: 10000,
 	level: 9,
 };
 
@@ -138,6 +139,25 @@ export const SkillsTable: React.FC = () => {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(25);
 	const [filters, setFilters] = useState<ISkillFilters>(defaultFilters);
+
+	const handleApplyFilters = (skill: ISkill) => {
+		const nameFilter = skill.name
+			.toLowerCase()
+			.includes(filters.name.toLowerCase());
+		const classFilter =
+			filters.class === "all" || skill.class === filters.class;
+		const typeFilter =
+			filters.type === "all" || getSkillType(skill) === filters.type;
+		const priceFilter = filters.price >= skill.price;
+		const levelFilter = filters.level >= skill.level;
+		return (
+			nameFilter &&
+			classFilter &&
+			typeFilter &&
+			priceFilter &&
+			levelFilter
+		);
+	};
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
@@ -205,13 +225,7 @@ export const SkillsTable: React.FC = () => {
 							<TableBody>
 								{skillsList
 									.slice()
-									.filter((row) =>
-										row.name
-											.toLowerCase()
-											.includes(
-												filters.name.toLowerCase()
-											)
-									)
+									.filter(handleApplyFilters)
 									.sort(getComparator(order, orderBy))
 									.slice(
 										page * rowsPerPage,
