@@ -89,11 +89,11 @@ export const SkillTableFilters: React.FC<IProps> = ({
 					</TextField>
 				</Grid>
 				<Grid item xs={6} md={3}>
-					<Typography variant="body2">Value</Typography>
+					<Typography variant="body2">Price</Typography>
 					<Slider
 						size="small"
-						name="value"
-						value={filters.value}
+						name="price"
+						value={filters.price}
 						onChange={onChangeSlider}
 						valueLabelDisplay="auto"
 						step={100}

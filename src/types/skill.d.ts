@@ -84,6 +84,6 @@ export interface ISkillFilters {
 	name: "";
 	class: CharacterClass | "all";
 	type: SkillType | "all";
-	value: number;
+	price: number;
 	level: number;
 }
