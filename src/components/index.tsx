@@ -7,3 +7,4 @@ export * from "./HOCLayout";
 export * from "./Settings";
 export * from "./Skill";
 export * from "./Skills";
+export * from "./SkillsTable";

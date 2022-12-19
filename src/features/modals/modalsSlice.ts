@@ -17,6 +17,7 @@ interface ModalsState {
 		effect?: ISkillEffect;
 		index?: number;
 	};
+	addSkillsModalOpen: boolean;
 }
 
 const initialState: ModalsState = {
@@ -31,6 +32,7 @@ const initialState: ModalsState = {
 	effectModal: {
 		open: false,
 	},
+	addSkillsModalOpen: false,
 };
 
 export const modalsSlice = createSlice({
@@ -81,6 +83,12 @@ export const modalsSlice = createSlice({
 			state.effectModal.effect = undefined;
 			state.effectModal.index = undefined;
 		},
+		openAddSkillsModal: (state) => {
+			state.addSkillsModalOpen = true;
+		},
+		closeAddSkillsModal: (state) => {
+			state.addSkillsModalOpen = false;
+		},
 	},
 });
 
@@ -96,6 +104,8 @@ export const {
 	closeSkillModal,
 	openEffectModal,
 	closeEffectModal,
+	openAddSkillsModal,
+	closeAddSkillsModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

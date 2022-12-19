@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { SkillsTable } from "./SkillsTable";
+import { SkillsTable } from "../SkillsTable";
 
 export const Skills: React.FC = () => {
 	return (

@@ -1,26 +1,24 @@
-import { Box, IconButton, TableCell, TableRow } from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import { TableCell, TableRow } from "@mui/material";
 import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { openSkillModal } from "../../features/modals/modalsSlice";
 import { deleteSkill } from "../../features/skills/skillsSlice";
 import { ISkill } from "../../types";
 import { CLASS_NAME_MAP, getSkillType, SKILL_TYPE_NAME_MAP } from "../../utils";
 import { ConfirmationModal } from "../Modals";
+import { SkillsTableDefaultActions } from "./SkillsTableDefaultActions";
+import { SkillsTableAddSkillActions } from "./SkillsTableAddSkillActions";
 
-export const SkillsTableRow: React.FC<ISkill> = (skill) => {
+interface IProps {
+	skill: ISkill;
+	type?: "default" | "addSkills";
+}
+
+export const SkillsTableRow: React.FC<IProps> = ({ skill, type }) => {
 	const dispatch = useAppDispatch();
 	const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
 	const isLoading = useAppSelector(
 		(state) => state.skills.status === "loading"
 	);
-
-	const handleUpdateSkill = () => {
-		dispatch(openSkillModal(skill));
-	};
 
 	const handleDeleteSkill = () => {
 		setConfirmationModalOpen(true);
@@ -57,36 +55,14 @@ export const SkillsTableRow: React.FC<ISkill> = (skill) => {
 				<TableCell align="right">{skill.price}</TableCell>
 				<TableCell align="right">{skill.level}</TableCell>
 				<TableCell>
-					<Box
-						sx={{
-							display: "flex",
-							justifyContent: "flex-end",
-							gap: 2,
-						}}
-					>
-						<IconButton
-							aria-label="view"
-							color="primary"
-							component={Link}
-							to={`/skills/${skill.id}`}
-						>
-							<VisibilityIcon />
-						</IconButton>
-						<IconButton
-							aria-label="update"
-							color="secondary"
-							onClick={handleUpdateSkill}
-						>
-							<EditIcon />
-						</IconButton>
-						<IconButton
-							aria-label="delete"
-							color="warning"
-							onClick={handleDeleteSkill}
-						>
-							<DeleteIcon />
-						</IconButton>
-					</Box>
+					{type === "addSkills" ? (
+						<SkillsTableAddSkillActions skill={skill} />
+					) : (
+						<SkillsTableDefaultActions
+							skill={skill}
+							onDeleteSkill={handleDeleteSkill}
+						/>
+					)}
 				</TableCell>
 			</TableRow>
 
