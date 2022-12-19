@@ -114,7 +114,11 @@ const defaultFilters: ISkillFilters = {
 	level: 9,
 };
 
-export const SkillsTable: React.FC = () => {
+interface IProps {
+	type?: "default" | "addSkills";
+}
+
+export const SkillsTable: React.FC<IProps> = ({ type = "default" }) => {
 	const skillsList = useAppSelector((state) => state.skills.skills);
 	const [order, setOrder] = useState<TOrder>("asc");
 	const [orderBy, setOrderBy] = useState<TSkillsOrderBy>("name");
@@ -195,7 +199,11 @@ export const SkillsTable: React.FC = () => {
 										page * rowsPerPage + rowsPerPage
 									)
 									.map((row) => (
-										<SkillsTableRow key={row.id} {...row} />
+										<SkillsTableRow
+											key={row.id}
+											skill={row}
+											type={type}
+										/>
 									))}
 								{emptyRows > 0 && (
 									<TableRow
