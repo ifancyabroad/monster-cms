@@ -26,6 +26,7 @@ import { StatGroup } from "../common";
 import { getResistancesArray, getStatsArray } from "../../../utils";
 import { DamageType } from "../../../enums";
 import { AddSkillsModal } from "../AddSkillsModal";
+import { SkillCard } from "./SkillCard";
 
 const defaultMonsterValues: IBaseMonster = {
 	challenge: 1,
@@ -184,6 +185,16 @@ export const MonsterModal: React.FC = () => {
 		});
 	};
 
+	const handleRemoveSkill = (skill: string) => {
+		setFormValues({
+			...formValues,
+			monster: {
+				...formValues.monster,
+				skills: formValues.monster.skills.filter((sk) => sk !== skill),
+			},
+		});
+	};
+
 	return (
 		<Fragment>
 			<Dialog
@@ -301,7 +312,16 @@ export const MonsterModal: React.FC = () => {
 							</Grid>
 						</Box>
 						<Box my={3}>
-							{formValues.monster.skills.map((skill) => skill)}
+							<Grid container spacing={1}>
+								{formValues.monster.skills.map((skill) => (
+									<Grid item xs={12} md={6}>
+										<SkillCard
+											id={skill}
+											onRemoveSkill={handleRemoveSkill}
+										/>
+									</Grid>
+								))}
+							</Grid>
 						</Box>
 					</DialogContent>
 					<DialogActions>
