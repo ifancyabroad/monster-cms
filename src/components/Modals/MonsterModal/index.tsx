@@ -305,7 +305,7 @@ export const MonsterModal: React.FC = () => {
 										required
 										inputProps={{
 											min: 0,
-											max: 20,
+											max: 30,
 										}}
 									/>
 								</Grid>
@@ -314,7 +314,7 @@ export const MonsterModal: React.FC = () => {
 						<Box my={3}>
 							<Grid container spacing={1}>
 								{formValues.monster.skills.map((skill) => (
-									<Grid item xs={12} md={6}>
+									<Grid key={skill} item xs={12} md={6}>
 										<SkillCard
 											id={skill}
 											onRemoveSkill={handleRemoveSkill}

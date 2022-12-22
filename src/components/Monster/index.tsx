@@ -32,6 +32,7 @@ import {
 } from "../../features/modals/modalsSlice";
 import { ConfirmationModal } from "../Modals";
 import { AuthContext } from "../../context/AuthContext";
+import { SkillCard } from "./SkillCard";
 
 interface IRouteParams {
 	id: string;
@@ -212,7 +213,13 @@ export const Monster: React.FC = () => {
 				>
 					Resistances
 				</Typography>
-				<Grid container spacing={3}>
+				<Grid
+					container
+					spacing={3}
+					sx={{
+						marginBottom: 3,
+					}}
+				>
 					<Grid item xs={12} sm={6} md={4}>
 						<StatsTable
 							title="Physical"
@@ -237,6 +244,25 @@ export const Monster: React.FC = () => {
 							)}
 						/>
 					</Grid>
+				</Grid>
+				<Divider />
+			</Box>
+
+			<Box marginBottom={4}>
+				<Typography
+					variant="body2"
+					color="textSecondary"
+					component="h5"
+					gutterBottom
+				>
+					Skills
+				</Typography>
+				<Grid container spacing={2}>
+					{monster.skills.map((skill) => (
+						<Grid key={skill} item xs={12} md={6} lg={3}>
+							<SkillCard key={skill} id={skill} />
+						</Grid>
+					))}
 				</Grid>
 			</Box>
 
