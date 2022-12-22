@@ -1,5 +1,5 @@
 import { TableCell, TableRow } from "@mui/material";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { deleteSkill } from "../../features/skills/skillsSlice";
 import { ISkill } from "../../types";
@@ -7,6 +7,7 @@ import { CLASS_NAME_MAP, getSkillType, SKILL_TYPE_NAME_MAP } from "../../utils";
 import { ConfirmationModal } from "../Modals";
 import { SkillsTableDefaultActions } from "./SkillsTableDefaultActions";
 import { SkillsTableAddSkillActions } from "./SkillsTableAddSkillActions";
+import { AuthContext } from "../../context/AuthContext";
 
 interface IProps {
 	skill: ISkill;
@@ -15,6 +16,7 @@ interface IProps {
 
 export const SkillsTableRow: React.FC<IProps> = ({ skill, type }) => {
 	const dispatch = useAppDispatch();
+	const user = useContext(AuthContext);
 	const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
 	const isLoading = useAppSelector(
 		(state) => state.skills.status === "loading"
@@ -54,16 +56,18 @@ export const SkillsTableRow: React.FC<IProps> = ({ skill, type }) => {
 				<TableCell align="right">{skill.maxUses}</TableCell>
 				<TableCell align="right">{skill.price}</TableCell>
 				<TableCell align="right">{skill.level}</TableCell>
-				<TableCell>
-					{type === "addSkills" ? (
-						<SkillsTableAddSkillActions skill={skill} />
-					) : (
-						<SkillsTableDefaultActions
-							skill={skill}
-							onDeleteSkill={handleDeleteSkill}
-						/>
-					)}
-				</TableCell>
+				{user && (
+					<TableCell>
+						{type === "addSkills" ? (
+							<SkillsTableAddSkillActions skill={skill} />
+						) : (
+							<SkillsTableDefaultActions
+								skill={skill}
+								onDeleteSkill={handleDeleteSkill}
+							/>
+						)}
+					</TableCell>
+				)}
 			</TableRow>
 
 			<ConfirmationModal

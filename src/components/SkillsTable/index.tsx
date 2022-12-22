@@ -13,11 +13,12 @@ import {
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { ISkillFilters, TOrder, TSkillsOrderBy } from "../../types";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { SkillsTableRow } from "./SkillsTableRow";
 import { SkillTableFilters } from "./SkillsTableFilters";
 import { applyFilters, getComparator } from "../../utils";
+import { AuthContext } from "../../context/AuthContext";
 
 interface HeadCell {
 	id: TSkillsOrderBy;
@@ -66,6 +67,8 @@ interface EnhancedTableProps {
 
 const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 	const { order, orderBy, onRequestSort } = props;
+	const user = useContext(AuthContext);
+
 	const createSortHandler =
 		(property: TSkillsOrderBy) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);
@@ -100,7 +103,7 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 					</TableCell>
 				))}
 
-				<TableCell align="right">Actions</TableCell>
+				{user && <TableCell align="right">Actions</TableCell>}
 			</TableRow>
 		</TableHead>
 	);
