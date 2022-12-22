@@ -5,18 +5,18 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { dbSkills, stImages } from "../../firebaseSetup";
-import { ISaveSkill, ISkill, IUpdateSkill } from "../../types";
+import { IImagePath, ISaveSkill, ISkill, IUpdateSkill } from "../../types";
 
 interface ISkillsState {
 	skills: ISkill[];
-	skillImagePath: string;
+	skillImagePaths: IImagePath[];
 	status: "idle" | "loading" | "succeeded" | "failed";
 	error?: string;
 }
 
 const initialState: ISkillsState = {
 	skills: [],
-	skillImagePath: "",
+	skillImagePaths: [],
 	status: "idle",
 };
 
@@ -107,19 +107,18 @@ export const selectSkillById = createSelector(
 			skills.find((skill) => skill.id === id)
 );
 
-export const selectSkillImagePath = createSelector(
+export const selectSkillImagePathById = createSelector(
 	skillsSelector,
-	({ skillImagePath }) => skillImagePath
+	({ skillImagePaths }) =>
+		(id: string) =>
+			skillImagePaths.find((skillImage) => skillImage.id === id)
+				?.imagePath
 );
 
 export const skillsSlice = createSlice({
 	name: "skills",
 	initialState,
-	reducers: {
-		clearSkillImagePath: (state) => {
-			state.skillImagePath = "";
-		},
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(fetchSkills.pending, (state) => {
 			state.status = "loading";
@@ -136,8 +135,15 @@ export const skillsSlice = createSlice({
 			state.status = "loading";
 		});
 		builder.addCase(fetchSkillImagePath.fulfilled, (state, action) => {
+			const newSkillImage = {
+				id: action.meta.arg.id,
+				imagePath: action.payload,
+			};
+
 			state.status = "succeeded";
-			state.skillImagePath = action.payload;
+			state.skillImagePaths = state.skillImagePaths
+				.filter((skillImage) => skillImage.id !== newSkillImage.id)
+				.concat(newSkillImage);
 		});
 		builder.addCase(fetchSkillImagePath.rejected, (state, action) => {
 			state.status = "failed";
@@ -177,6 +183,6 @@ export const skillsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { clearSkillImagePath } = skillsSlice.actions;
+// export const { } = skillsSlice.actions;
 
 export default skillsSlice.reducer;

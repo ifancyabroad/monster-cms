@@ -5,18 +5,23 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { dbMonsters, stImages } from "../../firebaseSetup";
-import { IMonster, ISaveMonster, IUpdateMonster } from "../../types";
+import {
+	IImagePath,
+	IMonster,
+	ISaveMonster,
+	IUpdateMonster,
+} from "../../types";
 
 interface IMonstersState {
 	monsters: IMonster[];
-	monsterImagePath: string;
+	monsterImagePaths: IImagePath[];
 	status: "idle" | "loading" | "succeeded" | "failed";
 	error?: string;
 }
 
 const initialState: IMonstersState = {
 	monsters: [],
-	monsterImagePath: "",
+	monsterImagePaths: [],
 	status: "idle",
 };
 
@@ -110,19 +115,18 @@ export const selectMonsterById = createSelector(
 			monsters.find((monster) => monster.id === id)
 );
 
-export const selectMonsterImagePath = createSelector(
+export const selectMonsterImagePathById = createSelector(
 	monstersSelector,
-	({ monsterImagePath }) => monsterImagePath
+	({ monsterImagePaths }) =>
+		(id: string) =>
+			monsterImagePaths.find((monsterImage) => monsterImage.id === id)
+				?.imagePath
 );
 
 export const monstersSlice = createSlice({
 	name: "monsters",
 	initialState,
-	reducers: {
-		clearMonsterImagePath: (state) => {
-			state.monsterImagePath = "";
-		},
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(fetchMonsters.pending, (state) => {
 			state.status = "loading";
@@ -139,8 +143,17 @@ export const monstersSlice = createSlice({
 			state.status = "loading";
 		});
 		builder.addCase(fetchMonsterImagePath.fulfilled, (state, action) => {
+			const newMonsterImage = {
+				id: action.meta.arg.id,
+				imagePath: action.payload,
+			};
+
 			state.status = "succeeded";
-			state.monsterImagePath = action.payload;
+			state.monsterImagePaths = state.monsterImagePaths
+				.filter(
+					(monsterImage) => monsterImage.id !== newMonsterImage.id
+				)
+				.concat(newMonsterImage);
 		});
 		builder.addCase(fetchMonsterImagePath.rejected, (state, action) => {
 			state.status = "failed";
@@ -180,6 +193,6 @@ export const monstersSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { clearMonsterImagePath } = monstersSlice.actions;
+// export const { } = monstersSlice.actions;
 
 export default monstersSlice.reducer;
