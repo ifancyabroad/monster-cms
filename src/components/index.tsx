@@ -8,3 +8,7 @@ export * from "./Settings";
 export * from "./Skill";
 export * from "./Skills";
 export * from "./SkillsTable";
+export * from "./Weapons";
+export * from "./Armour";
+export * from "./Classes";
+export * from "./Dashboard";

@@ -1,4 +1,7 @@
 import {
+	Armour,
+	Classes,
+	Dashboard,
 	HOCLayout,
 	LoginModal,
 	Monster,
@@ -8,6 +11,7 @@ import {
 	Skill,
 	SkillModal,
 	Skills,
+	Weapons,
 } from "./components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -16,12 +20,15 @@ function App() {
 		<Router>
 			<HOCLayout>
 				<Switch>
-					<Route exact={true} path="/" />
+					<Route exact={true} path="/" component={Dashboard} />
 					<Route path="/settings" component={Settings} />
 					<Route path="/monsters/:id" component={Monster} />
 					<Route path="/monsters" component={Monsters} />
 					<Route path="/skills/:id" component={Skill} />
 					<Route path="/skills" component={Skills} />
+					<Route path="/weapons" component={Weapons} />
+					<Route path="/armour" component={Armour} />
+					<Route path="/classes" component={Classes} />
 				</Switch>
 			</HOCLayout>
 			<LoginModal />

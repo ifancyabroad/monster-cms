@@ -47,8 +47,8 @@ export const SideDrawer: React.FC = () => {
 			<Box sx={(theme) => theme.mixins.toolbar} />
 			<Divider />
 			<List>
-				<ListItemButton component={Link} to="/settings">
-					<ListItemText>Settings</ListItemText>
+				<ListItemButton component={Link} to="/">
+					<ListItemText>Dashboard</ListItemText>
 				</ListItemButton>
 				<ListItemButton component={Link} to="/monsters">
 					<ListItemText>Monsters</ListItemText>
@@ -80,9 +80,6 @@ export const SideDrawer: React.FC = () => {
 						))}
 					</List>
 				</Collapse>
-				<ListItemButton>
-					<ListItemText>Items (coming soon)</ListItemText>
-				</ListItemButton>
 				<ListItemButton component={Link} to="/skills">
 					<ListItemText>Skills</ListItemText>
 					{user && (
@@ -113,8 +110,17 @@ export const SideDrawer: React.FC = () => {
 						))}
 					</List>
 				</Collapse>
-				<ListItemButton>
-					<ListItemText>Classes (coming soon)</ListItemText>
+				<ListItemButton component={Link} to="/weapons">
+					<ListItemText>Weapons</ListItemText>
+				</ListItemButton>
+				<ListItemButton component={Link} to="/armour">
+					<ListItemText>Armour</ListItemText>
+				</ListItemButton>
+				<ListItemButton component={Link} to="/classes">
+					<ListItemText>Classes</ListItemText>
+				</ListItemButton>
+				<ListItemButton component={Link} to="/settings">
+					<ListItemText>Settings</ListItemText>
 				</ListItemButton>
 			</List>
 		</div>
