@@ -11,10 +11,9 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import {
-	clearSkillImagePath,
 	fetchSkillImagePath,
 	selectSkillById,
-	selectSkillImagePath,
+	selectSkillImagePathById,
 } from "../../features/skills/skillsSlice";
 import { CLASS_NAME_MAP, getSkillType, SKILL_TYPE_NAME_MAP } from "../../utils";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -46,17 +45,13 @@ interface IProps {
 export const SkillCard: React.FC<IProps> = ({ id }) => {
 	const dispatch = useAppDispatch();
 	const skill = useSelector(selectSkillById)(id);
-	const skillImagePath = useSelector(selectSkillImagePath);
+	const skillImagePath = useSelector(selectSkillImagePathById)(id);
 	const [expanded, setExpanded] = useState(false);
 
 	useEffect(() => {
 		if (skill?.icon) {
 			dispatch(fetchSkillImagePath(skill));
 		}
-
-		return () => {
-			dispatch(clearSkillImagePath());
-		};
 	}, [dispatch, skill]);
 
 	const handleExpandClick = () => {
@@ -71,8 +66,16 @@ export const SkillCard: React.FC<IProps> = ({ id }) => {
 		<Card variant="outlined">
 			<CardHeader
 				avatar={
-					skillImagePath && (
+					skillImagePath ? (
 						<Icon src={skillImagePath} alt={skill.name} />
+					) : (
+						<Box
+							sx={{
+								height: 40,
+								width: 40,
+								bgcolor: "background.default",
+							}}
+						/>
 					)
 				}
 				title={skill.name}

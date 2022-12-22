@@ -11,11 +11,10 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
-	clearMonsterImagePath,
 	deleteMonster,
 	fetchMonsterImagePath,
 	selectMonsterById,
-	selectMonsterImagePath,
+	selectMonsterImagePathById,
 } from "../../features/monsters/monstersSlice";
 import {
 	getAuxillaryResistancesArray,
@@ -43,7 +42,7 @@ export const Monster: React.FC = () => {
 	let { id } = useParams<IRouteParams>();
 	const user = useContext(AuthContext);
 	const monster = useSelector(selectMonsterById)(id);
-	const monsterImagePath = useSelector(selectMonsterImagePath);
+	const monsterImagePath = useSelector(selectMonsterImagePathById)(id);
 	const confirmationModalOpen = useAppSelector(
 		(state) => state.modals.confirmationModalOpen
 	);
@@ -55,10 +54,6 @@ export const Monster: React.FC = () => {
 		if (monster?.portrait) {
 			dispatch(fetchMonsterImagePath(monster));
 		}
-
-		return () => {
-			dispatch(clearMonsterImagePath());
-		};
 	}, [dispatch, monster]);
 
 	if (!monster) {

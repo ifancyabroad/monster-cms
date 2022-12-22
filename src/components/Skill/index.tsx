@@ -11,11 +11,10 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
-	clearSkillImagePath,
 	deleteSkill,
 	fetchSkillImagePath,
 	selectSkillById,
-	selectSkillImagePath,
+	selectSkillImagePathById,
 } from "../../features/skills/skillsSlice";
 import { Delete, Edit } from "@mui/icons-material";
 import {
@@ -41,7 +40,7 @@ export const Skill: React.FC = () => {
 	let { id } = useParams<IRouteParams>();
 	const user = useContext(AuthContext);
 	const skill = useSelector(selectSkillById)(id);
-	const skillImagePath = useSelector(selectSkillImagePath);
+	const skillImagePath = useSelector(selectSkillImagePathById)(id);
 	const confirmationModalOpen = useAppSelector(
 		(state) => state.modals.confirmationModalOpen
 	);
@@ -53,10 +52,6 @@ export const Skill: React.FC = () => {
 		if (skill?.icon) {
 			dispatch(fetchSkillImagePath(skill));
 		}
-
-		return () => {
-			dispatch(clearSkillImagePath());
-		};
 	}, [dispatch, skill]);
 
 	if (!skill) {
