@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/monster-cms/static/js/main.94112677.chunk.js",
-    "main.js.map": "/monster-cms/static/js/main.94112677.chunk.js.map",
+    "main.js": "/monster-cms/static/js/main.c6fdf91b.chunk.js",
+    "main.js.map": "/monster-cms/static/js/main.c6fdf91b.chunk.js.map",
     "runtime-main.js": "/monster-cms/static/js/runtime-main.7955d625.js",
     "runtime-main.js.map": "/monster-cms/static/js/runtime-main.7955d625.js.map",
     "static/js/2.1c03eb23.chunk.js": "/monster-cms/static/js/2.1c03eb23.chunk.js",
@@ -14,6 +14,6 @@
   "entrypoints": [
     "static/js/runtime-main.7955d625.js",
     "static/js/2.1c03eb23.chunk.js",
-    "static/js/main.94112677.chunk.js"
+    "static/js/main.c6fdf91b.chunk.js"
   ]
 }
