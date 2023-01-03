@@ -1,4 +1,5 @@
 import { TDamageTypes, TStats } from ".";
+import { Stat } from "../enums";
 
 export interface IBaseMonster {
 	challenge: number;
@@ -23,3 +24,10 @@ export interface IUpdateMonster extends ISaveMonster {
 	id: string;
 	oldImage?: string;
 }
+
+export interface IMonsterFilters {
+	name: "";
+	challenge: number;
+}
+
+export type TMonstersOrderBy = keyof IMonster | Stat;

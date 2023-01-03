@@ -2,6 +2,7 @@ export * from "./Header";
 export * from "./SideDrawer";
 export * from "./Monster";
 export * from "./Monsters";
+export * from "./MonstersTable";
 export * from "./Modals";
 export * from "./HOCLayout";
 export * from "./Settings";

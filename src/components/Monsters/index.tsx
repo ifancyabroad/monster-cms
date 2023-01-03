@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import { MonstersTable } from "../MonstersTable";
 
 export const Monsters: React.FC = () => {
 	return (
@@ -6,7 +7,7 @@ export const Monsters: React.FC = () => {
 			<Typography variant="h2" gutterBottom>
 				Monsters
 			</Typography>
-			<Typography>Coming soon</Typography>
+			<MonstersTable />
 		</div>
 	);
 };

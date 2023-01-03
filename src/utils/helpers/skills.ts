@@ -54,7 +54,7 @@ const descendingComparator = (
 	return 0;
 };
 
-export const getComparator = (
+export const getSkillsComparator = (
 	order: TOrder,
 	orderBy: TSkillsOrderBy
 ): ((a: ISkill, b: ISkill) => number) => {
@@ -63,7 +63,7 @@ export const getComparator = (
 		: (a, b) => -descendingComparator(a, b, orderBy);
 };
 
-export const applyFilters = (
+export const applySkillsFilters = (
 	filters: ISkillFilters
 ): ((skill: ISkill) => boolean) => {
 	return (skill) => {

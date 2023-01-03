@@ -12,16 +12,17 @@ import {
 	TableSortLabel,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import { ISkillFilters, TOrder, TSkillsOrderBy } from "../../types";
+import { IMonsterFilters, TMonstersOrderBy, TOrder } from "../../types";
 import { Fragment, useContext, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
-import { SkillsTableRow } from "./SkillsTableRow";
-import { SkillTableFilters } from "./SkillsTableFilters";
-import { applySkillsFilters, getSkillsComparator } from "../../utils";
+import { MonstersTableRow } from "./MonstersTableRow";
+import { MonstersTableFilters } from "./MonstersTableFilters";
+import { applyMonstersFilters, getMonstersComparator } from "../../utils";
 import { AuthContext } from "../../context/AuthContext";
+import { Stat } from "../../enums";
 
 interface HeadCell {
-	id: TSkillsOrderBy;
+	id: TMonstersOrderBy;
 	label: string;
 	align?: "right";
 }
@@ -32,37 +33,49 @@ const headCells: readonly HeadCell[] = [
 		label: "Name",
 	},
 	{
-		id: "class",
-		label: "Class",
-	},
-	{
-		id: "type",
-		label: "Type",
-	},
-	{
-		id: "maxUses",
+		id: Stat.Strength,
 		align: "right",
-		label: "Max Uses",
+		label: "Strength",
 	},
 	{
-		id: "price",
+		id: Stat.Dexterity,
 		align: "right",
-		label: "Value",
+		label: "Dexterity",
 	},
 	{
-		id: "level",
+		id: Stat.Constitution,
 		align: "right",
-		label: "Level",
+		label: "Constitution",
+	},
+	{
+		id: Stat.Intelligence,
+		align: "right",
+		label: "Intelligence",
+	},
+	{
+		id: Stat.Wisdom,
+		align: "right",
+		label: "Wisdom",
+	},
+	{
+		id: Stat.Charisma,
+		align: "right",
+		label: "Charisma",
+	},
+	{
+		id: "challenge",
+		align: "right",
+		label: "Challenge",
 	},
 ];
 
 interface EnhancedTableProps {
 	onRequestSort: (
 		event: React.MouseEvent<unknown>,
-		property: TSkillsOrderBy
+		property: TMonstersOrderBy
 	) => void;
 	order: TOrder;
-	orderBy: TSkillsOrderBy;
+	orderBy: TMonstersOrderBy;
 }
 
 const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
@@ -70,7 +83,7 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 	const user = useContext(AuthContext);
 
 	const createSortHandler =
-		(property: TSkillsOrderBy) => (event: React.MouseEvent<unknown>) => {
+		(property: TMonstersOrderBy) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);
 		};
 
@@ -109,29 +122,22 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 	);
 };
 
-const defaultFilters: ISkillFilters = {
+const defaultFilters: IMonsterFilters = {
 	name: "",
-	class: "all",
-	type: "all",
-	price: 10000,
-	level: 9,
+	challenge: 30,
 };
 
-interface IProps {
-	type?: "default" | "addSkills";
-}
-
-export const SkillsTable: React.FC<IProps> = ({ type = "default" }) => {
-	const skillsList = useAppSelector((state) => state.skills.skills);
+export const MonstersTable: React.FC = () => {
+	const monstersList = useAppSelector((state) => state.monsters.monsters);
 	const [order, setOrder] = useState<TOrder>("asc");
-	const [orderBy, setOrderBy] = useState<TSkillsOrderBy>("name");
+	const [orderBy, setOrderBy] = useState<TMonstersOrderBy>("name");
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(25);
-	const [filters, setFilters] = useState<ISkillFilters>(defaultFilters);
+	const [filters, setFilters] = useState<IMonsterFilters>(defaultFilters);
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
-		property: TSkillsOrderBy
+		property: TMonstersOrderBy
 	) => {
 		const isAsc = orderBy === property && order === "asc";
 		setOrder(isAsc ? "desc" : "asc");
@@ -170,14 +176,14 @@ export const SkillsTable: React.FC<IProps> = ({ type = "default" }) => {
 	// Avoid a layout jump when reaching the last page with empty rows.
 	const emptyRows =
 		page > 0
-			? Math.max(0, (1 + page) * rowsPerPage - skillsList.length)
+			? Math.max(0, (1 + page) * rowsPerPage - monstersList.length)
 			: 0;
 
 	return (
 		<Fragment>
 			<Box sx={{ width: "100%" }}>
 				<Paper sx={{ width: "100%", mb: 2 }}>
-					<SkillTableFilters
+					<MonstersTableFilters
 						filters={filters}
 						onChangeFilters={handleChangeFilters}
 						onChangeSlider={handleChangeSlider}
@@ -193,19 +199,18 @@ export const SkillsTable: React.FC<IProps> = ({ type = "default" }) => {
 								onRequestSort={handleRequestSort}
 							/>
 							<TableBody>
-								{skillsList
+								{monstersList
 									.slice()
-									.filter(applySkillsFilters(filters))
-									.sort(getSkillsComparator(order, orderBy))
+									.filter(applyMonstersFilters(filters))
+									.sort(getMonstersComparator(order, orderBy))
 									.slice(
 										page * rowsPerPage,
 										page * rowsPerPage + rowsPerPage
 									)
 									.map((row) => (
-										<SkillsTableRow
+										<MonstersTableRow
 											key={row.id}
-											skill={row}
-											type={type}
+											monster={row}
 										/>
 									))}
 								{emptyRows > 0 && (
@@ -223,7 +228,7 @@ export const SkillsTable: React.FC<IProps> = ({ type = "default" }) => {
 					<TablePagination
 						rowsPerPageOptions={[5, 10, 25]}
 						component="div"
-						count={skillsList.length}
+						count={monstersList.length}
 						rowsPerPage={rowsPerPage}
 						page={page}
 						onPageChange={handleChangePage}

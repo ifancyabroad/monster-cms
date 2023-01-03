@@ -48,3 +48,4 @@ export const getKeyFromName = (name: string) =>
 	name.toLowerCase().replaceAll(" ", "_").trim();
 
 export * from "./skills";
+export * from "./monsters";
