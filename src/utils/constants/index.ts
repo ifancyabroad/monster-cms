@@ -112,6 +112,7 @@ export const CLASSES = [
 	CharacterClass.Warrior,
 	CharacterClass.Mage,
 	CharacterClass.Rogue,
+	CharacterClass.Cleric,
 ] as const;
 
 export const CLASS_NAME_MAP = {
@@ -119,6 +120,7 @@ export const CLASS_NAME_MAP = {
 	[CharacterClass.Warrior]: "Warrior",
 	[CharacterClass.Mage]: "Mage",
 	[CharacterClass.Rogue]: "Rogue",
+	[CharacterClass.Cleric]: "Cleric",
 };
 
 export const SKILL_TYPES = [
