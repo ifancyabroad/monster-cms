@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/monster-cms/static/js/main.c6fdf91b.chunk.js",
-    "main.js.map": "/monster-cms/static/js/main.c6fdf91b.chunk.js.map",
+    "main.js": "/monster-cms/static/js/main.aff02b11.chunk.js",
+    "main.js.map": "/monster-cms/static/js/main.aff02b11.chunk.js.map",
     "runtime-main.js": "/monster-cms/static/js/runtime-main.7955d625.js",
     "runtime-main.js.map": "/monster-cms/static/js/runtime-main.7955d625.js.map",
-    "static/js/2.1c03eb23.chunk.js": "/monster-cms/static/js/2.1c03eb23.chunk.js",
-    "static/js/2.1c03eb23.chunk.js.map": "/monster-cms/static/js/2.1c03eb23.chunk.js.map",
+    "static/js/2.fac957bd.chunk.js": "/monster-cms/static/js/2.fac957bd.chunk.js",
+    "static/js/2.fac957bd.chunk.js.map": "/monster-cms/static/js/2.fac957bd.chunk.js.map",
     "static/js/3.96f2cc7a.chunk.js": "/monster-cms/static/js/3.96f2cc7a.chunk.js",
     "static/js/3.96f2cc7a.chunk.js.map": "/monster-cms/static/js/3.96f2cc7a.chunk.js.map",
     "index.html": "/monster-cms/index.html",
-    "static/js/2.1c03eb23.chunk.js.LICENSE.txt": "/monster-cms/static/js/2.1c03eb23.chunk.js.LICENSE.txt"
+    "static/js/2.fac957bd.chunk.js.LICENSE.txt": "/monster-cms/static/js/2.fac957bd.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7955d625.js",
-    "static/js/2.1c03eb23.chunk.js",
-    "static/js/main.c6fdf91b.chunk.js"
+    "static/js/2.fac957bd.chunk.js",
+    "static/js/main.aff02b11.chunk.js"
   ]
 }
