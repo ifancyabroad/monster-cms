@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { Box, DialogContentText, Grid, TextField } from "@mui/material";
 import { useEffectContext } from "./effectContext";
+import { MAX_MULTIPLIER } from "../../../utils";
 
 export const WeaponDamageEffect: React.FC = () => {
 	const {
@@ -9,13 +10,14 @@ export const WeaponDamageEffect: React.FC = () => {
 	} = useEffectContext();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
+		const { name, type, value, valueAsNumber } = e.target;
+		const finalValue = type === "number" ? valueAsNumber : value;
 
 		dispatch({
 			type: "UPDATE",
 			payload: {
 				...weaponDamageEffectForm,
-				[name as string]: value,
+				[name as string]: finalValue,
 			},
 		});
 	};
@@ -37,14 +39,14 @@ export const WeaponDamageEffect: React.FC = () => {
 							fullWidth
 							margin="dense"
 							name="multiplier"
-							label="Multiplier"
+							label={`Multiplier (0-${MAX_MULTIPLIER})`}
 							type="number"
 							value={weaponDamageEffectForm.multiplier}
 							onChange={handleChange}
 							required
 							inputProps={{
 								min: 0,
-								max: 99,
+								max: MAX_MULTIPLIER,
 								step: ".01",
 							}}
 						/>

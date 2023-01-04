@@ -7,7 +7,11 @@ import {
 	TextField,
 } from "@mui/material";
 import { useEffectContext } from "./effectContext";
-import { AUXILIARY_EFFECTS, AUXILIARY_EFFECTS_NAME_MAP } from "../../../utils";
+import {
+	AUXILIARY_EFFECTS,
+	AUXILIARY_EFFECTS_NAME_MAP,
+	MAX_DURATION,
+} from "../../../utils";
 
 export const AuxiliaryEffect: React.FC = () => {
 	const {
@@ -16,13 +20,14 @@ export const AuxiliaryEffect: React.FC = () => {
 	} = useEffectContext();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
+		const { name, type, value, valueAsNumber } = e.target;
+		const finalValue = type === "number" ? valueAsNumber : value;
 
 		dispatch({
 			type: "UPDATE",
 			payload: {
 				...auxiliaryEffectForm,
-				[name as string]: value,
+				[name as string]: finalValue,
 			},
 		});
 	};
@@ -49,7 +54,7 @@ export const AuxiliaryEffect: React.FC = () => {
 							onChange={handleChange}
 						>
 							{AUXILIARY_EFFECTS.map((effect) => (
-								<MenuItem value={effect}>
+								<MenuItem key={effect} value={effect}>
 									{AUXILIARY_EFFECTS_NAME_MAP[effect]}
 								</MenuItem>
 							))}
@@ -64,7 +69,7 @@ export const AuxiliaryEffect: React.FC = () => {
 							fullWidth
 							margin="dense"
 							name="accuracy"
-							label="Accuracy"
+							label="Accuracy (%)"
 							type="number"
 							value={auxiliaryEffectForm.accuracy}
 							onChange={handleChange}
@@ -80,14 +85,14 @@ export const AuxiliaryEffect: React.FC = () => {
 							fullWidth
 							margin="dense"
 							name="duration"
-							label="Duration"
+							label={`Duration (1-${MAX_DURATION})`}
 							type="number"
 							value={auxiliaryEffectForm.duration}
 							onChange={handleChange}
 							required
 							inputProps={{
 								min: 1,
-								max: 100,
+								max: MAX_DURATION,
 							}}
 						/>
 					</Grid>

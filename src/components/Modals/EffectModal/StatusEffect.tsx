@@ -1,6 +1,10 @@
 import { Fragment, useState } from "react";
 import { Box, Grid, TextField } from "@mui/material";
-import { getResistancesArray, getStatsArray } from "../../../utils";
+import {
+	getResistancesArray,
+	getStatsArray,
+	MAX_DURATION,
+} from "../../../utils";
 import { StatGroup } from "../common";
 import { DamageType, Stat } from "../../../enums";
 import { TDamageTypes, TStats } from "../../../types";
@@ -42,30 +46,30 @@ export const StatusEffect: React.FC = () => {
 		...statusEffectForm.modifiers.resistances,
 	});
 
-	const handleChange = (
-		e: React.ChangeEvent<{ name?: string; value: unknown }>
-	) => {
-		const { name, value } = e.target;
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, type, value, valueAsNumber } = e.target;
+		const finalValue = type === "number" ? valueAsNumber : value;
+
 		dispatch({
 			type: "UPDATE",
 			payload: {
 				...statusEffectForm,
-				[name as string]: value,
+				[name as string]: finalValue,
 			},
 		});
 	};
 
 	const handleChangeStats = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.currentTarget;
+		const { name, valueAsNumber } = e.currentTarget;
 
 		setStats({
 			...stats,
-			[name as string]: value,
+			[name as string]: valueAsNumber,
 		});
 
 		const newStats = {
 			...statusEffectForm.modifiers.stats,
-			[name as string]: value,
+			[name as string]: valueAsNumber,
 		};
 
 		Object.keys(newStats).forEach((key) => {
@@ -89,16 +93,16 @@ export const StatusEffect: React.FC = () => {
 	const handleChangeResistances = (
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
-		const { name, value } = e.currentTarget;
+		const { name, valueAsNumber } = e.currentTarget;
 
 		setResistances({
 			...resistances,
-			[name as string]: value,
+			[name as string]: valueAsNumber,
 		});
 
 		const newResistances = {
 			...statusEffectForm.modifiers.resistances,
-			[name as string]: value,
+			[name as string]: valueAsNumber,
 		};
 
 		Object.keys(newResistances).forEach((key) => {
@@ -123,16 +127,16 @@ export const StatusEffect: React.FC = () => {
 		<Fragment>
 			<Box my={3}>
 				<StatGroup
-					title="Stats"
+					title="Stats (-30-30)"
 					stats={getStatsArray(stats)}
-					min={-100}
+					min={-30}
 					max={30}
 					handleChange={handleChangeStats}
 				/>
 				<StatGroup
-					title="Resistances"
+					title="Resistances (%)"
 					stats={getResistancesArray(resistances)}
-					min={-1000}
+					min={-100}
 					max={100}
 					handleChange={handleChangeResistances}
 				/>
@@ -144,7 +148,7 @@ export const StatusEffect: React.FC = () => {
 							fullWidth
 							margin="dense"
 							name="accuracy"
-							label="Accuracy"
+							label="Accuracy (%)"
 							type="number"
 							value={statusEffectForm.accuracy}
 							onChange={handleChange}
@@ -160,14 +164,14 @@ export const StatusEffect: React.FC = () => {
 							fullWidth
 							margin="dense"
 							name="duration"
-							label="Duration"
+							label={`Duration (1-${MAX_DURATION})`}
 							type="number"
 							value={statusEffectForm.duration}
 							onChange={handleChange}
 							required
 							inputProps={{
 								min: 1,
-								max: 100,
+								max: MAX_DURATION,
 							}}
 						/>
 					</Grid>

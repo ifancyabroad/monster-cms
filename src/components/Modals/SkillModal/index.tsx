@@ -29,7 +29,13 @@ import {
 } from "../../../enums";
 import { EffectModal } from "../EffectModal";
 import { EffectCard } from "./EffectCard";
-import { CLASSES, CLASS_NAME_MAP } from "../../../utils";
+import {
+	CLASSES,
+	CLASS_NAME_MAP,
+	MAX_GOLD_VALUE,
+	MAX_SKILL_LEVEL,
+	MAX_SKILL_USES,
+} from "../../../utils";
 
 const defaultSkillValues: IBaseSkill = {
 	name: "",
@@ -92,12 +98,13 @@ export const SkillModal: React.FC = () => {
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
+		const { name, type, value, valueAsNumber } = e.target;
+		const finalValue = type === "number" ? valueAsNumber : value;
 		setFormValues({
 			...formValues,
 			skill: {
 				...formValues.skill,
-				[name as string]: value as string,
+				[name as string]: finalValue,
 			},
 		});
 	};
@@ -305,14 +312,14 @@ export const SkillModal: React.FC = () => {
 										fullWidth
 										margin="dense"
 										name="level"
-										label="Level"
+										label={`Level (0-${MAX_SKILL_LEVEL})`}
 										type="number"
 										value={formValues.skill.level}
 										onChange={handleChange}
 										required
 										inputProps={{
 											min: 0,
-											max: 30,
+											max: MAX_SKILL_LEVEL,
 										}}
 									/>
 								</Grid>
@@ -321,14 +328,14 @@ export const SkillModal: React.FC = () => {
 										fullWidth
 										margin="dense"
 										name="price"
-										label="Price"
+										label={`Price (0-${MAX_GOLD_VALUE})`}
 										type="number"
 										value={formValues.skill.price}
 										onChange={handleChange}
 										required
 										inputProps={{
 											min: 0,
-											max: 9999,
+											max: MAX_GOLD_VALUE,
 										}}
 									/>
 								</Grid>
@@ -337,14 +344,14 @@ export const SkillModal: React.FC = () => {
 										fullWidth
 										margin="dense"
 										name="maxUses"
-										label="Max Uses"
+										label={`Max Uses (0-${MAX_SKILL_USES})`}
 										type="number"
 										value={formValues.skill.maxUses}
 										onChange={handleChange}
 										required
 										inputProps={{
 											min: 0,
-											max: 9999,
+											max: MAX_SKILL_USES,
 										}}
 									/>
 								</Grid>

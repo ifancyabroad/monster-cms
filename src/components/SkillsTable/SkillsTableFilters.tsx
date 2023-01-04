@@ -12,6 +12,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import {
 	CLASSES,
 	CLASS_NAME_MAP,
+	MAX_GOLD_VALUE,
+	MAX_SKILL_LEVEL,
 	SKILL_TYPES,
 	SKILL_TYPE_NAME_MAP,
 } from "../../utils";
@@ -98,7 +100,7 @@ export const SkillTableFilters: React.FC<IProps> = ({
 						valueLabelDisplay="auto"
 						step={100}
 						min={100}
-						max={10000}
+						max={MAX_GOLD_VALUE}
 					/>
 				</Grid>
 				<Grid item xs={6} md={3}>
@@ -111,7 +113,7 @@ export const SkillTableFilters: React.FC<IProps> = ({
 						valueLabelDisplay="auto"
 						step={1}
 						min={0}
-						max={9}
+						max={MAX_SKILL_LEVEL}
 					/>
 				</Grid>
 			</Grid>

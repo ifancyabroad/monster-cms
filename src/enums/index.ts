@@ -15,6 +15,7 @@ export enum Target {
 export enum AuxiliaryEffect {
 	Poison = "poison",
 	Stun = "stun",
+	Bleed = "bleed",
 }
 
 export enum CharacterClass {

@@ -17,7 +17,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
 	return (
-		<Router>
+		<Router basename="/monster-cms">
 			<HOCLayout>
 				<Switch>
 					<Route exact={true} path="/" component={Dashboard} />
