@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
 	closeMonsterModal,
 	openAddSkillsModal,
+	openErrorModal,
 } from "../../../features/modals/modalsSlice";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import {
@@ -85,6 +86,7 @@ export const MonsterModal: React.FC = () => {
 	const subtitle = monster
 		? `Updating ${monster?.name}`
 		: "Add a new monster to the database.";
+	const hasSkills = formValues.monster.skills.length > 0;
 
 	useEffect(() => {
 		setFormValues({
@@ -155,6 +157,14 @@ export const MonsterModal: React.FC = () => {
 	const handleSaveMonster = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
+
+			if (!hasSkills) {
+				dispatch(
+					openErrorModal({ message: "Please add at least 1 skill." })
+				);
+				return;
+			}
+
 			if (monster) {
 				const payload = {
 					...formValues,
@@ -313,15 +323,32 @@ export const MonsterModal: React.FC = () => {
 							</Grid>
 						</Box>
 						<Box my={3}>
+							<DialogContentText
+								variant="subtitle1"
+								component="h5"
+								gutterBottom
+							>
+								Skills
+							</DialogContentText>
 							<Grid container spacing={1}>
-								{formValues.monster.skills.map((skill) => (
-									<Grid key={skill} item xs={12} md={6}>
-										<SkillCard
-											id={skill}
-											onRemoveSkill={handleRemoveSkill}
-										/>
+								{hasSkills ? (
+									formValues.monster.skills.map((skill) => (
+										<Grid key={skill} item xs={12} md={6}>
+											<SkillCard
+												id={skill}
+												onRemoveSkill={
+													handleRemoveSkill
+												}
+											/>
+										</Grid>
+									))
+								) : (
+									<Grid item xs={12}>
+										<Typography>
+											Please add some skills!
+										</Typography>
 									</Grid>
-								))}
+								)}
 							</Grid>
 						</Box>
 					</DialogContent>

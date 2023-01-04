@@ -2,6 +2,7 @@ import {
 	Armour,
 	Classes,
 	Dashboard,
+	ErrorModal,
 	HOCLayout,
 	LoginModal,
 	Monster,
@@ -34,6 +35,7 @@ function App() {
 			<LoginModal />
 			<MonsterModal />
 			<SkillModal />
+			<ErrorModal />
 		</Router>
 	);
 }
