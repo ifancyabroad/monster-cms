@@ -7,6 +7,8 @@ import {
 	TextField,
 } from "@mui/material";
 import {
+	MAX_DAMAGE,
+	MAX_MULTIPLIER,
 	RESISTANCES,
 	RESISTANCES_NAME_MAP,
 	STATS,
@@ -21,13 +23,14 @@ export const DamageEffect: React.FC = () => {
 	} = useEffectContext();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
+		const { name, type, value, valueAsNumber } = e.target;
+		const finalValue = type === "number" ? valueAsNumber : value;
 
 		dispatch({
 			type: "UPDATE",
 			payload: {
 				...damageEffectForm,
-				[name as string]: value,
+				[name as string]: finalValue,
 			},
 		});
 	};
@@ -86,14 +89,14 @@ export const DamageEffect: React.FC = () => {
 							fullWidth
 							margin="dense"
 							name="min"
-							label="Minimum Roll"
+							label={`Minimum Roll (1-${MAX_DAMAGE})`}
 							type="number"
 							value={damageEffectForm.min}
 							onChange={handleChange}
 							required
 							inputProps={{
 								min: 1,
-								max: 99,
+								max: MAX_DAMAGE,
 							}}
 						/>
 					</Grid>
@@ -102,14 +105,14 @@ export const DamageEffect: React.FC = () => {
 							fullWidth
 							margin="dense"
 							name="max"
-							label="Maximum Roll"
+							label={`Maximum Roll (1-${MAX_DAMAGE})`}
 							type="number"
 							value={damageEffectForm.max}
 							onChange={handleChange}
 							required
 							inputProps={{
 								min: 1,
-								max: 99,
+								max: MAX_DAMAGE,
 							}}
 						/>
 					</Grid>
@@ -118,14 +121,14 @@ export const DamageEffect: React.FC = () => {
 							fullWidth
 							margin="dense"
 							name="multiplier"
-							label="Multiplier"
+							label={`Multiplier (0-${MAX_MULTIPLIER})`}
 							type="number"
 							value={damageEffectForm.multiplier}
 							onChange={handleChange}
 							required
 							inputProps={{
 								min: 0,
-								max: 99,
+								max: MAX_MULTIPLIER,
 								step: ".01",
 							}}
 						/>

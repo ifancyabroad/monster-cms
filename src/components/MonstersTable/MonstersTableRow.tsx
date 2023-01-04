@@ -48,7 +48,9 @@ export const MonstersTableRow: React.FC<IProps> = ({ monster }) => {
 					{monster.name}
 				</TableCell>
 				{STATS.map((stat) => (
-					<TableCell align="right">{monster.stats[stat]}</TableCell>
+					<TableCell key={stat} align="right">
+						{monster.stats[stat]}
+					</TableCell>
 				))}
 				<TableCell align="right">{monster.challenge}</TableCell>
 				{user && (

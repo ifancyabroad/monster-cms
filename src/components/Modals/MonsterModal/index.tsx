@@ -98,12 +98,13 @@ export const MonsterModal: React.FC = () => {
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.currentTarget;
+		const { name, type, value, valueAsNumber } = e.currentTarget;
+		const finalValue = type === "number" ? valueAsNumber : value;
 		setFormValues({
 			...formValues,
 			monster: {
 				...formValues.monster,
-				[name]: value,
+				[name]: finalValue,
 			},
 		});
 	};
@@ -124,28 +125,28 @@ export const MonsterModal: React.FC = () => {
 	const handleChangeResistances = (
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
-		const { name, value } = e.currentTarget;
+		const { name, valueAsNumber } = e.currentTarget;
 		setFormValues({
 			...formValues,
 			monster: {
 				...formValues.monster,
 				resistances: {
 					...formValues.monster.resistances,
-					[name]: value,
+					[name]: valueAsNumber,
 				},
 			},
 		});
 	};
 
 	const handleChangeStats = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.currentTarget;
+		const { name, valueAsNumber } = e.currentTarget;
 		setFormValues({
 			...formValues,
 			monster: {
 				...formValues.monster,
 				stats: {
 					...formValues.monster.stats,
-					[name]: value,
+					[name]: valueAsNumber,
 				},
 			},
 		});
@@ -269,14 +270,14 @@ export const MonsterModal: React.FC = () => {
 							/>
 						</Box>
 						<StatGroup
-							title="Stats"
+							title="Stats (1-30)"
 							stats={getStatsArray(formValues.monster.stats)}
 							min={1}
 							max={30}
 							handleChange={handleChangeStats}
 						/>
 						<StatGroup
-							title="Resistances"
+							title="Resistances (%)"
 							stats={getResistancesArray(
 								formValues.monster.resistances
 							)}
@@ -290,7 +291,7 @@ export const MonsterModal: React.FC = () => {
 								component="h5"
 								gutterBottom
 							>
-								Difficulty Rating
+								Difficulty Rating (1-30)
 							</DialogContentText>
 							<Grid container spacing={2}>
 								<Grid item xs={6} md={4}>

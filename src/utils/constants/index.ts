@@ -9,6 +9,13 @@ import {
 
 export const DRAWER_WIDTH = 240;
 
+export const MAX_SKILL_LEVEL = 9;
+export const MAX_GOLD_VALUE = 10000;
+export const MAX_SKILL_USES = 20;
+export const MAX_DURATION = 20;
+export const MAX_DAMAGE = 100;
+export const MAX_MULTIPLIER = 10;
+
 export const STATS = [
 	Stat.Strength,
 	Stat.Dexterity,
@@ -91,11 +98,13 @@ export const EFFECTS_NAME_MAP = {
 export const AUXILIARY_EFFECTS = [
 	AuxiliaryEffect.Poison,
 	AuxiliaryEffect.Stun,
+	AuxiliaryEffect.Bleed,
 ] as const;
 
 export const AUXILIARY_EFFECTS_NAME_MAP = {
 	[AuxiliaryEffect.Poison]: "Poison",
 	[AuxiliaryEffect.Stun]: "Stun",
+	[AuxiliaryEffect.Bleed]: "Bleed",
 };
 
 export const CLASSES = [

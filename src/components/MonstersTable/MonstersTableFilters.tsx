@@ -27,7 +27,7 @@ export const MonstersTableFilters: React.FC<IProps> = ({
 			}}
 		>
 			<Grid container spacing={2} alignItems="center">
-				<Grid item xs={6} md={6}>
+				<Grid item xs={12} md={3}>
 					<TextField
 						fullWidth
 						size="small"
@@ -45,7 +45,7 @@ export const MonstersTableFilters: React.FC<IProps> = ({
 						}}
 					/>
 				</Grid>
-				<Grid item xs={12} md={6}>
+				<Grid item xs={12} md={3}>
 					<Typography variant="body2">Challenge</Typography>
 					<Slider
 						size="small"
