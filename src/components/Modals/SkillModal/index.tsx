@@ -21,13 +21,7 @@ import {
 } from "@mui/material";
 import { saveSkill, updateSkill } from "../../../features/skills/skillsSlice";
 import { IBaseSkill, ISaveSkill, ISkill, ISkillEffect } from "../../../types";
-import {
-	CharacterClass,
-	DamageType,
-	EffectType,
-	Stat,
-	Target,
-} from "../../../enums";
+import { CharacterClass, Target } from "../../../enums";
 import { EffectModal } from "../EffectModal";
 import { EffectCard } from "./EffectCard";
 import {
