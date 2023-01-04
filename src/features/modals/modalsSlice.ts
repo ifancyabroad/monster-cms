@@ -4,6 +4,11 @@ import { IMonster, ISkill, ISkillEffect } from "../../types";
 interface ModalsState {
 	loginModalOpen: boolean;
 	confirmationModalOpen: boolean;
+	errorModal: {
+		open: boolean;
+		title?: string;
+		message?: string;
+	};
 	monsterModal: {
 		open: boolean;
 		monster?: IMonster;
@@ -23,6 +28,9 @@ interface ModalsState {
 const initialState: ModalsState = {
 	loginModalOpen: false,
 	confirmationModalOpen: false,
+	errorModal: {
+		open: false,
+	},
 	monsterModal: {
 		open: false,
 	},
@@ -50,6 +58,19 @@ export const modalsSlice = createSlice({
 		},
 		closeConfirmationModal: (state) => {
 			state.confirmationModalOpen = false;
+		},
+		openErrorModal: (
+			state,
+			action: PayloadAction<{ title?: string; message?: string }>
+		) => {
+			state.errorModal.open = true;
+			state.errorModal.title = action.payload.title;
+			state.errorModal.message = action.payload.message;
+		},
+		closeErrorModal: (state) => {
+			state.errorModal.open = false;
+			state.errorModal.title = undefined;
+			state.errorModal.message = undefined;
 		},
 		openMonsterModal: (
 			state,
@@ -98,6 +119,8 @@ export const {
 	closeLoginModal,
 	openConfirmationModal,
 	closeConfirmationModal,
+	openErrorModal,
+	closeErrorModal,
 	openMonsterModal,
 	closeMonsterModal,
 	openSkillModal,

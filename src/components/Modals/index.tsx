@@ -4,3 +4,4 @@ export * from "./LoginModal";
 export * from "./SkillModal";
 export * from "./EffectModal";
 export * from "./AddSkillsModal";
+export * from "./ErrorModal";

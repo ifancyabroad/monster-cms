@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
 	closeSkillModal,
 	openEffectModal,
+	openErrorModal,
 } from "../../../features/modals/modalsSlice";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import {
@@ -42,16 +43,7 @@ const defaultSkillValues: IBaseSkill = {
 	description: "",
 	icon: "",
 	class: CharacterClass.Common,
-	effects: [
-		{
-			type: EffectType.Damage,
-			damageType: DamageType.Slashing,
-			modifier: Stat.Strength,
-			multiplier: 1,
-			min: 1,
-			max: 6,
-		},
-	],
+	effects: [],
 	price: 0,
 	maxUses: 0,
 	level: 0,
@@ -85,6 +77,7 @@ export const SkillModal: React.FC = () => {
 	const subtitle = skill
 		? `Updating ${skill?.name}`
 		: "Add a new skill to the database.";
+	const hasEffects = formValues.skill.effects.length > 0;
 
 	useEffect(() => {
 		setFormValues({
@@ -164,6 +157,14 @@ export const SkillModal: React.FC = () => {
 	const handleSaveSkill = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
+
+			if (!hasEffects) {
+				dispatch(
+					openErrorModal({ message: "Please add at least 1 effect." })
+				);
+				return;
+			}
+
 			if (skill) {
 				const payload = {
 					...formValues,
@@ -365,17 +366,32 @@ export const SkillModal: React.FC = () => {
 							>
 								Skill Effects
 							</DialogContentText>
-							<Grid container spacing={2}>
-								{formValues.skill.effects.map(
-									(effect, index) => (
-										<Grid key={index} item xs={12} sm={6}>
-											<EffectCard
-												effect={effect}
-												index={index}
-												onRemove={handleRemoveEffect}
-											/>
-										</Grid>
+							<Grid container spacing={1}>
+								{hasEffects ? (
+									formValues.skill.effects.map(
+										(effect, index) => (
+											<Grid
+												key={index}
+												item
+												xs={12}
+												sm={6}
+											>
+												<EffectCard
+													effect={effect}
+													index={index}
+													onRemove={
+														handleRemoveEffect
+													}
+												/>
+											</Grid>
+										)
 									)
+								) : (
+									<Grid item xs={12}>
+										<Typography>
+											Please add some effects!
+										</Typography>
+									</Grid>
 								)}
 							</Grid>
 						</Box>
