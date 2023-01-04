@@ -327,6 +327,7 @@ export const MonsterModal: React.FC = () => {
 					</DialogContent>
 					<DialogActions>
 						<Button
+							variant="contained"
 							onClick={handleOpenAddSkillsModal}
 							color="secondary"
 						>

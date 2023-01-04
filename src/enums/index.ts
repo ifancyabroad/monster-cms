@@ -23,6 +23,7 @@ export enum CharacterClass {
 	Warrior = "warrior",
 	Rogue = "rogue",
 	Mage = "mage",
+	Cleric = "cleric",
 }
 
 export enum Stat {

@@ -9,7 +9,7 @@ export const DatabaseListener: React.FC = ({ children }) => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dbMonsters.on("value", (snapshot) => {
+		dbMonsters.orderByChild("name").on("value", (snapshot) => {
 			const monsters = [] as IMonster[];
 			snapshot.forEach((childSnapshot) => {
 				const monster = {
@@ -23,7 +23,7 @@ export const DatabaseListener: React.FC = ({ children }) => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		dbSkills.on("value", (snapshot) => {
+		dbSkills.orderByChild("name").on("value", (snapshot) => {
 			const skills = [] as ISkill[];
 			snapshot.forEach((childSnapshot) => {
 				const skill = {

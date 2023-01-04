@@ -382,6 +382,7 @@ export const SkillModal: React.FC = () => {
 					</DialogContent>
 					<DialogActions>
 						<Button
+							variant="contained"
 							onClick={handleOpenEffectModal}
 							color="secondary"
 						>
