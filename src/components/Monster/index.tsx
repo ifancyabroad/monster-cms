@@ -118,6 +118,7 @@ export const Monster: React.FC = () => {
 					sx={{
 						marginBottom: 3,
 						maxWidth: "100%",
+						maxHeight: 600,
 					}}
 					src={monsterImagePath}
 					alt={monster.name}
