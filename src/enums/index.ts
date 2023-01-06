@@ -56,3 +56,28 @@ export enum SkillType {
 	Debuff = "debuff",
 	Other = "other",
 }
+
+export enum WeaponType {
+	Axe = "axe",
+	Bow = "bow",
+	Club = "club",
+	Crossbow = "crossbow",
+	Dagger = "dagger",
+	Hammer = "hammer",
+	Mace = "mace",
+	Spear = "spear",
+	Staff = "staff",
+	Sword = "sword",
+}
+
+export enum EquipmentType {
+	Amulet = "amulet",
+	Armour = "armour",
+	Belt = "belt",
+	Boots = "boots",
+	Gloves = "gloves",
+	Helmet = "helmet",
+	Ring = "ring",
+	Shield = "shield",
+	Weapon = "weapon",
+}
