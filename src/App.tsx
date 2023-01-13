@@ -12,6 +12,7 @@ import {
 	Skill,
 	SkillModal,
 	Skills,
+	WeaponModal,
 	Weapons,
 } from "./components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -35,6 +36,7 @@ function App() {
 			<LoginModal />
 			<MonsterModal />
 			<SkillModal />
+			<WeaponModal />
 			<ErrorModal />
 		</Router>
 	);

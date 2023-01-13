@@ -70,6 +70,11 @@ export enum WeaponType {
 	Sword = "sword",
 }
 
+export enum WeaponSize {
+	OneHanded = "oneHanded",
+	TwoHanded = "twoHanded",
+}
+
 export enum EquipmentType {
 	Amulet = "amulet",
 	Armour = "armour",

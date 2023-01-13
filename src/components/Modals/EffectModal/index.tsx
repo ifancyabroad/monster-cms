@@ -14,7 +14,7 @@ import {
 	TextField,
 } from "@mui/material";
 import { ISkillEffect } from "../../../types";
-import { EFFECTS, EFFECTS_NAME_MAP } from "../../../utils";
+import { EFFECTS_NAME_MAP } from "../../../utils";
 import { EffectType } from "../../../enums";
 import { DamageEffect } from "./DamageEffect";
 import { effectReducer, initialState } from "./effectReducer";
@@ -25,11 +25,13 @@ import { AuxiliaryEffect } from "./AuxiliaryEffect";
 import { WeaponDamageEffect } from "./WeaponDamageEffect";
 
 interface IProps {
+	effects: Readonly<EffectType[]>;
 	onAddEffect: (effect: ISkillEffect) => void;
 	onUpdateEffect: (effect: ISkillEffect, index: number) => void;
 }
 
 export const EffectModal: React.FC<IProps> = ({
+	effects,
 	onAddEffect,
 	onUpdateEffect,
 }) => {
@@ -37,7 +39,7 @@ export const EffectModal: React.FC<IProps> = ({
 	const open = useAppSelector((state) => state.modals.effectModal.open);
 	const effect = useAppSelector((state) => state.modals.effectModal.effect);
 	const index = useAppSelector((state) => state.modals.effectModal.index);
-	const [effectType, setEffectType] = useState(EffectType.WeaponDamage);
+	const [effectType, setEffectType] = useState(effects[0]);
 	const [state, localDispatch] = useReducer(effectReducer, initialState);
 	const title = effect ? "Update Effect" : "Add Effect";
 	const confirm = effect ? "Update" : "Add";
@@ -119,7 +121,7 @@ export const EffectModal: React.FC<IProps> = ({
 									value={effectType}
 									onChange={handleChangeType}
 								>
-									{EFFECTS.map((effect, index) => (
+									{effects.map((effect, index) => (
 										<MenuItem key={index} value={effect}>
 											{EFFECTS_NAME_MAP[effect]}
 										</MenuItem>

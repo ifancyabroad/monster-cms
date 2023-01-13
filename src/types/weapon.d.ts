@@ -1,9 +1,10 @@
-import { DamageType, EquipmentType, WeaponType } from "../enums";
+import { DamageType, EquipmentType, WeaponSize, WeaponType } from "../enums";
 import { IWeaponEffect } from "./effect";
 
 export interface IBaseWeapon {
 	type: EquipmentType.Weapon;
-	class: WeaponType;
+	weaponType: WeaponType;
+	size: WeaponSize;
 	name: string;
 	description: string;
 	icon: string;
@@ -13,6 +14,10 @@ export interface IBaseWeapon {
 	min: number;
 	max: number;
 	effects: IWeaponEffect[];
+	modifiers?: {
+		stats?: Partial<TStats>;
+		resistances?: Partial<TDamageTypes>;
+	};
 }
 
 export interface IWeapon extends IBaseWeapon {
