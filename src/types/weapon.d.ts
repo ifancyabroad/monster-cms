@@ -1,3 +1,4 @@
+import { TDamageTypes, TStats } from ".";
 import { DamageType, EquipmentType, WeaponSize, WeaponType } from "../enums";
 import { IWeaponEffect } from "./effect";
 

@@ -24,6 +24,8 @@ import {
 	ISkillEffect,
 	IWeapon,
 	IWeaponEffect,
+	TDamageTypes,
+	TStats,
 } from "../../../types";
 import {
 	DamageType,
@@ -33,8 +35,10 @@ import {
 	WeaponType,
 } from "../../../enums";
 import { EffectModal } from "../EffectModal";
-import { EffectCard } from "../common";
+import { EffectCard, StatGroup } from "../common";
 import {
+	getResistancesArray,
+	getStatsArray,
 	MAX_DAMAGE,
 	MAX_GOLD_VALUE,
 	MAX_ITEM_LEVEL,
@@ -114,6 +118,14 @@ export const WeaponModal: React.FC = () => {
 		() => weapon && getBaseWeaponValues(weapon),
 		[weapon]
 	);
+	const [stats, setStats] = useState<TStats>({
+		...DEFAULT_STAT_VALUES,
+		...formValues.weapon.modifiers?.stats,
+	});
+	const [resistances, setResistances] = useState<TDamageTypes>({
+		...DEFAULT_RESISTANCE_VALUES,
+		...formValues.weapon.modifiers?.resistances,
+	});
 
 	const title = weapon ? "Update Weapon" : "Add Weapon";
 	const subtitle = weapon
@@ -153,6 +165,70 @@ export const WeaponModal: React.FC = () => {
 			weapon: {
 				...formValues.weapon,
 				icon,
+			},
+		});
+	};
+
+	const handleChangeStats = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, valueAsNumber } = e.currentTarget;
+
+		setStats({
+			...stats,
+			[name as string]: valueAsNumber,
+		});
+
+		const newStats = {
+			...formValues.weapon.modifiers?.stats,
+			[name as string]: valueAsNumber,
+		};
+
+		Object.keys(newStats).forEach((key) => {
+			if (!newStats[key as Stat]) {
+				delete newStats[key as Stat];
+			}
+		});
+
+		setFormValues({
+			...formValues,
+			weapon: {
+				...formValues.weapon,
+				modifiers: {
+					...formValues.weapon.modifiers,
+					stats: newStats,
+				},
+			},
+		});
+	};
+
+	const handleChangeResistances = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { name, valueAsNumber } = e.currentTarget;
+
+		setResistances({
+			...resistances,
+			[name as string]: valueAsNumber,
+		});
+
+		const newResistances = {
+			...formValues.weapon.modifiers?.resistances,
+			[name as string]: valueAsNumber,
+		};
+
+		Object.keys(newResistances).forEach((key) => {
+			if (!newResistances[key as DamageType]) {
+				delete newResistances[key as DamageType];
+			}
+		});
+
+		setFormValues({
+			...formValues,
+			weapon: {
+				...formValues.weapon,
+				modifiers: {
+					...formValues.weapon.modifiers,
+					resistances: newResistances,
+				},
 			},
 		});
 	};
@@ -437,6 +513,20 @@ export const WeaponModal: React.FC = () => {
 								</Grid>
 							</Grid>
 						</Box>
+						<StatGroup
+							title="Stats (0-30)"
+							stats={getStatsArray(stats)}
+							min={0}
+							max={30}
+							handleChange={handleChangeStats}
+						/>
+						<StatGroup
+							title="Resistances (%)"
+							stats={getResistancesArray(resistances)}
+							min={0}
+							max={100}
+							handleChange={handleChangeResistances}
+						/>
 						<Box my={3}>
 							<DialogContentText
 								variant="subtitle1"
