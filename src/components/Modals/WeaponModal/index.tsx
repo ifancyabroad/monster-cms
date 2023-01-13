@@ -1,8 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
-	closeSkillModal,
+	closeWeaponModal,
 	openEffectModal,
-	openErrorModal,
 } from "../../../features/modals/modalsSlice";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import {
@@ -19,70 +18,118 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
-import { saveSkill, updateSkill } from "../../../features/skills/skillsSlice";
-import { IBaseSkill, ISaveSkill, ISkill, ISkillEffect } from "../../../types";
-import { CharacterClass, Target } from "../../../enums";
-import { EffectModal } from "../EffectModal";
-import { EffectCard } from "../common/EffectCard";
 import {
-	CLASSES,
-	CLASS_NAME_MAP,
+	IBaseWeapon,
+	ISaveWeapon,
+	ISkillEffect,
+	IWeapon,
+	IWeaponEffect,
+} from "../../../types";
+import {
+	DamageType,
+	EquipmentType,
+	Stat,
+	WeaponSize,
+	WeaponType,
+} from "../../../enums";
+import { EffectModal } from "../EffectModal";
+import { EffectCard } from "../common";
+import {
+	MAX_DAMAGE,
 	MAX_GOLD_VALUE,
-	MAX_SKILL_LEVEL,
-	MAX_SKILL_USES,
-	SKILL_EFFECTS,
+	MAX_ITEM_LEVEL,
+	RESISTANCES,
+	RESISTANCES_NAME_MAP,
+	WEAPON_EFFECTS,
+	WEAPON_SIZES,
+	WEAPON_SIZE_NAME_MAP,
+	WEAPON_TYPES,
+	WEAPON_TYPE_NAME_MAP,
 } from "../../../utils";
+import {
+	saveWeapon,
+	updateWeapon,
+} from "../../../features/weapons/weaponsSlice";
 
-const defaultSkillValues: IBaseSkill = {
+const DEFAULT_STAT_VALUES = {
+	[Stat.Strength]: 0,
+	[Stat.Dexterity]: 0,
+	[Stat.Constitution]: 0,
+	[Stat.Intelligence]: 0,
+	[Stat.Wisdom]: 0,
+	[Stat.Charisma]: 0,
+};
+
+const DEFAULT_RESISTANCE_VALUES = {
+	[DamageType.Slashing]: 0,
+	[DamageType.Crushing]: 0,
+	[DamageType.Piercing]: 0,
+	[DamageType.Cold]: 0,
+	[DamageType.Fire]: 0,
+	[DamageType.Lighting]: 0,
+	[DamageType.Radiant]: 0,
+	[DamageType.Necrotic]: 0,
+	[DamageType.Poison]: 0,
+	[DamageType.Acid]: 0,
+};
+
+const defaultWeaponValues: IBaseWeapon = {
+	type: EquipmentType.Weapon,
+	weaponType: WeaponType.Sword,
+	size: WeaponSize.OneHanded,
 	name: "",
 	description: "",
 	icon: "",
-	class: CharacterClass.Common,
 	effects: [],
-	price: 0,
-	maxUses: 0,
-	level: 0,
-	target: Target.Enemy,
+	price: 100,
+	level: 1,
+	damageType: DamageType.Slashing,
+	min: 1,
+	max: 6,
+	modifiers: {
+		stats: DEFAULT_STAT_VALUES,
+		resistances: DEFAULT_RESISTANCE_VALUES,
+	},
 };
 
-const defaultFormValues: ISaveSkill = {
-	skill: defaultSkillValues,
+const defaultFormValues: ISaveWeapon = {
+	weapon: defaultWeaponValues,
 	image: null,
 };
 
-const getBaseSkillValues = (skill: ISkill) => {
-	const { id, ...baseSkill } = skill;
-	return baseSkill as IBaseSkill;
+const getBaseWeaponValues = (weapon: IWeapon) => {
+	const { id, ...baseWeapon } = weapon;
+	return baseWeapon as IBaseWeapon;
 };
 
-export const SkillModal: React.FC = () => {
+export const WeaponModal: React.FC = () => {
 	const dispatch = useAppDispatch();
-	const open = useAppSelector((state) => state.modals.skillModal.open);
-	const skill = useAppSelector((state) => state.modals.skillModal.skill);
+	const open = useAppSelector((state) => state.modals.weaponModal.open);
+	const weapon = useAppSelector((state) => state.modals.weaponModal.weapon);
 	const isLoading = useAppSelector(
-		(state) => state.skills.status === "loading"
+		(state) => state.weapons.status === "loading"
 	);
 	const [formValues, setFormValues] = useState(defaultFormValues);
-	const skillValues = useMemo(
-		() => skill && getBaseSkillValues(skill),
-		[skill]
+	const weaponValues = useMemo(
+		() => weapon && getBaseWeaponValues(weapon),
+		[weapon]
 	);
 
-	const title = skill ? "Update Skill" : "Add Skill";
-	const subtitle = skill
-		? `Updating ${skill?.name}`
-		: "Add a new skill to the database.";
-	const hasEffects = formValues.skill.effects.length > 0;
+	const title = weapon ? "Update Weapon" : "Add Weapon";
+	const subtitle = weapon
+		? `Updating ${weapon?.name}`
+		: "Add a new weapon to the database.";
+	const hasEffects = formValues.weapon.effects.length > 0;
 
 	useEffect(() => {
 		setFormValues({
-			skill: skillValues || defaultSkillValues,
+			weapon: weaponValues || defaultWeaponValues,
 			image: null,
 		});
-	}, [skillValues]);
+	}, [weaponValues]);
 
 	const handleClose = () => {
-		dispatch(closeSkillModal());
+		dispatch(closeWeaponModal());
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,8 +137,8 @@ export const SkillModal: React.FC = () => {
 		const finalValue = type === "number" ? valueAsNumber : value;
 		setFormValues({
 			...formValues,
-			skill: {
-				...formValues.skill,
+			weapon: {
+				...formValues.weapon,
 				[name as string]: finalValue,
 			},
 		});
@@ -103,8 +150,8 @@ export const SkillModal: React.FC = () => {
 		setFormValues({
 			...formValues,
 			image,
-			skill: {
-				...formValues.skill,
+			weapon: {
+				...formValues.weapon,
 				icon,
 			},
 		});
@@ -117,9 +164,11 @@ export const SkillModal: React.FC = () => {
 	const handleAddEffect = (effect: ISkillEffect) => {
 		setFormValues({
 			...formValues,
-			skill: {
-				...formValues.skill,
-				effects: formValues.skill.effects.concat(effect),
+			weapon: {
+				...formValues.weapon,
+				effects: formValues.weapon.effects.concat(
+					effect as IWeaponEffect
+				),
 			},
 		});
 	};
@@ -127,50 +176,43 @@ export const SkillModal: React.FC = () => {
 	const handleUpdateEffect = (effect: ISkillEffect, index: number) => {
 		setFormValues({
 			...formValues,
-			skill: {
-				...formValues.skill,
-				effects: formValues.skill.effects.map((e, i) =>
-					index === i ? effect : e
+			weapon: {
+				...formValues.weapon,
+				effects: formValues.weapon.effects.map((e, i) =>
+					index === i ? (effect as IWeaponEffect) : e
 				),
 			},
 		});
 	};
 
 	const handleRemoveEffect = (effect: ISkillEffect, index: number) => {
-		const newEffects = [...formValues.skill.effects];
+		const newEffects = [...formValues.weapon.effects];
 		newEffects.splice(index, 1);
 
 		setFormValues({
 			...formValues,
-			skill: {
-				...formValues.skill,
+			weapon: {
+				...formValues.weapon,
 				effects: newEffects,
 			},
 		});
 	};
 
-	const handleSaveSkill = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSaveWeapon = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
 
-			if (!hasEffects) {
-				dispatch(
-					openErrorModal({ message: "Please add at least 1 effect." })
-				);
-				return;
-			}
-
-			if (skill) {
+			if (weapon) {
 				const payload = {
 					...formValues,
-					id: skill.id,
-					oldImage: skill.icon,
+					id: weapon.id,
+					oldImage: weapon.icon,
 				};
-				await dispatch(updateSkill(payload)).unwrap();
+				await dispatch(updateWeapon(payload)).unwrap();
 			} else {
-				await dispatch(saveSkill(formValues)).unwrap();
+				await dispatch(saveWeapon(formValues)).unwrap();
 			}
-			dispatch(closeSkillModal());
+			dispatch(closeWeaponModal());
 			setFormValues(defaultFormValues);
 		} catch (error) {
 			// TODO: Show error popup
@@ -188,7 +230,7 @@ export const SkillModal: React.FC = () => {
 				aria-labelledby="form-dialog-title"
 			>
 				<DialogTitle id="form-dialog-title">{title}</DialogTitle>
-				<form onSubmit={handleSaveSkill}>
+				<form onSubmit={handleSaveWeapon}>
 					<DialogContent>
 						<DialogContentText>{subtitle}</DialogContentText>
 						<Box my={3}>
@@ -226,7 +268,7 @@ export const SkillModal: React.FC = () => {
 								autoFocus
 								name="name"
 								label="Name"
-								value={formValues.skill.name}
+								value={formValues.weapon.name}
 								onChange={handleChange}
 								fullWidth
 								required
@@ -241,7 +283,7 @@ export const SkillModal: React.FC = () => {
 								autoFocus
 								name="description"
 								label="Description"
-								value={formValues.skill.description}
+								value={formValues.weapon.description}
 								onChange={handleChange}
 								fullWidth
 								multiline
@@ -257,7 +299,7 @@ export const SkillModal: React.FC = () => {
 								component="h5"
 								gutterBottom
 							>
-								Skill Type
+								Weapon Type
 							</DialogContentText>
 							<Grid container spacing={2}>
 								<Grid item xs={6}>
@@ -265,14 +307,31 @@ export const SkillModal: React.FC = () => {
 										fullWidth
 										select
 										margin="dense"
-										label="Class"
-										name="class"
-										value={formValues.skill.class}
+										label="Type"
+										name="weaponType"
+										value={formValues.weapon.weaponType}
 										onChange={handleChange}
 									>
-										{CLASSES.map((cl) => (
-											<MenuItem key={cl} value={cl}>
-												{CLASS_NAME_MAP[cl]}
+										{WEAPON_TYPES.map((type) => (
+											<MenuItem key={type} value={type}>
+												{WEAPON_TYPE_NAME_MAP[type]}
+											</MenuItem>
+										))}
+									</TextField>
+								</Grid>
+								<Grid item xs={6}>
+									<TextField
+										fullWidth
+										select
+										margin="dense"
+										label="Type"
+										name="size"
+										value={formValues.weapon.size}
+										onChange={handleChange}
+									>
+										{WEAPON_SIZES.map((size) => (
+											<MenuItem key={size} value={size}>
+												{WEAPON_SIZE_NAME_MAP[size]}
 											</MenuItem>
 										))}
 									</TextField>
@@ -285,37 +344,78 @@ export const SkillModal: React.FC = () => {
 								component="h5"
 								gutterBottom
 							>
-								Skill Properties
+								Weapon Properties
 							</DialogContentText>
 							<Grid container spacing={2}>
-								<Grid item xs={6}>
+								<Grid item xs={12} md={4}>
 									<TextField
 										fullWidth
 										select
 										margin="dense"
-										name="target"
-										label="Target"
-										value={formValues.skill.target}
+										label="Damage Type"
+										name="damageType"
+										value={formValues.weapon.damageType}
+										onChange={handleChange}
+									>
+										{RESISTANCES.map((resistance) => (
+											<MenuItem
+												key={resistance}
+												value={resistance}
+											>
+												{
+													RESISTANCES_NAME_MAP[
+														resistance
+													]
+												}
+											</MenuItem>
+										))}
+									</TextField>
+								</Grid>
+								<Grid item xs={6} md={4}>
+									<TextField
+										fullWidth
+										margin="dense"
+										name="min"
+										label={`Minimum Roll (1-${MAX_DAMAGE})`}
+										type="number"
+										value={formValues.weapon.min}
 										onChange={handleChange}
 										required
-									>
-										<MenuItem value="self">Self</MenuItem>
-										<MenuItem value="enemy">Enemy</MenuItem>
-									</TextField>
+										inputProps={{
+											min: 1,
+											max: MAX_DAMAGE,
+										}}
+									/>
+								</Grid>
+								<Grid item xs={6} md={4}>
+									<TextField
+										fullWidth
+										margin="dense"
+										name="max"
+										label={`Maximum Roll (1-${MAX_DAMAGE})`}
+										type="number"
+										value={formValues.weapon.max}
+										onChange={handleChange}
+										required
+										inputProps={{
+											min: 1,
+											max: MAX_DAMAGE,
+										}}
+									/>
 								</Grid>
 								<Grid item xs={6}>
 									<TextField
 										fullWidth
 										margin="dense"
 										name="level"
-										label={`Level (0-${MAX_SKILL_LEVEL})`}
+										label={`Level (1-${MAX_ITEM_LEVEL})`}
 										type="number"
-										value={formValues.skill.level}
+										value={formValues.weapon.level}
 										onChange={handleChange}
 										required
 										inputProps={{
-											min: 0,
-											max: MAX_SKILL_LEVEL,
+											min: 1,
+											max: MAX_ITEM_LEVEL,
 										}}
 									/>
 								</Grid>
@@ -324,30 +424,14 @@ export const SkillModal: React.FC = () => {
 										fullWidth
 										margin="dense"
 										name="price"
-										label={`Price (0-${MAX_GOLD_VALUE})`}
+										label={`Price (1-${MAX_GOLD_VALUE})`}
 										type="number"
-										value={formValues.skill.price}
+										value={formValues.weapon.price}
 										onChange={handleChange}
 										required
 										inputProps={{
-											min: 0,
+											min: 1,
 											max: MAX_GOLD_VALUE,
-										}}
-									/>
-								</Grid>
-								<Grid item xs={6}>
-									<TextField
-										fullWidth
-										margin="dense"
-										name="maxUses"
-										label={`Max Uses (0-${MAX_SKILL_USES})`}
-										type="number"
-										value={formValues.skill.maxUses}
-										onChange={handleChange}
-										required
-										inputProps={{
-											min: 0,
-											max: MAX_SKILL_USES,
 										}}
 									/>
 								</Grid>
@@ -359,11 +443,11 @@ export const SkillModal: React.FC = () => {
 								component="h5"
 								gutterBottom
 							>
-								Skill Effects
+								Weapon Effects
 							</DialogContentText>
 							<Grid container spacing={1}>
 								{hasEffects ? (
-									formValues.skill.effects.map(
+									formValues.weapon.effects.map(
 										(effect, index) => (
 											<Grid
 												key={index}
@@ -414,7 +498,7 @@ export const SkillModal: React.FC = () => {
 			</Dialog>
 
 			<EffectModal
-				effects={SKILL_EFFECTS}
+				effects={WEAPON_EFFECTS}
 				onAddEffect={handleAddEffect}
 				onUpdateEffect={handleUpdateEffect}
 			/>

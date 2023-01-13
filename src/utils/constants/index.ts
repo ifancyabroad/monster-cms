@@ -5,11 +5,14 @@ import {
 	EffectType,
 	SkillType,
 	Stat,
+	WeaponSize,
+	WeaponType,
 } from "../../enums";
 
 export const DRAWER_WIDTH = 240;
 
 export const MAX_SKILL_LEVEL = 9;
+export const MAX_ITEM_LEVEL = 9;
 export const MAX_GOLD_VALUE = 10000;
 export const MAX_SKILL_USES = 20;
 export const MAX_DURATION = 20;
@@ -79,10 +82,16 @@ export const RESISTANCES_NAME_MAP = {
 	[DamageType.Acid]: "Acid",
 };
 
-export const EFFECTS = [
+export const SKILL_EFFECTS = [
 	EffectType.WeaponDamage,
 	EffectType.Damage,
 	EffectType.Heal,
+	EffectType.Status,
+	EffectType.Auxiliary,
+] as const;
+
+export const WEAPON_EFFECTS = [
+	EffectType.Damage,
 	EffectType.Status,
 	EffectType.Auxiliary,
 ] as const;
@@ -139,4 +148,40 @@ export const SKILL_TYPE_NAME_MAP = {
 	[SkillType.Buff]: "Buff",
 	[SkillType.Debuff]: "Debuff",
 	[SkillType.Other]: "Other",
+};
+
+export const WEAPON_TYPES = [
+	WeaponType.Axe,
+	WeaponType.Bow,
+	WeaponType.Club,
+	WeaponType.Crossbow,
+	WeaponType.Dagger,
+	WeaponType.Hammer,
+	WeaponType.Mace,
+	WeaponType.Spear,
+	WeaponType.Staff,
+	WeaponType.Sword,
+] as const;
+
+export const WEAPON_TYPE_NAME_MAP = {
+	[WeaponType.Axe]: "Axe",
+	[WeaponType.Bow]: "Bow",
+	[WeaponType.Club]: "Club",
+	[WeaponType.Crossbow]: "Crossbow",
+	[WeaponType.Dagger]: "Dagger",
+	[WeaponType.Hammer]: "Hammer",
+	[WeaponType.Mace]: "Mace",
+	[WeaponType.Spear]: "Spear",
+	[WeaponType.Staff]: "Staff",
+	[WeaponType.Sword]: "Sword",
+};
+
+export const WEAPON_SIZES = [
+	WeaponSize.OneHanded,
+	WeaponSize.TwoHanded,
+] as const;
+
+export const WEAPON_SIZE_NAME_MAP = {
+	[WeaponSize.OneHanded]: "One Handed",
+	[WeaponSize.TwoHanded]: "Two Handed",
 };
