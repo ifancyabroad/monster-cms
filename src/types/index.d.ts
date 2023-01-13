@@ -17,4 +17,5 @@ export type TDamageTypes = Record<DamageType, number>;
 export * from "./monster";
 export * from "./skill";
 export * from "./effect";
+export * from "./weapon";
 export * from "./armour";
