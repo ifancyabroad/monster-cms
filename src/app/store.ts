@@ -3,6 +3,7 @@ import modalsReducer from "../features/modals/modalsSlice";
 import sidedrawerReducer from "../features/sidedrawer/sidedrawerSlice";
 import monstersReducer from "../features/monsters/monstersSlice";
 import skillsReducer from "../features/skills/skillsSlice";
+import weaponsReducer from "../features/weapons/weaponsSlice";
 
 export const store = configureStore({
 	reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
 		sidedrawer: sidedrawerReducer,
 		monsters: monstersReducer,
 		skills: skillsReducer,
+		weapons: weaponsReducer,
 	},
 });
 
