@@ -9,21 +9,21 @@ import { IMonster } from "../../types";
 
 interface IProps {
 	monster: IMonster;
-	onDeleteMonster: () => void;
+	onDelete: () => void;
 }
 
-export const MonstersTableDefaultActions: React.FC<IProps> = ({
+export const TableDefaultActions: React.FC<IProps> = ({
 	monster,
-	onDeleteMonster,
+	onDelete,
 }) => {
 	const dispatch = useAppDispatch();
 
-	const handleUpdateMonster = () => {
+	const handleUpdate = () => {
 		dispatch(openMonsterModal(monster));
 	};
 
-	const handleDeleteMonster = () => {
-		onDeleteMonster();
+	const handleDelete = () => {
+		onDelete();
 	};
 
 	return (
@@ -45,14 +45,14 @@ export const MonstersTableDefaultActions: React.FC<IProps> = ({
 			<IconButton
 				aria-label="update"
 				color="secondary"
-				onClick={handleUpdateMonster}
+				onClick={handleUpdate}
 			>
 				<EditIcon />
 			</IconButton>
 			<IconButton
 				aria-label="delete"
 				color="warning"
-				onClick={handleDeleteMonster}
+				onClick={handleDelete}
 			>
 				<DeleteIcon />
 			</IconButton>

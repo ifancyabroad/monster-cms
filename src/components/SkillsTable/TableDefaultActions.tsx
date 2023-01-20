@@ -9,21 +9,18 @@ import { ISkill } from "../../types";
 
 interface IProps {
 	skill: ISkill;
-	onDeleteSkill: () => void;
+	onDelete: () => void;
 }
 
-export const SkillsTableDefaultActions: React.FC<IProps> = ({
-	skill,
-	onDeleteSkill,
-}) => {
+export const TableDefaultActions: React.FC<IProps> = ({ skill, onDelete }) => {
 	const dispatch = useAppDispatch();
 
-	const handleUpdateSkill = () => {
+	const handleUpdate = () => {
 		dispatch(openSkillModal(skill));
 	};
 
-	const handleDeleteSkill = () => {
-		onDeleteSkill();
+	const handleDelete = () => {
+		onDelete();
 	};
 
 	return (
@@ -45,14 +42,14 @@ export const SkillsTableDefaultActions: React.FC<IProps> = ({
 			<IconButton
 				aria-label="update"
 				color="secondary"
-				onClick={handleUpdateSkill}
+				onClick={handleUpdate}
 			>
 				<EditIcon />
 			</IconButton>
 			<IconButton
 				aria-label="delete"
 				color="warning"
-				onClick={handleDeleteSkill}
+				onClick={handleDelete}
 			>
 				<DeleteIcon />
 			</IconButton>

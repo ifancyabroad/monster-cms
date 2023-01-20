@@ -1,12 +1,12 @@
-import { TableCell, TableRow } from "@mui/material";
+import { TableCell, TableRow as MUITableRow } from "@mui/material";
 import { Fragment, useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { deleteSkill } from "../../features/skills/skillsSlice";
 import { ISkill } from "../../types";
 import { CLASS_NAME_MAP, getSkillType, SKILL_TYPE_NAME_MAP } from "../../utils";
 import { ConfirmationModal } from "../Modals";
-import { SkillsTableDefaultActions } from "./SkillsTableDefaultActions";
-import { SkillsTableAddSkillActions } from "./SkillsTableAddSkillActions";
+import { TableDefaultActions } from "./TableDefaultActions";
+import { TableAddActions } from "./TableAddActions";
 import { AuthContext } from "../../context/AuthContext";
 
 interface IProps {
@@ -14,7 +14,7 @@ interface IProps {
 	type?: "default" | "addSkills";
 }
 
-export const SkillsTableRow: React.FC<IProps> = ({ skill, type }) => {
+export const TableRow: React.FC<IProps> = ({ skill, type }) => {
 	const dispatch = useAppDispatch();
 	const user = useContext(AuthContext);
 	const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
@@ -22,7 +22,7 @@ export const SkillsTableRow: React.FC<IProps> = ({ skill, type }) => {
 		(state) => state.skills.status === "loading"
 	);
 
-	const handleDeleteSkill = () => {
+	const handleDelete = () => {
 		setConfirmationModalOpen(true);
 	};
 
@@ -30,7 +30,7 @@ export const SkillsTableRow: React.FC<IProps> = ({ skill, type }) => {
 		setConfirmationModalOpen(false);
 	};
 
-	const handleConfirmDeleteSkill = async () => {
+	const handleConfirmDelete = async () => {
 		try {
 			await dispatch(deleteSkill(skill)).unwrap();
 			setConfirmationModalOpen(false);
@@ -41,7 +41,7 @@ export const SkillsTableRow: React.FC<IProps> = ({ skill, type }) => {
 
 	return (
 		<Fragment>
-			<TableRow hover tabIndex={-1}>
+			<MUITableRow hover tabIndex={-1}>
 				<TableCell
 					component="th"
 					id={`skill-table-${skill.name}`}
@@ -59,23 +59,23 @@ export const SkillsTableRow: React.FC<IProps> = ({ skill, type }) => {
 				{user && (
 					<TableCell>
 						{type === "addSkills" ? (
-							<SkillsTableAddSkillActions skill={skill} />
+							<TableAddActions skill={skill} />
 						) : (
-							<SkillsTableDefaultActions
+							<TableDefaultActions
 								skill={skill}
-								onDeleteSkill={handleDeleteSkill}
+								onDelete={handleDelete}
 							/>
 						)}
 					</TableCell>
 				)}
-			</TableRow>
+			</MUITableRow>
 
 			<ConfirmationModal
 				open={confirmationModalOpen}
 				title="Are you sure?"
 				content={`This action will permanently delete ${skill.name} from the database.`}
 				handleClose={handleCloseConfirmationModal}
-				handleConfirm={handleConfirmDeleteSkill}
+				handleConfirm={handleConfirmDelete}
 				disabled={isLoading}
 			/>
 		</Fragment>

@@ -8,17 +8,17 @@ interface IProps {
 	skill: ISkill;
 }
 
-export const SkillsTableAddSkillActions: React.FC<IProps> = ({ skill }) => {
+export const TableAddActions: React.FC<IProps> = ({ skill }) => {
 	const { state, dispatch } = useAddSkillsContext();
 
-	const handleAddSkill = () => {
+	const handleAdd = () => {
 		dispatch({
 			type: "ADD",
 			payload: skill.id,
 		});
 	};
 
-	const handleRemoveSkill = () => {
+	const handleRemove = () => {
 		dispatch({
 			type: "REMOVE",
 			payload: skill.id,
@@ -37,7 +37,7 @@ export const SkillsTableAddSkillActions: React.FC<IProps> = ({ skill }) => {
 				<IconButton
 					aria-label="remove"
 					color="warning"
-					onClick={handleRemoveSkill}
+					onClick={handleRemove}
 				>
 					<RemoveCircleIcon />
 				</IconButton>
@@ -45,7 +45,7 @@ export const SkillsTableAddSkillActions: React.FC<IProps> = ({ skill }) => {
 				<IconButton
 					aria-label="add"
 					color="primary"
-					onClick={handleAddSkill}
+					onClick={handleAdd}
 				>
 					<AddCircleIcon />
 				</IconButton>

@@ -1,4 +1,4 @@
-import { TableCell, TableRow } from "@mui/material";
+import { TableCell, TableRow as MUITableRow } from "@mui/material";
 import { Fragment, useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { IMonster } from "../../types";
@@ -6,13 +6,13 @@ import { STATS } from "../../utils";
 import { ConfirmationModal } from "../Modals";
 import { AuthContext } from "../../context/AuthContext";
 import { deleteMonster } from "../../features/monsters/monstersSlice";
-import { MonstersTableDefaultActions } from "./MonstersTableDefaultActions";
+import { TableDefaultActions } from "./TableDefaultActions";
 
 interface IProps {
 	monster: IMonster;
 }
 
-export const MonstersTableRow: React.FC<IProps> = ({ monster }) => {
+export const TableRow: React.FC<IProps> = ({ monster }) => {
 	const dispatch = useAppDispatch();
 	const user = useContext(AuthContext);
 	const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
@@ -20,7 +20,7 @@ export const MonstersTableRow: React.FC<IProps> = ({ monster }) => {
 		(state) => state.monsters.status === "loading"
 	);
 
-	const handleDeleteMonster = () => {
+	const handleDelete = () => {
 		setConfirmationModalOpen(true);
 	};
 
@@ -28,7 +28,7 @@ export const MonstersTableRow: React.FC<IProps> = ({ monster }) => {
 		setConfirmationModalOpen(false);
 	};
 
-	const handleConfirmDeleteMonster = async () => {
+	const handleConfirmDelete = async () => {
 		try {
 			await dispatch(deleteMonster(monster)).unwrap();
 			setConfirmationModalOpen(false);
@@ -39,7 +39,7 @@ export const MonstersTableRow: React.FC<IProps> = ({ monster }) => {
 
 	return (
 		<Fragment>
-			<TableRow hover tabIndex={-1}>
+			<MUITableRow hover tabIndex={-1}>
 				<TableCell
 					component="th"
 					id={`monster-table-${monster.name}`}
@@ -55,20 +55,20 @@ export const MonstersTableRow: React.FC<IProps> = ({ monster }) => {
 				<TableCell align="right">{monster.challenge}</TableCell>
 				{user && (
 					<TableCell>
-						<MonstersTableDefaultActions
+						<TableDefaultActions
 							monster={monster}
-							onDeleteMonster={handleDeleteMonster}
+							onDelete={handleDelete}
 						/>
 					</TableCell>
 				)}
-			</TableRow>
+			</MUITableRow>
 
 			<ConfirmationModal
 				open={confirmationModalOpen}
 				title="Are you sure?"
 				content={`This action will permanently delete ${monster.name} from the database.`}
 				handleClose={handleCloseConfirmationModal}
-				handleConfirm={handleConfirmDeleteMonster}
+				handleConfirm={handleConfirmDelete}
 				disabled={isLoading}
 			/>
 		</Fragment>

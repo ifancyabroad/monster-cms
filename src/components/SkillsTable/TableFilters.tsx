@@ -24,7 +24,7 @@ interface IProps {
 	onChangeSlider: (e: Event, value: number | number[]) => void;
 }
 
-export const SkillTableFilters: React.FC<IProps> = ({
+export const TableFilters: React.FC<IProps> = ({
 	filters,
 	onChangeFilters,
 	onChangeSlider,
