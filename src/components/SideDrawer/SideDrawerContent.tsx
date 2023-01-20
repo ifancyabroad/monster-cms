@@ -14,6 +14,7 @@ import { Link, useRouteMatch } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { AuthContext } from "../../context/AuthContext";
 import {
+	openArmourModal,
 	openMonsterModal,
 	openSkillModal,
 	openWeaponModal,
@@ -55,9 +56,11 @@ export const SideDrawerContent: React.FC = () => {
 	const monstersList = useAppSelector((state) => state.monsters.monsters);
 	const skillsList = useAppSelector((state) => state.skills.skills);
 	const weaponsList = useAppSelector((state) => state.weapons.weapons);
+	const armoursList = useAppSelector((state) => state.armours.armours);
 	const isMonsters = useRouteMatch("/monsters");
 	const isSkills = useRouteMatch("/skills");
 	const isWeapons = useRouteMatch("/weapons");
+	const isArmours = useRouteMatch("/armours");
 
 	const addMonster = () => {
 		dispatch(openMonsterModal());
@@ -69,6 +72,10 @@ export const SideDrawerContent: React.FC = () => {
 
 	const addWeapon = () => {
 		dispatch(openWeaponModal());
+	};
+
+	const addArmour = () => {
+		dispatch(openArmourModal());
 	};
 
 	return (
@@ -142,9 +149,27 @@ export const SideDrawerContent: React.FC = () => {
 						))}
 					</List>
 				</Collapse>
-				<ListItemButton component={Link} to="/armour">
-					<ListItemText>Armour</ListItemText>
-				</ListItemButton>
+				<SideDrawerItem
+					title="Armours"
+					link="/armours"
+					onAddItem={addArmour}
+				/>
+				<Collapse in={Boolean(isArmours)} unmountOnExit>
+					<List>
+						{armoursList.map((armour, index) => (
+							<ListItemButton
+								sx={{
+									paddingLeft: 4,
+								}}
+								key={index}
+								component={Link}
+								to={`/armours/${armour.id}`}
+							>
+								<ListItemText primary={armour.name} />
+							</ListItemButton>
+						))}
+					</List>
+				</Collapse>
 				<ListItemButton component={Link} to="/classes">
 					<ListItemText>Classes</ListItemText>
 				</ListItemButton>

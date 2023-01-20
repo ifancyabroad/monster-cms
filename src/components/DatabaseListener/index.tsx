@@ -1,10 +1,16 @@
 import { Fragment, useEffect } from "react";
-import { dbMonsters, dbSkills, dbWeapons } from "../../firebaseSetup";
+import {
+	dbArmours,
+	dbMonsters,
+	dbSkills,
+	dbWeapons,
+} from "../../firebaseSetup";
 import { useAppDispatch } from "../../app/hooks";
 import { fetchMonsters } from "../../features/monsters/monstersSlice";
-import { IMonster, ISkill, IWeapon } from "../../types";
+import { IArmour, IMonster, ISkill, IWeapon } from "../../types";
 import { fetchSkills } from "../../features/skills/skillsSlice";
 import { fetchWeapons } from "../../features/weapons/weaponsSlice";
+import { fetchArmours } from "../../features/armours/armoursSlice";
 
 export const DatabaseListener: React.FC = ({ children }) => {
 	const dispatch = useAppDispatch();
@@ -48,6 +54,20 @@ export const DatabaseListener: React.FC = ({ children }) => {
 				weapons.push(weapon);
 			});
 			dispatch(fetchWeapons(weapons));
+		});
+	}, [dispatch]);
+
+	useEffect(() => {
+		dbArmours.orderByChild("name").on("value", (snapshot) => {
+			const armours = [] as IArmour[];
+			snapshot.forEach((childSnapshot) => {
+				const armour = {
+					...childSnapshot.val(),
+					id: childSnapshot.key,
+				};
+				armours.push(armour);
+			});
+			dispatch(fetchArmours(armours));
 		});
 	}, [dispatch]);
 

@@ -22,3 +22,4 @@ export const stImages = firebase.storage().ref("images");
 export const dbMonsters = firebase.database().ref("monsters");
 export const dbSkills = firebase.database().ref("skills");
 export const dbWeapons = firebase.database().ref("weapons");
+export const dbArmours = firebase.database().ref("armours");

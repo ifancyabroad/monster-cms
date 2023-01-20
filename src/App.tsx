@@ -1,5 +1,6 @@
 import {
 	Armour,
+	ArmourModal,
 	Classes,
 	Dashboard,
 	ErrorModal,
@@ -31,7 +32,7 @@ function App() {
 					<Route path="/skills" component={Skills} />
 					<Route path="/weapons/:id" component={Weapon} />
 					<Route path="/weapons" component={Weapons} />
-					<Route path="/armour" component={Armour} />
+					<Route path="/armours" component={Armour} />
 					<Route path="/classes" component={Classes} />
 				</Switch>
 			</HOCLayout>
@@ -39,6 +40,7 @@ function App() {
 			<MonsterModal />
 			<SkillModal />
 			<WeaponModal />
+			<ArmourModal />
 			<ErrorModal />
 		</Router>
 	);
