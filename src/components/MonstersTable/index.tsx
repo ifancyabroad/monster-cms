@@ -8,15 +8,15 @@ import {
 	TableContainer,
 	TableHead,
 	TablePagination,
-	TableRow,
+	TableRow as MUITableRow,
 	TableSortLabel,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { IMonsterFilters, TMonstersOrderBy, TOrder } from "../../types";
 import { Fragment, useContext, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
-import { MonstersTableRow } from "./MonstersTableRow";
-import { MonstersTableFilters } from "./MonstersTableFilters";
+import { TableRow } from "./TableRow";
+import { TableFilters } from "./TableFilters";
 import { applyMonstersFilters, getMonstersComparator } from "../../utils";
 import { AuthContext } from "../../context/AuthContext";
 import { Stat } from "../../enums";
@@ -89,7 +89,7 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 
 	return (
 		<TableHead>
-			<TableRow>
+			<MUITableRow>
 				{headCells.map((headCell) => (
 					<TableCell
 						key={headCell.id}
@@ -117,7 +117,7 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 				))}
 
 				{user && <TableCell align="right">Actions</TableCell>}
-			</TableRow>
+			</MUITableRow>
 		</TableHead>
 	);
 };
@@ -183,7 +183,7 @@ export const MonstersTable: React.FC = () => {
 		<Fragment>
 			<Box sx={{ width: "100%" }}>
 				<Paper sx={{ width: "100%", mb: 2 }}>
-					<MonstersTableFilters
+					<TableFilters
 						filters={filters}
 						onChangeFilters={handleChangeFilters}
 						onChangeSlider={handleChangeSlider}
@@ -208,19 +208,16 @@ export const MonstersTable: React.FC = () => {
 										page * rowsPerPage + rowsPerPage
 									)
 									.map((row) => (
-										<MonstersTableRow
-											key={row.id}
-											monster={row}
-										/>
+										<TableRow key={row.id} monster={row} />
 									))}
 								{emptyRows > 0 && (
-									<TableRow
+									<MUITableRow
 										style={{
 											height: 53 * emptyRows,
 										}}
 									>
 										<TableCell colSpan={6} />
-									</TableRow>
+									</MUITableRow>
 								)}
 							</TableBody>
 						</Table>

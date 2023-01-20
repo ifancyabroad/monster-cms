@@ -8,15 +8,15 @@ import {
 	TableContainer,
 	TableHead,
 	TablePagination,
-	TableRow,
+	TableRow as MUITableRow,
 	TableSortLabel,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { ISkillFilters, TOrder, TSkillsOrderBy } from "../../types";
 import { Fragment, useContext, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
-import { SkillsTableRow } from "./SkillsTableRow";
-import { SkillTableFilters } from "./SkillsTableFilters";
+import { TableRow } from "./TableRow";
+import { TableFilters } from "./TableFilters";
 import { applySkillsFilters, getSkillsComparator } from "../../utils";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -76,7 +76,7 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 
 	return (
 		<TableHead>
-			<TableRow>
+			<MUITableRow>
 				{headCells.map((headCell) => (
 					<TableCell
 						key={headCell.id}
@@ -104,7 +104,7 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 				))}
 
 				{user && <TableCell align="right">Actions</TableCell>}
-			</TableRow>
+			</MUITableRow>
 		</TableHead>
 	);
 };
@@ -177,7 +177,7 @@ export const SkillsTable: React.FC<IProps> = ({ type = "default" }) => {
 		<Fragment>
 			<Box sx={{ width: "100%" }}>
 				<Paper sx={{ width: "100%", mb: 2 }}>
-					<SkillTableFilters
+					<TableFilters
 						filters={filters}
 						onChangeFilters={handleChangeFilters}
 						onChangeSlider={handleChangeSlider}
@@ -202,20 +202,20 @@ export const SkillsTable: React.FC<IProps> = ({ type = "default" }) => {
 										page * rowsPerPage + rowsPerPage
 									)
 									.map((row) => (
-										<SkillsTableRow
+										<TableRow
 											key={row.id}
 											skill={row}
 											type={type}
 										/>
 									))}
 								{emptyRows > 0 && (
-									<TableRow
+									<MUITableRow
 										style={{
 											height: 53 * emptyRows,
 										}}
 									>
 										<TableCell colSpan={6} />
-									</TableRow>
+									</MUITableRow>
 								)}
 							</TableBody>
 						</Table>

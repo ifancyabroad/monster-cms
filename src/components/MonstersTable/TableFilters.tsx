@@ -15,7 +15,7 @@ interface IProps {
 	onChangeSlider: (e: Event, value: number | number[]) => void;
 }
 
-export const MonstersTableFilters: React.FC<IProps> = ({
+export const TableFilters: React.FC<IProps> = ({
 	filters,
 	onChangeFilters,
 	onChangeSlider,
