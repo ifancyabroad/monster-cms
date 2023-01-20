@@ -49,3 +49,4 @@ export const getKeyFromName = (name: string) =>
 
 export * from "./skills";
 export * from "./monsters";
+export * from "./weapons";

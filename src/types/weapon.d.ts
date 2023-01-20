@@ -34,3 +34,13 @@ export interface IUpdateWeapon extends ISaveWeapon {
 	id: string;
 	oldImage?: string;
 }
+
+export interface IWeaponFilters {
+	name: "";
+	type: WeaponType | "all";
+	damageType: DamageType | "all";
+	price: number;
+	level: number;
+}
+
+export type TWeaponsOrderBy = keyof IWeapon;

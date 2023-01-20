@@ -1,9 +1,10 @@
 import { Fragment, useEffect } from "react";
-import { dbMonsters, dbSkills } from "../../firebaseSetup";
+import { dbMonsters, dbSkills, dbWeapons } from "../../firebaseSetup";
 import { useAppDispatch } from "../../app/hooks";
 import { fetchMonsters } from "../../features/monsters/monstersSlice";
-import { IMonster, ISkill } from "../../types";
+import { IMonster, ISkill, IWeapon } from "../../types";
 import { fetchSkills } from "../../features/skills/skillsSlice";
+import { fetchWeapons } from "../../features/weapons/weaponsSlice";
 
 export const DatabaseListener: React.FC = ({ children }) => {
 	const dispatch = useAppDispatch();
@@ -33,6 +34,20 @@ export const DatabaseListener: React.FC = ({ children }) => {
 				skills.push(skill);
 			});
 			dispatch(fetchSkills(skills));
+		});
+	}, [dispatch]);
+
+	useEffect(() => {
+		dbWeapons.orderByChild("name").on("value", (snapshot) => {
+			const weapons = [] as IWeapon[];
+			snapshot.forEach((childSnapshot) => {
+				const weapon = {
+					...childSnapshot.val(),
+					id: childSnapshot.key,
+				};
+				weapons.push(weapon);
+			});
+			dispatch(fetchWeapons(weapons));
 		});
 	}, [dispatch]);
 

@@ -91,8 +91,8 @@ const defaultWeaponValues: IBaseWeapon = {
 	min: 1,
 	max: 6,
 	modifiers: {
-		stats: DEFAULT_STAT_VALUES,
-		resistances: DEFAULT_RESISTANCE_VALUES,
+		stats: {},
+		resistances: {},
 	},
 };
 
@@ -400,7 +400,7 @@ export const WeaponModal: React.FC = () => {
 										fullWidth
 										select
 										margin="dense"
-										label="Type"
+										label="Size"
 										name="size"
 										value={formValues.weapon.size}
 										onChange={handleChange}

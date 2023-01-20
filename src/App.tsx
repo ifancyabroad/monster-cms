@@ -12,6 +12,7 @@ import {
 	Skill,
 	SkillModal,
 	Skills,
+	Weapon,
 	WeaponModal,
 	Weapons,
 } from "./components";
@@ -28,6 +29,7 @@ function App() {
 					<Route path="/monsters" component={Monsters} />
 					<Route path="/skills/:id" component={Skill} />
 					<Route path="/skills" component={Skills} />
+					<Route path="/weapons/:id" component={Weapon} />
 					<Route path="/weapons" component={Weapons} />
 					<Route path="/armour" component={Armour} />
 					<Route path="/classes" component={Classes} />
