@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IMonster, ISkill, ISkillEffect, IWeapon } from "../../types";
+import { IArmour, IMonster, ISkill, ISkillEffect, IWeapon } from "../../types";
 
 interface ModalsState {
 	loginModalOpen: boolean;
@@ -21,6 +21,10 @@ interface ModalsState {
 		open: boolean;
 		weapon?: IWeapon;
 	};
+	armourModal: {
+		open: boolean;
+		armour?: IArmour;
+	};
 	effectModal: {
 		open: boolean;
 		effect?: ISkillEffect;
@@ -28,6 +32,7 @@ interface ModalsState {
 	};
 	addSkillsModalOpen: boolean;
 	addWeaponsModalOpen: boolean;
+	addArmourModalOpen: boolean;
 }
 
 const initialState: ModalsState = {
@@ -45,11 +50,15 @@ const initialState: ModalsState = {
 	weaponModal: {
 		open: false,
 	},
+	armourModal: {
+		open: false,
+	},
 	effectModal: {
 		open: false,
 	},
 	addSkillsModalOpen: false,
 	addWeaponsModalOpen: false,
+	addArmourModalOpen: false,
 };
 
 export const modalsSlice = createSlice({
@@ -111,6 +120,17 @@ export const modalsSlice = createSlice({
 			state.weaponModal.open = false;
 			state.weaponModal.weapon = undefined;
 		},
+		openArmourModal: (
+			state,
+			action: PayloadAction<IArmour | undefined>
+		) => {
+			state.armourModal.open = true;
+			state.armourModal.armour = action.payload;
+		},
+		closeArmourModal: (state) => {
+			state.armourModal.open = false;
+			state.armourModal.armour = undefined;
+		},
 		openEffectModal: (
 			state,
 			action: PayloadAction<{ effect?: ISkillEffect; index?: number }>
@@ -136,6 +156,12 @@ export const modalsSlice = createSlice({
 		closeAddWeaponsModal: (state) => {
 			state.addWeaponsModalOpen = false;
 		},
+		openAddArmourModal: (state) => {
+			state.addArmourModalOpen = true;
+		},
+		closeAddArmourModal: (state) => {
+			state.addArmourModalOpen = false;
+		},
 	},
 });
 
@@ -153,12 +179,16 @@ export const {
 	closeSkillModal,
 	openWeaponModal,
 	closeWeaponModal,
+	openArmourModal,
+	closeArmourModal,
 	openEffectModal,
 	closeEffectModal,
 	openAddSkillsModal,
 	closeAddSkillsModal,
 	openAddWeaponsModal,
 	closeAddWeaponsModal,
+	openAddArmourModal,
+	closeAddArmourModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

@@ -3,6 +3,7 @@ import {
 	CharacterClass,
 	DamageType,
 	EffectType,
+	EquipmentType,
 	SkillType,
 	Stat,
 	WeaponSize,
@@ -18,6 +19,7 @@ export const MAX_SKILL_USES = 20;
 export const MAX_DURATION = 20;
 export const MAX_DAMAGE = 100;
 export const MAX_MULTIPLIER = 10;
+export const MAX_DEFENSE = 100;
 
 export const STATS = [
 	Stat.Strength,
@@ -184,4 +186,27 @@ export const WEAPON_SIZES = [
 export const WEAPON_SIZE_NAME_MAP = {
 	[WeaponSize.OneHanded]: "One Handed",
 	[WeaponSize.TwoHanded]: "Two Handed",
+};
+
+export const ARMOUR_TYPES = [
+	EquipmentType.Amulet,
+	EquipmentType.Armour,
+	EquipmentType.Belt,
+	EquipmentType.Boots,
+	EquipmentType.Gloves,
+	EquipmentType.Helmet,
+	EquipmentType.Ring,
+	EquipmentType.Shield,
+] as const;
+
+export const EQUIPMENT_TYPE_NAME_MAP = {
+	[EquipmentType.Amulet]: "Amulet",
+	[EquipmentType.Armour]: "Armour",
+	[EquipmentType.Belt]: "Belt",
+	[EquipmentType.Boots]: "Boots",
+	[EquipmentType.Gloves]: "Gloves",
+	[EquipmentType.Helmet]: "Helmet",
+	[EquipmentType.Ring]: "Ring",
+	[EquipmentType.Shield]: "Shield",
+	[EquipmentType.Weapon]: "Weapon",
 };

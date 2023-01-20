@@ -6,3 +6,4 @@ export * from "./EffectModal";
 export * from "./AddSkillsModal";
 export * from "./ErrorModal";
 export * from "./WeaponModal";
+export * from "./ArmourModal";
