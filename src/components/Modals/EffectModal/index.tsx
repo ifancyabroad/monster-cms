@@ -17,10 +17,13 @@ import { ISkillEffect } from "../../../types";
 import { EFFECTS_NAME_MAP } from "../../../utils";
 import { EffectType } from "../../../enums";
 import { DamageEffect } from "./DamageEffect";
-import { effectReducer, initialState } from "./effectReducer";
 import { HealEffect } from "./HealEffect";
 import { StatusEffect } from "./StatusEffect";
-import { EffectContext } from "./effectContext";
+import {
+	EffectContext,
+	effectReducer,
+	initialEffectState,
+} from "../../../context";
 import { AuxiliaryEffect } from "./AuxiliaryEffect";
 import { WeaponDamageEffect } from "./WeaponDamageEffect";
 
@@ -40,7 +43,10 @@ export const EffectModal: React.FC<IProps> = ({
 	const effect = useAppSelector((state) => state.modals.effectModal.effect);
 	const index = useAppSelector((state) => state.modals.effectModal.index);
 	const [effectType, setEffectType] = useState(effects[0]);
-	const [state, localDispatch] = useReducer(effectReducer, initialState);
+	const [state, localDispatch] = useReducer(
+		effectReducer,
+		initialEffectState
+	);
 	const title = effect ? "Update Effect" : "Add Effect";
 	const confirm = effect ? "Update" : "Add";
 

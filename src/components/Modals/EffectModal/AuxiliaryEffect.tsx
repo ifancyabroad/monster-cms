@@ -6,7 +6,7 @@ import {
 	MenuItem,
 	TextField,
 } from "@mui/material";
-import { useEffectContext } from "./effectContext";
+import { useEffectContext } from "../../../context";
 import {
 	AUXILIARY_EFFECTS,
 	AUXILIARY_EFFECTS_NAME_MAP,

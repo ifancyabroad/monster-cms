@@ -2,7 +2,7 @@ import { Box, IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { IArmour } from "../../types";
-import { useAddArmoursContext } from "../Modals/AddArmoursModal/addArmoursContext";
+import { useAddArmoursContext } from "../../context";
 
 interface IProps {
 	armour: IArmour;

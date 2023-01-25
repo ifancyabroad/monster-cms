@@ -1,4 +1,5 @@
-import { AuxiliaryEffect, DamageType, EffectType, Stat } from "../../../enums";
+import { createContext, Dispatch, useContext } from "react";
+import { AuxiliaryEffect, DamageType, EffectType, Stat } from "../enums";
 import {
 	IAuxiliaryEffect,
 	IDamageEffect,
@@ -6,9 +7,9 @@ import {
 	ISkillEffect,
 	IStatusEffect,
 	IWeaponDamageEffect,
-} from "../../../types";
+} from "../types";
 
-export type TEffectFormAction =
+type TEffectFormAction =
 	| {
 			type: "UPDATE";
 			payload: ISkillEffect;
@@ -64,7 +65,7 @@ const defaultAuxiliaryEffectValues: IAuxiliaryEffect = {
 	duration: 3,
 };
 
-export const initialState: IEffectState = {
+export const initialEffectState: IEffectState = {
 	weaponDamageEffectForm: defaultWeaponDamageEffectValues,
 	damageEffectForm: defaultDamageEffectValues,
 	healEffectForm: defaultHealEffectValues,
@@ -108,8 +109,25 @@ export const effectReducer = (
 	}
 
 	if (action.type === "RESET") {
-		return initialState;
+		return initialEffectState;
 	}
 
 	throw Error("Unknown action");
+};
+
+interface IContextProps {
+	state: IEffectState;
+	dispatch: Dispatch<TEffectFormAction>;
+}
+
+export const EffectContext = createContext<IContextProps | null>(null);
+
+export const useEffectContext = () => {
+	const effectContext = useContext(EffectContext);
+	if (!effectContext) {
+		throw new Error(
+			"No EffectContext.Provider found when calling useEffectContext."
+		);
+	}
+	return effectContext;
 };
