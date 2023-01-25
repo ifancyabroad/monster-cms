@@ -1,20 +1,24 @@
 import { TableCell, TableRow as MUITableRow } from "@mui/material";
 import { Fragment, useContext, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { IArmour } from "../../types";
-import { EQUIPMENT_TYPE_NAME_MAP } from "../../utils";
-import { ConfirmationModal } from "../Modals";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { deleteSkill } from "../../../features/skills/skillsSlice";
+import { ISkill } from "../../../types";
+import {
+	CLASS_NAME_MAP,
+	getSkillType,
+	SKILL_TYPE_NAME_MAP,
+} from "../../../utils";
+import { ConfirmationModal } from "../../Modals";
 import { TableDefaultActions } from "./TableDefaultActions";
 import { TableAddActions } from "./TableAddActions";
-import { AuthContext } from "../../context/AuthContext";
-import { deleteArmour } from "../../features/armours/armoursSlice";
+import { AuthContext } from "../../../context";
 
 interface IProps {
-	armour: IArmour;
-	type?: "default" | "addArmours";
+	skill: ISkill;
+	type?: "default" | "addSkills";
 }
 
-export const TableRow: React.FC<IProps> = ({ armour, type }) => {
+export const TableRow: React.FC<IProps> = ({ skill, type }) => {
 	const dispatch = useAppDispatch();
 	const user = useContext(AuthContext);
 	const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
@@ -32,7 +36,7 @@ export const TableRow: React.FC<IProps> = ({ armour, type }) => {
 
 	const handleConfirmDelete = async () => {
 		try {
-			await dispatch(deleteArmour(armour)).unwrap();
+			await dispatch(deleteSkill(skill)).unwrap();
 			setConfirmationModalOpen(false);
 		} catch (error) {
 			// TODO: Show error popup
@@ -44,22 +48,25 @@ export const TableRow: React.FC<IProps> = ({ armour, type }) => {
 			<MUITableRow hover tabIndex={-1}>
 				<TableCell
 					component="th"
-					id={`table-${armour.name}`}
+					id={`skill-table-${skill.name}`}
 					scope="row"
 				>
-					{armour.name}
+					{skill.name}
 				</TableCell>
-				<TableCell>{EQUIPMENT_TYPE_NAME_MAP[armour.type]}</TableCell>
-				<TableCell align="right">{armour.defense}</TableCell>
-				<TableCell align="right">{armour.price}</TableCell>
-				<TableCell align="right">{armour.level}</TableCell>
+				<TableCell>{CLASS_NAME_MAP[skill.class]}</TableCell>
+				<TableCell>
+					{SKILL_TYPE_NAME_MAP[getSkillType(skill)]}
+				</TableCell>
+				<TableCell align="right">{skill.maxUses}</TableCell>
+				<TableCell align="right">{skill.price}</TableCell>
+				<TableCell align="right">{skill.level}</TableCell>
 				{user && (
 					<TableCell>
-						{type === "addArmours" ? (
-							<TableAddActions armour={armour} />
+						{type === "addSkills" ? (
+							<TableAddActions skill={skill} />
 						) : (
 							<TableDefaultActions
-								armour={armour}
+								skill={skill}
 								onDelete={handleDelete}
 							/>
 						)}
@@ -70,7 +77,7 @@ export const TableRow: React.FC<IProps> = ({ armour, type }) => {
 			<ConfirmationModal
 				open={confirmationModalOpen}
 				title="Are you sure?"
-				content={`This action will permanently delete ${armour.name} from the database.`}
+				content={`This action will permanently delete ${skill.name} from the database.`}
 				handleClose={handleCloseConfirmationModal}
 				handleConfirm={handleConfirmDelete}
 				disabled={isLoading}

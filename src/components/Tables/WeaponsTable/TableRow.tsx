@@ -1,17 +1,17 @@
 import { TableCell, TableRow as MUITableRow } from "@mui/material";
 import { Fragment, useContext, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { IWeapon } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { IWeapon } from "../../../types";
 import {
 	RESISTANCES_NAME_MAP,
 	WEAPON_SIZE_NAME_MAP,
 	WEAPON_TYPE_NAME_MAP,
-} from "../../utils";
-import { ConfirmationModal } from "../Modals";
+} from "../../../utils";
+import { ConfirmationModal } from "../../Modals";
 import { TableDefaultActions } from "./TableDefaultActions";
 import { TableAddActions } from "./TableAddActions";
-import { AuthContext } from "../../context/AuthContext";
-import { deleteWeapon } from "../../features/weapons/weaponsSlice";
+import { AuthContext } from "../../../context";
+import { deleteWeapon } from "../../../features/weapons/weaponsSlice";
 
 interface IProps {
 	weapon: IWeapon;

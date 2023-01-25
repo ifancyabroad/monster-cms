@@ -12,16 +12,16 @@ import {
 	TableSortLabel,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import { IWeaponFilters, TOrder, TWeaponsOrderBy } from "../../types";
+import { IArmourFilters, TArmoursOrderBy, TOrder } from "../../../types";
 import { Fragment, useContext, useState } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../../app/hooks";
 import { TableRow } from "./TableRow";
 import { TableFilters } from "./TableFilters";
-import { applyWeaponsFilters, getWeaponsComparator } from "../../utils";
-import { AuthContext } from "../../context/AuthContext";
+import { applyArmoursFilters, getArmoursComparator } from "../../../utils";
+import { AuthContext } from "../../../context";
 
 interface HeadCell {
-	id: TWeaponsOrderBy;
+	id: TArmoursOrderBy;
 	label: string;
 	align?: "right";
 }
@@ -32,16 +32,13 @@ const headCells: readonly HeadCell[] = [
 		label: "Name",
 	},
 	{
-		id: "weaponType",
+		id: "type",
 		label: "Type",
 	},
 	{
-		id: "damageType",
-		label: "Damage Type",
-	},
-	{
-		id: "size",
-		label: "Size",
+		id: "defense",
+		align: "right",
+		label: "Defense",
 	},
 	{
 		id: "price",
@@ -58,10 +55,10 @@ const headCells: readonly HeadCell[] = [
 interface EnhancedTableProps {
 	onRequestSort: (
 		event: React.MouseEvent<unknown>,
-		property: TWeaponsOrderBy
+		property: TArmoursOrderBy
 	) => void;
 	order: TOrder;
-	orderBy: TWeaponsOrderBy;
+	orderBy: TArmoursOrderBy;
 }
 
 const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
@@ -69,7 +66,7 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 	const user = useContext(AuthContext);
 
 	const createSortHandler =
-		(property: TWeaponsOrderBy) => (event: React.MouseEvent<unknown>) => {
+		(property: TArmoursOrderBy) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);
 		};
 
@@ -108,29 +105,28 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 	);
 };
 
-const defaultFilters: IWeaponFilters = {
+const defaultFilters: IArmourFilters = {
 	name: "",
 	type: "all",
-	damageType: "all",
 	price: 10000,
 	level: 9,
 };
 
 interface IProps {
-	type?: "default" | "addWeapons";
+	type?: "default" | "addArmours";
 }
 
-export const WeaponsTable: React.FC<IProps> = ({ type = "default" }) => {
-	const weaponsList = useAppSelector((state) => state.weapons.weapons);
+export const ArmoursTable: React.FC<IProps> = ({ type = "default" }) => {
+	const armoursList = useAppSelector((state) => state.armours.armours);
 	const [order, setOrder] = useState<TOrder>("asc");
-	const [orderBy, setOrderBy] = useState<TWeaponsOrderBy>("name");
+	const [orderBy, setOrderBy] = useState<TArmoursOrderBy>("name");
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(25);
-	const [filters, setFilters] = useState<IWeaponFilters>(defaultFilters);
+	const [filters, setFilters] = useState<IArmourFilters>(defaultFilters);
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
-		property: TWeaponsOrderBy
+		property: TArmoursOrderBy
 	) => {
 		const isAsc = orderBy === property && order === "asc";
 		setOrder(isAsc ? "desc" : "asc");
@@ -169,7 +165,7 @@ export const WeaponsTable: React.FC<IProps> = ({ type = "default" }) => {
 	// Avoid a layout jump when reaching the last page with empty rows.
 	const emptyRows =
 		page > 0
-			? Math.max(0, (1 + page) * rowsPerPage - weaponsList.length)
+			? Math.max(0, (1 + page) * rowsPerPage - armoursList.length)
 			: 0;
 
 	return (
@@ -192,10 +188,10 @@ export const WeaponsTable: React.FC<IProps> = ({ type = "default" }) => {
 								onRequestSort={handleRequestSort}
 							/>
 							<TableBody>
-								{weaponsList
+								{armoursList
 									.slice()
-									.filter(applyWeaponsFilters(filters))
-									.sort(getWeaponsComparator(order, orderBy))
+									.filter(applyArmoursFilters(filters))
+									.sort(getArmoursComparator(order, orderBy))
 									.slice(
 										page * rowsPerPage,
 										page * rowsPerPage + rowsPerPage
@@ -203,7 +199,7 @@ export const WeaponsTable: React.FC<IProps> = ({ type = "default" }) => {
 									.map((row) => (
 										<TableRow
 											key={row.id}
-											weapon={row}
+											armour={row}
 											type={type}
 										/>
 									))}
@@ -222,7 +218,7 @@ export const WeaponsTable: React.FC<IProps> = ({ type = "default" }) => {
 					<TablePagination
 						rowsPerPageOptions={[5, 10, 25]}
 						component="div"
-						count={weaponsList.length}
+						count={armoursList.length}
 						rowsPerPage={rowsPerPage}
 						page={page}
 						onPageChange={handleChangePage}

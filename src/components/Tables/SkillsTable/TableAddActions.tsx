@@ -1,27 +1,27 @@
 import { Box, IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import { IArmour } from "../../types";
-import { useAddArmoursContext } from "../../context";
+import { ISkill } from "../../../types";
+import { useAddSkillsContext } from "../../../context";
 
 interface IProps {
-	armour: IArmour;
+	skill: ISkill;
 }
 
-export const TableAddActions: React.FC<IProps> = ({ armour }) => {
-	const { state, dispatch } = useAddArmoursContext();
+export const TableAddActions: React.FC<IProps> = ({ skill }) => {
+	const { state, dispatch } = useAddSkillsContext();
 
 	const handleAdd = () => {
 		dispatch({
 			type: "ADD",
-			payload: armour.id,
+			payload: skill.id,
 		});
 	};
 
 	const handleRemove = () => {
 		dispatch({
 			type: "REMOVE",
-			payload: armour.id,
+			payload: skill.id,
 		});
 	};
 
@@ -33,7 +33,7 @@ export const TableAddActions: React.FC<IProps> = ({ armour }) => {
 				gap: 2,
 			}}
 		>
-			{state.includes(armour.id) ? (
+			{state.includes(skill.id) ? (
 				<IconButton
 					aria-label="remove"
 					color="warning"

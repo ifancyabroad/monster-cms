@@ -7,7 +7,7 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
-import { ISkillFilters } from "../../types";
+import { ISkillFilters } from "../../../types";
 import SearchIcon from "@mui/icons-material/Search";
 import {
 	CLASSES,
@@ -16,7 +16,7 @@ import {
 	MAX_SKILL_LEVEL,
 	SKILL_TYPES,
 	SKILL_TYPE_NAME_MAP,
-} from "../../utils";
+} from "../../../utils";
 
 interface IProps {
 	filters: ISkillFilters;

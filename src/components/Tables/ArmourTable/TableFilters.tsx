@@ -7,14 +7,14 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
-import { IArmourFilters } from "../../types";
+import { IArmourFilters } from "../../../types";
 import SearchIcon from "@mui/icons-material/Search";
 import {
 	ARMOUR_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
 	MAX_GOLD_VALUE,
 	MAX_SKILL_LEVEL,
-} from "../../utils";
+} from "../../../utils";
 
 interface IProps {
 	filters: IArmourFilters;

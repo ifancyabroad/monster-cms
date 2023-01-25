@@ -8,7 +8,7 @@ import {
 import { useEffect, useReducer } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { closeAddSkillsModal } from "../../../features/modals/modalsSlice";
-import { SkillsTable } from "../../SkillsTable";
+import { SkillsTable } from "../../Tables";
 import { AddSkillsContext, addSkillsReducer } from "../../../context";
 
 interface IProps {

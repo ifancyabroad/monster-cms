@@ -3,9 +3,9 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
-import { openArmourModal } from "../../features/modals/modalsSlice";
-import { IArmour } from "../../types";
+import { useAppDispatch } from "../../../app/hooks";
+import { openArmourModal } from "../../../features/modals/modalsSlice";
+import { IArmour } from "../../../types";
 
 interface IProps {
 	armour: IArmour;

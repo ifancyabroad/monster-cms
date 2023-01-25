@@ -1,11 +1,11 @@
 import { TableCell, TableRow as MUITableRow } from "@mui/material";
 import { Fragment, useContext, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { IMonster } from "../../types";
-import { STATS } from "../../utils";
-import { ConfirmationModal } from "../Modals";
-import { AuthContext } from "../../context/AuthContext";
-import { deleteMonster } from "../../features/monsters/monstersSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { IMonster } from "../../../types";
+import { STATS } from "../../../utils";
+import { ConfirmationModal } from "../../Modals";
+import { AuthContext } from "../../../context/AuthContext";
+import { deleteMonster } from "../../../features/monsters/monstersSlice";
 import { TableDefaultActions } from "./TableDefaultActions";
 
 interface IProps {

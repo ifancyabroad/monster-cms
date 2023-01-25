@@ -8,7 +8,7 @@ import {
 import { useEffect, useReducer } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { closeAddWeaponsModal } from "../../../features/modals/modalsSlice";
-import { WeaponsTable } from "../../WeaponsTable";
+import { WeaponsTable } from "../../Tables";
 import { AddWeaponsContext, addWeaponsReducer } from "../../../context";
 
 interface IProps {

@@ -12,14 +12,14 @@ import {
 	TableSortLabel,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import { IMonsterFilters, TMonstersOrderBy, TOrder } from "../../types";
+import { IMonsterFilters, TMonstersOrderBy, TOrder } from "../../../types";
 import { Fragment, useContext, useState } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../../app/hooks";
 import { TableRow } from "./TableRow";
 import { TableFilters } from "./TableFilters";
-import { applyMonstersFilters, getMonstersComparator } from "../../utils";
-import { AuthContext } from "../../context/AuthContext";
-import { Stat } from "../../enums";
+import { applyMonstersFilters, getMonstersComparator } from "../../../utils";
+import { AuthContext } from "../../../context";
+import { Stat } from "../../../enums";
 
 interface HeadCell {
 	id: TMonstersOrderBy;

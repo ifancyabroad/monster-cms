@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { AuthContext } from "../../context/AuthContext";
 import { openWeaponModal } from "../../features/modals/modalsSlice";
-import { WeaponsTable } from "../WeaponsTable";
+import { WeaponsTable } from "../Tables";
 
 export const Weapons: React.FC = () => {
 	const user = useContext(AuthContext);

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { AuthContext } from "../../context/AuthContext";
 import { openArmourModal } from "../../features/modals/modalsSlice";
-import { ArmoursTable } from "../ArmourTable";
+import { ArmoursTable } from "../Tables/ArmourTable";
 
 export const Armours: React.FC = () => {
 	const user = useContext(AuthContext);

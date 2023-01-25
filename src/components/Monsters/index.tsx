@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { AuthContext } from "../../context/AuthContext";
 import { openMonsterModal } from "../../features/modals/modalsSlice";
-import { MonstersTable } from "../MonstersTable";
+import { MonstersTable } from "../Tables/MonstersTable";
 
 export const Monsters: React.FC = () => {
 	const user = useContext(AuthContext);
