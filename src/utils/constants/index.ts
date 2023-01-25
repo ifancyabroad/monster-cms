@@ -8,7 +8,7 @@ import {
 	Stat,
 	WeaponSize,
 	WeaponType,
-} from "../../enums";
+} from "../enums";
 
 export const DRAWER_WIDTH = 240;
 

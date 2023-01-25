@@ -14,8 +14,7 @@ import {
 	TextField,
 } from "@mui/material";
 import { ISkillEffect } from "../../../types";
-import { EFFECTS_NAME_MAP } from "../../../utils";
-import { EffectType } from "../../../enums";
+import { EFFECTS_NAME_MAP, EffectType } from "../../../utils";
 import { DamageEffect } from "./DamageEffect";
 import { HealEffect } from "./HealEffect";
 import { StatusEffect } from "./StatusEffect";

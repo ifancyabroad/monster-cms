@@ -1,4 +1,4 @@
-import { EffectType, SkillType, Target } from "../../enums";
+import { EffectType, SkillType, Target } from "../enums";
 import { ISkill, ISkillFilters, TOrder, TSkillsOrderBy } from "../../types";
 
 export const getSkillType = (skill: ISkill) => {

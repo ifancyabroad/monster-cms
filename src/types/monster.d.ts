@@ -1,5 +1,5 @@
 import { TDamageTypes, TStats } from ".";
-import { Stat } from "../enums";
+import { Stat } from "../utils";
 
 export interface IBaseMonster {
 	challenge: number;

@@ -1,4 +1,4 @@
-import { CharacterClass, Target } from "../enums";
+import { CharacterClass, Target } from "../utils";
 import { ISkillEffect } from "./effect";
 
 export interface IBaseSkill {

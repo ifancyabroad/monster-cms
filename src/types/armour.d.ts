@@ -1,5 +1,5 @@
 import { TDamageTypes, TStats } from ".";
-import { DamageType, EquipmentType } from "../enums";
+import { DamageType, EquipmentType } from "../utils";
 
 export interface IBaseArmour {
 	type: EquipmentType;

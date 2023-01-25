@@ -7,10 +7,9 @@ import {
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { useAppDispatch } from "../../../../app/hooks";
-import { EffectType } from "../../../../enums";
 import { openEffectModal } from "../../../../features/modals/modalsSlice";
 import { ISkillEffect } from "../../../../types";
-import { EFFECTS_NAME_MAP } from "../../../../utils";
+import { EffectType, EFFECTS_NAME_MAP } from "../../../../utils";
 import { StatusEffect } from "./StatusEffect";
 import { DamageEffect } from "./DamageEffect";
 import { HealEffect } from "./HealEffect";

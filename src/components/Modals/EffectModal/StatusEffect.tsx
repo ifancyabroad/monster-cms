@@ -1,12 +1,13 @@
 import { Fragment, useState } from "react";
 import { Box, Grid, TextField } from "@mui/material";
 import {
+	DamageType,
 	getResistancesArray,
 	getStatsArray,
 	MAX_DURATION,
+	Stat,
 } from "../../../utils";
 import { StatGroup } from "../common";
-import { DamageType, Stat } from "../../../enums";
 import { TDamageTypes, TStats } from "../../../types";
 import { useEffectContext } from "../../../context";
 
