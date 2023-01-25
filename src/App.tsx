@@ -1,5 +1,5 @@
 import {
-	Armour,
+	Armours,
 	ArmourModal,
 	Classes,
 	Dashboard,
@@ -32,7 +32,7 @@ function App() {
 					<Route path="/skills" component={Skills} />
 					<Route path="/weapons/:id" component={Weapon} />
 					<Route path="/weapons" component={Weapons} />
-					<Route path="/armours" component={Armour} />
+					<Route path="/armours" component={Armours} />
 					<Route path="/classes" component={Classes} />
 				</Switch>
 			</HOCLayout>

@@ -1,6 +1,5 @@
 import { TDamageTypes, TStats } from ".";
-import { DamageType, EquipmentType, WeaponType } from "../enums";
-import { IWeaponEffect } from "./effect";
+import { DamageType, EquipmentType } from "../enums";
 
 export interface IBaseArmour {
 	type: EquipmentType;
@@ -29,3 +28,12 @@ export interface IUpdateArmour extends ISaveArmour {
 	id: string;
 	oldImage?: string;
 }
+
+export interface IArmourFilters {
+	name: "";
+	type: EquipmentType | "all";
+	price: number;
+	level: number;
+}
+
+export type TArmoursOrderBy = keyof IArmour;

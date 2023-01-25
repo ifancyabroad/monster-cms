@@ -32,7 +32,7 @@ interface ModalsState {
 	};
 	addSkillsModalOpen: boolean;
 	addWeaponsModalOpen: boolean;
-	addArmourModalOpen: boolean;
+	addArmoursModalOpen: boolean;
 }
 
 const initialState: ModalsState = {
@@ -58,7 +58,7 @@ const initialState: ModalsState = {
 	},
 	addSkillsModalOpen: false,
 	addWeaponsModalOpen: false,
-	addArmourModalOpen: false,
+	addArmoursModalOpen: false,
 };
 
 export const modalsSlice = createSlice({
@@ -156,11 +156,11 @@ export const modalsSlice = createSlice({
 		closeAddWeaponsModal: (state) => {
 			state.addWeaponsModalOpen = false;
 		},
-		openAddArmourModal: (state) => {
-			state.addArmourModalOpen = true;
+		openAddArmoursModal: (state) => {
+			state.addArmoursModalOpen = true;
 		},
-		closeAddArmourModal: (state) => {
-			state.addArmourModalOpen = false;
+		closeAddArmoursModal: (state) => {
+			state.addArmoursModalOpen = false;
 		},
 	},
 });
@@ -187,8 +187,8 @@ export const {
 	closeAddSkillsModal,
 	openAddWeaponsModal,
 	closeAddWeaponsModal,
-	openAddArmourModal,
-	closeAddArmourModal,
+	openAddArmoursModal,
+	closeAddArmoursModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;
