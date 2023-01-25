@@ -2,7 +2,7 @@ import { Box, IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { IWeapon } from "../../types";
-import { useAddWeaponsContext } from "../Modals/AddWeaponsModal/addWeaponsContext";
+import { useAddWeaponsContext } from "../../context";
 
 interface IProps {
 	weapon: IWeapon;

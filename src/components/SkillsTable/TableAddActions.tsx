@@ -2,7 +2,7 @@ import { Box, IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { ISkill } from "../../types";
-import { useAddSkillsContext } from "../Modals/AddSkillsModal/addSkillsContext";
+import { useAddSkillsContext } from "../../context";
 
 interface IProps {
 	skill: ISkill;

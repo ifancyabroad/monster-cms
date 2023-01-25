@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Box, DialogContentText, Grid, TextField } from "@mui/material";
-import { useEffectContext } from "./effectContext";
+import { useEffectContext } from "../../../context";
 import { MAX_MULTIPLIER } from "../../../utils";
 
 export const WeaponDamageEffect: React.FC = () => {

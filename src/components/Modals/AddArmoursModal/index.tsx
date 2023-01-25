@@ -9,8 +9,7 @@ import { useEffect, useReducer } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { closeAddArmoursModal } from "../../../features/modals/modalsSlice";
 import { ArmoursTable } from "../../ArmourTable";
-import { AddArmoursContext } from "./addArmoursContext";
-import { addArmoursReducer } from "./addArmoursReducer";
+import { AddArmoursContext, addArmoursReducer } from "../../../context";
 
 interface IProps {
 	armours: string[];

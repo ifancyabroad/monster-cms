@@ -14,7 +14,7 @@ import {
 	STATS,
 	STATS_NAME_MAP,
 } from "../../../utils";
-import { useEffectContext } from "./effectContext";
+import { useEffectContext } from "../../../context";
 
 export const DamageEffect: React.FC = () => {
 	const {

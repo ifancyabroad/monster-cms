@@ -8,7 +8,7 @@ import {
 import { StatGroup } from "../common";
 import { DamageType, Stat } from "../../../enums";
 import { TDamageTypes, TStats } from "../../../types";
-import { useEffectContext } from "./effectContext";
+import { useEffectContext } from "../../../context";
 
 const DEFAULT_STAT_VALUES = {
 	[Stat.Strength]: 0,
