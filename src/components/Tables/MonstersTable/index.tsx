@@ -17,9 +17,12 @@ import { Fragment, useContext, useState } from "react";
 import { useAppSelector } from "../../../app/hooks";
 import { TableRow } from "./TableRow";
 import { TableFilters } from "./TableFilters";
-import { applyMonstersFilters, getMonstersComparator } from "../../../utils";
+import {
+	applyMonstersFilters,
+	getMonstersComparator,
+	Stat,
+} from "../../../utils";
 import { AuthContext } from "../../../context";
-import { Stat } from "../../../enums";
 
 interface HeadCell {
 	id: TMonstersOrderBy;

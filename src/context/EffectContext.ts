@@ -1,5 +1,5 @@
 import { createContext, Dispatch, useContext } from "react";
-import { AuxiliaryEffect, DamageType, EffectType, Stat } from "../enums";
+import { AuxiliaryEffect, DamageType, EffectType, Stat } from "../utils";
 import {
 	IAuxiliaryEffect,
 	IDamageEffect,

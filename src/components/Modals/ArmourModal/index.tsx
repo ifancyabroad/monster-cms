@@ -22,16 +22,18 @@ import {
 	TDamageTypes,
 	TStats,
 } from "../../../types";
-import { DamageType, EquipmentType, Stat } from "../../../enums";
 import { StatGroup } from "../common";
 import {
 	ARMOUR_TYPES,
+	DamageType,
+	EquipmentType,
 	EQUIPMENT_TYPE_NAME_MAP,
 	getResistancesArray,
 	getStatsArray,
 	MAX_DEFENSE,
 	MAX_GOLD_VALUE,
 	MAX_ITEM_LEVEL,
+	Stat,
 } from "../../../utils";
 import {
 	saveArmour,

@@ -1,5 +1,5 @@
 import { TDamageTypes, TStats } from ".";
-import { DamageType, EquipmentType, WeaponSize, WeaponType } from "../enums";
+import { DamageType, EquipmentType, WeaponSize, WeaponType } from "../utils";
 import { IWeaponEffect } from "./effect";
 
 export interface IBaseWeapon {

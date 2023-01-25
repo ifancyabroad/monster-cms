@@ -21,16 +21,17 @@ import {
 } from "@mui/material";
 import { saveSkill, updateSkill } from "../../../features/skills/skillsSlice";
 import { IBaseSkill, ISaveSkill, ISkill, ISkillEffect } from "../../../types";
-import { CharacterClass, Target } from "../../../enums";
 import { EffectModal } from "../EffectModal";
 import { EffectCard } from "../common/EffectCard";
 import {
+	CharacterClass,
 	CLASSES,
 	CLASS_NAME_MAP,
 	MAX_GOLD_VALUE,
 	MAX_SKILL_LEVEL,
 	MAX_SKILL_USES,
 	SKILL_EFFECTS,
+	Target,
 } from "../../../utils";
 
 const defaultSkillValues: IBaseSkill = {

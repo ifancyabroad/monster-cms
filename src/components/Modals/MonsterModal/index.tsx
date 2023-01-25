@@ -24,8 +24,7 @@ import {
 } from "../../../features/monsters/monstersSlice";
 import { IBaseMonster, IMonster, ISaveMonster } from "../../../types";
 import { StatGroup } from "../common";
-import { getResistancesArray, getStatsArray } from "../../../utils";
-import { DamageType } from "../../../enums";
+import { DamageType, getResistancesArray, getStatsArray } from "../../../utils";
 import { AddSkillsModal } from "../AddSkillsModal";
 import { SkillCard } from "./SkillCard";
 

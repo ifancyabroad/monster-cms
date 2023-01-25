@@ -1,7 +1,11 @@
 import { Box, Typography } from "@mui/material";
-import { DamageType, Stat } from "../../../enums";
 import { IStatusEffect } from "../../../types";
-import { RESISTANCES_NAME_MAP, STATS_NAME_MAP } from "../../../utils";
+import {
+	DamageType,
+	RESISTANCES_NAME_MAP,
+	Stat,
+	STATS_NAME_MAP,
+} from "../../../utils";
 
 export const StatusEffect: React.FC<IStatusEffect> = ({
 	modifiers,

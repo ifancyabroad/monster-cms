@@ -27,16 +27,11 @@ import {
 	TDamageTypes,
 	TStats,
 } from "../../../types";
-import {
-	DamageType,
-	EquipmentType,
-	Stat,
-	WeaponSize,
-	WeaponType,
-} from "../../../enums";
 import { EffectModal } from "../EffectModal";
 import { EffectCard, StatGroup } from "../common";
 import {
+	DamageType,
+	EquipmentType,
 	getResistancesArray,
 	getStatsArray,
 	MAX_DAMAGE,
@@ -44,6 +39,9 @@ import {
 	MAX_ITEM_LEVEL,
 	RESISTANCES,
 	RESISTANCES_NAME_MAP,
+	Stat,
+	WeaponSize,
+	WeaponType,
 	WEAPON_EFFECTS,
 	WEAPON_SIZES,
 	WEAPON_SIZE_NAME_MAP,
