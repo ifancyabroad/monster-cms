@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { AuthContext } from "../../context/AuthContext";
 import { openSkillModal } from "../../features/modals/modalsSlice";
-import { SkillsTable } from "../SkillsTable";
+import { SkillsTable } from "../Tables";
 
 export const Skills: React.FC = () => {
 	const user = useContext(AuthContext);

@@ -6,7 +6,7 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
-import { IMonsterFilters } from "../../types";
+import { IMonsterFilters } from "../../../types";
 import SearchIcon from "@mui/icons-material/Search";
 
 interface IProps {

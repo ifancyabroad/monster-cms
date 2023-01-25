@@ -3,20 +3,20 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
-import { openSkillModal } from "../../features/modals/modalsSlice";
-import { ISkill } from "../../types";
+import { useAppDispatch } from "../../../app/hooks";
+import { openWeaponModal } from "../../../features/modals/modalsSlice";
+import { IWeapon } from "../../../types";
 
 interface IProps {
-	skill: ISkill;
+	weapon: IWeapon;
 	onDelete: () => void;
 }
 
-export const TableDefaultActions: React.FC<IProps> = ({ skill, onDelete }) => {
+export const TableDefaultActions: React.FC<IProps> = ({ weapon, onDelete }) => {
 	const dispatch = useAppDispatch();
 
 	const handleUpdate = () => {
-		dispatch(openSkillModal(skill));
+		dispatch(openWeaponModal(weapon));
 	};
 
 	const handleDelete = () => {
@@ -35,7 +35,7 @@ export const TableDefaultActions: React.FC<IProps> = ({ skill, onDelete }) => {
 				aria-label="view"
 				color="primary"
 				component={Link}
-				to={`/skills/${skill.id}`}
+				to={`/weapons/${weapon.id}`}
 			>
 				<VisibilityIcon />
 			</IconButton>

@@ -12,13 +12,13 @@ import {
 	TableSortLabel,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import { ISkillFilters, TOrder, TSkillsOrderBy } from "../../types";
+import { ISkillFilters, TOrder, TSkillsOrderBy } from "../../../types";
 import { Fragment, useContext, useState } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../../app/hooks";
 import { TableRow } from "./TableRow";
 import { TableFilters } from "./TableFilters";
-import { applySkillsFilters, getSkillsComparator } from "../../utils";
-import { AuthContext } from "../../context/AuthContext";
+import { applySkillsFilters, getSkillsComparator } from "../../../utils";
+import { AuthContext } from "../../../context";
 
 interface HeadCell {
 	id: TSkillsOrderBy;

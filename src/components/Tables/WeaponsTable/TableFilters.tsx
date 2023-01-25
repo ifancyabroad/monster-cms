@@ -7,7 +7,7 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
-import { IWeaponFilters } from "../../types";
+import { IWeaponFilters } from "../../../types";
 import SearchIcon from "@mui/icons-material/Search";
 import {
 	MAX_GOLD_VALUE,
@@ -16,7 +16,7 @@ import {
 	RESISTANCES_NAME_MAP,
 	WEAPON_TYPES,
 	WEAPON_TYPE_NAME_MAP,
-} from "../../utils";
+} from "../../../utils";
 
 interface IProps {
 	filters: IWeaponFilters;
