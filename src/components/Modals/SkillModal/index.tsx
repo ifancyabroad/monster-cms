@@ -4,7 +4,7 @@ import {
 	openEffectModal,
 	openErrorModal,
 } from "../../../features/modals/modalsSlice";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
 	Box,
 	Button,
@@ -180,245 +180,229 @@ export const SkillModal: React.FC = () => {
 	};
 
 	return (
-		<Fragment>
-			<Dialog
-				open={open}
-				onClose={handleClose}
-				maxWidth="sm"
-				fullWidth
-				aria-labelledby="form-dialog-title"
-			>
-				<DialogTitle id="form-dialog-title">{title}</DialogTitle>
-				<form onSubmit={handleSaveSkill}>
-					<DialogContent>
-						<DialogContentText>{subtitle}</DialogContentText>
-						<Box my={3}>
-							<FormControl>
-								<input
-									accept="image/*"
-									style={{ display: "none" }}
-									id="contained-button-file"
-									multiple
-									type="file"
-									onChange={handleChangeImage}
-								/>
-								<label htmlFor="contained-button-file">
-									<Button
-										variant="contained"
-										component="span"
-									>
-										Upload Image
-									</Button>
-									{formValues.image && (
-										<Typography
-											sx={{
-												marginLeft: 2,
-												display: "inline",
-											}}
-										>
-											{formValues.image.name}
-										</Typography>
-									)}
-								</label>
-							</FormControl>
-						</Box>
-						<Box my={3}>
-							<TextField
-								autoFocus
-								name="name"
-								label="Name"
-								value={formValues.skill.name}
-								onChange={handleChange}
-								fullWidth
-								required
-								inputProps={{
-									minLength: 3,
-									maxLength: 25,
-								}}
+		<Dialog
+			open={open}
+			onClose={handleClose}
+			maxWidth="sm"
+			fullWidth
+			aria-labelledby="form-dialog-title"
+		>
+			<DialogTitle id="form-dialog-title">{title}</DialogTitle>
+			<form onSubmit={handleSaveSkill}>
+				<DialogContent>
+					<DialogContentText>{subtitle}</DialogContentText>
+					<Box my={3}>
+						<FormControl>
+							<input
+								accept="image/*"
+								style={{ display: "none" }}
+								id="contained-button-file"
+								multiple
+								type="file"
+								onChange={handleChangeImage}
 							/>
-						</Box>
-						<Box my={3}>
-							<TextField
-								autoFocus
-								name="description"
-								label="Description"
-								value={formValues.skill.description}
-								onChange={handleChange}
-								fullWidth
-								multiline
-								minRows={4}
-								inputProps={{
-									maxLength: 200,
-								}}
-							/>
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Skill Type
-							</DialogContentText>
-							<Grid container spacing={2}>
-								<Grid item xs={6}>
-									<TextField
-										fullWidth
-										select
-										margin="dense"
-										label="Class"
-										name="class"
-										value={formValues.skill.class}
-										onChange={handleChange}
+							<label htmlFor="contained-button-file">
+								<Button variant="contained" component="span">
+									Upload Image
+								</Button>
+								{formValues.image && (
+									<Typography
+										sx={{
+											marginLeft: 2,
+											display: "inline",
+										}}
 									>
-										{CLASSES.map((cl) => (
-											<MenuItem key={cl} value={cl}>
-												{CLASS_NAME_MAP[cl]}
-											</MenuItem>
-										))}
-									</TextField>
-								</Grid>
-							</Grid>
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Skill Properties
-							</DialogContentText>
-							<Grid container spacing={2}>
-								<Grid item xs={6}>
-									<TextField
-										fullWidth
-										select
-										margin="dense"
-										name="target"
-										label="Target"
-										value={formValues.skill.target}
-										onChange={handleChange}
-										required
-									>
-										<MenuItem value="self">Self</MenuItem>
-										<MenuItem value="enemy">Enemy</MenuItem>
-									</TextField>
-								</Grid>
-								<Grid item xs={6}>
-									<TextField
-										fullWidth
-										margin="dense"
-										name="level"
-										label={`Level (0-${MAX_SKILL_LEVEL})`}
-										type="number"
-										value={formValues.skill.level}
-										onChange={handleChange}
-										required
-										inputProps={{
-											min: 0,
-											max: MAX_SKILL_LEVEL,
-										}}
-									/>
-								</Grid>
-								<Grid item xs={6}>
-									<TextField
-										fullWidth
-										margin="dense"
-										name="price"
-										label={`Price (0-${MAX_GOLD_VALUE})`}
-										type="number"
-										value={formValues.skill.price}
-										onChange={handleChange}
-										required
-										inputProps={{
-											min: 0,
-											max: MAX_GOLD_VALUE,
-										}}
-									/>
-								</Grid>
-								<Grid item xs={6}>
-									<TextField
-										fullWidth
-										margin="dense"
-										name="maxUses"
-										label={`Max Uses (0-${MAX_SKILL_USES})`}
-										type="number"
-										value={formValues.skill.maxUses}
-										onChange={handleChange}
-										required
-										inputProps={{
-											min: 0,
-											max: MAX_SKILL_USES,
-										}}
-									/>
-								</Grid>
-							</Grid>
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Skill Effects
-							</DialogContentText>
-							<Grid container spacing={1}>
-								{hasEffects ? (
-									formValues.skill.effects.map(
-										(effect, index) => (
-											<Grid
-												key={index}
-												item
-												xs={12}
-												sm={6}
-											>
-												<EffectCard
-													effect={effect}
-													index={index}
-													onRemove={
-														handleRemoveEffect
-													}
-												/>
-											</Grid>
-										)
-									)
-								) : (
-									<Grid item xs={12}>
-										<Typography>
-											Please add some effects!
-										</Typography>
-									</Grid>
+										{formValues.image.name}
+									</Typography>
 								)}
+							</label>
+						</FormControl>
+					</Box>
+					<Box my={3}>
+						<TextField
+							autoFocus
+							name="name"
+							label="Name"
+							value={formValues.skill.name}
+							onChange={handleChange}
+							fullWidth
+							required
+							inputProps={{
+								minLength: 3,
+								maxLength: 25,
+							}}
+						/>
+					</Box>
+					<Box my={3}>
+						<TextField
+							autoFocus
+							name="description"
+							label="Description"
+							value={formValues.skill.description}
+							onChange={handleChange}
+							fullWidth
+							multiline
+							minRows={4}
+							inputProps={{
+								maxLength: 200,
+							}}
+						/>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Skill Type
+						</DialogContentText>
+						<Grid container spacing={2}>
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Class"
+									name="class"
+									value={formValues.skill.class}
+									onChange={handleChange}
+								>
+									{CLASSES.map((cl) => (
+										<MenuItem key={cl} value={cl}>
+											{CLASS_NAME_MAP[cl]}
+										</MenuItem>
+									))}
+								</TextField>
 							</Grid>
-						</Box>
-					</DialogContent>
-					<DialogActions>
-						<Button
-							variant="contained"
-							onClick={handleOpenEffectModal}
-							color="secondary"
+						</Grid>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
 						>
-							Add Effect
-						</Button>
-						<Button onClick={handleClose} color="primary">
-							Cancel
-						</Button>
-						<Button
-							type="submit"
-							color="primary"
-							disabled={isLoading}
+							Skill Properties
+						</DialogContentText>
+						<Grid container spacing={2}>
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									name="target"
+									label="Target"
+									value={formValues.skill.target}
+									onChange={handleChange}
+									required
+								>
+									<MenuItem value="self">Self</MenuItem>
+									<MenuItem value="enemy">Enemy</MenuItem>
+								</TextField>
+							</Grid>
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									margin="dense"
+									name="level"
+									label={`Level (0-${MAX_SKILL_LEVEL})`}
+									type="number"
+									value={formValues.skill.level}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 0,
+										max: MAX_SKILL_LEVEL,
+									}}
+								/>
+							</Grid>
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									margin="dense"
+									name="price"
+									label={`Price (0-${MAX_GOLD_VALUE})`}
+									type="number"
+									value={formValues.skill.price}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 0,
+										max: MAX_GOLD_VALUE,
+									}}
+								/>
+							</Grid>
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									margin="dense"
+									name="maxUses"
+									label={`Max Uses (0-${MAX_SKILL_USES})`}
+									type="number"
+									value={formValues.skill.maxUses}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 0,
+										max: MAX_SKILL_USES,
+									}}
+								/>
+							</Grid>
+						</Grid>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
 						>
-							Save
-						</Button>
-					</DialogActions>
-				</form>
-			</Dialog>
+							Skill Effects
+						</DialogContentText>
+						<Grid container spacing={1}>
+							{hasEffects ? (
+								formValues.skill.effects.map(
+									(effect, index) => (
+										<Grid key={index} item xs={12} sm={6}>
+											<EffectCard
+												effect={effect}
+												index={index}
+												onRemove={handleRemoveEffect}
+											/>
+										</Grid>
+									)
+								)
+							) : (
+								<Grid item xs={12}>
+									<Typography>
+										Please add some effects!
+									</Typography>
+								</Grid>
+							)}
+						</Grid>
+					</Box>
+				</DialogContent>
+				<DialogActions>
+					<Button
+						variant="contained"
+						onClick={handleOpenEffectModal}
+						color="secondary"
+					>
+						Add Effect
+					</Button>
+					<Button onClick={handleClose} color="primary">
+						Cancel
+					</Button>
+					<Button type="submit" color="primary" disabled={isLoading}>
+						Save
+					</Button>
+				</DialogActions>
+			</form>
 
 			<EffectModal
 				effects={SKILL_EFFECTS}
 				onAddEffect={handleAddEffect}
 				onUpdateEffect={handleUpdateEffect}
 			/>
-		</Fragment>
+		</Dialog>
 	);
 };
