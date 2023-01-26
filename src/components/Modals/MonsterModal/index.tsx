@@ -15,6 +15,7 @@ import {
 	DialogTitle,
 	FormControl,
 	Grid,
+	List,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -26,7 +27,7 @@ import { IBaseMonster, IMonster, ISaveMonster } from "../../../types";
 import { StatGroup } from "../common";
 import { DamageType, getResistancesArray, getStatsArray } from "../../../utils";
 import { AddSkillsModal } from "../AddSkillsModal";
-import { SkillCard } from "./SkillCard";
+import { SkillItem } from "./SkillItem";
 
 const defaultMonsterValues: IBaseMonster = {
 	challenge: 1,
@@ -329,26 +330,24 @@ export const MonsterModal: React.FC = () => {
 							>
 								Skills
 							</DialogContentText>
-							<Grid container spacing={1}>
-								{hasSkills ? (
-									formValues.monster.skills.map((skill) => (
-										<Grid key={skill} item xs={12} md={6}>
-											<SkillCard
-												id={skill}
-												onRemoveSkill={
-													handleRemoveSkill
-												}
-											/>
-										</Grid>
-									))
-								) : (
-									<Grid item xs={12}>
-										<Typography>
-											Please add some skills!
-										</Typography>
-									</Grid>
-								)}
-							</Grid>
+							{hasSkills ? (
+								<List
+									sx={{
+										width: "100%",
+										bgcolor: "background.paper",
+									}}
+								>
+									{formValues.monster.skills.map((skill) => (
+										<SkillItem
+											key={skill}
+											id={skill}
+											onRemoveSkill={handleRemoveSkill}
+										/>
+									))}
+								</List>
+							) : (
+								<Typography>Please add some skills!</Typography>
+							)}
 						</Box>
 					</DialogContent>
 					<DialogActions>
