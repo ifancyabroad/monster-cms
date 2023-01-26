@@ -3,7 +3,7 @@ import {
 	closeWeaponModal,
 	openEffectModal,
 } from "../../../features/modals/modalsSlice";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
 	Box,
 	Button,
@@ -129,7 +129,8 @@ export const WeaponModal: React.FC = () => {
 	const subtitle = weapon
 		? `Updating ${weapon?.name}`
 		: "Add a new weapon to the database.";
-	const hasEffects = formValues.weapon.effects.length > 0;
+	const weaponEffects = formValues.weapon.effects || [];
+	const hasEffects = weaponEffects.length > 0;
 
 	useEffect(() => {
 		setFormValues({
@@ -240,9 +241,7 @@ export const WeaponModal: React.FC = () => {
 			...formValues,
 			weapon: {
 				...formValues.weapon,
-				effects: formValues.weapon.effects.concat(
-					effect as IWeaponEffect
-				),
+				effects: weaponEffects.concat(effect as IWeaponEffect),
 			},
 		});
 	};
@@ -252,7 +251,7 @@ export const WeaponModal: React.FC = () => {
 			...formValues,
 			weapon: {
 				...formValues.weapon,
-				effects: formValues.weapon.effects.map((e, i) =>
+				effects: weaponEffects.map((e, i) =>
 					index === i ? (effect as IWeaponEffect) : e
 				),
 			},
@@ -260,7 +259,7 @@ export const WeaponModal: React.FC = () => {
 	};
 
 	const handleRemoveEffect = (effect: ISkillEffect, index: number) => {
-		const newEffects = [...formValues.weapon.effects];
+		const newEffects = [...weaponEffects];
 		newEffects.splice(index, 1);
 
 		setFormValues({
@@ -295,301 +294,279 @@ export const WeaponModal: React.FC = () => {
 	};
 
 	return (
-		<Fragment>
-			<Dialog
-				open={open}
-				onClose={handleClose}
-				maxWidth="sm"
-				fullWidth
-				aria-labelledby="form-dialog-title"
-			>
-				<DialogTitle id="form-dialog-title">{title}</DialogTitle>
-				<form onSubmit={handleSaveWeapon}>
-					<DialogContent>
-						<DialogContentText>{subtitle}</DialogContentText>
-						<Box my={3}>
-							<FormControl>
-								<input
-									accept="image/*"
-									style={{ display: "none" }}
-									id="contained-button-file"
-									multiple
-									type="file"
-									onChange={handleChangeImage}
-								/>
-								<label htmlFor="contained-button-file">
-									<Button
-										variant="contained"
-										component="span"
-									>
-										Upload Image
-									</Button>
-									{formValues.image && (
-										<Typography
-											sx={{
-												marginLeft: 2,
-												display: "inline",
-											}}
-										>
-											{formValues.image.name}
-										</Typography>
-									)}
-								</label>
-							</FormControl>
-						</Box>
-						<Box my={3}>
-							<TextField
-								autoFocus
-								name="name"
-								label="Name"
-								value={formValues.weapon.name}
-								onChange={handleChange}
-								fullWidth
-								required
-								inputProps={{
-									minLength: 3,
-									maxLength: 25,
-								}}
+		<Dialog
+			open={open}
+			onClose={handleClose}
+			maxWidth="sm"
+			fullWidth
+			aria-labelledby="form-dialog-title"
+		>
+			<DialogTitle id="form-dialog-title">{title}</DialogTitle>
+			<form onSubmit={handleSaveWeapon}>
+				<DialogContent>
+					<DialogContentText>{subtitle}</DialogContentText>
+					<Box my={3}>
+						<FormControl>
+							<input
+								accept="image/*"
+								style={{ display: "none" }}
+								id="contained-button-file"
+								multiple
+								type="file"
+								onChange={handleChangeImage}
 							/>
-						</Box>
-						<Box my={3}>
-							<TextField
-								autoFocus
-								name="description"
-								label="Description"
-								value={formValues.weapon.description}
-								onChange={handleChange}
-								fullWidth
-								multiline
-								minRows={4}
-								inputProps={{
-									maxLength: 200,
-								}}
-							/>
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Weapon Type
-							</DialogContentText>
-							<Grid container spacing={2}>
-								<Grid item xs={6}>
-									<TextField
-										fullWidth
-										select
-										margin="dense"
-										label="Type"
-										name="weaponType"
-										value={formValues.weapon.weaponType}
-										onChange={handleChange}
+							<label htmlFor="contained-button-file">
+								<Button variant="contained" component="span">
+									Upload Image
+								</Button>
+								{formValues.image && (
+									<Typography
+										sx={{
+											marginLeft: 2,
+											display: "inline",
+										}}
 									>
-										{WEAPON_TYPES.map((type) => (
-											<MenuItem key={type} value={type}>
-												{WEAPON_TYPE_NAME_MAP[type]}
-											</MenuItem>
-										))}
-									</TextField>
-								</Grid>
-								<Grid item xs={6}>
-									<TextField
-										fullWidth
-										select
-										margin="dense"
-										label="Size"
-										name="size"
-										value={formValues.weapon.size}
-										onChange={handleChange}
-									>
-										{WEAPON_SIZES.map((size) => (
-											<MenuItem key={size} value={size}>
-												{WEAPON_SIZE_NAME_MAP[size]}
-											</MenuItem>
-										))}
-									</TextField>
-								</Grid>
-							</Grid>
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Weapon Properties
-							</DialogContentText>
-							<Grid container spacing={2}>
-								<Grid item xs={12} md={4}>
-									<TextField
-										fullWidth
-										select
-										margin="dense"
-										label="Damage Type"
-										name="damageType"
-										value={formValues.weapon.damageType}
-										onChange={handleChange}
-									>
-										{RESISTANCES.map((resistance) => (
-											<MenuItem
-												key={resistance}
-												value={resistance}
-											>
-												{
-													RESISTANCES_NAME_MAP[
-														resistance
-													]
-												}
-											</MenuItem>
-										))}
-									</TextField>
-								</Grid>
-								<Grid item xs={6} md={4}>
-									<TextField
-										fullWidth
-										margin="dense"
-										name="min"
-										label={`Minimum Roll (1-${MAX_DAMAGE})`}
-										type="number"
-										value={formValues.weapon.min}
-										onChange={handleChange}
-										required
-										inputProps={{
-											min: 1,
-											max: MAX_DAMAGE,
-										}}
-									/>
-								</Grid>
-								<Grid item xs={6} md={4}>
-									<TextField
-										fullWidth
-										margin="dense"
-										name="max"
-										label={`Maximum Roll (1-${MAX_DAMAGE})`}
-										type="number"
-										value={formValues.weapon.max}
-										onChange={handleChange}
-										required
-										inputProps={{
-											min: 1,
-											max: MAX_DAMAGE,
-										}}
-									/>
-								</Grid>
-								<Grid item xs={6}>
-									<TextField
-										fullWidth
-										margin="dense"
-										name="level"
-										label={`Level (1-${MAX_ITEM_LEVEL})`}
-										type="number"
-										value={formValues.weapon.level}
-										onChange={handleChange}
-										required
-										inputProps={{
-											min: 1,
-											max: MAX_ITEM_LEVEL,
-										}}
-									/>
-								</Grid>
-								<Grid item xs={6}>
-									<TextField
-										fullWidth
-										margin="dense"
-										name="price"
-										label={`Price (1-${MAX_GOLD_VALUE})`}
-										type="number"
-										value={formValues.weapon.price}
-										onChange={handleChange}
-										required
-										inputProps={{
-											min: 1,
-											max: MAX_GOLD_VALUE,
-										}}
-									/>
-								</Grid>
-							</Grid>
-						</Box>
-						<StatGroup
-							title="Stats (0-30)"
-							stats={getStatsArray(stats)}
-							min={0}
-							max={30}
-							handleChange={handleChangeStats}
-						/>
-						<StatGroup
-							title="Resistances (%)"
-							stats={getResistancesArray(resistances)}
-							min={0}
-							max={100}
-							handleChange={handleChangeResistances}
-						/>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Weapon Effects
-							</DialogContentText>
-							<Grid container spacing={1}>
-								{hasEffects ? (
-									formValues.weapon.effects.map(
-										(effect, index) => (
-											<Grid
-												key={index}
-												item
-												xs={12}
-												sm={6}
-											>
-												<EffectCard
-													effect={effect}
-													index={index}
-													onRemove={
-														handleRemoveEffect
-													}
-												/>
-											</Grid>
-										)
-									)
-								) : (
-									<Grid item xs={12}>
-										<Typography>
-											Please add some effects!
-										</Typography>
-									</Grid>
+										{formValues.image.name}
+									</Typography>
 								)}
+							</label>
+						</FormControl>
+					</Box>
+					<Box my={3}>
+						<TextField
+							autoFocus
+							name="name"
+							label="Name"
+							value={formValues.weapon.name}
+							onChange={handleChange}
+							fullWidth
+							required
+							inputProps={{
+								minLength: 3,
+								maxLength: 25,
+							}}
+						/>
+					</Box>
+					<Box my={3}>
+						<TextField
+							autoFocus
+							name="description"
+							label="Description"
+							value={formValues.weapon.description}
+							onChange={handleChange}
+							fullWidth
+							multiline
+							minRows={4}
+							inputProps={{
+								maxLength: 200,
+							}}
+						/>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Weapon Type
+						</DialogContentText>
+						<Grid container spacing={2}>
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Type"
+									name="weaponType"
+									value={formValues.weapon.weaponType}
+									onChange={handleChange}
+								>
+									{WEAPON_TYPES.map((type) => (
+										<MenuItem key={type} value={type}>
+											{WEAPON_TYPE_NAME_MAP[type]}
+										</MenuItem>
+									))}
+								</TextField>
 							</Grid>
-						</Box>
-					</DialogContent>
-					<DialogActions>
-						<Button
-							variant="contained"
-							onClick={handleOpenEffectModal}
-							color="secondary"
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Size"
+									name="size"
+									value={formValues.weapon.size}
+									onChange={handleChange}
+								>
+									{WEAPON_SIZES.map((size) => (
+										<MenuItem key={size} value={size}>
+											{WEAPON_SIZE_NAME_MAP[size]}
+										</MenuItem>
+									))}
+								</TextField>
+							</Grid>
+						</Grid>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
 						>
-							Add Effect
-						</Button>
-						<Button onClick={handleClose} color="primary">
-							Cancel
-						</Button>
-						<Button
-							type="submit"
-							color="primary"
-							disabled={isLoading}
+							Weapon Properties
+						</DialogContentText>
+						<Grid container spacing={2}>
+							<Grid item xs={12} md={4}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Damage Type"
+									name="damageType"
+									value={formValues.weapon.damageType}
+									onChange={handleChange}
+								>
+									{RESISTANCES.map((resistance) => (
+										<MenuItem
+											key={resistance}
+											value={resistance}
+										>
+											{RESISTANCES_NAME_MAP[resistance]}
+										</MenuItem>
+									))}
+								</TextField>
+							</Grid>
+							<Grid item xs={6} md={4}>
+								<TextField
+									fullWidth
+									margin="dense"
+									name="min"
+									label={`Minimum Roll (1-${MAX_DAMAGE})`}
+									type="number"
+									value={formValues.weapon.min}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 1,
+										max: MAX_DAMAGE,
+									}}
+								/>
+							</Grid>
+							<Grid item xs={6} md={4}>
+								<TextField
+									fullWidth
+									margin="dense"
+									name="max"
+									label={`Maximum Roll (1-${MAX_DAMAGE})`}
+									type="number"
+									value={formValues.weapon.max}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 1,
+										max: MAX_DAMAGE,
+									}}
+								/>
+							</Grid>
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									margin="dense"
+									name="level"
+									label={`Level (1-${MAX_ITEM_LEVEL})`}
+									type="number"
+									value={formValues.weapon.level}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 1,
+										max: MAX_ITEM_LEVEL,
+									}}
+								/>
+							</Grid>
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									margin="dense"
+									name="price"
+									label={`Price (1-${MAX_GOLD_VALUE})`}
+									type="number"
+									value={formValues.weapon.price}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 1,
+										max: MAX_GOLD_VALUE,
+									}}
+								/>
+							</Grid>
+						</Grid>
+					</Box>
+					<StatGroup
+						title="Stats (0-30)"
+						stats={getStatsArray(stats)}
+						min={0}
+						max={30}
+						handleChange={handleChangeStats}
+					/>
+					<StatGroup
+						title="Resistances (%)"
+						stats={getResistancesArray(resistances)}
+						min={0}
+						max={100}
+						handleChange={handleChangeResistances}
+					/>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
 						>
-							Save
-						</Button>
-					</DialogActions>
-				</form>
-			</Dialog>
+							Weapon Effects
+						</DialogContentText>
+						<Grid container spacing={1}>
+							{hasEffects ? (
+								weaponEffects.map((effect, index) => (
+									<Grid key={index} item xs={12} sm={6}>
+										<EffectCard
+											effect={effect}
+											index={index}
+											onRemove={handleRemoveEffect}
+										/>
+									</Grid>
+								))
+							) : (
+								<Grid item xs={12}>
+									<Typography>
+										Please add some effects!
+									</Typography>
+								</Grid>
+							)}
+						</Grid>
+					</Box>
+				</DialogContent>
+				<DialogActions>
+					<Button
+						variant="contained"
+						onClick={handleOpenEffectModal}
+						color="secondary"
+					>
+						Add Effect
+					</Button>
+					<Button onClick={handleClose} color="primary">
+						Cancel
+					</Button>
+					<Button type="submit" color="primary" disabled={isLoading}>
+						Save
+					</Button>
+				</DialogActions>
+			</form>
 
 			<EffectModal
 				effects={WEAPON_EFFECTS}
 				onAddEffect={handleAddEffect}
 				onUpdateEffect={handleUpdateEffect}
 			/>
-		</Fragment>
+		</Dialog>
 	);
 };

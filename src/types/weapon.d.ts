@@ -14,7 +14,7 @@ export interface IBaseWeapon {
 	damageType: DamageType;
 	min: number;
 	max: number;
-	effects: IWeaponEffect[];
+	effects?: IWeaponEffect[];
 	modifiers?: {
 		stats?: Partial<TStats>;
 		resistances?: Partial<TDamageTypes>;
