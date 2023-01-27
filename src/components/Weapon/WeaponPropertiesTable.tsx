@@ -6,13 +6,17 @@ import {
 	TableContainer,
 	TableRow,
 } from "@mui/material";
-import { ISkill } from "../../types";
-import { CLASS_NAME_MAP } from "../../utils";
+import { IWeapon } from "../../types";
+import {
+	RESISTANCES_NAME_MAP,
+	WEAPON_SIZE_NAME_MAP,
+	WEAPON_TYPE_NAME_MAP,
+} from "../../utils";
 
-export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
+export const WeaponPropertiesTable: React.FC<IWeapon> = (weapon) => {
 	return (
 		<TableContainer component={Paper}>
-			<Table aria-label="skill properties table">
+			<Table aria-label="weapon properties table">
 				<TableBody>
 					<TableRow>
 						<TableCell
@@ -20,10 +24,10 @@ export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
 							scope="row"
 							sx={{ fontWeight: "medium" }}
 						>
-							Class
+							Type
 						</TableCell>
 						<TableCell align="right">
-							{CLASS_NAME_MAP[skill.class]}
+							{WEAPON_TYPE_NAME_MAP[weapon.weaponType]}
 						</TableCell>
 					</TableRow>
 					<TableRow>
@@ -32,9 +36,35 @@ export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
 							scope="row"
 							sx={{ fontWeight: "medium" }}
 						>
-							Target
+							Size
 						</TableCell>
-						<TableCell align="right">{skill.target}</TableCell>
+						<TableCell align="right">
+							{WEAPON_SIZE_NAME_MAP[weapon.size]}
+						</TableCell>
+					</TableRow>
+					<TableRow>
+						<TableCell
+							component="th"
+							scope="row"
+							sx={{ fontWeight: "medium" }}
+						>
+							Damage Type
+						</TableCell>
+						<TableCell align="right">
+							{RESISTANCES_NAME_MAP[weapon.damageType]}
+						</TableCell>
+					</TableRow>
+					<TableRow>
+						<TableCell
+							component="th"
+							scope="row"
+							sx={{ fontWeight: "medium" }}
+						>
+							Damage
+						</TableCell>
+						<TableCell align="right">
+							{weapon.min}-{weapon.max}
+						</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableCell
@@ -44,7 +74,7 @@ export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
 						>
 							Level
 						</TableCell>
-						<TableCell align="right">{skill.level}</TableCell>
+						<TableCell align="right">{weapon.level}</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableCell
@@ -54,19 +84,7 @@ export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
 						>
 							Price
 						</TableCell>
-						<TableCell align="right">{skill.price}g</TableCell>
-					</TableRow>
-					<TableRow>
-						<TableCell
-							component="th"
-							scope="row"
-							sx={{ fontWeight: "medium", border: 0 }}
-						>
-							Max Uses
-						</TableCell>
-						<TableCell align="right" sx={{ border: 0 }}>
-							{skill.maxUses}
-						</TableCell>
+						<TableCell align="right">{weapon.price}g</TableCell>
 					</TableRow>
 				</TableBody>
 			</Table>

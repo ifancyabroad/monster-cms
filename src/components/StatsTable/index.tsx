@@ -17,9 +17,16 @@ interface ITableStat {
 interface IProps {
 	title: string;
 	stats: ITableStat[];
+	prefix?: string;
+	suffix?: string;
 }
 
-export const StatsTable: React.FC<IProps> = ({ title, stats }) => {
+export const StatsTable: React.FC<IProps> = ({
+	title,
+	stats,
+	prefix = "",
+	suffix = "",
+}) => {
 	return (
 		<TableContainer component={Paper}>
 			<Table aria-label="stats table">
@@ -42,7 +49,11 @@ export const StatsTable: React.FC<IProps> = ({ title, stats }) => {
 							<TableCell component="th" scope="row">
 								{stat.name}
 							</TableCell>
-							<TableCell align="right">{stat.value}%</TableCell>
+							<TableCell align="right">
+								{prefix}
+								{stat.value}
+								{suffix}
+							</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
