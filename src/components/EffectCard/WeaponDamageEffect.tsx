@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { IWeaponDamageEffect } from "../../../types";
+import { IWeaponDamageEffect } from "../../types";
 
 export const WeaponDamageEffect: React.FC<IWeaponDamageEffect> = ({
 	multiplier,

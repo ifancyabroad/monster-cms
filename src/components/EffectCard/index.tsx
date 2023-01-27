@@ -7,8 +7,8 @@ import {
 	IconButtonProps,
 	styled,
 } from "@mui/material";
-import { ISkillEffect } from "../../../types";
-import { EFFECTS_NAME_MAP, EffectType } from "../../../utils";
+import { ISkillEffect } from "../../types";
+import { EFFECTS_NAME_MAP, EffectType } from "../../utils";
 import { StatusEffect } from "./StatusEffect";
 import { DamageEffect } from "./DamageEffect";
 import { HealEffect } from "./HealEffect";

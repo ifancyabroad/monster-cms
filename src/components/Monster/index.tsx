@@ -22,7 +22,7 @@ import {
 	getPhysicalResistancesArray,
 	getStatsArray,
 } from "../../utils";
-import { StatsTable } from "./StatsTable";
+import { StatsTable } from "../StatsTable";
 import { Delete, Edit } from "@mui/icons-material";
 import {
 	closeConfirmationModal,
@@ -31,7 +31,7 @@ import {
 } from "../../features/modals/modalsSlice";
 import { ConfirmationModal } from "../Modals";
 import { AuthContext } from "../../context/AuthContext";
-import { SkillCard } from "./SkillCard";
+import { SkillCard } from "../SkillCard";
 
 interface IRouteParams {
 	id: string;

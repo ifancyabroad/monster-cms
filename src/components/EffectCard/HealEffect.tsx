@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import { IHealEffect } from "../../../types";
-import { STATS_NAME_MAP } from "../../../utils";
+import { IHealEffect } from "../../types";
+import { STATS_NAME_MAP } from "../../utils";
 
 export const HealEffect: React.FC<IHealEffect> = ({
 	modifier,

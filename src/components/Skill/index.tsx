@@ -24,7 +24,7 @@ import {
 } from "../../features/modals/modalsSlice";
 import { ConfirmationModal } from "../Modals";
 import { SkillPropertiesTable } from "./SkillPropertiesTable";
-import { EffectCard } from "./EffectCard";
+import { EffectCard } from "../EffectCard";
 import { AuthContext } from "../../context/AuthContext";
 
 const Icon = styled("img")({
