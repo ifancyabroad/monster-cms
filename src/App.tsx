@@ -16,6 +16,7 @@ import {
 	Weapon,
 	WeaponModal,
 	Weapons,
+	Armour,
 } from "./components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -32,6 +33,7 @@ function App() {
 					<Route path="/skills" component={Skills} />
 					<Route path="/weapons/:id" component={Weapon} />
 					<Route path="/weapons" component={Weapons} />
+					<Route path="/armours/:id" component={Armour} />
 					<Route path="/armours" component={Armours} />
 					<Route path="/classes" component={Classes} />
 				</Switch>

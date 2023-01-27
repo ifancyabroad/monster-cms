@@ -9,6 +9,7 @@ export * from "./Skill";
 export * from "./Skills";
 export * from "./Weapon";
 export * from "./Weapons";
+export * from "./Armour";
 export * from "./Armours";
 export * from "./Classes";
 export * from "./Dashboard";
