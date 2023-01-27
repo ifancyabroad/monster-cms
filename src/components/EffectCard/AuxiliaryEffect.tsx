@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import { IAuxiliaryEffect } from "../../../types";
-import { AUXILIARY_EFFECTS_NAME_MAP } from "../../../utils";
+import { IAuxiliaryEffect } from "../../types";
+import { AUXILIARY_EFFECTS_NAME_MAP } from "../../utils";
 
 export const AuxiliaryEffect: React.FC<IAuxiliaryEffect> = ({
 	effect,

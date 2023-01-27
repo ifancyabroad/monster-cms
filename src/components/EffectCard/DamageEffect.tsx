@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import { IDamageEffect } from "../../../types";
-import { RESISTANCES_NAME_MAP, STATS_NAME_MAP } from "../../../utils";
+import { IDamageEffect } from "../../types";
+import { RESISTANCES_NAME_MAP, STATS_NAME_MAP } from "../../utils";
 
 export const DamageEffect: React.FC<IDamageEffect> = ({
 	damageType,
