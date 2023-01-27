@@ -8,6 +8,7 @@ import {
 	STATS,
 	STATS_NAME_MAP,
 } from "../constants";
+import { DamageType, Stat } from "../enums";
 
 export const getStatsArray = (stats: TStats) =>
 	STATS.map((stat) => ({
@@ -16,11 +17,25 @@ export const getStatsArray = (stats: TStats) =>
 		value: stats[stat],
 	}));
 
+export const getPartialStatsArray = (stats: Partial<TStats>) =>
+	Object.keys(stats).map((stat) => ({
+		key: stat,
+		name: STATS_NAME_MAP[stat as Stat],
+		value: stats[stat] as number,
+	}));
+
 export const getResistancesArray = (stats: TDamageTypes) =>
 	RESISTANCES.map((stat) => ({
 		key: stat,
 		name: RESISTANCES_NAME_MAP[stat],
 		value: stats[stat],
+	}));
+
+export const getPartialResistancesArray = (stats: Partial<TDamageTypes>) =>
+	Object.keys(stats).map((stat) => ({
+		key: stat,
+		name: RESISTANCES_NAME_MAP[stat as DamageType],
+		value: stats[stat] as number,
 	}));
 
 export const getPhysicalResistancesArray = (stats: TDamageTypes) =>

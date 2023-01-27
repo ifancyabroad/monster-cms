@@ -159,7 +159,7 @@ export const Skill: React.FC = () => {
 				</Typography>
 
 				<Grid container spacing={3} marginBottom={3}>
-					<Grid item xs={12} md={6} lg={3}>
+					<Grid item xs={12} md={6} lg={4}>
 						<SkillPropertiesTable {...skill} />
 					</Grid>
 				</Grid>
