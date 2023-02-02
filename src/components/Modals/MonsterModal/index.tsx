@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
 	closeMonsterModal,
+	openAddEquipmentModal,
 	openAddSkillsModal,
 	openErrorModal,
 } from "../../../features/modals/modalsSlice";
@@ -23,11 +24,22 @@ import {
 	saveMonster,
 	updateMonster,
 } from "../../../features/monsters/monstersSlice";
-import { IBaseMonster, IMonster, ISaveMonster } from "../../../types";
+import {
+	IBaseMonster,
+	IMonster,
+	ISaveMonster,
+	TEquipment,
+} from "../../../types";
 import { StatGroup } from "../common";
-import { DamageType, getResistancesArray, getStatsArray } from "../../../utils";
+import {
+	DamageType,
+	EquipmentSlot,
+	getResistancesArray,
+	getStatsArray,
+} from "../../../utils";
 import { AddSkillsModal } from "../AddSkillsModal";
 import { SkillItem } from "./SkillItem";
+import { AddEquipmentModal } from "../AddEquipmentModal";
 
 const defaultMonsterValues: IBaseMonster = {
 	challenge: 1,
@@ -54,6 +66,18 @@ const defaultMonsterValues: IBaseMonster = {
 		intelligence: 10,
 		wisdom: 10,
 		charisma: 10,
+	},
+	equipment: {
+		[EquipmentSlot.Head]: null,
+		[EquipmentSlot.Neck]: null,
+		[EquipmentSlot.Body]: null,
+		[EquipmentSlot.Waist]: null,
+		[EquipmentSlot.Hands]: null,
+		[EquipmentSlot.Feet]: null,
+		[EquipmentSlot.Finger1]: null,
+		[EquipmentSlot.Finger2]: null,
+		[EquipmentSlot.Hand1]: null,
+		[EquipmentSlot.Hand2]: null,
 	},
 };
 
@@ -180,6 +204,20 @@ export const MonsterModal: React.FC = () => {
 		} catch (error) {
 			// TODO: Show error popup
 		}
+	};
+
+	const handleOpenAddEquipmentModal = () => {
+		dispatch(openAddEquipmentModal());
+	};
+
+	const handleSetEquipment = (equipment: TEquipment) => {
+		setFormValues({
+			...formValues,
+			monster: {
+				...formValues.monster,
+				equipment,
+			},
+		});
 	};
 
 	const handleOpenAddSkillsModal = () => {
@@ -353,6 +391,13 @@ export const MonsterModal: React.FC = () => {
 					<DialogActions>
 						<Button
 							variant="contained"
+							onClick={handleOpenAddEquipmentModal}
+							color="secondary"
+						>
+							Add Equipment
+						</Button>
+						<Button
+							variant="contained"
 							onClick={handleOpenAddSkillsModal}
 							color="secondary"
 						>
@@ -372,6 +417,10 @@ export const MonsterModal: React.FC = () => {
 				</form>
 			</Dialog>
 
+			<AddEquipmentModal
+				equipment={formValues.monster.equipment}
+				onSetEquipment={handleSetEquipment}
+			/>
 			<AddSkillsModal
 				skills={formValues.monster.skills}
 				onSetSkills={handleSetSkills}

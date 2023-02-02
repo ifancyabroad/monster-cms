@@ -21,7 +21,7 @@ export const getPartialStatsArray = (stats: Partial<TStats>) =>
 	Object.keys(stats).map((stat) => ({
 		key: stat,
 		name: STATS_NAME_MAP[stat as Stat],
-		value: stats[stat] as number,
+		value: stats[stat as Stat] as number,
 	}));
 
 export const getResistancesArray = (stats: TDamageTypes) =>
@@ -35,7 +35,7 @@ export const getPartialResistancesArray = (stats: Partial<TDamageTypes>) =>
 	Object.keys(stats).map((stat) => ({
 		key: stat,
 		name: RESISTANCES_NAME_MAP[stat as DamageType],
-		value: stats[stat] as number,
+		value: stats[stat as DamageType] as number,
 	}));
 
 export const getPhysicalResistancesArray = (stats: TDamageTypes) =>

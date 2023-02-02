@@ -1,4 +1,4 @@
-import { TDamageTypes, TStats } from ".";
+import { TDamageTypes, TEquipment, TStats } from ".";
 import { Stat } from "../utils";
 
 export interface IBaseMonster {
@@ -9,6 +9,7 @@ export interface IBaseMonster {
 	portrait: string;
 	skills: string[];
 	stats: TStats;
+	equipment: TEquipment;
 }
 
 export interface IMonster extends IBaseMonster {

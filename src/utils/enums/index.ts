@@ -86,3 +86,16 @@ export enum EquipmentType {
 	Shield = "shield",
 	Weapon = "weapon",
 }
+
+export enum EquipmentSlot {
+	Head = "head",
+	Neck = "neck",
+	Body = "body",
+	Hands = "hands",
+	Finger1 = "finger1",
+	Finger2 = "finger2",
+	Waist = "waist",
+	Feet = "feet",
+	Hand1 = "hand1",
+	Hand2 = "hand2",
+}
