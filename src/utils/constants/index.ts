@@ -3,6 +3,7 @@ import {
 	CharacterClass,
 	DamageType,
 	EffectType,
+	EquipmentSlot,
 	EquipmentType,
 	SkillType,
 	Stat,
@@ -209,4 +210,16 @@ export const EQUIPMENT_TYPE_NAME_MAP = {
 	[EquipmentType.Ring]: "Ring",
 	[EquipmentType.Shield]: "Shield",
 	[EquipmentType.Weapon]: "Weapon",
+};
+
+export const EQUIPMENT_SLOT_TYPE_MAP = {
+	[EquipmentType.Helmet]: [EquipmentSlot.Head],
+	[EquipmentType.Amulet]: [EquipmentSlot.Neck],
+	[EquipmentType.Armour]: [EquipmentSlot.Body],
+	[EquipmentType.Belt]: [EquipmentSlot.Waist],
+	[EquipmentType.Gloves]: [EquipmentSlot.Hands],
+	[EquipmentType.Boots]: [EquipmentSlot.Feet],
+	[EquipmentType.Ring]: [EquipmentSlot.Finger1, EquipmentSlot.Finger2],
+	[EquipmentType.Weapon]: [EquipmentSlot.Hand1, EquipmentSlot.Hand2],
+	[EquipmentType.Shield]: [EquipmentSlot.Hand2],
 };

@@ -2,27 +2,42 @@ import { Box, IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { IWeapon } from "../../../types";
-import { useAddWeaponsContext } from "../../../context";
+import { useAddEquipmentContext } from "../../../context";
+import { EQUIPMENT_SLOT_TYPE_MAP } from "../../../utils";
 
 interface IProps {
 	weapon: IWeapon;
 }
 
 export const TableAddActions: React.FC<IProps> = ({ weapon }) => {
-	const { state, dispatch } = useAddWeaponsContext();
+	const { state, dispatch } = useAddEquipmentContext();
+
+	const slots = EQUIPMENT_SLOT_TYPE_MAP[weapon.type];
+	const availableSlot = slots.find((slot) => state[slot] === null);
+	const currentSlot = slots.find((slot) => state[slot] === weapon.id);
 
 	const handleAdd = () => {
-		dispatch({
-			type: "ADD",
-			payload: weapon.id,
-		});
+		if (availableSlot) {
+			dispatch({
+				type: "ADD",
+				payload: {
+					slot: availableSlot,
+					value: weapon.id,
+				},
+			});
+		}
 	};
 
 	const handleRemove = () => {
-		dispatch({
-			type: "REMOVE",
-			payload: weapon.id,
-		});
+		if (currentSlot) {
+			dispatch({
+				type: "REMOVE",
+				payload: {
+					slot: currentSlot,
+					value: weapon.id,
+				},
+			});
+		}
 	};
 
 	return (
@@ -33,21 +48,21 @@ export const TableAddActions: React.FC<IProps> = ({ weapon }) => {
 				gap: 2,
 			}}
 		>
-			{state.includes(weapon.id) ? (
-				<IconButton
-					aria-label="remove"
-					color="warning"
-					onClick={handleRemove}
-				>
-					<RemoveCircleIcon />
-				</IconButton>
-			) : (
+			{availableSlot ? (
 				<IconButton
 					aria-label="add"
 					color="primary"
 					onClick={handleAdd}
 				>
 					<AddCircleIcon />
+				</IconButton>
+			) : (
+				<IconButton
+					aria-label="remove"
+					color="warning"
+					onClick={handleRemove}
+				>
+					<RemoveCircleIcon />
 				</IconButton>
 			)}
 		</Box>
