@@ -17,6 +17,7 @@ import {
 	selectMonsterImagePathById,
 } from "../../features/monsters/monstersSlice";
 import {
+	EQUIPMENT_SLOTS,
 	getAuxillaryResistancesArray,
 	getElementalResistancesArray,
 	getPhysicalResistancesArray,
@@ -32,6 +33,7 @@ import {
 import { ConfirmationModal } from "../Modals";
 import { AuthContext } from "../../context/AuthContext";
 import { SkillCard } from "../SkillCard";
+import { EquipmentCard } from "../EquipmentCard";
 
 interface IRouteParams {
 	id: string;
@@ -254,12 +256,46 @@ export const Monster: React.FC = () => {
 					component="h5"
 					gutterBottom
 				>
+					Equipment
+				</Typography>
+				<Grid
+					container
+					spacing={2}
+					sx={{
+						marginBottom: 3,
+					}}
+				>
+					{EQUIPMENT_SLOTS.map((slot) => {
+						const equipment =
+							monster.equipment && monster.equipment[slot];
+
+						if (equipment) {
+							return (
+								<Grid key={slot} item xs={12} md={6} lg={3}>
+									<EquipmentCard id={equipment} slot={slot} />
+								</Grid>
+							);
+						}
+
+						return null;
+					})}
+				</Grid>
+				<Divider />
+			</Box>
+
+			<Box marginBottom={4}>
+				<Typography
+					variant="body2"
+					color="textSecondary"
+					component="h5"
+					gutterBottom
+				>
 					Skills
 				</Typography>
 				<Grid container spacing={2}>
 					{monster.skills.map((skill) => (
 						<Grid key={skill} item xs={12} md={6} lg={3}>
-							<SkillCard key={skill} id={skill} />
+							<SkillCard id={skill} />
 						</Grid>
 					))}
 				</Grid>
