@@ -12,24 +12,11 @@ type TAddEquipmentFormAction =
 	  }
 	| {
 			type: "RESET";
-			payload: TEquipment;
+			payload: Partial<TEquipment>;
 	  };
 
-export const initialEquipmentState: TEquipment = {
-	[EquipmentSlot.Head]: null,
-	[EquipmentSlot.Neck]: null,
-	[EquipmentSlot.Body]: null,
-	[EquipmentSlot.Waist]: null,
-	[EquipmentSlot.Hands]: null,
-	[EquipmentSlot.Feet]: null,
-	[EquipmentSlot.Finger1]: null,
-	[EquipmentSlot.Finger2]: null,
-	[EquipmentSlot.Hand1]: null,
-	[EquipmentSlot.Hand2]: null,
-};
-
 export const addEquipmentReducer = (
-	state: TEquipment,
+	state: Partial<TEquipment>,
 	action: TAddEquipmentFormAction
 ) => {
 	switch (action.type) {
@@ -41,7 +28,7 @@ export const addEquipmentReducer = (
 		case "REMOVE":
 			return {
 				...state,
-				[action.payload.slot]: null,
+				[action.payload.slot]: undefined,
 			};
 		case "RESET":
 			return action.payload;
@@ -51,7 +38,7 @@ export const addEquipmentReducer = (
 };
 
 interface IContextProps {
-	state: TEquipment;
+	state: Partial<TEquipment>;
 	dispatch: Dispatch<TAddEquipmentFormAction>;
 }
 

@@ -13,7 +13,7 @@ export const TableAddActions: React.FC<IProps> = ({ weapon }) => {
 	const { state, dispatch } = useAddEquipmentContext();
 
 	const slots = EQUIPMENT_SLOT_TYPE_MAP[weapon.type];
-	const availableSlot = slots.find((slot) => state[slot] === null);
+	const availableSlot = slots.find((slot) => state[slot] === undefined);
 	const currentSlot = slots.find((slot) => state[slot] === weapon.id);
 
 	const handleAdd = () => {

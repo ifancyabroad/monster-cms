@@ -39,8 +39,8 @@ const TabPanel: React.FC<TabPanelProps> = (props) => {
 };
 
 interface IProps {
-	equipment: TEquipment;
-	onSetEquipment: (equipment: TEquipment) => void;
+	equipment: Partial<TEquipment>;
+	onSetEquipment: (equipment: Partial<TEquipment>) => void;
 }
 
 export const AddEquipmentModal: React.FC<IProps> = ({

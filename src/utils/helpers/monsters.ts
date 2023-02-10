@@ -14,11 +14,11 @@ const descendingComparator = (
 	const first =
 		orderBy in a.stats
 			? a.stats[orderBy as Stat]
-			: a[orderBy as keyof IMonster];
+			: a[orderBy as keyof IMonster] || 0;
 	const second =
 		orderBy in b.stats
 			? b.stats[orderBy as Stat]
-			: b[orderBy as keyof IMonster];
+			: b[orderBy as keyof IMonster] || 0;
 
 	if (second < first) {
 		return -1;

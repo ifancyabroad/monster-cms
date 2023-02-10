@@ -13,7 +13,7 @@ export type TOrder = "asc" | "desc";
 
 export type TStats = Record<Stat, number>;
 export type TDamageTypes = Record<DamageType, number>;
-export type TEquipment = Record<EquipmentSlot, string | null>;
+export type TEquipment = Record<EquipmentSlot, string>;
 
 export * from "./monster";
 export * from "./skill";
