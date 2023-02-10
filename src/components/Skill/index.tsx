@@ -1,11 +1,4 @@
-import {
-	Box,
-	Divider,
-	Grid,
-	IconButton,
-	styled,
-	Typography,
-} from "@mui/material";
+import { Box, Divider, Grid, IconButton, Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -14,7 +7,6 @@ import {
 	deleteSkill,
 	fetchSkillImagePath,
 	selectSkillById,
-	selectSkillImagePathById,
 } from "../../features/skills/skillsSlice";
 import { Delete, Edit } from "@mui/icons-material";
 import {
@@ -26,10 +18,7 @@ import { ConfirmationModal } from "../Modals";
 import { SkillPropertiesTable } from "./SkillPropertiesTable";
 import { EffectCard } from "../EffectCard";
 import { AuthContext } from "../../context/AuthContext";
-
-const Icon = styled("img")({
-	width: "64px",
-});
+import { SkillIcon } from "../SkillIcon";
 
 interface IRouteParams {
 	id: string;
@@ -40,7 +29,6 @@ export const Skill: React.FC = () => {
 	let { id } = useParams<IRouteParams>();
 	const user = useContext(AuthContext);
 	const skill = useSelector(selectSkillById)(id);
-	const skillImagePath = useSelector(selectSkillImagePathById)(id);
 	const confirmationModalOpen = useAppSelector(
 		(state) => state.modals.confirmationModalOpen
 	);
@@ -124,9 +112,8 @@ export const Skill: React.FC = () => {
 						marginBottom: 3,
 					}}
 				>
-					{skillImagePath && (
-						<Icon src={skillImagePath} alt={skill.name} />
-					)}
+					<SkillIcon skill={skill} width={64} />
+
 					<Box>
 						<Typography
 							variant="body2"
