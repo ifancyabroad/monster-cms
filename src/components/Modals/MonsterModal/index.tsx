@@ -69,18 +69,7 @@ const defaultMonsterValues: IBaseMonster = {
 		wisdom: 10,
 		charisma: 10,
 	},
-	equipment: {
-		[EquipmentSlot.Head]: null,
-		[EquipmentSlot.Neck]: null,
-		[EquipmentSlot.Body]: null,
-		[EquipmentSlot.Waist]: null,
-		[EquipmentSlot.Hands]: null,
-		[EquipmentSlot.Feet]: null,
-		[EquipmentSlot.Finger1]: null,
-		[EquipmentSlot.Finger2]: null,
-		[EquipmentSlot.Hand1]: null,
-		[EquipmentSlot.Hand2]: null,
-	},
+	equipment: {},
 };
 
 const defaultFormValues: ISaveMonster = {
@@ -114,6 +103,7 @@ export const MonsterModal: React.FC = () => {
 		: "Add a new monster to the database.";
 	const hasSkills = formValues.monster.skills.length > 0;
 	const hasEquipment =
+		formValues.monster.equipment &&
 		Object.values(formValues.monster.equipment).filter(Boolean).length > 0;
 
 	useEffect(() => {
@@ -214,7 +204,7 @@ export const MonsterModal: React.FC = () => {
 		dispatch(openAddEquipmentModal());
 	};
 
-	const handleSetEquipment = (equipment: TEquipment) => {
+	const handleSetEquipment = (equipment: Partial<TEquipment>) => {
 		setFormValues({
 			...formValues,
 			monster: {
@@ -394,6 +384,7 @@ export const MonsterModal: React.FC = () => {
 								>
 									{EQUIPMENT_SLOTS.map((slot) => {
 										const equipment =
+											formValues.monster.equipment &&
 											formValues.monster.equipment[slot];
 
 										const handleRemove = () => {
@@ -478,7 +469,7 @@ export const MonsterModal: React.FC = () => {
 			</Dialog>
 
 			<AddEquipmentModal
-				equipment={formValues.monster.equipment}
+				equipment={formValues.monster.equipment || {}}
 				onSetEquipment={handleSetEquipment}
 			/>
 			<AddSkillsModal

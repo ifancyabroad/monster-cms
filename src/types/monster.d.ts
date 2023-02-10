@@ -9,7 +9,7 @@ export interface IBaseMonster {
 	portrait: string;
 	skills: string[];
 	stats: TStats;
-	equipment: TEquipment;
+	equipment?: Partial<TEquipment>;
 }
 
 export interface IMonster extends IBaseMonster {
