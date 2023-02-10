@@ -223,3 +223,29 @@ export const EQUIPMENT_SLOT_TYPE_MAP = {
 	[EquipmentType.Weapon]: [EquipmentSlot.Hand1, EquipmentSlot.Hand2],
 	[EquipmentType.Shield]: [EquipmentSlot.Hand2],
 };
+
+export const EQUIPMENT_SLOTS = [
+	EquipmentSlot.Head,
+	EquipmentSlot.Neck,
+	EquipmentSlot.Body,
+	EquipmentSlot.Waist,
+	EquipmentSlot.Hands,
+	EquipmentSlot.Feet,
+	EquipmentSlot.Finger1,
+	EquipmentSlot.Finger2,
+	EquipmentSlot.Hand1,
+	EquipmentSlot.Hand2,
+] as const;
+
+export const EQUIPMENT_SLOT_NAME_MAP = {
+	[EquipmentSlot.Head]: "Head",
+	[EquipmentSlot.Neck]: "Neck",
+	[EquipmentSlot.Body]: "Body",
+	[EquipmentSlot.Waist]: "Waist",
+	[EquipmentSlot.Hands]: "Hands",
+	[EquipmentSlot.Feet]: "Feet",
+	[EquipmentSlot.Finger1]: "Finger",
+	[EquipmentSlot.Finger2]: "Finger",
+	[EquipmentSlot.Hand1]: "Main Hand",
+	[EquipmentSlot.Hand2]: "Off Hand",
+};
