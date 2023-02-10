@@ -17,3 +17,4 @@ export * from "./Tables";
 export * from "./SkillCard";
 export * from "./StatsTable";
 export * from "./EffectCard";
+export * from "./EquipmentSlotIcon";

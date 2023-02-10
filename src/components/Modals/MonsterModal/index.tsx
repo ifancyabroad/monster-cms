@@ -34,12 +34,14 @@ import { StatGroup } from "../common";
 import {
 	DamageType,
 	EquipmentSlot,
+	EQUIPMENT_SLOTS,
 	getResistancesArray,
 	getStatsArray,
 } from "../../../utils";
 import { AddSkillsModal } from "../AddSkillsModal";
 import { SkillItem } from "./SkillItem";
 import { AddEquipmentModal } from "../AddEquipmentModal";
+import { EquipmentItem } from "./EquipmentItem";
 
 const defaultMonsterValues: IBaseMonster = {
 	challenge: 1,
@@ -111,6 +113,8 @@ export const MonsterModal: React.FC = () => {
 		? `Updating ${monster?.name}`
 		: "Add a new monster to the database.";
 	const hasSkills = formValues.monster.skills.length > 0;
+	const hasEquipment =
+		Object.values(formValues.monster.equipment).filter(Boolean).length > 0;
 
 	useEffect(() => {
 		setFormValues({
@@ -216,6 +220,19 @@ export const MonsterModal: React.FC = () => {
 			monster: {
 				...formValues.monster,
 				equipment,
+			},
+		});
+	};
+
+	const handleRemoveEquipment = (slot: EquipmentSlot) => {
+		setFormValues({
+			...formValues,
+			monster: {
+				...formValues.monster,
+				equipment: {
+					...formValues.monster.equipment,
+					[slot]: null,
+				},
 			},
 		});
 	};
@@ -359,6 +376,49 @@ export const MonsterModal: React.FC = () => {
 									/>
 								</Grid>
 							</Grid>
+						</Box>
+						<Box my={3}>
+							<DialogContentText
+								variant="subtitle1"
+								component="h5"
+								gutterBottom
+							>
+								Equipment
+							</DialogContentText>
+							{hasEquipment ? (
+								<List
+									sx={{
+										width: "100%",
+										bgcolor: "background.paper",
+									}}
+								>
+									{EQUIPMENT_SLOTS.map((slot) => {
+										const equipment =
+											formValues.monster.equipment[slot];
+
+										const handleRemove = () => {
+											handleRemoveEquipment(slot);
+										};
+
+										if (!equipment) {
+											return null;
+										}
+
+										return (
+											<EquipmentItem
+												key={slot}
+												id={equipment}
+												slot={slot}
+												onRemove={handleRemove}
+											/>
+										);
+									})}
+								</List>
+							) : (
+								<Typography>
+									Please add some equipment!
+								</Typography>
+							)}
 						</Box>
 						<Box my={3}>
 							<DialogContentText
