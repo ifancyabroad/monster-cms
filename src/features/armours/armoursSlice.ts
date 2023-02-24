@@ -3,9 +3,9 @@ import {
 	createSelector,
 	createSlice,
 } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
-import { dbArmours, stImages } from "../../firebaseSetup";
-import { IArmour, IImagePath, ISaveArmour, IUpdateArmour } from "../../types";
+import { RootState } from "app/store";
+import { dbArmours, stImages } from "firebaseSetup";
+import { IArmour, IImagePath, ISaveArmour, IUpdateArmour } from "common/types";
 
 interface IArmoursState {
 	armours: IArmour[];

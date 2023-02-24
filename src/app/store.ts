@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import modalsReducer from "../features/modals/modalsSlice";
-import sidedrawerReducer from "../features/sidedrawer/sidedrawerSlice";
-import monstersReducer from "../features/monsters/monstersSlice";
-import skillsReducer from "../features/skills/skillsSlice";
-import weaponsReducer from "../features/weapons/weaponsSlice";
-import armoursReducer from "../features/armours/armoursSlice";
+import modalsReducer from "features/modals/modalsSlice";
+import sidedrawerReducer from "features/sidedrawer/sidedrawerSlice";
+import monstersReducer from "features/monsters/monstersSlice";
+import skillsReducer from "features/skills/skillsSlice";
+import weaponsReducer from "features/weapons/weaponsSlice";
+import armoursReducer from "features/armours/armoursSlice";
 
 export const store = configureStore({
 	reducer: {

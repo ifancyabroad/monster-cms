@@ -3,9 +3,9 @@ import {
 	createSelector,
 	createSlice,
 } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
-import { dbSkills, stImages } from "../../firebaseSetup";
-import { IImagePath, ISaveSkill, ISkill, IUpdateSkill } from "../../types";
+import { RootState } from "app/store";
+import { dbSkills, stImages } from "firebaseSetup";
+import { IImagePath, ISaveSkill, ISkill, IUpdateSkill } from "common/types";
 
 interface ISkillsState {
 	skills: ISkill[];

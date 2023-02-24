@@ -3,14 +3,14 @@ import {
 	createSelector,
 	createSlice,
 } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
-import { dbMonsters, stImages } from "../../firebaseSetup";
+import { RootState } from "app/store";
+import { dbMonsters, stImages } from "firebaseSetup";
 import {
 	IImagePath,
 	IMonster,
 	ISaveMonster,
 	IUpdateMonster,
-} from "../../types";
+} from "common/types";
 
 interface IMonstersState {
 	monsters: IMonster[];

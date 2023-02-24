@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./theme";
-import { AuthProvider } from "./provider/AuthProvider";
-import { DatabaseListener } from "./components/DatabaseListener";
+import { AuthProvider } from "./common/provider/AuthProvider";
+import { DatabaseListener } from "./common/components/DatabaseListener";
 
 ReactDOM.render(
 	<React.StrictMode>
