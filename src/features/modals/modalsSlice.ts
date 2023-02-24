@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IArmour, IMonster, ISkill, ISkillEffect, IWeapon } from "../../types";
+import { IArmour, IMonster, ISkill, ISkillEffect, IWeapon } from "common/types";
 
 interface ModalsState {
 	loginModalOpen: boolean;
