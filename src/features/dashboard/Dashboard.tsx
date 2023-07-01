@@ -5,7 +5,12 @@ import skillsImage from "assets/images/skills.png";
 import weaponsImage from "assets/images/weapons.webp";
 import armourImage from "assets/images/armour.jpg";
 import { useAppDispatch } from "common/hooks";
-import { openMonsterModal, openSkillModal } from "features/modals";
+import {
+	openArmourModal,
+	openMonsterModal,
+	openSkillModal,
+	openWeaponModal,
+} from "features/modals";
 
 export const Dashboard: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -18,9 +23,13 @@ export const Dashboard: React.FC = () => {
 		dispatch(openSkillModal());
 	};
 
-	const handleAddWeapon = () => {};
+	const handleAddWeapon = () => {
+		dispatch(openWeaponModal());
+	};
 
-	const handleAddArmour = () => {};
+	const handleAddArmour = () => {
+		dispatch(openArmourModal());
+	};
 
 	return (
 		<div>
