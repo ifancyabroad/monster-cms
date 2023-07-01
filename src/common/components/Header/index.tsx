@@ -1,6 +1,7 @@
 import { Fragment, useContext, useState } from "react";
 import {
 	AppBar,
+	Box,
 	IconButton,
 	Menu,
 	MenuItem,
@@ -13,6 +14,7 @@ import { openSidedrawer } from "features/sidedrawer";
 import { AuthContext } from "common/context";
 import { auth } from "firebaseSetup";
 import { AccountCircle, Login, Menu as MenuIcon } from "@mui/icons-material";
+import { ReactComponent as Logo } from "assets/images/icons/sea-dragon.svg";
 
 export const Header = () => {
 	const dispatch = useAppDispatch();
@@ -63,9 +65,19 @@ export const Header = () => {
 				>
 					<MenuIcon />
 				</IconButton>
-				<Typography sx={{ flexGrow: 1 }} variant="h6" fontWeight="bold">
-					Monster Manual
-				</Typography>
+				<Box
+					sx={{
+						flexGrow: 1,
+						display: "flex",
+						alignItems: "center",
+						gap: 2,
+					}}
+				>
+					<Logo height={32} width={32} />
+					<Typography variant="h6" fontWeight="bold">
+						Monster Manual
+					</Typography>
+				</Box>
 				{user ? (
 					<Fragment>
 						<IconButton
