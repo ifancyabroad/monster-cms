@@ -43,7 +43,7 @@ export const DashboardCard: React.FC<IProps> = ({
 					View
 				</Button>
 				{user && (
-					<Button size="small" onClick={onAdd}>
+					<Button color="secondary" size="small" onClick={onAdd}>
 						Add
 					</Button>
 				)}

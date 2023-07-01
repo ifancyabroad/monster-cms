@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, Dashboard } from "@mui/icons-material";
 import {
 	Box,
 	Collapse,
@@ -6,8 +6,10 @@ import {
 	IconButton,
 	List,
 	ListItemButton,
+	ListItemIcon,
 	ListItemSecondaryAction,
 	ListItemText,
+	ListSubheader,
 } from "@mui/material";
 import { useContext } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
@@ -35,6 +37,9 @@ const SideDrawerItem: React.FC<ISideDrawerItemProps> = ({
 
 	return (
 		<ListItemButton component={Link} to={link}>
+			<ListItemIcon>
+				<Dashboard />
+			</ListItemIcon>
 			<ListItemText>{title}</ListItemText>
 			{user && (
 				<ListItemSecondaryAction>
@@ -84,8 +89,19 @@ export const SideDrawerContent: React.FC = () => {
 			<Divider />
 			<List>
 				<ListItemButton component={Link} to="/">
+					<ListItemIcon>
+						<Dashboard />
+					</ListItemIcon>
 					<ListItemText>Dashboard</ListItemText>
 				</ListItemButton>
+				<ListItemButton component={Link} to="/settings">
+					<ListItemIcon>
+						<Dashboard />
+					</ListItemIcon>
+					<ListItemText>Settings</ListItemText>
+				</ListItemButton>
+				<Divider />
+				<ListSubheader>Game Data</ListSubheader>
 				<SideDrawerItem
 					title="Monsters"
 					link="/monsters"
@@ -171,10 +187,10 @@ export const SideDrawerContent: React.FC = () => {
 					</List>
 				</Collapse>
 				<ListItemButton component={Link} to="/classes">
+					<ListItemIcon>
+						<Dashboard />
+					</ListItemIcon>
 					<ListItemText>Classes</ListItemText>
-				</ListItemButton>
-				<ListItemButton component={Link} to="/settings">
-					<ListItemText>Settings</ListItemText>
 				</ListItemButton>
 			</List>
 		</div>

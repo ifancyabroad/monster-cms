@@ -67,3 +67,4 @@ export * from "./skills";
 export * from "./monsters";
 export * from "./weapons";
 export * from "./armours";
+export * from "./equipment";

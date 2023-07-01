@@ -33,6 +33,7 @@ export const TableFilters: React.FC<IProps> = ({
 		<Box
 			sx={{
 				p: 2,
+				backgroundColor: "black",
 			}}
 		>
 			<Grid container spacing={2} alignItems="center">

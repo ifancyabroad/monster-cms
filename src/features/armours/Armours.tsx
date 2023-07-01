@@ -28,7 +28,11 @@ export const Armours: React.FC = () => {
 				<Typography variant="h2">Armours</Typography>
 
 				{user && (
-					<Button variant="contained" onClick={handleOpenArmourModal}>
+					<Button
+						variant="contained"
+						color="secondary"
+						onClick={handleOpenArmourModal}
+					>
 						Add Armour
 					</Button>
 				)}
