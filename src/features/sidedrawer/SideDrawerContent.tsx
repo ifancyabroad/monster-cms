@@ -1,4 +1,4 @@
-import { Add, Dashboard } from "@mui/icons-material";
+import { Add, Dashboard, Settings } from "@mui/icons-material";
 import {
 	Box,
 	Collapse,
@@ -21,25 +21,30 @@ import {
 	openSkillModal,
 	openWeaponModal,
 } from "features/modals";
+import { ReactComponent as WeaponsIcon } from "assets/images/icons/broad-dagger.svg";
+import { ReactComponent as ArmourIcon } from "assets/images/icons/breastplate.svg";
+import { ReactComponent as MonstersIcon } from "assets/images/icons/imp-laugh.svg";
+import { ReactComponent as SkillsIcon } from "assets/images/icons/bookmarklet.svg";
+import { ReactComponent as ClassesIcon } from "assets/images/icons/sheikah-eye.svg";
 
 interface ISideDrawerItemProps {
 	title: string;
 	link: string;
+	icon: JSX.Element;
 	onAddItem: () => void;
 }
 
 const SideDrawerItem: React.FC<ISideDrawerItemProps> = ({
 	title,
 	link,
+	icon,
 	onAddItem,
 }) => {
 	const user = useContext(AuthContext);
 
 	return (
 		<ListItemButton component={Link} to={link}>
-			<ListItemIcon>
-				<Dashboard />
-			</ListItemIcon>
+			<ListItemIcon>{icon}</ListItemIcon>
 			<ListItemText>{title}</ListItemText>
 			{user && (
 				<ListItemSecondaryAction>
@@ -96,7 +101,7 @@ export const SideDrawerContent: React.FC = () => {
 				</ListItemButton>
 				<ListItemButton component={Link} to="/settings">
 					<ListItemIcon>
-						<Dashboard />
+						<Settings />
 					</ListItemIcon>
 					<ListItemText>Settings</ListItemText>
 				</ListItemButton>
@@ -105,6 +110,7 @@ export const SideDrawerContent: React.FC = () => {
 				<SideDrawerItem
 					title="Monsters"
 					link="/monsters"
+					icon={<MonstersIcon height={24} width={24} />}
 					onAddItem={addMonster}
 				/>
 				<Collapse in={Boolean(isMonsters)} unmountOnExit>
@@ -126,6 +132,7 @@ export const SideDrawerContent: React.FC = () => {
 				<SideDrawerItem
 					title="Skills"
 					link="/skills"
+					icon={<SkillsIcon height={24} width={24} />}
 					onAddItem={addSkill}
 				/>
 				<Collapse in={Boolean(isSkills)} unmountOnExit>
@@ -147,6 +154,7 @@ export const SideDrawerContent: React.FC = () => {
 				<SideDrawerItem
 					title="Weapons"
 					link="/weapons"
+					icon={<WeaponsIcon height={24} width={24} />}
 					onAddItem={addWeapon}
 				/>
 				<Collapse in={Boolean(isWeapons)} unmountOnExit>
@@ -168,6 +176,7 @@ export const SideDrawerContent: React.FC = () => {
 				<SideDrawerItem
 					title="Armours"
 					link="/armours"
+					icon={<ArmourIcon height={24} width={24} />}
 					onAddItem={addArmour}
 				/>
 				<Collapse in={Boolean(isArmours)} unmountOnExit>
@@ -188,7 +197,7 @@ export const SideDrawerContent: React.FC = () => {
 				</Collapse>
 				<ListItemButton component={Link} to="/classes">
 					<ListItemIcon>
-						<Dashboard />
+						<ClassesIcon height={24} width={24} />
 					</ListItemIcon>
 					<ListItemText>Classes</ListItemText>
 				</ListItemButton>
