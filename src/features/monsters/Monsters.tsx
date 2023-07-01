@@ -30,6 +30,7 @@ export const Monsters: React.FC = () => {
 				{user && (
 					<Button
 						variant="contained"
+						color="secondary"
 						onClick={handleOpenMonsterModal}
 					>
 						Add Monster

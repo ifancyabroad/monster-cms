@@ -22,6 +22,7 @@ import {
 	getElementalResistancesArray,
 	getPhysicalResistancesArray,
 	getStatsArray,
+	hasEquipment,
 } from "common/utils";
 import { StatsTable } from "common/components";
 import { Delete, Edit } from "@mui/icons-material";
@@ -280,6 +281,15 @@ export const Monster: React.FC = () => {
 						return null;
 					})}
 				</Grid>
+				{!hasEquipment(monster.equipment) && (
+					<Typography
+						sx={{
+							marginBottom: 3,
+						}}
+					>
+						No equipment
+					</Typography>
+				)}
 				<Divider />
 			</Box>
 

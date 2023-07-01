@@ -1,16 +1,24 @@
-import { useContext } from "react";
-import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
-import { Menu } from "@mui/icons-material";
+import { Fragment, useContext, useState } from "react";
+import {
+	AppBar,
+	IconButton,
+	Menu,
+	MenuItem,
+	Toolbar,
+	Typography,
+} from "@mui/material";
 import { useAppDispatch } from "common/hooks";
-import { DRAWER_WIDTH } from "common/utils";
 import { openLoginModal } from "features/modals";
 import { openSidedrawer } from "features/sidedrawer";
 import { AuthContext } from "common/context";
 import { auth } from "firebaseSetup";
+import { AccountCircle, Login, Menu as MenuIcon } from "@mui/icons-material";
 
 export const Header = () => {
 	const dispatch = useAppDispatch();
 	const user = useContext(AuthContext);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
 
 	const handleDrawerToggle = () => {
 		dispatch(openSidedrawer());
@@ -20,22 +28,21 @@ export const Header = () => {
 		dispatch(openLoginModal());
 	};
 
+	const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
 	const signOut = async () => {
+		setAnchorEl(null);
 		await auth.signOut();
 	};
 
 	return (
-		<AppBar
-			sx={{
-				width: {
-					sm: `calc(100% - ${DRAWER_WIDTH}px)`,
-				},
-				marginLeft: {
-					sm: DRAWER_WIDTH,
-				},
-			}}
-			position="fixed"
-		>
+		<AppBar position="fixed">
 			<Toolbar
 				sx={{
 					backgroundColor: "primary.main",
@@ -54,23 +61,43 @@ export const Header = () => {
 					edge="start"
 					onClick={handleDrawerToggle}
 				>
-					<Menu />
+					<MenuIcon />
 				</IconButton>
-				<Typography sx={{ flexGrow: 1 }} variant="h6">
+				<Typography sx={{ flexGrow: 1 }} variant="h6" fontWeight="bold">
 					Monster Manual
 				</Typography>
 				{user ? (
-					<Button color="inherit" type="button" onClick={signOut}>
-						Logout
-					</Button>
+					<Fragment>
+						<IconButton
+							aria-label="account menu"
+							color="inherit"
+							type="button"
+							onClick={handleOpenMenu}
+						>
+							<AccountCircle fontSize="large" />
+						</IconButton>
+						<Menu
+							id="lock-menu"
+							anchorEl={anchorEl}
+							open={open}
+							onClose={handleClose}
+							MenuListProps={{
+								"aria-labelledby": "lock-button",
+								role: "listbox",
+							}}
+						>
+							<MenuItem onClick={signOut}>Sign Out</MenuItem>
+						</Menu>
+					</Fragment>
 				) : (
-					<Button
+					<IconButton
+						aria-label="login"
 						color="inherit"
 						type="button"
 						onClick={handleOpenLogin}
 					>
-						Login
-					</Button>
+						<Login fontSize="large" />
+					</IconButton>
 				)}
 			</Toolbar>
 		</AppBar>

@@ -28,7 +28,11 @@ export const Skills: React.FC = () => {
 				<Typography variant="h2">Skills</Typography>
 
 				{user && (
-					<Button variant="contained" onClick={handleOpenSkillModal}>
+					<Button
+						variant="contained"
+						color="secondary"
+						onClick={handleOpenSkillModal}
+					>
 						Add Skill
 					</Button>
 				)}

@@ -1,5 +1,5 @@
 import { Box, Drawer } from "@mui/material";
-import { DRAWER_WIDTH } from "common/utils/constants";
+import { DRAWER_TOP, DRAWER_WIDTH } from "common/utils/constants";
 import { closeSidedrawer } from "./sidedrawerSlice";
 import { useAppDispatch, useAppSelector } from "common/hooks";
 import { SideDrawerContent } from "./SideDrawerContent";
@@ -46,6 +46,7 @@ export const SideDrawer: React.FC = () => {
 				PaperProps={{
 					sx: {
 						width: DRAWER_WIDTH,
+						top: DRAWER_TOP,
 					},
 				}}
 				open

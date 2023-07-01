@@ -10,6 +10,7 @@ import {
 	TablePagination,
 	TableRow as MUITableRow,
 	TableSortLabel,
+	Tooltip,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { IMonsterFilters, TMonstersOrderBy, TOrder } from "common/types";
@@ -21,12 +22,15 @@ import {
 	applyMonstersFilters,
 	getMonstersComparator,
 	Stat,
+	STATS_ABBR_MAP,
+	STATS_NAME_MAP,
 } from "common/utils";
 import { AuthContext } from "common/context";
 
 interface HeadCell {
 	id: TMonstersOrderBy;
 	label: string;
+	tooltip?: string;
 	align?: "right";
 }
 
@@ -38,32 +42,38 @@ const headCells: readonly HeadCell[] = [
 	{
 		id: Stat.Strength,
 		align: "right",
-		label: "Strength",
+		label: STATS_ABBR_MAP[Stat.Strength],
+		tooltip: STATS_NAME_MAP[Stat.Strength],
 	},
 	{
 		id: Stat.Dexterity,
 		align: "right",
-		label: "Dexterity",
+		label: STATS_ABBR_MAP[Stat.Dexterity],
+		tooltip: STATS_NAME_MAP[Stat.Dexterity],
 	},
 	{
 		id: Stat.Constitution,
 		align: "right",
-		label: "Constitution",
+		label: STATS_ABBR_MAP[Stat.Constitution],
+		tooltip: STATS_NAME_MAP[Stat.Constitution],
 	},
 	{
 		id: Stat.Intelligence,
 		align: "right",
-		label: "Intelligence",
+		label: STATS_ABBR_MAP[Stat.Intelligence],
+		tooltip: STATS_NAME_MAP[Stat.Intelligence],
 	},
 	{
 		id: Stat.Wisdom,
 		align: "right",
-		label: "Wisdom",
+		label: STATS_ABBR_MAP[Stat.Wisdom],
+		tooltip: STATS_NAME_MAP[Stat.Wisdom],
 	},
 	{
 		id: Stat.Charisma,
 		align: "right",
-		label: "Charisma",
+		label: STATS_ABBR_MAP[Stat.Charisma],
+		tooltip: STATS_NAME_MAP[Stat.Charisma],
 	},
 	{
 		id: "challenge",
@@ -99,23 +109,27 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 						align={headCell.align}
 						sortDirection={orderBy === headCell.id ? order : false}
 					>
-						<TableSortLabel
-							active={orderBy === headCell.id}
-							direction={orderBy === headCell.id ? order : "asc"}
-							onClick={createSortHandler(headCell.id)}
-						>
-							{headCell.label}
-							{orderBy === headCell.id ? (
-								<Box
-									component="span"
-									sx={visuallyHidden as SxProps}
-								>
-									{order === "desc"
-										? "sorted descending"
-										: "sorted ascending"}
-								</Box>
-							) : null}
-						</TableSortLabel>
+						<Tooltip title={headCell.tooltip} placement="top">
+							<TableSortLabel
+								active={orderBy === headCell.id}
+								direction={
+									orderBy === headCell.id ? order : "asc"
+								}
+								onClick={createSortHandler(headCell.id)}
+							>
+								{headCell.label}
+								{orderBy === headCell.id ? (
+									<Box
+										component="span"
+										sx={visuallyHidden as SxProps}
+									>
+										{order === "desc"
+											? "sorted descending"
+											: "sorted ascending"}
+									</Box>
+								) : null}
+							</TableSortLabel>
+						</Tooltip>
 					</TableCell>
 				))}
 

@@ -11,6 +11,7 @@ import {
 	WeaponType,
 } from "common/utils";
 
+export const DRAWER_TOP = 64;
 export const DRAWER_WIDTH = 240;
 
 export const MAX_SKILL_LEVEL = 9;
@@ -62,6 +63,15 @@ export const AUXILLARY_RESISTANCES = [
 	DamageType.Poison,
 	DamageType.Acid,
 ] as const;
+
+export const STATS_ABBR_MAP: Record<Stat, string> = {
+	[Stat.Charisma]: "CHR",
+	[Stat.Constitution]: "CON",
+	[Stat.Dexterity]: "DEX",
+	[Stat.Intelligence]: "INT",
+	[Stat.Strength]: "STR",
+	[Stat.Wisdom]: "WIS",
+};
 
 export const STATS_NAME_MAP: Record<Stat, string> = {
 	[Stat.Charisma]: "Charisma",
