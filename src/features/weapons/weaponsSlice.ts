@@ -6,6 +6,7 @@ import {
 import { RootState } from "app/store";
 import { dbWeapons, stImages } from "firebaseSetup";
 import { IImagePath, ISaveWeapon, IUpdateWeapon, IWeapon } from "common/types";
+import { WeaponSize } from "common/utils";
 
 interface IWeaponsState {
 	weapons: IWeapon[];
@@ -105,6 +106,14 @@ export const selectWeaponById = createSelector(
 	({ weapons }) =>
 		(id: string) =>
 			weapons.find((weapon) => weapon.id === id)
+);
+
+export const isTwoHandedWeapon = createSelector(
+	weaponsSelector,
+	({ weapons }) =>
+		(id: string) =>
+			weapons.find((weapon) => weapon.id === id)?.size ===
+			WeaponSize.TwoHanded
 );
 
 export const selectWeaponImagePathById = createSelector(

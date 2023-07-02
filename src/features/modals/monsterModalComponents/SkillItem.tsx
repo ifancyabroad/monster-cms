@@ -8,7 +8,7 @@ import {
 import { useSelector } from "react-redux";
 import { selectSkillById } from "features/skills/skillsSlice";
 import { getSkillType, SKILL_TYPE_NAME_MAP } from "common/utils";
-import DeleteIcon from "@mui/icons-material/Delete";
+import CloseIcon from "@mui/icons-material/Close";
 import { SkillIcon } from "features/skills/SkillIcon";
 
 interface IProps {
@@ -37,10 +37,9 @@ export const SkillItem: React.FC<IProps> = ({ id, onRemoveSkill }) => {
 				<IconButton
 					edge="end"
 					aria-label="remove skill"
-					color="warning"
 					onClick={handleRemoveSkill}
 				>
-					<DeleteIcon />
+					<CloseIcon />
 				</IconButton>
 			}
 		>
