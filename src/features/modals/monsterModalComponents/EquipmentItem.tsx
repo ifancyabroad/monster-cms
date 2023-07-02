@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { EquipmentSlot, EQUIPMENT_TYPE_NAME_MAP } from "common/utils";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { selectEquipmentById } from "features/equipment";
-import { EquipmentSlotIcon } from "features/equipment/EquipmentSlotIcon";
+import { EquipmentTypeIcon } from "features/equipment/EquipmentTypeIcon";
 
 interface IProps {
 	id: string;
@@ -49,7 +49,7 @@ export const EquipmentItem: React.FC<IProps> = ({ id, slot, onRemove }) => {
 		>
 			<ListItemAvatar>
 				<Avatar sx={{ backgroundColor: "transparent" }}>
-					<EquipmentSlotIcon slot={slot} />
+					<EquipmentTypeIcon type={equipment.type} />
 				</Avatar>
 			</ListItemAvatar>
 			<ListItemText primary={equipment.name} secondary={secondaryText} />

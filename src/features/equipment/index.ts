@@ -1,3 +1,3 @@
 export * from "./EquipmentCard";
-export * from "./EquipmentSlotIcon";
+export * from "./EquipmentTypeIcon";
 export * from "./equipmentSlice";
