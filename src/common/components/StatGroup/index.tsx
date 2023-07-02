@@ -5,9 +5,9 @@ import {
 	Grid,
 	IconButton,
 	IconButtonProps,
-	Paper,
 	styled,
 	TextField,
+	Tooltip,
 } from "@mui/material";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -29,6 +29,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 interface ITableStat {
 	key: string;
+	abbr: string;
 	name: string;
 	value: number;
 }
@@ -48,14 +49,14 @@ export const StatGroup: React.FC<IProps> = ({
 	max,
 	handleChange,
 }) => {
-	const [expanded, setExpanded] = useState(false);
+	const [expanded, setExpanded] = useState(true);
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
 	};
 
 	return (
-		<Paper sx={{ p: 1, my: 3 }}>
+		<Box sx={{ my: 3 }}>
 			<Box
 				sx={{
 					display: "flex",
@@ -79,26 +80,29 @@ export const StatGroup: React.FC<IProps> = ({
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<Grid container spacing={2}>
 					{stats.map((stat) => (
-						<Grid key={stat.key} item xs={6} md={4}>
-							<TextField
-								key={stat.key}
-								fullWidth
-								margin="dense"
-								name={stat.key}
-								label={stat.name}
-								type="number"
-								value={stat.value}
-								onChange={handleChange}
-								required
-								inputProps={{
-									min,
-									max,
-								}}
-							/>
+						<Grid key={stat.key} item xs={4} md={2}>
+							<Tooltip title={stat.name} placement="top">
+								<TextField
+									key={stat.key}
+									size="small"
+									fullWidth
+									margin="dense"
+									name={stat.key}
+									label={stat.abbr}
+									type="number"
+									value={stat.value}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min,
+										max,
+									}}
+								/>
+							</Tooltip>
 						</Grid>
 					))}
 				</Grid>
 			</Collapse>
-		</Paper>
+		</Box>
 	);
 };
