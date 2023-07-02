@@ -82,6 +82,19 @@ export const STATS_NAME_MAP: Record<Stat, string> = {
 	[Stat.Wisdom]: "Wisdom",
 };
 
+export const RESISTANCES_ABBR_MAP: Record<DamageType, string> = {
+	[DamageType.Slashing]: "SLA",
+	[DamageType.Crushing]: "CRU",
+	[DamageType.Piercing]: "PIE",
+	[DamageType.Cold]: "CLD",
+	[DamageType.Fire]: "FRE",
+	[DamageType.Lighting]: "LTG",
+	[DamageType.Radiant]: "RAD",
+	[DamageType.Necrotic]: "NEC",
+	[DamageType.Poison]: "PSN",
+	[DamageType.Acid]: "ACD",
+};
+
 export const RESISTANCES_NAME_MAP: Record<DamageType, string> = {
 	[DamageType.Slashing]: "Slashing",
 	[DamageType.Crushing]: "Crushing",
