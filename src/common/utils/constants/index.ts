@@ -95,6 +95,19 @@ export const RESISTANCES_NAME_MAP: Record<DamageType, string> = {
 	[DamageType.Acid]: "Acid",
 };
 
+export const RESISTANCES_COLOUR_MAP: Record<DamageType, string> = {
+	[DamageType.Slashing]: "#607466",
+	[DamageType.Crushing]: "#6C6F7D",
+	[DamageType.Piercing]: "#F2D1C9",
+	[DamageType.Cold]: "#92D5E6",
+	[DamageType.Fire]: "#E4572E",
+	[DamageType.Lighting]: "#F9DC5C",
+	[DamageType.Radiant]: "#F3FFBD",
+	[DamageType.Necrotic]: "#5A0B4D",
+	[DamageType.Poison]: "#157145",
+	[DamageType.Acid]: "#A1EF8B",
+};
+
 export const SKILL_EFFECTS = [
 	EffectType.WeaponDamage,
 	EffectType.Damage,

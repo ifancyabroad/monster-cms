@@ -7,11 +7,13 @@ import {
 	TableHead,
 	TableRow,
 } from "@mui/material";
+import { LinearProgressWithLabel } from "common/components";
 
 interface ITableStat {
 	key: string;
 	name: string;
 	value: number;
+	colour?: string;
 }
 
 interface IProps {
@@ -37,7 +39,6 @@ export const StatsTable: React.FC<IProps> = ({
 								backgroundColor: "common.black",
 								color: "common.white",
 							}}
-							colSpan={2}
 						>
 							{title}
 						</TableCell>
@@ -48,11 +49,11 @@ export const StatsTable: React.FC<IProps> = ({
 						<TableRow key={stat.name}>
 							<TableCell component="th" scope="row">
 								{stat.name}
-							</TableCell>
-							<TableCell align="right">
-								{prefix}
-								{stat.value}
-								{suffix}
+								<LinearProgressWithLabel
+									value={stat.value}
+									label={prefix + stat.value + suffix}
+									customColor={stat.colour}
+								/>
 							</TableCell>
 						</TableRow>
 					))}
