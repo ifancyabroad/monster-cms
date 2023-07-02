@@ -1,10 +1,14 @@
 import {
 	Box,
 	Button,
+	Card,
+	CardHeader,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
+	Grid,
+	IconButton,
 	Tab,
 	Tabs,
 } from "@mui/material";
@@ -12,8 +16,20 @@ import { useEffect, useReducer, useState } from "react";
 import { useAppDispatch, useAppSelector } from "common/hooks";
 import { closeAddEquipmentModal } from "features/modals/modalsSlice";
 import { ArmoursTable, WeaponsTable } from "common/components";
-import { AddEquipmentContext, addEquipmentReducer } from "common/context";
+import {
+	AddEquipmentContext,
+	addEquipmentReducer,
+	useAddEquipmentContext,
+} from "common/context";
 import { TEquipment } from "common/types";
+import {
+	EQUIPMENT_SLOTS,
+	EQUIPMENT_SLOT_NAME_MAP,
+	EquipmentSlot,
+} from "common/utils";
+import { useSelector } from "react-redux";
+import { EquipmentTypeIcon, selectEquipmentById } from "features/equipment";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -34,6 +50,45 @@ const TabPanel: React.FC<TabPanelProps> = (props) => {
 		>
 			{value === index && <Box sx={{ p: 3 }}>{children}</Box>}
 		</div>
+	);
+};
+
+interface IEquipmentCardProps {
+	id: string;
+	slot: EquipmentSlot;
+}
+
+const EquipmentCard: React.FC<IEquipmentCardProps> = ({ id, slot }) => {
+	const equipment = useSelector(selectEquipmentById)(id);
+	const context = useAddEquipmentContext();
+
+	const handleRemove = () => {
+		context.dispatch({
+			type: "REMOVE",
+			payload: {
+				slot,
+				value: id,
+			},
+		});
+	};
+
+	if (!equipment) {
+		return null;
+	}
+
+	return (
+		<Card variant="outlined">
+			<CardHeader
+				avatar={<EquipmentTypeIcon type={equipment.type} />}
+				title={EQUIPMENT_SLOT_NAME_MAP[slot]}
+				subheader={equipment.name}
+				action={
+					<IconButton aria-label="remove" onClick={handleRemove}>
+						<CloseIcon />
+					</IconButton>
+				}
+			/>
+		</Card>
 	);
 };
 
@@ -114,6 +169,28 @@ export const AddEquipmentModal: React.FC<IProps> = ({
 							<ArmoursTable type="addArmours" />
 						</AddEquipmentContext.Provider>
 					</TabPanel>
+					<Grid container spacing={2}>
+						{EQUIPMENT_SLOTS.map((slot) => {
+							const equipment = state[slot];
+
+							if (equipment) {
+								return (
+									<Grid key={slot} item xs={12} md={6} lg={3}>
+										<AddEquipmentContext.Provider
+											value={providerState}
+										>
+											<EquipmentCard
+												id={equipment}
+												slot={slot}
+											/>
+										</AddEquipmentContext.Provider>
+									</Grid>
+								);
+							}
+
+							return null;
+						})}
+					</Grid>
 				</Box>
 			</DialogContent>
 			<DialogActions>
