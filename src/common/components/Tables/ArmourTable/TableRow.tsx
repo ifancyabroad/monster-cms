@@ -2,12 +2,12 @@ import { TableCell, TableRow as MUITableRow } from "@mui/material";
 import { Fragment, useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "common/hooks";
 import { IArmour } from "common/types";
-import { EQUIPMENT_TYPE_NAME_MAP } from "common/utils";
 import { ConfirmationModal } from "features/modals";
 import { TableDefaultActions } from "./TableDefaultActions";
 import { TableAddActions } from "./TableAddActions";
 import { AuthContext } from "common/context";
 import { deleteArmour } from "features/armours";
+import { EquipmentTypeIcon } from "features/equipment";
 
 interface IProps {
 	armour: IArmour;
@@ -49,7 +49,9 @@ export const TableRow: React.FC<IProps> = ({ armour, type }) => {
 				>
 					{armour.name}
 				</TableCell>
-				<TableCell>{EQUIPMENT_TYPE_NAME_MAP[armour.type]}</TableCell>
+				<TableCell>
+					<EquipmentTypeIcon type={armour.type} width={24} />
+				</TableCell>
 				<TableCell align="right">{armour.defense}</TableCell>
 				<TableCell align="right">{armour.price}</TableCell>
 				<TableCell align="right">{armour.level}</TableCell>

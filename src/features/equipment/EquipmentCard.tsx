@@ -4,7 +4,7 @@ import { selectEquipmentById } from "./equipmentSlice";
 import { EquipmentSlot, EQUIPMENT_SLOT_NAME_MAP } from "common/utils";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";
-import { EquipmentSlotIcon } from "./EquipmentSlotIcon";
+import { EquipmentTypeIcon } from "./EquipmentTypeIcon";
 
 interface IProps {
 	id: string;
@@ -26,7 +26,7 @@ export const EquipmentCard: React.FC<IProps> = ({ id, slot }) => {
 	return (
 		<Card variant="outlined">
 			<CardHeader
-				avatar={<EquipmentSlotIcon slot={slot} />}
+				avatar={<EquipmentTypeIcon type={equipment.type} />}
 				title={EQUIPMENT_SLOT_NAME_MAP[slot]}
 				subheader={equipment.name}
 				action={
