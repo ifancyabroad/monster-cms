@@ -5,6 +5,7 @@ import {
 	ELEMENTAL_RESISTANCES,
 	PHYSICAL_RESISTANCES,
 	RESISTANCES,
+	RESISTANCES_COLOUR_MAP,
 	RESISTANCES_NAME_MAP,
 	Stat,
 	STATS,
@@ -30,6 +31,7 @@ export const getResistancesArray = (stats: TDamageTypes) =>
 		key: stat,
 		name: RESISTANCES_NAME_MAP[stat],
 		value: stats[stat],
+		colour: RESISTANCES_COLOUR_MAP[stat],
 	}));
 
 export const getPartialResistancesArray = (stats: Partial<TDamageTypes>) =>
@@ -37,6 +39,7 @@ export const getPartialResistancesArray = (stats: Partial<TDamageTypes>) =>
 		key: stat,
 		name: RESISTANCES_NAME_MAP[stat as DamageType],
 		value: stats[stat as DamageType] as number,
+		colour: RESISTANCES_COLOUR_MAP[stat as DamageType],
 	}));
 
 export const getPhysicalResistancesArray = (stats: TDamageTypes) =>
@@ -44,6 +47,7 @@ export const getPhysicalResistancesArray = (stats: TDamageTypes) =>
 		key: stat,
 		name: RESISTANCES_NAME_MAP[stat],
 		value: stats[stat],
+		colour: RESISTANCES_COLOUR_MAP[stat as DamageType],
 	}));
 
 export const getElementalResistancesArray = (stats: TDamageTypes) =>
@@ -51,6 +55,7 @@ export const getElementalResistancesArray = (stats: TDamageTypes) =>
 		key: stat,
 		name: RESISTANCES_NAME_MAP[stat],
 		value: stats[stat],
+		colour: RESISTANCES_COLOUR_MAP[stat as DamageType],
 	}));
 
 export const getAuxillaryResistancesArray = (stats: TDamageTypes) =>
@@ -58,6 +63,7 @@ export const getAuxillaryResistancesArray = (stats: TDamageTypes) =>
 		key: stat,
 		name: RESISTANCES_NAME_MAP[stat],
 		value: stats[stat],
+		colour: RESISTANCES_COLOUR_MAP[stat as DamageType],
 	}));
 
 export const getKeyFromName = (name: string) =>
