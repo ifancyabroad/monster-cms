@@ -124,7 +124,13 @@ export const SideDrawerContent: React.FC = () => {
 								component={Link}
 								to={`/monsters/${monster.id}`}
 							>
-								<ListItemText primary={monster.name} />
+								<ListItemText
+									primary={monster.name}
+									primaryTypographyProps={{
+										variant: "body2",
+										color: "textSecondary",
+									}}
+								/>
 							</ListItemButton>
 						))}
 					</List>
@@ -146,7 +152,13 @@ export const SideDrawerContent: React.FC = () => {
 								component={Link}
 								to={`/skills/${skill.id}`}
 							>
-								<ListItemText primary={skill.name} />
+								<ListItemText
+									primary={skill.name}
+									primaryTypographyProps={{
+										variant: "body2",
+										color: "textSecondary",
+									}}
+								/>
 							</ListItemButton>
 						))}
 					</List>
@@ -168,7 +180,13 @@ export const SideDrawerContent: React.FC = () => {
 								component={Link}
 								to={`/weapons/${weapon.id}`}
 							>
-								<ListItemText primary={weapon.name} />
+								<ListItemText
+									primary={weapon.name}
+									primaryTypographyProps={{
+										variant: "body2",
+										color: "textSecondary",
+									}}
+								/>
 							</ListItemButton>
 						))}
 					</List>
@@ -190,7 +208,13 @@ export const SideDrawerContent: React.FC = () => {
 								component={Link}
 								to={`/armours/${armour.id}`}
 							>
-								<ListItemText primary={armour.name} />
+								<ListItemText
+									primary={armour.name}
+									primaryTypographyProps={{
+										variant: "body2",
+										color: "textSecondary",
+									}}
+								/>
 							</ListItemButton>
 						))}
 					</List>
