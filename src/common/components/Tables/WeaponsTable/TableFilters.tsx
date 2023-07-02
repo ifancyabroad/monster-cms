@@ -10,12 +10,12 @@ import {
 import { IWeaponFilters } from "common/types";
 import SearchIcon from "@mui/icons-material/Search";
 import {
+	EQUIPMENT_TYPE_NAME_MAP,
 	MAX_GOLD_VALUE,
 	MAX_SKILL_LEVEL,
 	RESISTANCES,
 	RESISTANCES_NAME_MAP,
 	WEAPON_TYPES,
-	WEAPON_TYPE_NAME_MAP,
 } from "common/utils";
 
 interface IProps {
@@ -68,7 +68,7 @@ export const TableFilters: React.FC<IProps> = ({
 						<MenuItem value="all">All</MenuItem>
 						{WEAPON_TYPES.map((type) => (
 							<MenuItem key={type} value={type}>
-								{WEAPON_TYPE_NAME_MAP[type]}
+								{EQUIPMENT_TYPE_NAME_MAP[type]}
 							</MenuItem>
 						))}
 					</TextField>

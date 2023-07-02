@@ -202,19 +202,6 @@ export const WEAPON_TYPES = [
 	WeaponType.Sword,
 ] as const;
 
-export const WEAPON_TYPE_NAME_MAP: Record<WeaponType, string> = {
-	[WeaponType.Axe]: "Axe",
-	[WeaponType.Bow]: "Bow",
-	[WeaponType.Club]: "Club",
-	[WeaponType.Crossbow]: "Crossbow",
-	[WeaponType.Dagger]: "Dagger",
-	[WeaponType.Hammer]: "Hammer",
-	[WeaponType.Mace]: "Mace",
-	[WeaponType.Spear]: "Spear",
-	[WeaponType.Staff]: "Staff",
-	[WeaponType.Sword]: "Sword",
-};
-
 export const WEAPON_SIZES = [
 	WeaponSize.OneHanded,
 	WeaponSize.TwoHanded,
@@ -236,7 +223,10 @@ export const ARMOUR_TYPES = [
 	EquipmentType.Shield,
 ] as const;
 
-export const EQUIPMENT_TYPE_NAME_MAP: Record<EquipmentType, string> = {
+export const EQUIPMENT_TYPE_NAME_MAP: Record<
+	EquipmentType | WeaponType,
+	string
+> = {
 	[EquipmentType.Amulet]: "Amulet",
 	[EquipmentType.Armour]: "Armour",
 	[EquipmentType.Belt]: "Belt",
@@ -246,6 +236,16 @@ export const EQUIPMENT_TYPE_NAME_MAP: Record<EquipmentType, string> = {
 	[EquipmentType.Ring]: "Ring",
 	[EquipmentType.Shield]: "Shield",
 	[EquipmentType.Weapon]: "Weapon",
+	[WeaponType.Axe]: "Axe",
+	[WeaponType.Bow]: "Bow",
+	[WeaponType.Club]: "Club",
+	[WeaponType.Crossbow]: "Crossbow",
+	[WeaponType.Dagger]: "Dagger",
+	[WeaponType.Hammer]: "Hammer",
+	[WeaponType.Mace]: "Mace",
+	[WeaponType.Spear]: "Spear",
+	[WeaponType.Staff]: "Staff",
+	[WeaponType.Sword]: "Sword",
 };
 
 export const EQUIPMENT_SLOT_TYPE_MAP: Record<EquipmentType, EquipmentSlot[]> = {

@@ -8,9 +8,9 @@ import {
 } from "@mui/material";
 import { IWeapon } from "common/types";
 import {
+	EQUIPMENT_TYPE_NAME_MAP,
 	RESISTANCES_NAME_MAP,
 	WEAPON_SIZE_NAME_MAP,
-	WEAPON_TYPE_NAME_MAP,
 } from "common/utils";
 
 export const WeaponPropertiesTable: React.FC<IWeapon> = (weapon) => {
@@ -27,7 +27,7 @@ export const WeaponPropertiesTable: React.FC<IWeapon> = (weapon) => {
 							Type
 						</TableCell>
 						<TableCell align="right">
-							{WEAPON_TYPE_NAME_MAP[weapon.weaponType]}
+							{EQUIPMENT_TYPE_NAME_MAP[weapon.weaponType]}
 						</TableCell>
 					</TableRow>
 					<TableRow>
