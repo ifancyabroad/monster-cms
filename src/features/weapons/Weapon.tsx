@@ -181,6 +181,7 @@ export const Weapon: React.FC = () => {
 								stats={getPartialStatsArray(
 									weapon.modifiers.stats
 								)}
+								max={30}
 							/>
 						</Grid>
 					)}

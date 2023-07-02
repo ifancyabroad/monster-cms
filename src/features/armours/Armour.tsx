@@ -181,6 +181,7 @@ export const Armour: React.FC = () => {
 								stats={getPartialStatsArray(
 									armour.modifiers.stats
 								)}
+								max={30}
 							/>
 						</Grid>
 					)}
