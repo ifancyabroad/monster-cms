@@ -1,6 +1,6 @@
 {
-	"short_name": "React App",
-	"name": "Create React App Sample",
+	"short_name": "Monster Manual",
+	"name": "Monster Manual",
 	"icons": [
 		{
 			"src": "favicon.ico",
@@ -20,6 +20,6 @@
 	],
 	"start_url": ".",
 	"display": "standalone",
-	"theme_color": "#000000",
-	"background_color": "#ffffff"
+	"theme_color": "#56E39F",
+	"background_color": "#171d1c"
 }
