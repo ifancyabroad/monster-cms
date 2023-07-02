@@ -48,7 +48,7 @@ export const EquipmentItem: React.FC<IProps> = ({ id, slot, onRemove }) => {
 			}
 		>
 			<ListItemAvatar>
-				<Avatar variant="square">
+				<Avatar sx={{ backgroundColor: "transparent" }}>
 					<EquipmentSlotIcon slot={slot} />
 				</Avatar>
 			</ListItemAvatar>

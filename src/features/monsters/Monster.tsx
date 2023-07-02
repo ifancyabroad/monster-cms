@@ -1,5 +1,6 @@
 import {
 	Box,
+	CircularProgress,
 	Divider,
 	Grid,
 	IconButton,
@@ -115,18 +116,47 @@ export const Monster: React.FC = () => {
 					</Box>
 				)}
 			</Box>
-			{monsterImagePath && (
-				<Box
-					component="img"
-					sx={{
-						marginBottom: 3,
-						maxWidth: "100%",
-						maxHeight: 600,
-					}}
-					src={monsterImagePath}
-					alt={monster.name}
-				/>
-			)}
+			<Box
+				sx={{
+					marginBottom: 3,
+					width: "100%",
+					maxWidth: 600,
+					aspectRatio: "1/1",
+				}}
+			>
+				{isLoading ? (
+					<Box
+						sx={{
+							height: "100%",
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					>
+						<CircularProgress />
+					</Box>
+				) : monsterImagePath ? (
+					<Box
+						component="img"
+						sx={{
+							maxWidth: "100%",
+							verticalAlign: "middle",
+						}}
+						src={monsterImagePath}
+						alt={monster.name}
+					/>
+				) : (
+					<Box
+						component="img"
+						sx={{
+							maxWidth: "100%",
+							verticalAlign: "middle",
+						}}
+						src="https://via.placeholder.com/600"
+						alt={monster.name}
+					/>
+				)}
+			</Box>
 
 			<Box marginBottom={4}>
 				<Typography
