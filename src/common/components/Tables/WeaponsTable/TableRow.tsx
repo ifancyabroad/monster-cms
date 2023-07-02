@@ -2,16 +2,13 @@ import { TableCell, TableRow as MUITableRow } from "@mui/material";
 import { Fragment, useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "common/hooks";
 import { IWeapon } from "common/types";
-import {
-	RESISTANCES_NAME_MAP,
-	WEAPON_SIZE_NAME_MAP,
-	WEAPON_TYPE_NAME_MAP,
-} from "common/utils";
+import { RESISTANCES_NAME_MAP, WEAPON_SIZE_NAME_MAP } from "common/utils";
 import { ConfirmationModal } from "features/modals";
 import { TableDefaultActions } from "./TableDefaultActions";
 import { TableAddActions } from "./TableAddActions";
 import { AuthContext } from "common/context";
 import { deleteWeapon } from "features/weapons";
+import { EquipmentTypeIcon } from "features/equipment";
 
 interface IProps {
 	weapon: IWeapon;
@@ -53,7 +50,9 @@ export const TableRow: React.FC<IProps> = ({ weapon, type }) => {
 				>
 					{weapon.name}
 				</TableCell>
-				<TableCell>{WEAPON_TYPE_NAME_MAP[weapon.weaponType]}</TableCell>
+				<TableCell>
+					<EquipmentTypeIcon type={weapon.weaponType} width={32} />
+				</TableCell>
 				<TableCell>{RESISTANCES_NAME_MAP[weapon.damageType]}</TableCell>
 				<TableCell>{WEAPON_SIZE_NAME_MAP[weapon.size]}</TableCell>
 				<TableCell align="right">{weapon.price}</TableCell>

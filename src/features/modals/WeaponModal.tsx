@@ -44,7 +44,7 @@ import {
 	WEAPON_SIZES,
 	WEAPON_SIZE_NAME_MAP,
 	WEAPON_TYPES,
-	WEAPON_TYPE_NAME_MAP,
+	EQUIPMENT_TYPE_NAME_MAP,
 } from "common/utils";
 import { saveWeapon, updateWeapon } from "features/weapons";
 
@@ -377,7 +377,7 @@ export const WeaponModal: React.FC = () => {
 								>
 									{WEAPON_TYPES.map((type) => (
 										<MenuItem key={type} value={type}>
-											{WEAPON_TYPE_NAME_MAP[type]}
+											{EQUIPMENT_TYPE_NAME_MAP[type]}
 										</MenuItem>
 									))}
 								</TextField>

@@ -50,7 +50,7 @@ export const TableRow: React.FC<IProps> = ({ armour, type }) => {
 					{armour.name}
 				</TableCell>
 				<TableCell>
-					<EquipmentTypeIcon type={armour.type} width={24} />
+					<EquipmentTypeIcon type={armour.type} width={32} />
 				</TableCell>
 				<TableCell align="right">{armour.defense}</TableCell>
 				<TableCell align="right">{armour.price}</TableCell>
