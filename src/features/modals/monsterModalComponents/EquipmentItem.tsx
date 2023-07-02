@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { EquipmentSlot, EQUIPMENT_TYPE_NAME_MAP } from "common/utils";
-import DeleteIcon from "@mui/icons-material/Delete";
+import CloseIcon from "@mui/icons-material/Close";
 import { selectEquipmentById } from "features/equipment";
 import { EquipmentTypeIcon } from "features/equipment/EquipmentTypeIcon";
 
@@ -40,10 +40,9 @@ export const EquipmentItem: React.FC<IProps> = ({ id, slot, onRemove }) => {
 				<IconButton
 					edge="end"
 					aria-label="remove equipment"
-					color="warning"
 					onClick={handleRemove}
 				>
-					<DeleteIcon />
+					<CloseIcon />
 				</IconButton>
 			}
 		>
