@@ -21,6 +21,8 @@ interface IProps {
 	stats: ITableStat[];
 	prefix?: string;
 	suffix?: string;
+	min?: number;
+	max?: number;
 }
 
 export const StatsTable: React.FC<IProps> = ({
@@ -28,6 +30,8 @@ export const StatsTable: React.FC<IProps> = ({
 	stats,
 	prefix = "",
 	suffix = "",
+	min,
+	max,
 }) => {
 	return (
 		<TableContainer component={Paper}>
@@ -53,6 +57,8 @@ export const StatsTable: React.FC<IProps> = ({
 									value={stat.value}
 									label={prefix + stat.value + suffix}
 									customColor={stat.colour}
+									min={min}
+									max={max}
 								/>
 							</TableCell>
 						</TableRow>
