@@ -344,7 +344,6 @@ export const WeaponModal: React.FC = () => {
 					</Box>
 					<Box my={3}>
 						<TextField
-							autoFocus
 							name="description"
 							label="Description"
 							value={formValues.weapon.description}

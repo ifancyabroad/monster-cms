@@ -302,7 +302,6 @@ export const MonsterModal: React.FC = () => {
 						</Box>
 						<Box my={3}>
 							<TextField
-								autoFocus
 								name="description"
 								label="Description"
 								value={formValues.monster.description}
