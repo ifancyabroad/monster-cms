@@ -84,6 +84,7 @@ export const StatGroup: React.FC<IProps> = ({
 							<Tooltip title={stat.name} placement="top">
 								<TextField
 									key={stat.key}
+									variant="filled"
 									size="small"
 									fullWidth
 									margin="dense"

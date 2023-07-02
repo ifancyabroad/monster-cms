@@ -235,7 +235,6 @@ export const SkillModal: React.FC = () => {
 					</Box>
 					<Box my={3}>
 						<TextField
-							autoFocus
 							name="description"
 							label="Description"
 							value={formValues.skill.description}
