@@ -105,18 +105,13 @@ export const ArmourModal: React.FC = () => {
 		() => armour && getBaseValues(armour),
 		[armour]
 	);
-	const [stats, setStats] = useState<TStats>({
-		...DEFAULT_STAT_VALUES,
-		...formValues.armour.modifiers?.stats,
-	});
-	const [auxiliaryStats, setAuxiliaryStats] = useState<TAuxiliaryStats>({
-		...DEFAULT_AUXILIARY_STAT_VALUES,
-		...formValues.armour.modifiers?.auxiliaryStats,
-	});
-	const [resistances, setResistances] = useState<TDamageTypes>({
-		...DEFAULT_RESISTANCE_VALUES,
-		...formValues.armour.modifiers?.resistances,
-	});
+	const [stats, setStats] = useState<TStats>(DEFAULT_STAT_VALUES);
+	const [auxiliaryStats, setAuxiliaryStats] = useState<TAuxiliaryStats>(
+		DEFAULT_AUXILIARY_STAT_VALUES
+	);
+	const [resistances, setResistances] = useState<TDamageTypes>(
+		DEFAULT_RESISTANCE_VALUES
+	);
 
 	const title = armour ? "Update Armour" : "Add Armour";
 	const subtitle = armour
@@ -127,6 +122,18 @@ export const ArmourModal: React.FC = () => {
 		setFormValues({
 			armour: armourValues || defaultValues,
 			image: null,
+		});
+		setStats({
+			...DEFAULT_STAT_VALUES,
+			...armourValues?.modifiers?.stats,
+		});
+		setAuxiliaryStats({
+			...DEFAULT_AUXILIARY_STAT_VALUES,
+			...armourValues?.modifiers?.auxiliaryStats,
+		});
+		setResistances({
+			...DEFAULT_RESISTANCE_VALUES,
+			...armourValues?.modifiers?.resistances,
 		});
 	}, [armourValues]);
 

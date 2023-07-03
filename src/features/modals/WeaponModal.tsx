@@ -121,18 +121,13 @@ export const WeaponModal: React.FC = () => {
 		() => weapon && getBaseWeaponValues(weapon),
 		[weapon]
 	);
-	const [stats, setStats] = useState<TStats>({
-		...DEFAULT_STAT_VALUES,
-		...formValues.weapon.modifiers?.stats,
-	});
-	const [auxiliaryStats, setAuxiliaryStats] = useState<TAuxiliaryStats>({
-		...DEFAULT_AUXILIARY_STAT_VALUES,
-		...formValues.weapon.modifiers?.auxiliaryStats,
-	});
-	const [resistances, setResistances] = useState<TDamageTypes>({
-		...DEFAULT_RESISTANCE_VALUES,
-		...formValues.weapon.modifiers?.resistances,
-	});
+	const [stats, setStats] = useState<TStats>(DEFAULT_STAT_VALUES);
+	const [auxiliaryStats, setAuxiliaryStats] = useState<TAuxiliaryStats>(
+		DEFAULT_AUXILIARY_STAT_VALUES
+	);
+	const [resistances, setResistances] = useState<TDamageTypes>(
+		DEFAULT_RESISTANCE_VALUES
+	);
 
 	const title = weapon ? "Update Weapon" : "Add Weapon";
 	const subtitle = weapon
@@ -145,6 +140,18 @@ export const WeaponModal: React.FC = () => {
 		setFormValues({
 			weapon: weaponValues || defaultWeaponValues,
 			image: null,
+		});
+		setStats({
+			...DEFAULT_STAT_VALUES,
+			...weaponValues?.modifiers?.stats,
+		});
+		setAuxiliaryStats({
+			...DEFAULT_AUXILIARY_STAT_VALUES,
+			...weaponValues?.modifiers?.auxiliaryStats,
+		});
+		setResistances({
+			...DEFAULT_RESISTANCE_VALUES,
+			...weaponValues?.modifiers?.resistances,
 		});
 	}, [weaponValues]);
 
