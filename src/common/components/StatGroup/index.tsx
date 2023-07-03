@@ -39,6 +39,7 @@ interface IProps {
 	stats: ITableStat[];
 	min: number;
 	max: number;
+	step?: number;
 	handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -47,6 +48,7 @@ export const StatGroup: React.FC<IProps> = ({
 	stats,
 	min,
 	max,
+	step,
 	handleChange,
 }) => {
 	const [expanded, setExpanded] = useState(true);
@@ -97,6 +99,7 @@ export const StatGroup: React.FC<IProps> = ({
 									inputProps={{
 										min,
 										max,
+										step,
 									}}
 								/>
 							</Tooltip>

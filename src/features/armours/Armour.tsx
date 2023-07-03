@@ -20,7 +20,11 @@ import {
 import { ArmourPropertiesTable } from "./ArmourPropertiesTable";
 import { AuthContext } from "common/context";
 import { StatsTable } from "common/components";
-import { getPartialResistancesArray, getPartialStatsArray } from "common/utils";
+import {
+	getPartialAuxiliaryStatsArray,
+	getPartialResistancesArray,
+	getPartialStatsArray,
+} from "common/utils";
 import {
 	deleteArmour,
 	fetchArmourImagePath,
@@ -163,29 +167,62 @@ export const Armour: React.FC = () => {
 					<Grid item xs={12} md={4}>
 						<ArmourPropertiesTable {...armour} />
 					</Grid>
-					{armour.modifiers?.resistances && (
-						<Grid item xs={12} md={3} lg={4}>
-							<StatsTable
-								title="Resistances"
-								suffix="%"
-								stats={getPartialResistancesArray(
-									armour.modifiers.resistances
-								)}
-							/>
-						</Grid>
-					)}
-					{armour.modifiers?.stats && (
-						<Grid item xs={12} md={3} lg={4}>
-							<StatsTable
-								title="Stats"
-								stats={getPartialStatsArray(
-									armour.modifiers.stats
-								)}
-								max={30}
-							/>
-						</Grid>
-					)}
 				</Grid>
+				<Divider />
+			</Box>
+
+			<Box
+				sx={{
+					marginBottom: 4,
+				}}
+			>
+				<Typography
+					variant="body2"
+					color="textSecondary"
+					component="h5"
+					gutterBottom
+				>
+					Resistances/Bonuses
+				</Typography>
+				{armour.modifiers ? (
+					<Grid container spacing={3} marginBottom={3}>
+						{armour.modifiers.resistances && (
+							<Grid item xs={12} md={3} lg={4}>
+								<StatsTable
+									title="Resistances"
+									suffix="%"
+									stats={getPartialResistancesArray(
+										armour.modifiers.resistances
+									)}
+								/>
+							</Grid>
+						)}
+						{armour.modifiers.stats && (
+							<Grid item xs={12} md={3} lg={4}>
+								<StatsTable
+									title="Stats"
+									stats={getPartialStatsArray(
+										armour.modifiers.stats
+									)}
+									max={10}
+								/>
+							</Grid>
+						)}
+						{armour.modifiers.auxiliaryStats && (
+							<Grid item xs={12} md={3} lg={4}>
+								<StatsTable
+									title="Auxiliary Stats"
+									stats={getPartialAuxiliaryStatsArray(
+										armour.modifiers.auxiliaryStats
+									)}
+									max={10}
+								/>
+							</Grid>
+						)}
+					</Grid>
+				) : (
+					<Typography>No armour bonuses</Typography>
+				)}
 			</Box>
 
 			<ConfirmationModal

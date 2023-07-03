@@ -15,6 +15,7 @@ export const SideDrawer: React.FC = () => {
 	return (
 		<Box
 			sx={{
+				top: DRAWER_TOP,
 				width: {
 					sm: DRAWER_WIDTH,
 				},

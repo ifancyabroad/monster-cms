@@ -22,6 +22,7 @@ export interface IBaseWeapon {
 	effects?: IWeaponEffect[];
 	modifiers?: {
 		stats?: Partial<TStats>;
+		auxiliaryStats?: Partial<TAuxiliaryStats>;
 		resistances?: Partial<TDamageTypes>;
 	};
 }

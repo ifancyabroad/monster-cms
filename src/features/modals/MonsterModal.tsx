@@ -326,8 +326,9 @@ export const MonsterModal: React.FC = () => {
 							stats={getResistancesArray(
 								formValues.monster.resistances
 							)}
-							min={-1000}
+							min={-100}
 							max={100}
+							step={5}
 							handleChange={handleChangeResistances}
 						/>
 						<Box my={3}>

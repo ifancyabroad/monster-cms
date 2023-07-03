@@ -35,6 +35,12 @@ export enum Stat {
 	Charisma = "charisma",
 }
 
+export enum AuxiliaryStat {
+	Defence = "defence",
+	HitChance = "hitChance",
+	CritChance = "critChance",
+}
+
 export enum DamageType {
 	Slashing = "slashing",
 	Crushing = "crushing",
