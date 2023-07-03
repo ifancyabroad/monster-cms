@@ -26,7 +26,11 @@ import {
 	selectWeaponById,
 	selectWeaponImagePathById,
 } from "./weaponsSlice";
-import { getPartialResistancesArray, getPartialStatsArray } from "common/utils";
+import {
+	getPartialAuxiliaryStatsArray,
+	getPartialResistancesArray,
+	getPartialStatsArray,
+} from "common/utils";
 
 const Icon = styled("img")({
 	width: "64px",
@@ -163,31 +167,64 @@ export const Weapon: React.FC = () => {
 					<Grid item xs={12} md={4}>
 						<WeaponPropertiesTable {...weapon} />
 					</Grid>
-					{weapon.modifiers?.resistances && (
-						<Grid item xs={12} md={3} lg={4}>
-							<StatsTable
-								title="Resistances"
-								suffix="%"
-								stats={getPartialResistancesArray(
-									weapon.modifiers.resistances
-								)}
-							/>
-						</Grid>
-					)}
-					{weapon.modifiers?.stats && (
-						<Grid item xs={12} md={3} lg={4}>
-							<StatsTable
-								title="Stats"
-								stats={getPartialStatsArray(
-									weapon.modifiers.stats
-								)}
-								max={30}
-							/>
-						</Grid>
-					)}
 				</Grid>
 
 				<Divider />
+			</Box>
+
+			<Box
+				sx={{
+					marginBottom: 4,
+				}}
+			>
+				<Typography
+					variant="body2"
+					color="textSecondary"
+					component="h5"
+					gutterBottom
+				>
+					Resistances/Bonuses
+				</Typography>
+
+				{weapon.modifiers ? (
+					<Grid container spacing={3} marginBottom={3}>
+						{weapon.modifiers.resistances && (
+							<Grid item xs={12} md={3} lg={4}>
+								<StatsTable
+									title="Resistances"
+									suffix="%"
+									stats={getPartialResistancesArray(
+										weapon.modifiers.resistances
+									)}
+								/>
+							</Grid>
+						)}
+						{weapon.modifiers.stats && (
+							<Grid item xs={12} md={3} lg={4}>
+								<StatsTable
+									title="Stats"
+									stats={getPartialStatsArray(
+										weapon.modifiers.stats
+									)}
+									max={10}
+								/>
+							</Grid>
+						)}
+						{weapon.modifiers.auxiliaryStats && (
+							<Grid item xs={12} md={3} lg={4}>
+								<StatsTable
+									title="Auxiliary Stats"
+									stats={getPartialAuxiliaryStatsArray(
+										weapon.modifiers.auxiliaryStats
+									)}
+									max={10}
+								/>
+							</Grid>
+						)}
+					</Grid>
+				) : (
+					<Typography>No weapon bonuses</Typography>
+				)}
 			</Box>
 
 			<Box>

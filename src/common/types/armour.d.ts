@@ -1,5 +1,5 @@
-import { TDamageTypes, TStats } from "common/types";
-import { DamageType, EquipmentType } from "common/utils";
+import { TAuxiliaryStats, TDamageTypes, TStats } from "common/types";
+import { EquipmentType } from "common/utils";
 
 export interface IBaseArmour {
 	type: EquipmentType;
@@ -11,6 +11,7 @@ export interface IBaseArmour {
 	defense: number;
 	modifiers?: {
 		stats?: Partial<TStats>;
+		auxiliaryStats?: Partial<TAuxiliaryStats>;
 		resistances?: Partial<TDamageTypes>;
 	};
 }

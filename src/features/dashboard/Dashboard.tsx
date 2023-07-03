@@ -69,7 +69,7 @@ export const Dashboard: React.FC = () => {
 						title="Armour"
 						description="A complete list of armour"
 						image={armourImage}
-						link="/armour"
+						link="/armours"
 						onAdd={handleAddArmour}
 					/>
 				</Grid>

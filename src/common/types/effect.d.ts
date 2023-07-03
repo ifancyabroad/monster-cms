@@ -1,4 +1,4 @@
-import { TDamageTypes, TStats } from "common/types";
+import { TAuxiliaryStats, TDamageTypes, TStats } from "common/types";
 import { AuxiliaryEffect, DamageType, EffectType, Stat } from "common/utils";
 
 export interface IWeaponDamageEffect {
@@ -9,16 +9,12 @@ export interface IWeaponDamageEffect {
 export interface IDamageEffect {
 	type: EffectType.Damage;
 	damageType: DamageType;
-	modifier: Stat;
-	multiplier: number;
 	min: number;
 	max: number;
 }
 
 export interface IHealEffect {
 	type: EffectType.Heal;
-	modifier: Stat.Wisdom;
-	multiplier: number;
 	min: number;
 	max: number;
 }
@@ -27,6 +23,7 @@ export interface IStatusEffect {
 	type: EffectType.Status;
 	modifiers: {
 		stats?: Partial<TStats>;
+		auxiliaryStats?: Partial<TAuxiliaryStats>;
 		resistances?: Partial<TDamageTypes>;
 	};
 	accuracy: number;

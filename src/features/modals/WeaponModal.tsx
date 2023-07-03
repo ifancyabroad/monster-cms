@@ -21,6 +21,7 @@ import {
 	ISkillEffect,
 	IWeapon,
 	IWeaponEffect,
+	TAuxiliaryStats,
 	TDamageTypes,
 	TStats,
 } from "common/types";
@@ -45,6 +46,8 @@ import {
 	WEAPON_SIZE_NAME_MAP,
 	WEAPON_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
+	AuxiliaryStat,
+	getAuxiliaryStatsArray,
 } from "common/utils";
 import { saveWeapon, updateWeapon } from "features/weapons";
 
@@ -55,6 +58,12 @@ const DEFAULT_STAT_VALUES = {
 	[Stat.Intelligence]: 0,
 	[Stat.Wisdom]: 0,
 	[Stat.Charisma]: 0,
+};
+
+const DEFAULT_AUXILIARY_STAT_VALUES = {
+	[AuxiliaryStat.Defence]: 0,
+	[AuxiliaryStat.HitChance]: 0,
+	[AuxiliaryStat.CritChance]: 0,
 };
 
 const DEFAULT_RESISTANCE_VALUES = {
@@ -85,6 +94,7 @@ const defaultWeaponValues: IBaseWeapon = {
 	max: 6,
 	modifiers: {
 		stats: {},
+		auxiliaryStats: {},
 		resistances: {},
 	},
 };
@@ -114,6 +124,10 @@ export const WeaponModal: React.FC = () => {
 	const [stats, setStats] = useState<TStats>({
 		...DEFAULT_STAT_VALUES,
 		...formValues.weapon.modifiers?.stats,
+	});
+	const [auxiliaryStats, setAuxiliaryStats] = useState<TAuxiliaryStats>({
+		...DEFAULT_AUXILIARY_STAT_VALUES,
+		...formValues.weapon.modifiers?.auxiliaryStats,
 	});
 	const [resistances, setResistances] = useState<TDamageTypes>({
 		...DEFAULT_RESISTANCE_VALUES,
@@ -189,6 +203,39 @@ export const WeaponModal: React.FC = () => {
 				modifiers: {
 					...formValues.weapon.modifiers,
 					stats: newStats,
+				},
+			},
+		});
+	};
+
+	const handleChangeAuxiliaryStats = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { name, valueAsNumber } = e.currentTarget;
+
+		setAuxiliaryStats({
+			...auxiliaryStats,
+			[name as string]: valueAsNumber,
+		});
+
+		const newStats = {
+			...formValues.weapon.modifiers?.auxiliaryStats,
+			[name as string]: valueAsNumber,
+		};
+
+		Object.keys(newStats).forEach((key) => {
+			if (!newStats[key as AuxiliaryStat]) {
+				delete newStats[key as AuxiliaryStat];
+			}
+		});
+
+		setFormValues({
+			...formValues,
+			weapon: {
+				...formValues.weapon,
+				modifiers: {
+					...formValues.weapon.modifiers,
+					auxiliaryStats: newStats,
 				},
 			},
 		});
@@ -489,25 +536,35 @@ export const WeaponModal: React.FC = () => {
 									onChange={handleChange}
 									required
 									inputProps={{
-										min: 1,
+										min: 0,
 										max: MAX_GOLD_VALUE,
+										step: 10,
 									}}
 								/>
 							</Grid>
 						</Grid>
 					</Box>
 					<StatGroup
-						title="Stats (0-30)"
+						title="Stats (-10-10)"
 						stats={getStatsArray(stats)}
-						min={0}
-						max={30}
+						min={-10}
+						max={10}
 						handleChange={handleChangeStats}
+					/>
+					<StatGroup
+						title="Auxiliary Stats (%)"
+						stats={getAuxiliaryStatsArray(auxiliaryStats)}
+						min={-100}
+						max={100}
+						step={5}
+						handleChange={handleChangeAuxiliaryStats}
 					/>
 					<StatGroup
 						title="Resistances (%)"
 						stats={getResistancesArray(resistances)}
-						min={0}
+						min={-100}
 						max={100}
+						step={5}
 						handleChange={handleChangeResistances}
 					/>
 					<Box my={3}>

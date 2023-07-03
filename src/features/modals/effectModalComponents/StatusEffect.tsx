@@ -1,14 +1,16 @@
 import { Fragment, useState } from "react";
 import { Box, Grid, TextField } from "@mui/material";
 import {
+	AuxiliaryStat,
 	DamageType,
+	getAuxiliaryStatsArray,
 	getResistancesArray,
 	getStatsArray,
 	MAX_DURATION,
 	Stat,
 } from "common/utils";
 import { StatGroup } from "common/components";
-import { TDamageTypes, TStats } from "common/types";
+import { TAuxiliaryStats, TDamageTypes, TStats } from "common/types";
 import { useEffectContext } from "common/context";
 
 const DEFAULT_STAT_VALUES = {
@@ -18,6 +20,12 @@ const DEFAULT_STAT_VALUES = {
 	[Stat.Intelligence]: 0,
 	[Stat.Wisdom]: 0,
 	[Stat.Charisma]: 0,
+};
+
+const DEFAULT_AUXILIARY_STAT_VALUES = {
+	[AuxiliaryStat.Defence]: 0,
+	[AuxiliaryStat.HitChance]: 0,
+	[AuxiliaryStat.CritChance]: 0,
 };
 
 const DEFAULT_RESISTANCE_VALUES = {
@@ -41,6 +49,10 @@ export const StatusEffect: React.FC = () => {
 	const [stats, setStats] = useState<TStats>({
 		...DEFAULT_STAT_VALUES,
 		...statusEffectForm.modifiers.stats,
+	});
+	const [auxiliaryStats, setAuxiliaryStats] = useState<TAuxiliaryStats>({
+		...DEFAULT_AUXILIARY_STAT_VALUES,
+		...statusEffectForm.modifiers.auxiliaryStats,
 	});
 	const [resistances, setResistances] = useState<TDamageTypes>({
 		...DEFAULT_RESISTANCE_VALUES,
@@ -91,6 +103,39 @@ export const StatusEffect: React.FC = () => {
 		});
 	};
 
+	const handleChangeAuxiliaryStats = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { name, valueAsNumber } = e.currentTarget;
+
+		setAuxiliaryStats({
+			...auxiliaryStats,
+			[name as string]: valueAsNumber,
+		});
+
+		const newStats = {
+			...statusEffectForm.modifiers.auxiliaryStats,
+			[name as string]: valueAsNumber,
+		};
+
+		Object.keys(newStats).forEach((key) => {
+			if (!newStats[key as AuxiliaryStat]) {
+				delete newStats[key as AuxiliaryStat];
+			}
+		});
+
+		dispatch({
+			type: "UPDATE",
+			payload: {
+				...statusEffectForm,
+				modifiers: {
+					...statusEffectForm.modifiers,
+					auxiliaryStats: newStats,
+				},
+			},
+		});
+	};
+
 	const handleChangeResistances = (
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
@@ -128,17 +173,26 @@ export const StatusEffect: React.FC = () => {
 		<Fragment>
 			<Box my={3}>
 				<StatGroup
-					title="Stats (-30-30)"
+					title="Stats (-10-10)"
 					stats={getStatsArray(stats)}
-					min={-30}
-					max={30}
+					min={-10}
+					max={10}
 					handleChange={handleChangeStats}
+				/>
+				<StatGroup
+					title="Auxiliary Stats (%)"
+					stats={getAuxiliaryStatsArray(auxiliaryStats)}
+					min={-100}
+					max={100}
+					step={5}
+					handleChange={handleChangeAuxiliaryStats}
 				/>
 				<StatGroup
 					title="Resistances (%)"
 					stats={getResistancesArray(resistances)}
 					min={-100}
 					max={100}
+					step={5}
 					handleChange={handleChangeResistances}
 				/>
 			</Box>
@@ -155,8 +209,9 @@ export const StatusEffect: React.FC = () => {
 							onChange={handleChange}
 							required
 							inputProps={{
-								min: 1,
+								min: 0,
 								max: 100,
+								step: 5,
 							}}
 						/>
 					</Grid>

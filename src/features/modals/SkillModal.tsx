@@ -328,6 +328,7 @@ export const SkillModal: React.FC = () => {
 									inputProps={{
 										min: 0,
 										max: MAX_GOLD_VALUE,
+										step: 10,
 									}}
 								/>
 							</Grid>

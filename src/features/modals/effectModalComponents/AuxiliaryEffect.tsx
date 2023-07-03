@@ -75,8 +75,9 @@ export const AuxiliaryEffect: React.FC = () => {
 							onChange={handleChange}
 							required
 							inputProps={{
-								min: 1,
+								min: 0,
 								max: 100,
+								step: 5,
 							}}
 						/>
 					</Grid>

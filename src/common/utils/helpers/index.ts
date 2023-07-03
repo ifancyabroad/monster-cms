@@ -1,5 +1,9 @@
-import { TStats, TDamageTypes } from "common/types";
+import { TStats, TDamageTypes, TAuxiliaryStats } from "common/types";
 import {
+	AUXILIARY_STATS,
+	AUXILIARY_STATS_ABBR_MAP,
+	AUXILIARY_STATS_NAME_MAP,
+	AuxiliaryStat,
 	AUXILLARY_RESISTANCES,
 	DamageType,
 	ELEMENTAL_RESISTANCES,
@@ -28,6 +32,24 @@ export const getPartialStatsArray = (stats: Partial<TStats>) =>
 		abbr: STATS_ABBR_MAP[stat as Stat],
 		name: STATS_NAME_MAP[stat as Stat],
 		value: stats[stat as Stat] as number,
+	}));
+
+export const getAuxiliaryStatsArray = (stats: TAuxiliaryStats) =>
+	AUXILIARY_STATS.map((stat) => ({
+		key: stat,
+		abbr: AUXILIARY_STATS_ABBR_MAP[stat],
+		name: AUXILIARY_STATS_NAME_MAP[stat],
+		value: stats[stat],
+	}));
+
+export const getPartialAuxiliaryStatsArray = (
+	stats: Partial<TAuxiliaryStats>
+) =>
+	Object.keys(stats).map((stat) => ({
+		key: stat,
+		abbr: AUXILIARY_STATS_ABBR_MAP[stat as AuxiliaryStat],
+		name: AUXILIARY_STATS_NAME_MAP[stat as AuxiliaryStat],
+		value: stats[stat as AuxiliaryStat] as number,
 	}));
 
 export const getResistancesArray = (stats: TDamageTypes) =>

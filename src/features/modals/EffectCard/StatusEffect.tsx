@@ -1,6 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import { IStatusEffect } from "common/types";
 import {
+	AUXILIARY_STATS_NAME_MAP,
+	AuxiliaryStat,
 	DamageType,
 	RESISTANCES_NAME_MAP,
 	Stat,
@@ -12,7 +14,7 @@ export const StatusEffect: React.FC<IStatusEffect> = ({
 	accuracy,
 	duration,
 }) => {
-	const { stats, resistances } = modifiers;
+	const { stats, auxiliaryStats, resistances } = modifiers;
 
 	return (
 		<Box component="ul" sx={{ margin: 0 }}>
@@ -47,6 +49,35 @@ export const StatusEffect: React.FC<IStatusEffect> = ({
 									{STATS_NAME_MAP[stat as Stat]}:{" "}
 								</Box>
 								{stats[stat as Stat]}
+							</Typography>
+						))}
+					</Box>
+				</Typography>
+			)}
+			{auxiliaryStats && (
+				<Typography component="li" variant="body2">
+					<Box component="span" sx={{ fontWeight: "medium" }}>
+						Auxiliary Stat Modifiers
+					</Box>
+					<Box component="ul">
+						{Object.keys(auxiliaryStats).map((stat) => (
+							<Typography
+								key={stat}
+								component="li"
+								variant="body2"
+							>
+								<Box
+									component="span"
+									sx={{ fontWeight: "medium" }}
+								>
+									{
+										AUXILIARY_STATS_NAME_MAP[
+											stat as AuxiliaryStat
+										]
+									}
+									:{" "}
+								</Box>
+								{auxiliaryStats[stat as AuxiliaryStat]}
 							</Typography>
 						))}
 					</Box>

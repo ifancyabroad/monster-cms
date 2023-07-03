@@ -1,5 +1,6 @@
 import {
 	AuxiliaryEffect,
+	AuxiliaryStat,
 	CharacterClass,
 	DamageType,
 	EffectType,
@@ -14,8 +15,8 @@ import {
 export const DRAWER_TOP = 64;
 export const DRAWER_WIDTH = 240;
 
-export const MAX_SKILL_LEVEL = 9;
-export const MAX_ITEM_LEVEL = 9;
+export const MAX_SKILL_LEVEL = 5;
+export const MAX_ITEM_LEVEL = 5;
 export const MAX_GOLD_VALUE = 10000;
 export const MAX_SKILL_USES = 20;
 export const MAX_DURATION = 20;
@@ -30,6 +31,12 @@ export const STATS = [
 	Stat.Intelligence,
 	Stat.Wisdom,
 	Stat.Charisma,
+] as const;
+
+export const AUXILIARY_STATS = [
+	AuxiliaryStat.Defence,
+	AuxiliaryStat.HitChance,
+	AuxiliaryStat.CritChance,
 ] as const;
 
 export const RESISTANCES = [
@@ -80,6 +87,18 @@ export const STATS_NAME_MAP: Record<Stat, string> = {
 	[Stat.Intelligence]: "Intelligence",
 	[Stat.Strength]: "Strength",
 	[Stat.Wisdom]: "Wisdom",
+};
+
+export const AUXILIARY_STATS_ABBR_MAP: Record<AuxiliaryStat, string> = {
+	[AuxiliaryStat.Defence]: "DEF",
+	[AuxiliaryStat.HitChance]: "HIT",
+	[AuxiliaryStat.CritChance]: "CRT",
+};
+
+export const AUXILIARY_STATS_NAME_MAP: Record<AuxiliaryStat, string> = {
+	[AuxiliaryStat.Defence]: "Defence",
+	[AuxiliaryStat.HitChance]: "Hit Chance",
+	[AuxiliaryStat.CritChance]: "Crit Chance",
 };
 
 export const RESISTANCES_ABBR_MAP: Record<DamageType, string> = {

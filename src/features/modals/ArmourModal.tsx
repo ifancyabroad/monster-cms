@@ -19,6 +19,7 @@ import {
 	IArmour,
 	IBaseArmour,
 	ISaveArmour,
+	TAuxiliaryStats,
 	TDamageTypes,
 	TStats,
 } from "common/types";
@@ -34,6 +35,8 @@ import {
 	MAX_GOLD_VALUE,
 	MAX_ITEM_LEVEL,
 	Stat,
+	AuxiliaryStat,
+	getAuxiliaryStatsArray,
 } from "common/utils";
 import { saveArmour, updateArmour } from "features/armours";
 
@@ -44,6 +47,12 @@ const DEFAULT_STAT_VALUES = {
 	[Stat.Intelligence]: 0,
 	[Stat.Wisdom]: 0,
 	[Stat.Charisma]: 0,
+};
+
+const DEFAULT_AUXILIARY_STAT_VALUES = {
+	[AuxiliaryStat.Defence]: 0,
+	[AuxiliaryStat.HitChance]: 0,
+	[AuxiliaryStat.CritChance]: 0,
 };
 
 const DEFAULT_RESISTANCE_VALUES = {
@@ -69,6 +78,7 @@ const defaultValues: IBaseArmour = {
 	defense: 0,
 	modifiers: {
 		stats: {},
+		auxiliaryStats: {},
 		resistances: {},
 	},
 };
@@ -98,6 +108,10 @@ export const ArmourModal: React.FC = () => {
 	const [stats, setStats] = useState<TStats>({
 		...DEFAULT_STAT_VALUES,
 		...formValues.armour.modifiers?.stats,
+	});
+	const [auxiliaryStats, setAuxiliaryStats] = useState<TAuxiliaryStats>({
+		...DEFAULT_AUXILIARY_STAT_VALUES,
+		...formValues.armour.modifiers?.auxiliaryStats,
 	});
 	const [resistances, setResistances] = useState<TDamageTypes>({
 		...DEFAULT_RESISTANCE_VALUES,
@@ -171,6 +185,39 @@ export const ArmourModal: React.FC = () => {
 				modifiers: {
 					...formValues.armour.modifiers,
 					stats: newStats,
+				},
+			},
+		});
+	};
+
+	const handleChangeAuxiliaryStats = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { name, valueAsNumber } = e.currentTarget;
+
+		setAuxiliaryStats({
+			...auxiliaryStats,
+			[name as string]: valueAsNumber,
+		});
+
+		const newStats = {
+			...formValues.armour.modifiers?.auxiliaryStats,
+			[name as string]: valueAsNumber,
+		};
+
+		Object.keys(newStats).forEach((key) => {
+			if (!newStats[key as AuxiliaryStat]) {
+				delete newStats[key as AuxiliaryStat];
+			}
+		});
+
+		setFormValues({
+			...formValues,
+			armour: {
+				...formValues.armour,
+				modifiers: {
+					...formValues.armour.modifiers,
+					auxiliaryStats: newStats,
 				},
 			},
 		});
@@ -349,6 +396,7 @@ export const ArmourModal: React.FC = () => {
 									inputProps={{
 										min: 0,
 										max: MAX_DEFENSE,
+										step: 5,
 									}}
 								/>
 							</Grid>
@@ -379,25 +427,35 @@ export const ArmourModal: React.FC = () => {
 									onChange={handleChange}
 									required
 									inputProps={{
-										min: 1,
+										min: 0,
 										max: MAX_GOLD_VALUE,
+										step: 10,
 									}}
 								/>
 							</Grid>
 						</Grid>
 					</Box>
 					<StatGroup
-						title="Stats (0-30)"
+						title="Stats (-10-10)"
 						stats={getStatsArray(stats)}
-						min={0}
-						max={30}
+						min={-10}
+						max={10}
 						handleChange={handleChangeStats}
+					/>
+					<StatGroup
+						title="Auxiliary Stats (%)"
+						stats={getAuxiliaryStatsArray(auxiliaryStats)}
+						min={-100}
+						max={100}
+						step={5}
+						handleChange={handleChangeAuxiliaryStats}
 					/>
 					<StatGroup
 						title="Resistances (%)"
 						stats={getResistancesArray(resistances)}
-						min={0}
+						min={-100}
 						max={100}
+						step={5}
 						handleChange={handleChangeResistances}
 					/>
 				</DialogContent>
