@@ -1,9 +1,9 @@
 import {
 	Box,
+	CircularProgress,
 	Divider,
 	Grid,
 	IconButton,
-	styled,
 	Typography,
 } from "@mui/material";
 import { useContext, useEffect } from "react";
@@ -31,10 +31,6 @@ import {
 	selectArmourById,
 	selectArmourImagePathById,
 } from "./armoursSlice";
-
-const Icon = styled("img")({
-	width: "64px",
-});
 
 interface IRouteParams {
 	id: string;
@@ -118,34 +114,62 @@ export const Armour: React.FC = () => {
 
 			<Box
 				sx={{
+					marginBottom: 3,
+					width: "100%",
+					maxWidth: 600,
+					aspectRatio: "1/1",
+				}}
+			>
+				{isLoading ? (
+					<Box
+						sx={{
+							height: "100%",
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					>
+						<CircularProgress />
+					</Box>
+				) : armourImagePath ? (
+					<Box
+						component="img"
+						sx={{
+							maxWidth: "100%",
+							verticalAlign: "middle",
+						}}
+						src={armourImagePath}
+						alt={armour.name}
+					/>
+				) : (
+					<Box
+						component="img"
+						sx={{
+							maxWidth: "100%",
+							verticalAlign: "middle",
+						}}
+						src="https://via.placeholder.com/600"
+						alt={armour.name}
+					/>
+				)}
+			</Box>
+
+			<Box
+				sx={{
 					marginBottom: 4,
 				}}
 			>
-				<Box
-					sx={{
-						display: "flex",
-						alignItems: "flex-start",
-						gap: 2,
-						marginBottom: 3,
-					}}
+				<Typography
+					variant="body2"
+					color="textSecondary"
+					component="h5"
+					gutterBottom
 				>
-					{armourImagePath && (
-						<Icon src={armourImagePath} alt={armour.name} />
-					)}
-					<Box>
-						<Typography
-							variant="body2"
-							color="textSecondary"
-							component="h5"
-							gutterBottom
-						>
-							Description
-						</Typography>
-						<Typography variant="h5" paragraph>
-							{armour.description || "No description available."}
-						</Typography>
-					</Box>
-				</Box>
+					Description
+				</Typography>
+				<Typography variant="h5" paragraph>
+					{armour.description || "No description available."}
+				</Typography>
 				<Divider />
 			</Box>
 
