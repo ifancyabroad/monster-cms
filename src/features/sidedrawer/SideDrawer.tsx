@@ -15,7 +15,6 @@ export const SideDrawer: React.FC = () => {
 	return (
 		<Box
 			sx={{
-				top: DRAWER_TOP,
 				width: {
 					sm: DRAWER_WIDTH,
 				},
@@ -46,6 +45,7 @@ export const SideDrawer: React.FC = () => {
 				variant="permanent"
 				PaperProps={{
 					sx: {
+						height: `calc(100vh - ${DRAWER_TOP}px)`,
 						width: DRAWER_WIDTH,
 						top: DRAWER_TOP,
 					},
