@@ -24,7 +24,7 @@ import { IBaseSkill, ISaveSkill, ISkill, ISkillEffect } from "common/types";
 import { EffectModal } from "./EffectModal";
 import { EffectCard } from "./EffectCard";
 import {
-	CharacterClass,
+	SkillClass,
 	CLASSES,
 	CLASS_NAME_MAP,
 	MAX_GOLD_VALUE,
@@ -38,7 +38,7 @@ const defaultSkillValues: IBaseSkill = {
 	name: "",
 	description: "",
 	icon: "",
-	class: CharacterClass.Common,
+	class: SkillClass.Common,
 	effects: [],
 	price: 0,
 	maxUses: 0,

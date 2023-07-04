@@ -1,8 +1,8 @@
-import { CharacterClass, Target } from "common/utils";
+import { SkillClass, Target } from "common/utils";
 import { ISkillEffect } from "./effect";
 
 export interface IBaseSkill {
-	class: CharacterClass;
+	class: SkillClass;
 	name: string;
 	description: string;
 	icon: string;
@@ -29,7 +29,7 @@ export interface IUpdateSkill extends ISaveSkill {
 
 export interface ISkillFilters {
 	name: "";
-	class: CharacterClass | "all";
+	class: SkillClass | "all";
 	type: SkillType | "all";
 	price: number;
 	level: number;
