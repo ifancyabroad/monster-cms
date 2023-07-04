@@ -16,10 +16,12 @@ export enum AuxiliaryEffect {
 	Poison = "poison",
 	Stun = "stun",
 	Bleed = "bleed",
+	Disarm = "disarm",
 }
 
-export enum CharacterClass {
+export enum SkillClass {
 	Common = "common",
+	Unique = "unique",
 	Warrior = "warrior",
 	Rogue = "rogue",
 	Mage = "mage",

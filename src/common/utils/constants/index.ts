@@ -1,7 +1,7 @@
 import {
 	AuxiliaryEffect,
 	AuxiliaryStat,
-	CharacterClass,
+	SkillClass,
 	DamageType,
 	EffectType,
 	EquipmentSlot,
@@ -166,28 +166,32 @@ export const AUXILIARY_EFFECTS = [
 	AuxiliaryEffect.Poison,
 	AuxiliaryEffect.Stun,
 	AuxiliaryEffect.Bleed,
+	AuxiliaryEffect.Disarm,
 ] as const;
 
 export const AUXILIARY_EFFECTS_NAME_MAP: Record<AuxiliaryEffect, string> = {
 	[AuxiliaryEffect.Poison]: "Poison",
 	[AuxiliaryEffect.Stun]: "Stun",
 	[AuxiliaryEffect.Bleed]: "Bleed",
+	[AuxiliaryEffect.Disarm]: "Disarm",
 };
 
 export const CLASSES = [
-	CharacterClass.Common,
-	CharacterClass.Warrior,
-	CharacterClass.Mage,
-	CharacterClass.Rogue,
-	CharacterClass.Cleric,
+	SkillClass.Common,
+	SkillClass.Unique,
+	SkillClass.Warrior,
+	SkillClass.Mage,
+	SkillClass.Rogue,
+	SkillClass.Cleric,
 ] as const;
 
-export const CLASS_NAME_MAP: Record<CharacterClass, string> = {
-	[CharacterClass.Common]: "Common",
-	[CharacterClass.Warrior]: "Warrior",
-	[CharacterClass.Mage]: "Mage",
-	[CharacterClass.Rogue]: "Rogue",
-	[CharacterClass.Cleric]: "Cleric",
+export const CLASS_NAME_MAP: Record<SkillClass, string> = {
+	[SkillClass.Common]: "Common",
+	[SkillClass.Unique]: "Unique",
+	[SkillClass.Warrior]: "Warrior",
+	[SkillClass.Mage]: "Mage",
+	[SkillClass.Rogue]: "Rogue",
+	[SkillClass.Cleric]: "Cleric",
 };
 
 export const SKILL_TYPES = [
