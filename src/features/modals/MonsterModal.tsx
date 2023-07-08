@@ -340,8 +340,10 @@ export const MonsterModal: React.FC = () => {
 								Difficulty Rating (1-30)
 							</DialogContentText>
 							<Grid container spacing={2}>
-								<Grid item xs={6} md={4}>
+								<Grid item xs={4} md={2}>
 									<TextField
+										variant="filled"
+										size="small"
 										fullWidth
 										margin="dense"
 										name="challenge"
