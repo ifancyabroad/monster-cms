@@ -10,6 +10,7 @@ import {
 } from "common/utils";
 
 export const StatusEffect: React.FC<IStatusEffect> = ({
+	target,
 	modifiers,
 	accuracy,
 	duration,
@@ -18,6 +19,12 @@ export const StatusEffect: React.FC<IStatusEffect> = ({
 
 	return (
 		<Box component="ul" sx={{ margin: 0 }}>
+			<Typography component="li" variant="body2">
+				<Box component="span" sx={{ fontWeight: "medium" }}>
+					Target:{" "}
+				</Box>
+				{target}
+			</Typography>
 			<Typography component="li" variant="body2">
 				<Box component="span" sx={{ fontWeight: "medium" }}>
 					Accuracy:{" "}

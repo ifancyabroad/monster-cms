@@ -1,5 +1,5 @@
 import { createContext, Dispatch, useContext } from "react";
-import { AuxiliaryEffect, DamageType, EffectType } from "common/utils";
+import { AuxiliaryEffect, DamageType, EffectType, Target } from "common/utils";
 import {
 	IAuxiliaryEffect,
 	IDamageEffect,
@@ -28,11 +28,13 @@ export interface IEffectState {
 
 const defaultWeaponDamageEffectValues: IWeaponDamageEffect = {
 	type: EffectType.WeaponDamage,
+	target: Target.Enemy,
 	multiplier: 1,
 };
 
 const defaultDamageEffectValues: IDamageEffect = {
 	type: EffectType.Damage,
+	target: Target.Enemy,
 	damageType: DamageType.Slashing,
 	min: 1,
 	max: 6,
@@ -40,12 +42,14 @@ const defaultDamageEffectValues: IDamageEffect = {
 
 const defaultHealEffectValues: IHealEffect = {
 	type: EffectType.Heal,
+	target: Target.Self,
 	min: 1,
 	max: 6,
 };
 
 const defaultStatusEffectValues: IStatusEffect = {
 	type: EffectType.Status,
+	target: Target.Enemy,
 	modifiers: {
 		stats: {},
 		auxiliaryStats: {},
@@ -57,6 +61,7 @@ const defaultStatusEffectValues: IStatusEffect = {
 
 const defaultAuxiliaryEffectValues: IAuxiliaryEffect = {
 	type: EffectType.Auxiliary,
+	target: Target.Enemy,
 	effect: AuxiliaryEffect.Stun,
 	accuracy: 50,
 	duration: 3,

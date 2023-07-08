@@ -31,7 +31,6 @@ import {
 	MAX_SKILL_LEVEL,
 	MAX_SKILL_USES,
 	SKILL_EFFECTS,
-	Target,
 } from "common/utils";
 
 const defaultSkillValues: IBaseSkill = {
@@ -43,7 +42,6 @@ const defaultSkillValues: IBaseSkill = {
 	price: 0,
 	maxUses: 0,
 	level: 0,
-	target: Target.Enemy,
 };
 
 const defaultFormValues: ISaveSkill = {
@@ -284,21 +282,6 @@ export const SkillModal: React.FC = () => {
 							Skill Properties
 						</DialogContentText>
 						<Grid container spacing={2}>
-							<Grid item xs={6}>
-								<TextField
-									fullWidth
-									select
-									margin="dense"
-									name="target"
-									label="Target"
-									value={formValues.skill.target}
-									onChange={handleChange}
-									required
-								>
-									<MenuItem value="self">Self</MenuItem>
-									<MenuItem value="enemy">Enemy</MenuItem>
-								</TextField>
-							</Grid>
 							<Grid item xs={6}>
 								<TextField
 									fullWidth

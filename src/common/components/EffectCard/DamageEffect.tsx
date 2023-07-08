@@ -3,12 +3,19 @@ import { IDamageEffect } from "common/types";
 import { RESISTANCES_NAME_MAP } from "common/utils";
 
 export const DamageEffect: React.FC<IDamageEffect> = ({
+	target,
 	damageType,
 	min,
 	max,
 }) => {
 	return (
 		<Box component="ul" sx={{ margin: 0 }}>
+			<Typography component="li">
+				<Box component="span" sx={{ fontWeight: "medium" }}>
+					Target:{" "}
+				</Box>
+				{target}
+			</Typography>
 			<Typography component="li">
 				<Box component="span" sx={{ fontWeight: "medium" }}>
 					Damage Type:{" "}

@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "common/hooks";
 import { closeEffectModal } from "./modalsSlice";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import {
 	Box,
 	Button,
@@ -48,6 +48,17 @@ export const EffectModal: React.FC<IProps> = ({
 		effectReducer,
 		initialEffectState
 	);
+	const formValues = useMemo(
+		() =>
+			({
+				[EffectType.WeaponDamage]: state.weaponDamageEffectForm,
+				[EffectType.Damage]: state.damageEffectForm,
+				[EffectType.Heal]: state.healEffectForm,
+				[EffectType.Status]: state.statusEffectForm,
+				[EffectType.Auxiliary]: state.auxiliaryEffectForm,
+			}[effectType]),
+		[state, effectType]
+	);
 	const title = effect ? "Update Effect" : "Add Effect";
 	const confirm = effect ? "Update" : "Add";
 
@@ -78,16 +89,17 @@ export const EffectModal: React.FC<IProps> = ({
 		setEffectType(value as EffectType);
 	};
 
+	const handleChangeTarget = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		const payload = {
+			...formValues,
+			target: value,
+		};
+		localDispatch({ type: "UPDATE", payload });
+	};
+
 	const handleAddEffect = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
-		const formValues = {
-			[EffectType.WeaponDamage]: state.weaponDamageEffectForm,
-			[EffectType.Damage]: state.damageEffectForm,
-			[EffectType.Heal]: state.healEffectForm,
-			[EffectType.Status]: state.statusEffectForm,
-			[EffectType.Auxiliary]: state.auxiliaryEffectForm,
-		}[effectType];
 
 		if (effect && typeof index === "number") {
 			onUpdateEffect(formValues, index);
@@ -133,6 +145,21 @@ export const EffectModal: React.FC<IProps> = ({
 											{EFFECTS_NAME_MAP[effect]}
 										</MenuItem>
 									))}
+								</TextField>
+							</Grid>
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									name="target"
+									label="Target"
+									value={formValues.target}
+									onChange={handleChangeTarget}
+									required
+								>
+									<MenuItem value="self">Self</MenuItem>
+									<MenuItem value="enemy">Enemy</MenuItem>
 								</TextField>
 							</Grid>
 						</Grid>
