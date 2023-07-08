@@ -6,7 +6,7 @@ import {
 	IconButton,
 	Typography,
 } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "common/hooks";
@@ -25,12 +25,7 @@ import {
 	getPartialResistancesArray,
 	getPartialStatsArray,
 } from "common/utils";
-import {
-	deleteArmour,
-	fetchArmourImagePath,
-	selectArmourById,
-	selectArmourImagePathById,
-} from "./armoursSlice";
+import { deleteArmour, selectArmourById } from "./armoursSlice";
 
 interface IRouteParams {
 	id: string;
@@ -41,19 +36,12 @@ export const Armour: React.FC = () => {
 	let { id } = useParams<IRouteParams>();
 	const user = useContext(AuthContext);
 	const armour = useSelector(selectArmourById)(id);
-	const armourImagePath = useSelector(selectArmourImagePathById)(id);
 	const confirmationModalOpen = useAppSelector(
 		(state) => state.modals.confirmationModalOpen
 	);
 	const isLoading = useAppSelector(
 		(state) => state.skills.status === "loading"
 	);
-
-	useEffect(() => {
-		if (armour?.icon) {
-			dispatch(fetchArmourImagePath(armour));
-		}
-	}, [dispatch, armour]);
 
 	if (!armour) {
 		return null;
@@ -131,14 +119,14 @@ export const Armour: React.FC = () => {
 					>
 						<CircularProgress />
 					</Box>
-				) : armourImagePath ? (
+				) : armour.icon ? (
 					<Box
 						component="img"
 						sx={{
 							maxWidth: "100%",
 							verticalAlign: "middle",
 						}}
-						src={armourImagePath}
+						src={armour.icon}
 						alt={armour.name}
 					/>
 				) : (

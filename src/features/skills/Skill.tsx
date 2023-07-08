@@ -1,13 +1,9 @@
 import { Box, Divider, Grid, IconButton, Typography } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "common/hooks";
-import {
-	deleteSkill,
-	fetchSkillImagePath,
-	selectSkillById,
-} from "./skillsSlice";
+import { deleteSkill, selectSkillById } from "./skillsSlice";
 import { Delete, Edit } from "@mui/icons-material";
 import {
 	closeConfirmationModal,
@@ -35,12 +31,6 @@ export const Skill: React.FC = () => {
 	const isLoading = useAppSelector(
 		(state) => state.skills.status === "loading"
 	);
-
-	useEffect(() => {
-		if (skill?.icon) {
-			dispatch(fetchSkillImagePath(skill));
-		}
-	}, [dispatch, skill]);
 
 	if (!skill) {
 		return null;

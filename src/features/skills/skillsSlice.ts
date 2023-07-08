@@ -25,33 +25,28 @@ export const fetchSkills = createAsyncThunk(
 	async (payload: ISkill[]) => payload
 );
 
-export const fetchSkillImagePath = createAsyncThunk(
-	"skills/fetchSkillImagePath",
-	async (payload: ISkill) => {
-		try {
-			return await stImages
-				.child(payload.id)
-				.child(payload.icon)
-				.getDownloadURL();
-		} catch (error) {
-			console.error(error);
-			throw error;
-		}
+const deleteImage = async (key: string) => {
+	try {
+		await stImages.child("skills").child(key).delete();
+	} catch (error) {
+		console.error(error);
 	}
-);
+};
 
 export const saveSkill = createAsyncThunk(
 	"skills/saveSkill",
 	async (payload: ISaveSkill) => {
 		try {
 			const newSkillRef = dbSkills.push();
+			const newSkill = { ...payload.skill };
 			if (payload.image) {
-				await stImages
-					.child(newSkillRef.key!)
-					.child(payload.image.name)
-					.put(payload.image);
+				const imageRef = stImages
+					.child("skills")
+					.child(newSkillRef.key!);
+				await imageRef.put(payload.image);
+				newSkill.icon = await imageRef.getDownloadURL();
 			}
-			return await newSkillRef.set(payload.skill);
+			return await newSkillRef.set(newSkill);
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -63,19 +58,16 @@ export const updateSkill = createAsyncThunk(
 	"skills/updateSkill",
 	async (payload: IUpdateSkill) => {
 		try {
+			const newSkill = { ...payload.skill };
 			if (payload.image && payload.oldImage) {
-				await stImages
-					.child(payload.id)
-					.child(payload.oldImage)
-					.delete();
+				await deleteImage(payload.id);
 			}
 			if (payload.image) {
-				await stImages
-					.child(payload.id)
-					.child(payload.image.name)
-					.put(payload.image);
+				const imageRef = stImages.child("skills").child(payload.id);
+				await imageRef.put(payload.image);
+				newSkill.icon = await imageRef.getDownloadURL();
 			}
-			return await dbSkills.child(payload.id).update(payload.skill);
+			return await dbSkills.child(payload.id).update(newSkill);
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -88,7 +80,7 @@ export const deleteSkill = createAsyncThunk(
 	async (payload: ISkill) => {
 		try {
 			if (payload.icon) {
-				await stImages.child(payload.id).child(payload.icon).delete();
+				await deleteImage(payload.id);
 			}
 			return await dbSkills.child(payload.id).remove();
 		} catch (error) {
@@ -107,14 +99,6 @@ export const selectSkillById = createSelector(
 			skills.find((skill) => skill.id === id)
 );
 
-export const selectSkillImagePathById = createSelector(
-	skillsSelector,
-	({ skillImagePaths }) =>
-		(id: string) =>
-			skillImagePaths.find((skillImage) => skillImage.id === id)
-				?.imagePath
-);
-
 export const skillsSlice = createSlice({
 	name: "skills",
 	initialState,
@@ -128,24 +112,6 @@ export const skillsSlice = createSlice({
 			state.skills = action.payload;
 		});
 		builder.addCase(fetchSkills.rejected, (state, action) => {
-			state.status = "failed";
-			state.error = action.error.message;
-		});
-		builder.addCase(fetchSkillImagePath.pending, (state) => {
-			state.status = "loading";
-		});
-		builder.addCase(fetchSkillImagePath.fulfilled, (state, action) => {
-			const newSkillImage = {
-				id: action.meta.arg.id,
-				imagePath: action.payload,
-			};
-
-			state.status = "succeeded";
-			state.skillImagePaths = state.skillImagePaths
-				.filter((skillImage) => skillImage.id !== newSkillImage.id)
-				.concat(newSkillImage);
-		});
-		builder.addCase(fetchSkillImagePath.rejected, (state, action) => {
 			state.status = "failed";
 			state.error = action.error.message;
 		});
