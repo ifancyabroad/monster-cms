@@ -96,6 +96,7 @@ const defaultWeaponValues: IBaseWeapon = {
 		stats: {},
 		auxiliaryStats: {},
 		resistances: {},
+		damage: {},
 	},
 };
 
@@ -128,6 +129,9 @@ export const WeaponModal: React.FC = () => {
 	const [resistances, setResistances] = useState<TDamageTypes>(
 		DEFAULT_RESISTANCE_VALUES
 	);
+	const [damageBonuses, setDamageBonuses] = useState<TDamageTypes>(
+		DEFAULT_RESISTANCE_VALUES
+	);
 
 	const title = weapon ? "Update Weapon" : "Add Weapon";
 	const subtitle = weapon
@@ -152,6 +156,10 @@ export const WeaponModal: React.FC = () => {
 		setResistances({
 			...DEFAULT_RESISTANCE_VALUES,
 			...weaponValues?.modifiers?.resistances,
+		});
+		setDamageBonuses({
+			...DEFAULT_RESISTANCE_VALUES,
+			...weaponValues?.modifiers?.damage,
 		});
 	}, [weaponValues]);
 
@@ -276,6 +284,39 @@ export const WeaponModal: React.FC = () => {
 				modifiers: {
 					...formValues.weapon.modifiers,
 					resistances: newResistances,
+				},
+			},
+		});
+	};
+
+	const handleChangeDamageBonuses = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { name, valueAsNumber } = e.currentTarget;
+
+		setDamageBonuses({
+			...damageBonuses,
+			[name as string]: valueAsNumber,
+		});
+
+		const newDamageBonuses = {
+			...formValues.weapon.modifiers?.damage,
+			[name as string]: valueAsNumber,
+		};
+
+		Object.keys(newDamageBonuses).forEach((key) => {
+			if (!newDamageBonuses[key as DamageType]) {
+				delete newDamageBonuses[key as DamageType];
+			}
+		});
+
+		setFormValues({
+			...formValues,
+			weapon: {
+				...formValues.weapon,
+				modifiers: {
+					...formValues.weapon.modifiers,
+					damage: newDamageBonuses,
 				},
 			},
 		});
@@ -573,6 +614,14 @@ export const WeaponModal: React.FC = () => {
 						max={100}
 						step={5}
 						handleChange={handleChangeResistances}
+					/>
+					<StatGroup
+						title="Damage Bonuses (%)"
+						stats={getResistancesArray(damageBonuses)}
+						min={-100}
+						max={100}
+						step={5}
+						handleChange={handleChangeDamageBonuses}
 					/>
 					<Box my={3}>
 						<DialogContentText

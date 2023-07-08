@@ -13,6 +13,7 @@ export interface IBaseArmour {
 		stats?: Partial<TStats>;
 		auxiliaryStats?: Partial<TAuxiliaryStats>;
 		resistances?: Partial<TDamageTypes>;
+		damage?: Partial<TDamageTypes>;
 	};
 }
 

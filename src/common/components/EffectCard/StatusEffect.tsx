@@ -1,6 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import { IStatusEffect } from "common/types";
 import {
+	AUXILIARY_STATS_NAME_MAP,
+	AuxiliaryStat,
 	DamageType,
 	RESISTANCES_NAME_MAP,
 	Stat,
@@ -13,7 +15,7 @@ export const StatusEffect: React.FC<IStatusEffect> = ({
 	accuracy,
 	duration,
 }) => {
-	const { stats, resistances } = modifiers;
+	const { stats, auxiliaryStats, resistances, damage } = modifiers;
 
 	return (
 		<Box component="ul" sx={{ margin: 0 }}>
@@ -55,6 +57,31 @@ export const StatusEffect: React.FC<IStatusEffect> = ({
 					</Box>
 				</Typography>
 			)}
+			{auxiliaryStats && (
+				<Typography component="li">
+					<Box component="span" sx={{ fontWeight: "medium" }}>
+						Stat Modifiers
+					</Box>
+					<Box component="ul">
+						{Object.keys(auxiliaryStats).map((stat) => (
+							<Typography key={stat} component="li">
+								<Box
+									component="span"
+									sx={{ fontWeight: "medium" }}
+								>
+									{
+										AUXILIARY_STATS_NAME_MAP[
+											stat as AuxiliaryStat
+										]
+									}
+									:{" "}
+								</Box>
+								{auxiliaryStats[stat as AuxiliaryStat]}%
+							</Typography>
+						))}
+					</Box>
+				</Typography>
+			)}
 			{resistances && (
 				<Typography component="li">
 					<Box component="span" sx={{ fontWeight: "medium" }}>
@@ -75,6 +102,31 @@ export const StatusEffect: React.FC<IStatusEffect> = ({
 									:{" "}
 								</Box>
 								{resistances[resistance as DamageType]}%
+							</Typography>
+						))}
+					</Box>
+				</Typography>
+			)}
+			{damage && (
+				<Typography component="li">
+					<Box component="span" sx={{ fontWeight: "medium" }}>
+						Damage Modifiers
+					</Box>
+					<Box component="ul">
+						{Object.keys(damage).map((damageType) => (
+							<Typography key={damageType} component="li">
+								<Box
+									component="span"
+									sx={{ fontWeight: "medium" }}
+								>
+									{
+										RESISTANCES_NAME_MAP[
+											damageType as DamageType
+										]
+									}
+									:{" "}
+								</Box>
+								{damage[damageType as DamageType]}%
 							</Typography>
 						))}
 					</Box>

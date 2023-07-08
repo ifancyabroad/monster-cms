@@ -54,6 +54,7 @@ const defaultStatusEffectValues: IStatusEffect = {
 		stats: {},
 		auxiliaryStats: {},
 		resistances: {},
+		damage: {},
 	},
 	accuracy: 100,
 	duration: 5,

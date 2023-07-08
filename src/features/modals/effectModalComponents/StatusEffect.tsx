@@ -58,6 +58,9 @@ export const StatusEffect: React.FC = () => {
 		...DEFAULT_RESISTANCE_VALUES,
 		...statusEffectForm.modifiers.resistances,
 	});
+	const [damageBonuses, setDamageBonuses] = useState<TDamageTypes>(
+		DEFAULT_RESISTANCE_VALUES
+	);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, type, value, valueAsNumber } = e.target;
@@ -169,6 +172,39 @@ export const StatusEffect: React.FC = () => {
 		});
 	};
 
+	const handleChangeDamageBonuses = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { name, valueAsNumber } = e.currentTarget;
+
+		setDamageBonuses({
+			...damageBonuses,
+			[name as string]: valueAsNumber,
+		});
+
+		const newDamageBonuses = {
+			...statusEffectForm.modifiers.damage,
+			[name as string]: valueAsNumber,
+		};
+
+		Object.keys(newDamageBonuses).forEach((key) => {
+			if (!newDamageBonuses[key as DamageType]) {
+				delete newDamageBonuses[key as DamageType];
+			}
+		});
+
+		dispatch({
+			type: "UPDATE",
+			payload: {
+				...statusEffectForm,
+				modifiers: {
+					...statusEffectForm.modifiers,
+					damage: newDamageBonuses,
+				},
+			},
+		});
+	};
+
 	return (
 		<Fragment>
 			<Box my={3}>
@@ -194,6 +230,14 @@ export const StatusEffect: React.FC = () => {
 					max={100}
 					step={5}
 					handleChange={handleChangeResistances}
+				/>
+				<StatGroup
+					title="Damage Bonuses (%)"
+					stats={getResistancesArray(damageBonuses)}
+					min={-100}
+					max={100}
+					step={5}
+					handleChange={handleChangeDamageBonuses}
 				/>
 			</Box>
 			<Box my={3}>
