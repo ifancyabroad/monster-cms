@@ -7,7 +7,11 @@ import {
 	TableRow,
 } from "@mui/material";
 import { ISkill } from "common/types";
-import { CLASS_NAME_MAP } from "common/utils";
+import {
+	CLASS_NAME_MAP,
+	SKILL_TYPE_NAME_MAP,
+	getSkillType,
+} from "common/utils";
 
 export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
 	return (
@@ -32,9 +36,11 @@ export const SkillPropertiesTable: React.FC<ISkill> = (skill) => {
 							scope="row"
 							sx={{ fontWeight: "medium" }}
 						>
-							Target
+							Type
 						</TableCell>
-						<TableCell align="right">{skill.target}</TableCell>
+						<TableCell align="right">
+							{SKILL_TYPE_NAME_MAP[getSkillType(skill)]}
+						</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableCell

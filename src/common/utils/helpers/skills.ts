@@ -2,37 +2,38 @@ import { EffectType, SkillType, Target } from "common/utils";
 import { ISkill, ISkillFilters, TOrder, TSkillsOrderBy } from "common/types";
 
 export const getSkillType = (skill: ISkill) => {
-	const { effects, target } = skill;
-	const effectTypes = effects.map((effect) => effect.type);
+	const { effects } = skill;
+	const offensiveEffectTypes = effects
+		.filter((effect) => effect.target === Target.Enemy)
+		.map((effect) => effect.type);
+	const defensiveEffectTypes = effects
+		.filter((effect) => effect.target === Target.Self)
+		.map((effect) => effect.type);
 
-	if (target === Target.Enemy) {
-		if (effectTypes.includes(EffectType.WeaponDamage)) {
-			return SkillType.WeaponAttack;
-		}
-
-		if (effectTypes.includes(EffectType.Damage)) {
-			return SkillType.Attack;
-		}
-
-		if (
-			effectTypes.includes(EffectType.Status) ||
-			effectTypes.includes(EffectType.Auxiliary)
-		) {
-			return SkillType.Debuff;
-		}
+	if (offensiveEffectTypes.includes(EffectType.WeaponDamage)) {
+		return SkillType.WeaponAttack;
 	}
 
-	if (target === Target.Self) {
-		if (effectTypes.includes(EffectType.Heal)) {
-			return SkillType.Heal;
-		}
+	if (offensiveEffectTypes.includes(EffectType.Damage)) {
+		return SkillType.Attack;
+	}
 
-		if (
-			effectTypes.includes(EffectType.Status) ||
-			effectTypes.includes(EffectType.Auxiliary)
-		) {
-			return SkillType.Buff;
-		}
+	if (
+		offensiveEffectTypes.includes(EffectType.Status) ||
+		offensiveEffectTypes.includes(EffectType.Auxiliary)
+	) {
+		return SkillType.Debuff;
+	}
+
+	if (defensiveEffectTypes.includes(EffectType.Heal)) {
+		return SkillType.Heal;
+	}
+
+	if (
+		defensiveEffectTypes.includes(EffectType.Status) ||
+		defensiveEffectTypes.includes(EffectType.Auxiliary)
+	) {
+		return SkillType.Buff;
 	}
 
 	return SkillType.Other;

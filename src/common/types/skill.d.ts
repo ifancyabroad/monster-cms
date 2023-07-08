@@ -10,7 +10,6 @@ export interface IBaseSkill {
 	price: number;
 	maxUses: number;
 	level: number;
-	target: Target;
 }
 
 export interface ISkill extends IBaseSkill {
