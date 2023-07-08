@@ -6,7 +6,7 @@ import {
 	IconButton,
 	Typography,
 } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "common/hooks";
@@ -20,12 +20,7 @@ import {
 import { WeaponPropertiesTable } from "./WeaponPropertiesTable";
 import { EffectCard, StatsTable } from "common/components";
 import { AuthContext } from "common/context";
-import {
-	deleteWeapon,
-	fetchWeaponImagePath,
-	selectWeaponById,
-	selectWeaponImagePathById,
-} from "./weaponsSlice";
+import { deleteWeapon, selectWeaponById } from "./weaponsSlice";
 import {
 	getPartialAuxiliaryStatsArray,
 	getPartialResistancesArray,
@@ -41,19 +36,12 @@ export const Weapon: React.FC = () => {
 	let { id } = useParams<IRouteParams>();
 	const user = useContext(AuthContext);
 	const weapon = useSelector(selectWeaponById)(id);
-	const weaponImagePath = useSelector(selectWeaponImagePathById)(id);
 	const confirmationModalOpen = useAppSelector(
 		(state) => state.modals.confirmationModalOpen
 	);
 	const isLoading = useAppSelector(
 		(state) => state.skills.status === "loading"
 	);
-
-	useEffect(() => {
-		if (weapon?.icon) {
-			dispatch(fetchWeaponImagePath(weapon));
-		}
-	}, [dispatch, weapon]);
 
 	if (!weapon) {
 		return null;
@@ -131,14 +119,14 @@ export const Weapon: React.FC = () => {
 					>
 						<CircularProgress />
 					</Box>
-				) : weaponImagePath ? (
+				) : weapon.icon ? (
 					<Box
 						component="img"
 						sx={{
 							maxWidth: "100%",
 							verticalAlign: "middle",
 						}}
-						src={weaponImagePath}
+						src={weapon.icon}
 						alt={weapon.name}
 					/>
 				) : (

@@ -64,7 +64,7 @@ export const updateMonster = createAsyncThunk(
 	async (payload: IUpdateMonster) => {
 		try {
 			const newMonster = { ...payload.monster };
-			if (payload.oldImage) {
+			if (payload.image && payload.oldImage) {
 				await deleteImage(payload.id);
 			}
 			if (payload.image) {

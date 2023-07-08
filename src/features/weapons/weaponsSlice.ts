@@ -26,33 +26,28 @@ export const fetchWeapons = createAsyncThunk(
 	async (payload: IWeapon[]) => payload
 );
 
-export const fetchWeaponImagePath = createAsyncThunk(
-	"weapons/fetchWeaponImagePath",
-	async (payload: IWeapon) => {
-		try {
-			return await stImages
-				.child(payload.id)
-				.child(payload.icon)
-				.getDownloadURL();
-		} catch (error) {
-			console.error(error);
-			throw error;
-		}
+const deleteImage = async (key: string) => {
+	try {
+		await stImages.child("weapons").child(key).delete();
+	} catch (error) {
+		console.error(error);
 	}
-);
+};
 
 export const saveWeapon = createAsyncThunk(
 	"weapons/saveWeapon",
 	async (payload: ISaveWeapon) => {
 		try {
 			const newWeaponRef = dbWeapons.push();
+			const newWeapon = { ...payload.weapon };
 			if (payload.image) {
-				await stImages
-					.child(newWeaponRef.key!)
-					.child(payload.image.name)
-					.put(payload.image);
+				const imageRef = stImages
+					.child("weapons")
+					.child(newWeaponRef.key!);
+				await imageRef.put(payload.image);
+				newWeapon.icon = await imageRef.getDownloadURL();
 			}
-			return await newWeaponRef.set(payload.weapon);
+			return await newWeaponRef.set(newWeapon);
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -64,19 +59,16 @@ export const updateWeapon = createAsyncThunk(
 	"weapons/updateWeapon",
 	async (payload: IUpdateWeapon) => {
 		try {
+			const newWeapon = { ...payload.weapon };
 			if (payload.image && payload.oldImage) {
-				await stImages
-					.child(payload.id)
-					.child(payload.oldImage)
-					.delete();
+				await deleteImage(payload.id);
 			}
 			if (payload.image) {
-				await stImages
-					.child(payload.id)
-					.child(payload.image.name)
-					.put(payload.image);
+				const imageRef = stImages.child("weapons").child(payload.id);
+				await imageRef.put(payload.image);
+				newWeapon.icon = await imageRef.getDownloadURL();
 			}
-			return await dbWeapons.child(payload.id).update(payload.weapon);
+			return await dbWeapons.child(payload.id).update(newWeapon);
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -89,7 +81,7 @@ export const deleteWeapon = createAsyncThunk(
 	async (payload: IWeapon) => {
 		try {
 			if (payload.icon) {
-				await stImages.child(payload.id).child(payload.icon).delete();
+				await deleteImage(payload.id);
 			}
 			return await dbWeapons.child(payload.id).remove();
 		} catch (error) {
@@ -116,14 +108,6 @@ export const isTwoHandedWeapon = createSelector(
 			WeaponSize.TwoHanded
 );
 
-export const selectWeaponImagePathById = createSelector(
-	weaponsSelector,
-	({ weaponImagePaths }) =>
-		(id: string) =>
-			weaponImagePaths.find((weaponImage) => weaponImage.id === id)
-				?.imagePath
-);
-
 export const weaponsSlice = createSlice({
 	name: "weapons",
 	initialState,
@@ -137,24 +121,6 @@ export const weaponsSlice = createSlice({
 			state.weapons = action.payload;
 		});
 		builder.addCase(fetchWeapons.rejected, (state, action) => {
-			state.status = "failed";
-			state.error = action.error.message;
-		});
-		builder.addCase(fetchWeaponImagePath.pending, (state) => {
-			state.status = "loading";
-		});
-		builder.addCase(fetchWeaponImagePath.fulfilled, (state, action) => {
-			const newWeaponImage = {
-				id: action.meta.arg.id,
-				imagePath: action.payload,
-			};
-
-			state.status = "succeeded";
-			state.weaponImagePaths = state.weaponImagePaths
-				.filter((weaponImage) => weaponImage.id !== newWeaponImage.id)
-				.concat(newWeaponImage);
-		});
-		builder.addCase(fetchWeaponImagePath.rejected, (state, action) => {
 			state.status = "failed";
 			state.error = action.error.message;
 		});

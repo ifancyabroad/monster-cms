@@ -25,33 +25,28 @@ export const fetchArmours = createAsyncThunk(
 	async (payload: IArmour[]) => payload
 );
 
-export const fetchArmourImagePath = createAsyncThunk(
-	"armours/fetchArmourImagePath",
-	async (payload: IArmour) => {
-		try {
-			return await stImages
-				.child(payload.id)
-				.child(payload.icon)
-				.getDownloadURL();
-		} catch (error) {
-			console.error(error);
-			throw error;
-		}
+const deleteImage = async (key: string) => {
+	try {
+		await stImages.child("armours").child(key).delete();
+	} catch (error) {
+		console.error(error);
 	}
-);
+};
 
 export const saveArmour = createAsyncThunk(
 	"armours/saveArmour",
 	async (payload: ISaveArmour) => {
 		try {
 			const newArmourRef = dbArmours.push();
+			const newArmour = { ...payload.armour };
 			if (payload.image) {
-				await stImages
-					.child(newArmourRef.key!)
-					.child(payload.image.name)
-					.put(payload.image);
+				const imageRef = stImages
+					.child("armours")
+					.child(newArmourRef.key!);
+				await imageRef.put(payload.image);
+				newArmour.icon = await imageRef.getDownloadURL();
 			}
-			return await newArmourRef.set(payload.armour);
+			return await newArmourRef.set(newArmour);
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -63,19 +58,16 @@ export const updateArmour = createAsyncThunk(
 	"armours/updateArmour",
 	async (payload: IUpdateArmour) => {
 		try {
+			const newArmour = { ...payload.armour };
 			if (payload.image && payload.oldImage) {
-				await stImages
-					.child(payload.id)
-					.child(payload.oldImage)
-					.delete();
+				await deleteImage(payload.id);
 			}
 			if (payload.image) {
-				await stImages
-					.child(payload.id)
-					.child(payload.image.name)
-					.put(payload.image);
+				const imageRef = stImages.child("armours").child(payload.id);
+				await imageRef.put(payload.image);
+				newArmour.icon = await imageRef.getDownloadURL();
 			}
-			return await dbArmours.child(payload.id).update(payload.armour);
+			return await dbArmours.child(payload.id).update(newArmour);
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -88,7 +80,7 @@ export const deleteArmour = createAsyncThunk(
 	async (payload: IArmour) => {
 		try {
 			if (payload.icon) {
-				await stImages.child(payload.id).child(payload.icon).delete();
+				await deleteImage(payload.id);
 			}
 			return await dbArmours.child(payload.id).remove();
 		} catch (error) {
@@ -107,14 +99,6 @@ export const selectArmourById = createSelector(
 			armours.find((armour) => armour.id === id)
 );
 
-export const selectArmourImagePathById = createSelector(
-	armoursSelector,
-	({ armourImagePaths }) =>
-		(id: string) =>
-			armourImagePaths.find((armourImage) => armourImage.id === id)
-				?.imagePath
-);
-
 export const armoursSlice = createSlice({
 	name: "armours",
 	initialState,
@@ -128,24 +112,6 @@ export const armoursSlice = createSlice({
 			state.armours = action.payload;
 		});
 		builder.addCase(fetchArmours.rejected, (state, action) => {
-			state.status = "failed";
-			state.error = action.error.message;
-		});
-		builder.addCase(fetchArmourImagePath.pending, (state) => {
-			state.status = "loading";
-		});
-		builder.addCase(fetchArmourImagePath.fulfilled, (state, action) => {
-			const newArmourImage = {
-				id: action.meta.arg.id,
-				imagePath: action.payload,
-			};
-
-			state.status = "succeeded";
-			state.armourImagePaths = state.armourImagePaths
-				.filter((armourImage) => armourImage.id !== newArmourImage.id)
-				.concat(newArmourImage);
-		});
-		builder.addCase(fetchArmourImagePath.rejected, (state, action) => {
 			state.status = "failed";
 			state.error = action.error.message;
 		});
