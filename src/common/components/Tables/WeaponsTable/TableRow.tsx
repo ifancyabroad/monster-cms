@@ -51,7 +51,7 @@ export const TableRow: React.FC<IProps> = ({ weapon, type }) => {
 					{weapon.name}
 				</TableCell>
 				<TableCell>
-					<EquipmentTypeIcon type={weapon.weaponType} width={32} />
+					<EquipmentTypeIcon equipment={weapon} width={32} />
 				</TableCell>
 				<TableCell>{RESISTANCES_NAME_MAP[weapon.damageType]}</TableCell>
 				<TableCell>{WEAPON_SIZE_NAME_MAP[weapon.size]}</TableCell>

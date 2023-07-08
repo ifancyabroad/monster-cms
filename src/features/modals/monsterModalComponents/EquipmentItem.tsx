@@ -47,8 +47,11 @@ export const EquipmentItem: React.FC<IProps> = ({ id, slot, onRemove }) => {
 			}
 		>
 			<ListItemAvatar>
-				<Avatar sx={{ backgroundColor: "transparent" }}>
-					<EquipmentTypeIcon type={equipment.type} />
+				<Avatar
+					variant="square"
+					sx={{ backgroundColor: "transparent" }}
+				>
+					<EquipmentTypeIcon equipment={equipment} />
 				</Avatar>
 			</ListItemAvatar>
 			<ListItemText primary={equipment.name} secondary={secondaryText} />

@@ -23,6 +23,7 @@ import spearIcon from "assets/images/icons/barbed-spear.svg";
 import staffIcon from "assets/images/icons/wizard-staff.svg";
 import swordIcon from "assets/images/icons/broadsword.svg";
 import { Tooltip } from "@mui/material";
+import { IArmour, IWeapon } from "common/types";
 
 const EQUIPMENT_TYPE_ICON_MAP: Record<EquipmentType | WeaponType, string> = {
 	[EquipmentType.Amulet]: amuletIcon,
@@ -47,11 +48,17 @@ const EQUIPMENT_TYPE_ICON_MAP: Record<EquipmentType | WeaponType, string> = {
 };
 
 interface IProps {
-	type: EquipmentType | WeaponType;
+	equipment: IArmour | IWeapon;
 	width?: number;
 }
 
-export const EquipmentTypeIcon: React.FC<IProps> = ({ type, width = 40 }) => {
+export const EquipmentTypeIcon: React.FC<IProps> = ({
+	equipment,
+	width = 40,
+}) => {
+	const type =
+		"weaponType" in equipment ? equipment.weaponType : equipment.type;
+
 	return (
 		<Tooltip title={EQUIPMENT_TYPE_NAME_MAP[type]} placement="top">
 			<img
