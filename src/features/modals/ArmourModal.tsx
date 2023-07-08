@@ -80,6 +80,7 @@ const defaultValues: IBaseArmour = {
 		stats: {},
 		auxiliaryStats: {},
 		resistances: {},
+		damage: {},
 	},
 };
 
@@ -112,6 +113,9 @@ export const ArmourModal: React.FC = () => {
 	const [resistances, setResistances] = useState<TDamageTypes>(
 		DEFAULT_RESISTANCE_VALUES
 	);
+	const [damageBonuses, setDamageBonuses] = useState<TDamageTypes>(
+		DEFAULT_RESISTANCE_VALUES
+	);
 
 	const title = armour ? "Update Armour" : "Add Armour";
 	const subtitle = armour
@@ -134,6 +138,10 @@ export const ArmourModal: React.FC = () => {
 		setResistances({
 			...DEFAULT_RESISTANCE_VALUES,
 			...armourValues?.modifiers?.resistances,
+		});
+		setDamageBonuses({
+			...DEFAULT_RESISTANCE_VALUES,
+			...armourValues?.modifiers?.damage,
 		});
 	}, [armourValues]);
 
@@ -258,6 +266,39 @@ export const ArmourModal: React.FC = () => {
 				modifiers: {
 					...formValues.armour.modifiers,
 					resistances: newResistances,
+				},
+			},
+		});
+	};
+
+	const handleChangeDamageBonuses = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { name, valueAsNumber } = e.currentTarget;
+
+		setDamageBonuses({
+			...damageBonuses,
+			[name as string]: valueAsNumber,
+		});
+
+		const newDamageBonuses = {
+			...formValues.armour.modifiers?.damage,
+			[name as string]: valueAsNumber,
+		};
+
+		Object.keys(newDamageBonuses).forEach((key) => {
+			if (!newDamageBonuses[key as DamageType]) {
+				delete newDamageBonuses[key as DamageType];
+			}
+		});
+
+		setFormValues({
+			...formValues,
+			armour: {
+				...formValues.armour,
+				modifiers: {
+					...formValues.armour.modifiers,
+					damage: newDamageBonuses,
 				},
 			},
 		});
@@ -464,6 +505,14 @@ export const ArmourModal: React.FC = () => {
 						max={100}
 						step={5}
 						handleChange={handleChangeResistances}
+					/>
+					<StatGroup
+						title="Damage Bonuses (%)"
+						stats={getResistancesArray(damageBonuses)}
+						min={-100}
+						max={100}
+						step={5}
+						handleChange={handleChangeDamageBonuses}
 					/>
 				</DialogContent>
 				<DialogActions>

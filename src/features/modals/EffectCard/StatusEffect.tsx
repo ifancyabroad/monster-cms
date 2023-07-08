@@ -15,7 +15,7 @@ export const StatusEffect: React.FC<IStatusEffect> = ({
 	accuracy,
 	duration,
 }) => {
-	const { stats, auxiliaryStats, resistances } = modifiers;
+	const { stats, auxiliaryStats, resistances, damage } = modifiers;
 
 	return (
 		<Box component="ul" sx={{ margin: 0 }}>
@@ -84,7 +84,7 @@ export const StatusEffect: React.FC<IStatusEffect> = ({
 									}
 									:{" "}
 								</Box>
-								{auxiliaryStats[stat as AuxiliaryStat]}
+								{auxiliaryStats[stat as AuxiliaryStat]}%
 							</Typography>
 						))}
 					</Box>
@@ -114,6 +114,35 @@ export const StatusEffect: React.FC<IStatusEffect> = ({
 									:{" "}
 								</Box>
 								{resistances[resistance as DamageType]}%
+							</Typography>
+						))}
+					</Box>
+				</Typography>
+			)}
+			{damage && (
+				<Typography component="li" variant="body2">
+					<Box component="span" sx={{ fontWeight: "medium" }}>
+						Damage Modifiers
+					</Box>
+					<Box component="ul">
+						{Object.keys(damage).map((damageType) => (
+							<Typography
+								key={damageType}
+								component="li"
+								variant="body2"
+							>
+								<Box
+									component="span"
+									sx={{ fontWeight: "medium" }}
+								>
+									{
+										RESISTANCES_NAME_MAP[
+											damageType as DamageType
+										]
+									}
+									:{" "}
+								</Box>
+								{damage[damageType as DamageType]}%
 							</Typography>
 						))}
 					</Box>

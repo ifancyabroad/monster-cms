@@ -194,23 +194,12 @@ export const Armour: React.FC = () => {
 					component="h5"
 					gutterBottom
 				>
-					Resistances/Bonuses
+					Bonuses
 				</Typography>
 				{armour.modifiers ? (
 					<Grid container spacing={3} marginBottom={3}>
-						{armour.modifiers.resistances && (
-							<Grid item xs={12} md={3} lg={4}>
-								<StatsTable
-									title="Resistances"
-									suffix="%"
-									stats={getPartialResistancesArray(
-										armour.modifiers.resistances
-									)}
-								/>
-							</Grid>
-						)}
 						{armour.modifiers.stats && (
-							<Grid item xs={12} md={3} lg={4}>
+							<Grid item xs={12} md={3}>
 								<StatsTable
 									title="Stats"
 									stats={getPartialStatsArray(
@@ -221,7 +210,7 @@ export const Armour: React.FC = () => {
 							</Grid>
 						)}
 						{armour.modifiers.auxiliaryStats && (
-							<Grid item xs={12} md={3} lg={4}>
+							<Grid item xs={12} md={3}>
 								<StatsTable
 									title="Auxiliary Stats"
 									stats={getPartialAuxiliaryStatsArray(
@@ -231,9 +220,31 @@ export const Armour: React.FC = () => {
 								/>
 							</Grid>
 						)}
+						{armour.modifiers.resistances && (
+							<Grid item xs={12} md={3}>
+								<StatsTable
+									title="Resistances"
+									suffix="%"
+									stats={getPartialResistancesArray(
+										armour.modifiers.resistances
+									)}
+								/>
+							</Grid>
+						)}
+						{armour.modifiers.damage && (
+							<Grid item xs={12} md={3}>
+								<StatsTable
+									title="Damage Bonuses"
+									suffix="%"
+									stats={getPartialResistancesArray(
+										armour.modifiers.damage
+									)}
+								/>
+							</Grid>
+						)}
 					</Grid>
 				) : (
-					<Typography>No armour bonuses</Typography>
+					<Typography>No bonuses</Typography>
 				)}
 			</Box>
 
