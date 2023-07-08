@@ -79,7 +79,7 @@ const EquipmentCard: React.FC<IEquipmentCardProps> = ({ id, slot }) => {
 	return (
 		<Card variant="outlined">
 			<CardHeader
-				avatar={<EquipmentTypeIcon type={equipment.type} />}
+				avatar={<EquipmentTypeIcon equipment={equipment} />}
 				title={EQUIPMENT_SLOT_NAME_MAP[slot]}
 				subheader={equipment.name}
 				action={
