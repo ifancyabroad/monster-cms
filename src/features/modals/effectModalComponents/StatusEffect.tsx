@@ -58,9 +58,10 @@ export const StatusEffect: React.FC = () => {
 		...DEFAULT_RESISTANCE_VALUES,
 		...statusEffectForm.modifiers.resistances,
 	});
-	const [damageBonuses, setDamageBonuses] = useState<TDamageTypes>(
-		DEFAULT_RESISTANCE_VALUES
-	);
+	const [damageBonuses, setDamageBonuses] = useState<TDamageTypes>({
+		...DEFAULT_RESISTANCE_VALUES,
+		...statusEffectForm.modifiers.damage,
+	});
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, type, value, valueAsNumber } = e.target;
