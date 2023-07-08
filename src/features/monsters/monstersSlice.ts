@@ -30,33 +30,28 @@ export const fetchMonsters = createAsyncThunk(
 	async (payload: IMonster[]) => payload
 );
 
-export const fetchMonsterImagePath = createAsyncThunk(
-	"monsters/fetchMonsterImagePath",
-	async (payload: IMonster) => {
-		try {
-			return await stImages
-				.child(payload.id)
-				.child(payload.portrait)
-				.getDownloadURL();
-		} catch (error) {
-			console.error(error);
-			throw error;
-		}
+const deleteImage = async (key: string) => {
+	try {
+		await stImages.child("monsters").child(key).delete();
+	} catch (error) {
+		console.error(error);
 	}
-);
+};
 
 export const saveMonster = createAsyncThunk(
 	"monsters/saveMonster",
 	async (payload: ISaveMonster) => {
 		try {
 			const newMonsterRef = dbMonsters.push();
+			const newMonster = { ...payload.monster };
 			if (payload.image) {
-				await stImages
-					.child(newMonsterRef.key!)
-					.child(payload.image.name)
-					.put(payload.image);
+				const imageRef = stImages
+					.child("monsters")
+					.child(newMonsterRef.key!);
+				await imageRef.put(payload.image);
+				newMonster.portrait = await imageRef.getDownloadURL();
 			}
-			return await newMonsterRef.set(payload.monster);
+			return await newMonsterRef.set(newMonster);
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -68,19 +63,16 @@ export const updateMonster = createAsyncThunk(
 	"monsters/updateMonster",
 	async (payload: IUpdateMonster) => {
 		try {
-			if (payload.image && payload.oldImage) {
-				await stImages
-					.child(payload.id)
-					.child(payload.oldImage)
-					.delete();
+			const newMonster = { ...payload.monster };
+			if (payload.oldImage) {
+				await deleteImage(payload.id);
 			}
 			if (payload.image) {
-				await stImages
-					.child(payload.id)
-					.child(payload.image.name)
-					.put(payload.image);
+				const imageRef = stImages.child("monsters").child(payload.id);
+				await imageRef.put(payload.image);
+				newMonster.portrait = await imageRef.getDownloadURL();
 			}
-			return await dbMonsters.child(payload.id).update(payload.monster);
+			return await dbMonsters.child(payload.id).update(newMonster);
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -93,10 +85,7 @@ export const deleteMonster = createAsyncThunk(
 	async (payload: IMonster) => {
 		try {
 			if (payload.portrait) {
-				await stImages
-					.child(payload.id)
-					.child(payload.portrait)
-					.delete();
+				await deleteImage(payload.id);
 			}
 			return await dbMonsters.child(payload.id).remove();
 		} catch (error) {
@@ -115,14 +104,6 @@ export const selectMonsterById = createSelector(
 			monsters.find((monster) => monster.id === id)
 );
 
-export const selectMonsterImagePathById = createSelector(
-	monstersSelector,
-	({ monsterImagePaths }) =>
-		(id: string) =>
-			monsterImagePaths.find((monsterImage) => monsterImage.id === id)
-				?.imagePath
-);
-
 export const monstersSlice = createSlice({
 	name: "monsters",
 	initialState,
@@ -136,26 +117,6 @@ export const monstersSlice = createSlice({
 			state.monsters = action.payload;
 		});
 		builder.addCase(fetchMonsters.rejected, (state, action) => {
-			state.status = "failed";
-			state.error = action.error.message;
-		});
-		builder.addCase(fetchMonsterImagePath.pending, (state) => {
-			state.status = "loading";
-		});
-		builder.addCase(fetchMonsterImagePath.fulfilled, (state, action) => {
-			const newMonsterImage = {
-				id: action.meta.arg.id,
-				imagePath: action.payload,
-			};
-
-			state.status = "succeeded";
-			state.monsterImagePaths = state.monsterImagePaths
-				.filter(
-					(monsterImage) => monsterImage.id !== newMonsterImage.id
-				)
-				.concat(newMonsterImage);
-		});
-		builder.addCase(fetchMonsterImagePath.rejected, (state, action) => {
 			state.status = "failed";
 			state.error = action.error.message;
 		});

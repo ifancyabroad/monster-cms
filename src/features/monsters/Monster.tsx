@@ -7,16 +7,11 @@ import {
 	Paper,
 	Typography,
 } from "@mui/material";
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "common/hooks";
-import {
-	deleteMonster,
-	fetchMonsterImagePath,
-	selectMonsterById,
-	selectMonsterImagePathById,
-} from "./monstersSlice";
+import { deleteMonster, selectMonsterById } from "./monstersSlice";
 import {
 	EQUIPMENT_SLOTS,
 	getAuxillaryResistancesArray,
@@ -46,19 +41,12 @@ export const Monster: React.FC = () => {
 	let { id } = useParams<IRouteParams>();
 	const user = useContext(AuthContext);
 	const monster = useSelector(selectMonsterById)(id);
-	const monsterImagePath = useSelector(selectMonsterImagePathById)(id);
 	const confirmationModalOpen = useAppSelector(
 		(state) => state.modals.confirmationModalOpen
 	);
 	const isLoading = useAppSelector(
 		(state) => state.monsters.status === "loading"
 	);
-
-	useEffect(() => {
-		if (monster?.portrait) {
-			dispatch(fetchMonsterImagePath(monster));
-		}
-	}, [dispatch, monster]);
 
 	if (!monster) {
 		return null;
@@ -135,14 +123,14 @@ export const Monster: React.FC = () => {
 					>
 						<CircularProgress />
 					</Box>
-				) : monsterImagePath ? (
+				) : monster.portrait ? (
 					<Box
 						component="img"
 						sx={{
 							maxWidth: "100%",
 							verticalAlign: "middle",
 						}}
-						src={monsterImagePath}
+						src={monster.portrait}
 						alt={monster.name}
 					/>
 				) : (
