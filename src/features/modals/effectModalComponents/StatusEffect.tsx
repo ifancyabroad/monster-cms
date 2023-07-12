@@ -104,7 +104,7 @@ export const StatusEffect: React.FC = () => {
 
 			<Box my={3}>
 				{hasProperties ? (
-					<Stack direction="row" spacing={1}>
+					<Stack direction="row" flexWrap="wrap" spacing={1}>
 						{statusEffectProperties.map((property, index) => (
 							<PropertyCardEdit
 								key={property.name + index}

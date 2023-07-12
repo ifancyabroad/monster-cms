@@ -194,7 +194,7 @@ export const Weapon: React.FC = () => {
 					Properties
 				</Typography>
 				{weapon.properties ? (
-					<Stack direction="row" spacing={1}>
+					<Stack direction="row" flexWrap="wrap" spacing={1}>
 						{weapon.properties.map((property, index) => (
 							<PropertyCard
 								key={property.name + index}

@@ -342,7 +342,7 @@ export const ArmourModal: React.FC = () => {
 							Armour Properties
 						</DialogContentText>
 						{hasProperties ? (
-							<Stack direction="row" spacing={1}>
+							<Stack direction="row" flexWrap="wrap" spacing={1}>
 								{armourProperties.map((property, index) => (
 									<PropertyCardEdit
 										key={property.name + index}
