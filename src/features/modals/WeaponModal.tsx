@@ -463,7 +463,7 @@ export const WeaponModal: React.FC = () => {
 							Weapon Properties
 						</DialogContentText>
 						{hasProperties ? (
-							<Stack direction="row" spacing={1}>
+							<Stack direction="row" flexWrap="wrap" spacing={1}>
 								{weaponProperties.map((property, index) => (
 									<PropertyCardEdit
 										key={property.name + index}

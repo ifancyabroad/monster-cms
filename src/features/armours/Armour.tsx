@@ -193,7 +193,7 @@ export const Armour: React.FC = () => {
 					Properties
 				</Typography>
 				{armour.properties ? (
-					<Stack direction="row" spacing={1}>
+					<Stack direction="row" flexWrap="wrap" spacing={1}>
 						{armour.properties.map((property, index) => (
 							<PropertyCard
 								key={property.name + index}
