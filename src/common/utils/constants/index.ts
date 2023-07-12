@@ -308,3 +308,5 @@ export const EQUIPMENT_SLOT_NAME_MAP: Record<EquipmentSlot, string> = {
 	[EquipmentSlot.Hand1]: "Main Hand",
 	[EquipmentSlot.Hand2]: "Off Hand",
 };
+
+export * from "./config";

@@ -240,7 +240,6 @@ export const Monster: React.FC = () => {
 					<Grid item xs={12} sm={6} md={4}>
 						<StatsTable
 							title="Physical"
-							suffix="%"
 							stats={getPhysicalResistancesArray(
 								monster.resistances
 							)}
@@ -249,7 +248,6 @@ export const Monster: React.FC = () => {
 					<Grid item xs={12} sm={6} md={4}>
 						<StatsTable
 							title="Elemental"
-							suffix="%"
 							stats={getElementalResistancesArray(
 								monster.resistances
 							)}
@@ -258,7 +256,6 @@ export const Monster: React.FC = () => {
 					<Grid item xs={12} sm={6} md={4}>
 						<StatsTable
 							title="Auxillary"
-							suffix="%"
 							stats={getAuxillaryResistancesArray(
 								monster.resistances
 							)}

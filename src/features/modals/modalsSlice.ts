@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IArmour, IMonster, ISkill, ISkillEffect, IWeapon } from "common/types";
+import {
+	IArmour,
+	IMonster,
+	ISkill,
+	ISkillEffect,
+	IWeapon,
+	TProperty,
+} from "common/types";
 
 interface ModalsState {
 	loginModalOpen: boolean;
@@ -30,6 +37,11 @@ interface ModalsState {
 		effect?: ISkillEffect;
 		index?: number;
 	};
+	propertyModal: {
+		open: boolean;
+		property?: TProperty;
+		index?: number;
+	};
 	addSkillsModalOpen: boolean;
 	addEquipmentModalOpen: boolean;
 }
@@ -53,6 +65,9 @@ const initialState: ModalsState = {
 		open: false,
 	},
 	effectModal: {
+		open: false,
+	},
+	propertyModal: {
 		open: false,
 	},
 	addSkillsModalOpen: false,
@@ -142,6 +157,19 @@ export const modalsSlice = createSlice({
 			state.effectModal.effect = undefined;
 			state.effectModal.index = undefined;
 		},
+		openPropertyModal: (
+			state,
+			action: PayloadAction<{ property?: TProperty; index?: number }>
+		) => {
+			state.propertyModal.open = true;
+			state.propertyModal.property = action.payload.property;
+			state.propertyModal.index = action.payload.index;
+		},
+		closePropertyModal: (state) => {
+			state.propertyModal.open = false;
+			state.propertyModal.property = undefined;
+			state.propertyModal.index = undefined;
+		},
 		openAddSkillsModal: (state) => {
 			state.addSkillsModalOpen = true;
 		},
@@ -175,6 +203,8 @@ export const {
 	closeArmourModal,
 	openEffectModal,
 	closeEffectModal,
+	openPropertyModal,
+	closePropertyModal,
 	openAddSkillsModal,
 	closeAddSkillsModal,
 	openAddEquipmentModal,

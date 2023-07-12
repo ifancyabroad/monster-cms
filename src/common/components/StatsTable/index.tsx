@@ -13,26 +13,19 @@ interface ITableStat {
 	key: string;
 	name: string;
 	value: number;
+	min?: number;
+	max?: number;
+	prefix?: string;
+	suffix?: string;
 	colour?: string;
 }
 
 interface IProps {
 	title: string;
 	stats: ITableStat[];
-	prefix?: string;
-	suffix?: string;
-	min?: number;
-	max?: number;
 }
 
-export const StatsTable: React.FC<IProps> = ({
-	title,
-	stats,
-	prefix = "",
-	suffix = "",
-	min,
-	max,
-}) => {
+export const StatsTable: React.FC<IProps> = ({ title, stats }) => {
 	return (
 		<TableContainer component={Paper}>
 			<Table aria-label="stats table">
@@ -49,20 +42,30 @@ export const StatsTable: React.FC<IProps> = ({
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{stats.map((stat) => (
-						<TableRow key={stat.name}>
-							<TableCell component="th" scope="row">
-								{stat.name}
-								<LinearProgressWithLabel
-									value={stat.value}
-									label={prefix + stat.value + suffix}
-									customColor={stat.colour}
-									min={min}
-									max={max}
-								/>
-							</TableCell>
-						</TableRow>
-					))}
+					{stats.map(
+						({
+							name,
+							value,
+							prefix = "",
+							suffix = "",
+							min,
+							max,
+							colour,
+						}) => (
+							<TableRow key={name}>
+								<TableCell component="th" scope="row">
+									{name}
+									<LinearProgressWithLabel
+										value={value}
+										label={prefix + value + suffix}
+										customColor={colour}
+										min={min}
+										max={max}
+									/>
+								</TableCell>
+							</TableRow>
+						)
+					)}
 				</TableBody>
 			</Table>
 		</TableContainer>

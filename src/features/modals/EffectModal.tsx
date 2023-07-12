@@ -1,5 +1,9 @@
 import { useAppDispatch, useAppSelector } from "common/hooks";
-import { closeEffectModal } from "./modalsSlice";
+import {
+	closeEffectModal,
+	openErrorModal,
+	openPropertyModal,
+} from "./modalsSlice";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import {
 	Box,
@@ -61,6 +65,9 @@ export const EffectModal: React.FC<IProps> = ({
 	);
 	const title = effect ? "Update Effect" : "Add Effect";
 	const confirm = effect ? "Update" : "Add";
+	const isStatusEffect = effectType === EffectType.Status;
+	const statusEffectProperties = state.statusEffectForm.properties || [];
+	const hasProperties = statusEffectProperties.length > 0;
 
 	const providerState = {
 		state,
@@ -101,6 +108,13 @@ export const EffectModal: React.FC<IProps> = ({
 	const handleAddEffect = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
+		if (isStatusEffect && !hasProperties) {
+			dispatch(
+				openErrorModal({ message: "Please add at least 1 property." })
+			);
+			return;
+		}
+
 		if (effect && typeof index === "number") {
 			onUpdateEffect(formValues, index);
 		} else {
@@ -108,6 +122,10 @@ export const EffectModal: React.FC<IProps> = ({
 		}
 
 		dispatch(closeEffectModal());
+	};
+
+	const handleOpenPropertyModal = () => {
+		dispatch(openPropertyModal({}));
 	};
 
 	return (
@@ -179,6 +197,15 @@ export const EffectModal: React.FC<IProps> = ({
 					</EffectContext.Provider>
 				</DialogContent>
 				<DialogActions>
+					{isStatusEffect && (
+						<Button
+							onClick={handleOpenPropertyModal}
+							variant="contained"
+							color="secondary"
+						>
+							Add Properties
+						</Button>
+					)}
 					<Button onClick={handleClose} color="primary">
 						Cancel
 					</Button>

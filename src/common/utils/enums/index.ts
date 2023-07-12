@@ -107,3 +107,10 @@ export enum EquipmentSlot {
 	Hand1 = "hand1",
 	Hand2 = "hand2",
 }
+
+export enum PropertyType {
+	Stat = "stat",
+	AuxiliaryStat = "auxiliaryStat",
+	Resistance = "resistance",
+	Damage = "damage",
+}

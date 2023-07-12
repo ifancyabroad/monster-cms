@@ -1,4 +1,4 @@
-import { TAuxiliaryStats, TDamageTypes, TStats } from "common/types";
+import { TProperty } from "common/types";
 import { AuxiliaryEffect, DamageType, EffectType } from "common/utils";
 
 export interface IWeaponDamageEffect {
@@ -25,14 +25,9 @@ export interface IHealEffect {
 export interface IStatusEffect {
 	type: EffectType.Status;
 	target: Target;
-	modifiers: {
-		stats?: Partial<TStats>;
-		auxiliaryStats?: Partial<TAuxiliaryStats>;
-		resistances?: Partial<TDamageTypes>;
-		damage?: Partial<TDamageTypes>;
-	};
 	accuracy: number;
 	duration: number;
+	properties?: TProperty[];
 }
 
 export interface IAuxiliaryEffect {

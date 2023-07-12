@@ -5,3 +5,4 @@ export * from "./StatGroup";
 export * from "./StatsTable";
 export * from "./Tables";
 export * from "./LinearProgressWithLabel";
+export * from "./PropertyCard";

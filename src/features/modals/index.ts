@@ -8,3 +8,4 @@ export * from "./modalsSlice";
 export * from "./MonsterModal";
 export * from "./SkillModal";
 export * from "./WeaponModal";
+export * from "./PropertyModal";

@@ -1,4 +1,4 @@
-import { SkillClass, Target } from "common/utils";
+import { SkillClass } from "common/utils";
 import { ISkillEffect } from "./effect";
 
 export interface IBaseSkill {

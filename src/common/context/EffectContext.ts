@@ -50,12 +50,7 @@ const defaultHealEffectValues: IHealEffect = {
 const defaultStatusEffectValues: IStatusEffect = {
 	type: EffectType.Status,
 	target: Target.Enemy,
-	modifiers: {
-		stats: {},
-		auxiliaryStats: {},
-		resistances: {},
-		damage: {},
-	},
+	properties: [],
 	accuracy: 100,
 	duration: 5,
 };
