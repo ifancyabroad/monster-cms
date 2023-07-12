@@ -1,4 +1,3 @@
-import { TDamageTypes, TStats } from "common/types";
 import {
 	DamageType,
 	EquipmentType,
@@ -20,12 +19,7 @@ export interface IBaseWeapon {
 	min: number;
 	max: number;
 	effects?: IWeaponEffect[];
-	modifiers?: {
-		stats?: Partial<TStats>;
-		auxiliaryStats?: Partial<TAuxiliaryStats>;
-		resistances?: Partial<TDamageTypes>;
-		damage?: Partial<TDamageTypes>;
-	};
+	properties?: TProperty[];
 }
 
 export interface IWeapon extends IBaseWeapon {

@@ -1,4 +1,4 @@
-import { TAuxiliaryStats, TDamageTypes, TStats } from "common/types";
+import { TProperty } from "common/types";
 import { EquipmentType } from "common/utils";
 
 export interface IBaseArmour {
@@ -9,12 +9,7 @@ export interface IBaseArmour {
 	price: number;
 	level: number;
 	defense: number;
-	modifiers?: {
-		stats?: Partial<TStats>;
-		auxiliaryStats?: Partial<TAuxiliaryStats>;
-		resistances?: Partial<TDamageTypes>;
-		damage?: Partial<TDamageTypes>;
-	};
+	properties?: TProperty[];
 }
 
 export interface IArmour extends IBaseArmour {

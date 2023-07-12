@@ -4,6 +4,7 @@ import {
 	Divider,
 	Grid,
 	IconButton,
+	Stack,
 	Typography,
 } from "@mui/material";
 import { useContext } from "react";
@@ -19,13 +20,8 @@ import {
 } from "features/modals";
 import { ArmourPropertiesTable } from "./ArmourPropertiesTable";
 import { AuthContext } from "common/context";
-import { StatsTable } from "common/components";
-import {
-	getPartialAuxiliaryStatsArray,
-	getPartialResistancesArray,
-	getPartialStatsArray,
-} from "common/utils";
 import { deleteArmour, selectArmourById } from "./armoursSlice";
+import { PropertyCard } from "common/components";
 
 interface IRouteParams {
 	id: string;
@@ -172,7 +168,7 @@ export const Armour: React.FC = () => {
 					component="h5"
 					gutterBottom
 				>
-					Properties
+					Details
 				</Typography>
 
 				<Grid container spacing={3} marginBottom={3}>
@@ -194,57 +190,19 @@ export const Armour: React.FC = () => {
 					component="h5"
 					gutterBottom
 				>
-					Bonuses
+					Properties
 				</Typography>
-				{armour.modifiers ? (
-					<Grid container spacing={3} marginBottom={3}>
-						{armour.modifiers.stats && (
-							<Grid item xs={12} md={3}>
-								<StatsTable
-									title="Stats"
-									stats={getPartialStatsArray(
-										armour.modifiers.stats
-									)}
-									max={10}
-								/>
-							</Grid>
-						)}
-						{armour.modifiers.auxiliaryStats && (
-							<Grid item xs={12} md={3}>
-								<StatsTable
-									title="Auxiliary Stats"
-									stats={getPartialAuxiliaryStatsArray(
-										armour.modifiers.auxiliaryStats
-									)}
-									max={10}
-								/>
-							</Grid>
-						)}
-						{armour.modifiers.resistances && (
-							<Grid item xs={12} md={3}>
-								<StatsTable
-									title="Resistances"
-									suffix="%"
-									stats={getPartialResistancesArray(
-										armour.modifiers.resistances
-									)}
-								/>
-							</Grid>
-						)}
-						{armour.modifiers.damage && (
-							<Grid item xs={12} md={3}>
-								<StatsTable
-									title="Damage Bonuses"
-									suffix="%"
-									stats={getPartialResistancesArray(
-										armour.modifiers.damage
-									)}
-								/>
-							</Grid>
-						)}
-					</Grid>
+				{armour.properties ? (
+					<Stack direction="row" spacing={1}>
+						{armour.properties.map((property, index) => (
+							<PropertyCard
+								key={property.name + index}
+								property={property}
+							/>
+						))}
+					</Stack>
 				) : (
-					<Typography>No bonuses</Typography>
+					<Typography>No Properties</Typography>
 				)}
 			</Box>
 

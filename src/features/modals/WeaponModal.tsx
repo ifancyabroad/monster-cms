@@ -1,5 +1,9 @@
 import { useAppDispatch, useAppSelector } from "common/hooks";
-import { closeWeaponModal, openEffectModal } from "features/modals/modalsSlice";
+import {
+	closeWeaponModal,
+	openPropertyModal,
+	openEffectModal,
+} from "features/modals/modalsSlice";
 import { useEffect, useMemo, useState } from "react";
 import {
 	Box,
@@ -12,6 +16,7 @@ import {
 	FormControl,
 	Grid,
 	MenuItem,
+	Stack,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -21,24 +26,18 @@ import {
 	ISkillEffect,
 	IWeapon,
 	IWeaponEffect,
-	TAuxiliaryStats,
-	TDamageTypes,
-	TStats,
+	TProperty,
 } from "common/types";
 import { EffectModal } from "./EffectModal";
 import { EffectCard } from "./EffectCard";
-import { StatGroup } from "common/components";
 import {
 	DamageType,
 	EquipmentType,
-	getResistancesArray,
-	getStatsArray,
 	MAX_DAMAGE,
 	MAX_GOLD_VALUE,
 	MAX_ITEM_LEVEL,
 	RESISTANCES,
 	RESISTANCES_NAME_MAP,
-	Stat,
 	WeaponSize,
 	WeaponType,
 	WEAPON_EFFECTS,
@@ -46,38 +45,10 @@ import {
 	WEAPON_SIZE_NAME_MAP,
 	WEAPON_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
-	AuxiliaryStat,
-	getAuxiliaryStatsArray,
 } from "common/utils";
 import { saveWeapon, updateWeapon } from "features/weapons";
-
-const DEFAULT_STAT_VALUES = {
-	[Stat.Strength]: 0,
-	[Stat.Dexterity]: 0,
-	[Stat.Constitution]: 0,
-	[Stat.Intelligence]: 0,
-	[Stat.Wisdom]: 0,
-	[Stat.Charisma]: 0,
-};
-
-const DEFAULT_AUXILIARY_STAT_VALUES = {
-	[AuxiliaryStat.Defence]: 0,
-	[AuxiliaryStat.HitChance]: 0,
-	[AuxiliaryStat.CritChance]: 0,
-};
-
-const DEFAULT_RESISTANCE_VALUES = {
-	[DamageType.Slashing]: 0,
-	[DamageType.Crushing]: 0,
-	[DamageType.Piercing]: 0,
-	[DamageType.Cold]: 0,
-	[DamageType.Fire]: 0,
-	[DamageType.Lighting]: 0,
-	[DamageType.Radiant]: 0,
-	[DamageType.Necrotic]: 0,
-	[DamageType.Poison]: 0,
-	[DamageType.Acid]: 0,
-};
+import { PropertyModal } from "./PropertyModal";
+import { PropertyCardEdit } from "../../common/components/PropertyCard";
 
 const defaultWeaponValues: IBaseWeapon = {
 	type: EquipmentType.Weapon,
@@ -92,12 +63,7 @@ const defaultWeaponValues: IBaseWeapon = {
 	damageType: DamageType.Slashing,
 	min: 1,
 	max: 6,
-	modifiers: {
-		stats: {},
-		auxiliaryStats: {},
-		resistances: {},
-		damage: {},
-	},
+	properties: [],
 };
 
 const defaultFormValues: ISaveWeapon = {
@@ -117,20 +83,13 @@ export const WeaponModal: React.FC = () => {
 	const isLoading = useAppSelector(
 		(state) => state.weapons.status === "loading"
 	);
+	const isEffectModalOpen = useAppSelector(
+		(state) => state.modals.effectModal.open
+	);
 	const [formValues, setFormValues] = useState(defaultFormValues);
 	const weaponValues = useMemo(
 		() => weapon && getBaseWeaponValues(weapon),
 		[weapon]
-	);
-	const [stats, setStats] = useState<TStats>(DEFAULT_STAT_VALUES);
-	const [auxiliaryStats, setAuxiliaryStats] = useState<TAuxiliaryStats>(
-		DEFAULT_AUXILIARY_STAT_VALUES
-	);
-	const [resistances, setResistances] = useState<TDamageTypes>(
-		DEFAULT_RESISTANCE_VALUES
-	);
-	const [damageBonuses, setDamageBonuses] = useState<TDamageTypes>(
-		DEFAULT_RESISTANCE_VALUES
 	);
 
 	const title = weapon ? "Update Weapon" : "Add Weapon";
@@ -139,27 +98,13 @@ export const WeaponModal: React.FC = () => {
 		: "Add a new weapon to the database.";
 	const weaponEffects = formValues.weapon.effects || [];
 	const hasEffects = weaponEffects.length > 0;
+	const weaponProperties = formValues.weapon.properties || [];
+	const hasProperties = weaponProperties.length > 0;
 
 	useEffect(() => {
 		setFormValues({
 			weapon: weaponValues || defaultWeaponValues,
 			image: null,
-		});
-		setStats({
-			...DEFAULT_STAT_VALUES,
-			...weaponValues?.modifiers?.stats,
-		});
-		setAuxiliaryStats({
-			...DEFAULT_AUXILIARY_STAT_VALUES,
-			...weaponValues?.modifiers?.auxiliaryStats,
-		});
-		setResistances({
-			...DEFAULT_RESISTANCE_VALUES,
-			...weaponValues?.modifiers?.resistances,
-		});
-		setDamageBonuses({
-			...DEFAULT_RESISTANCE_VALUES,
-			...weaponValues?.modifiers?.damage,
 		});
 	}, [weaponValues]);
 
@@ -188,136 +133,6 @@ export const WeaponModal: React.FC = () => {
 			weapon: {
 				...formValues.weapon,
 				icon,
-			},
-		});
-	};
-
-	const handleChangeStats = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, valueAsNumber } = e.currentTarget;
-
-		setStats({
-			...stats,
-			[name as string]: valueAsNumber,
-		});
-
-		const newStats = {
-			...formValues.weapon.modifiers?.stats,
-			[name as string]: valueAsNumber,
-		};
-
-		Object.keys(newStats).forEach((key) => {
-			if (!newStats[key as Stat]) {
-				delete newStats[key as Stat];
-			}
-		});
-
-		setFormValues({
-			...formValues,
-			weapon: {
-				...formValues.weapon,
-				modifiers: {
-					...formValues.weapon.modifiers,
-					stats: newStats,
-				},
-			},
-		});
-	};
-
-	const handleChangeAuxiliaryStats = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		const { name, valueAsNumber } = e.currentTarget;
-
-		setAuxiliaryStats({
-			...auxiliaryStats,
-			[name as string]: valueAsNumber,
-		});
-
-		const newStats = {
-			...formValues.weapon.modifiers?.auxiliaryStats,
-			[name as string]: valueAsNumber,
-		};
-
-		Object.keys(newStats).forEach((key) => {
-			if (!newStats[key as AuxiliaryStat]) {
-				delete newStats[key as AuxiliaryStat];
-			}
-		});
-
-		setFormValues({
-			...formValues,
-			weapon: {
-				...formValues.weapon,
-				modifiers: {
-					...formValues.weapon.modifiers,
-					auxiliaryStats: newStats,
-				},
-			},
-		});
-	};
-
-	const handleChangeResistances = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		const { name, valueAsNumber } = e.currentTarget;
-
-		setResistances({
-			...resistances,
-			[name as string]: valueAsNumber,
-		});
-
-		const newResistances = {
-			...formValues.weapon.modifiers?.resistances,
-			[name as string]: valueAsNumber,
-		};
-
-		Object.keys(newResistances).forEach((key) => {
-			if (!newResistances[key as DamageType]) {
-				delete newResistances[key as DamageType];
-			}
-		});
-
-		setFormValues({
-			...formValues,
-			weapon: {
-				...formValues.weapon,
-				modifiers: {
-					...formValues.weapon.modifiers,
-					resistances: newResistances,
-				},
-			},
-		});
-	};
-
-	const handleChangeDamageBonuses = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		const { name, valueAsNumber } = e.currentTarget;
-
-		setDamageBonuses({
-			...damageBonuses,
-			[name as string]: valueAsNumber,
-		});
-
-		const newDamageBonuses = {
-			...formValues.weapon.modifiers?.damage,
-			[name as string]: valueAsNumber,
-		};
-
-		Object.keys(newDamageBonuses).forEach((key) => {
-			if (!newDamageBonuses[key as DamageType]) {
-				delete newDamageBonuses[key as DamageType];
-			}
-		});
-
-		setFormValues({
-			...formValues,
-			weapon: {
-				...formValues.weapon,
-				modifiers: {
-					...formValues.weapon.modifiers,
-					damage: newDamageBonuses,
-				},
 			},
 		});
 	};
@@ -357,6 +172,45 @@ export const WeaponModal: React.FC = () => {
 			weapon: {
 				...formValues.weapon,
 				effects: newEffects,
+			},
+		});
+	};
+
+	const handleOpenPropertyModal = () => {
+		dispatch(openPropertyModal({}));
+	};
+
+	const handleAddProperty = (property: TProperty) => {
+		setFormValues({
+			...formValues,
+			weapon: {
+				...formValues.weapon,
+				properties: weaponProperties.concat(property),
+			},
+		});
+	};
+
+	const handleUpdateProperty = (property: TProperty, index: number) => {
+		setFormValues({
+			...formValues,
+			weapon: {
+				...formValues.weapon,
+				properties: weaponProperties.map((e, i) =>
+					index === i ? property : e
+				),
+			},
+		});
+	};
+
+	const handleRemoveProperty = (property: TProperty, index: number) => {
+		const newProperties = [...weaponProperties];
+		newProperties.splice(index, 1);
+
+		setFormValues({
+			...formValues,
+			weapon: {
+				...formValues.weapon,
+				properties: newProperties,
 			},
 		});
 	};
@@ -460,7 +314,7 @@ export const WeaponModal: React.FC = () => {
 							Weapon Type
 						</DialogContentText>
 						<Grid container spacing={2}>
-							<Grid item xs={6}>
+							<Grid item xs={12} md={4}>
 								<TextField
 									fullWidth
 									select
@@ -477,7 +331,7 @@ export const WeaponModal: React.FC = () => {
 									))}
 								</TextField>
 							</Grid>
-							<Grid item xs={6}>
+							<Grid item xs={12} md={4}>
 								<TextField
 									fullWidth
 									select
@@ -494,17 +348,6 @@ export const WeaponModal: React.FC = () => {
 									))}
 								</TextField>
 							</Grid>
-						</Grid>
-					</Box>
-					<Box my={3}>
-						<DialogContentText
-							variant="subtitle1"
-							component="h5"
-							gutterBottom
-						>
-							Weapon Properties
-						</DialogContentText>
-						<Grid container spacing={2}>
 							<Grid item xs={12} md={4}>
 								<TextField
 									fullWidth
@@ -525,12 +368,25 @@ export const WeaponModal: React.FC = () => {
 									))}
 								</TextField>
 							</Grid>
-							<Grid item xs={6} md={4}>
+						</Grid>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Weapon Properties
+						</DialogContentText>
+						<Grid container spacing={2}>
+							<Grid item xs={6} md={3}>
 								<TextField
 									fullWidth
+									variant="filled"
+									size="small"
 									margin="dense"
 									name="min"
-									label={`Minimum Roll (1-${MAX_DAMAGE})`}
+									label={`Min Roll (1-${MAX_DAMAGE})`}
 									type="number"
 									value={formValues.weapon.min}
 									onChange={handleChange}
@@ -541,12 +397,14 @@ export const WeaponModal: React.FC = () => {
 									}}
 								/>
 							</Grid>
-							<Grid item xs={6} md={4}>
+							<Grid item xs={6} md={3}>
 								<TextField
 									fullWidth
+									variant="filled"
+									size="small"
 									margin="dense"
 									name="max"
-									label={`Maximum Roll (1-${MAX_DAMAGE})`}
+									label={`Max Roll (1-${MAX_DAMAGE})`}
 									type="number"
 									value={formValues.weapon.max}
 									onChange={handleChange}
@@ -557,9 +415,11 @@ export const WeaponModal: React.FC = () => {
 									}}
 								/>
 							</Grid>
-							<Grid item xs={6}>
+							<Grid item xs={6} md={3}>
 								<TextField
 									fullWidth
+									variant="filled"
+									size="small"
 									margin="dense"
 									name="level"
 									label={`Level (1-${MAX_ITEM_LEVEL})`}
@@ -573,9 +433,11 @@ export const WeaponModal: React.FC = () => {
 									}}
 								/>
 							</Grid>
-							<Grid item xs={6}>
+							<Grid item xs={6} md={3}>
 								<TextField
 									fullWidth
+									variant="filled"
+									size="small"
 									margin="dense"
 									name="price"
 									label={`Price (1-${MAX_GOLD_VALUE})`}
@@ -592,37 +454,29 @@ export const WeaponModal: React.FC = () => {
 							</Grid>
 						</Grid>
 					</Box>
-					<StatGroup
-						title="Stats (-10-10)"
-						stats={getStatsArray(stats)}
-						min={-10}
-						max={10}
-						handleChange={handleChangeStats}
-					/>
-					<StatGroup
-						title="Auxiliary Stats (%)"
-						stats={getAuxiliaryStatsArray(auxiliaryStats)}
-						min={-100}
-						max={100}
-						step={5}
-						handleChange={handleChangeAuxiliaryStats}
-					/>
-					<StatGroup
-						title="Resistances (%)"
-						stats={getResistancesArray(resistances)}
-						min={-100}
-						max={100}
-						step={5}
-						handleChange={handleChangeResistances}
-					/>
-					<StatGroup
-						title="Damage Bonuses (%)"
-						stats={getResistancesArray(damageBonuses)}
-						min={-100}
-						max={100}
-						step={5}
-						handleChange={handleChangeDamageBonuses}
-					/>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Weapon Properties
+						</DialogContentText>
+						{hasProperties ? (
+							<Stack direction="row" spacing={1}>
+								{weaponProperties.map((property, index) => (
+									<PropertyCardEdit
+										key={property.name + index}
+										property={property}
+										index={index}
+										onRemove={handleRemoveProperty}
+									/>
+								))}
+							</Stack>
+						) : (
+							<Typography>No Properties</Typography>
+						)}
+					</Box>
 					<Box my={3}>
 						<DialogContentText
 							variant="subtitle1"
@@ -644,15 +498,20 @@ export const WeaponModal: React.FC = () => {
 								))
 							) : (
 								<Grid item xs={12}>
-									<Typography>
-										Please add some effects!
-									</Typography>
+									<Typography>No effects</Typography>
 								</Grid>
 							)}
 						</Grid>
 					</Box>
 				</DialogContent>
 				<DialogActions>
+					<Button
+						variant="contained"
+						onClick={handleOpenPropertyModal}
+						color="secondary"
+					>
+						Add Property
+					</Button>
 					<Button
 						variant="contained"
 						onClick={handleOpenEffectModal}
@@ -674,6 +533,13 @@ export const WeaponModal: React.FC = () => {
 				onAddEffect={handleAddEffect}
 				onUpdateEffect={handleUpdateEffect}
 			/>
+
+			{!isEffectModalOpen && (
+				<PropertyModal
+					onAddProperty={handleAddProperty}
+					onUpdateProperty={handleUpdateProperty}
+				/>
+			)}
 		</Dialog>
 	);
 };

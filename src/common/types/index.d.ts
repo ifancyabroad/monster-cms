@@ -1,4 +1,4 @@
-import { AuxiliaryStat, DamageType, EquipmentSlot, Stat } from "common/utils";
+import { DamageType, EquipmentSlot, Stat } from "common/utils";
 
 export interface IDictionary<T> {
 	[K: string]: T;
@@ -12,7 +12,6 @@ export interface IImagePath {
 export type TOrder = "asc" | "desc";
 
 export type TStats = Record<Stat, number>;
-export type TAuxiliaryStats = Record<AuxiliaryStat, number>;
 export type TDamageTypes = Record<DamageType, number>;
 export type TEquipment = Record<EquipmentSlot, string>;
 
@@ -21,3 +20,4 @@ export * from "./skill";
 export * from "./effect";
 export * from "./weapon";
 export * from "./armour";
+export * from "./property";

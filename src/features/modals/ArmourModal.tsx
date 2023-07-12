@@ -1,5 +1,8 @@
 import { useAppDispatch, useAppSelector } from "common/hooks";
-import { closeArmourModal } from "features/modals/modalsSlice";
+import {
+	closeArmourModal,
+	openPropertyModal,
+} from "features/modals/modalsSlice";
 import { useEffect, useMemo, useState } from "react";
 import {
 	Box,
@@ -12,61 +15,22 @@ import {
 	FormControl,
 	Grid,
 	MenuItem,
+	Stack,
 	TextField,
 	Typography,
 } from "@mui/material";
-import {
-	IArmour,
-	IBaseArmour,
-	ISaveArmour,
-	TAuxiliaryStats,
-	TDamageTypes,
-	TStats,
-} from "common/types";
-import { StatGroup } from "common/components";
+import { IArmour, IBaseArmour, ISaveArmour, TProperty } from "common/types";
 import {
 	ARMOUR_TYPES,
-	DamageType,
 	EquipmentType,
 	EQUIPMENT_TYPE_NAME_MAP,
-	getResistancesArray,
-	getStatsArray,
 	MAX_DEFENSE,
 	MAX_GOLD_VALUE,
 	MAX_ITEM_LEVEL,
-	Stat,
-	AuxiliaryStat,
-	getAuxiliaryStatsArray,
 } from "common/utils";
 import { saveArmour, updateArmour } from "features/armours";
-
-const DEFAULT_STAT_VALUES = {
-	[Stat.Strength]: 0,
-	[Stat.Dexterity]: 0,
-	[Stat.Constitution]: 0,
-	[Stat.Intelligence]: 0,
-	[Stat.Wisdom]: 0,
-	[Stat.Charisma]: 0,
-};
-
-const DEFAULT_AUXILIARY_STAT_VALUES = {
-	[AuxiliaryStat.Defence]: 0,
-	[AuxiliaryStat.HitChance]: 0,
-	[AuxiliaryStat.CritChance]: 0,
-};
-
-const DEFAULT_RESISTANCE_VALUES = {
-	[DamageType.Slashing]: 0,
-	[DamageType.Crushing]: 0,
-	[DamageType.Piercing]: 0,
-	[DamageType.Cold]: 0,
-	[DamageType.Fire]: 0,
-	[DamageType.Lighting]: 0,
-	[DamageType.Radiant]: 0,
-	[DamageType.Necrotic]: 0,
-	[DamageType.Poison]: 0,
-	[DamageType.Acid]: 0,
-};
+import { PropertyModal } from "./PropertyModal";
+import { PropertyCardEdit } from "../../common/components/PropertyCard";
 
 const defaultValues: IBaseArmour = {
 	type: EquipmentType.Armour,
@@ -76,12 +40,7 @@ const defaultValues: IBaseArmour = {
 	price: 100,
 	level: 1,
 	defense: 0,
-	modifiers: {
-		stats: {},
-		auxiliaryStats: {},
-		resistances: {},
-		damage: {},
-	},
+	properties: [],
 };
 
 const defaultFormValues: ISaveArmour = {
@@ -106,42 +65,18 @@ export const ArmourModal: React.FC = () => {
 		() => armour && getBaseValues(armour),
 		[armour]
 	);
-	const [stats, setStats] = useState<TStats>(DEFAULT_STAT_VALUES);
-	const [auxiliaryStats, setAuxiliaryStats] = useState<TAuxiliaryStats>(
-		DEFAULT_AUXILIARY_STAT_VALUES
-	);
-	const [resistances, setResistances] = useState<TDamageTypes>(
-		DEFAULT_RESISTANCE_VALUES
-	);
-	const [damageBonuses, setDamageBonuses] = useState<TDamageTypes>(
-		DEFAULT_RESISTANCE_VALUES
-	);
 
 	const title = armour ? "Update Armour" : "Add Armour";
 	const subtitle = armour
 		? `Updating ${armour?.name}`
 		: "Add a new armour to the database.";
+	const armourProperties = formValues.armour.properties || [];
+	const hasProperties = armourProperties.length > 0;
 
 	useEffect(() => {
 		setFormValues({
 			armour: armourValues || defaultValues,
 			image: null,
-		});
-		setStats({
-			...DEFAULT_STAT_VALUES,
-			...armourValues?.modifiers?.stats,
-		});
-		setAuxiliaryStats({
-			...DEFAULT_AUXILIARY_STAT_VALUES,
-			...armourValues?.modifiers?.auxiliaryStats,
-		});
-		setResistances({
-			...DEFAULT_RESISTANCE_VALUES,
-			...armourValues?.modifiers?.resistances,
-		});
-		setDamageBonuses({
-			...DEFAULT_RESISTANCE_VALUES,
-			...armourValues?.modifiers?.damage,
 		});
 	}, [armourValues]);
 
@@ -174,132 +109,41 @@ export const ArmourModal: React.FC = () => {
 		});
 	};
 
-	const handleChangeStats = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, valueAsNumber } = e.currentTarget;
+	const handleOpenPropertyModal = () => {
+		dispatch(openPropertyModal({}));
+	};
 
-		setStats({
-			...stats,
-			[name as string]: valueAsNumber,
-		});
-
-		const newStats = {
-			...formValues.armour.modifiers?.stats,
-			[name as string]: valueAsNumber,
-		};
-
-		Object.keys(newStats).forEach((key) => {
-			if (!newStats[key as Stat]) {
-				delete newStats[key as Stat];
-			}
-		});
-
+	const handleAddProperty = (property: TProperty) => {
 		setFormValues({
 			...formValues,
 			armour: {
 				...formValues.armour,
-				modifiers: {
-					...formValues.armour.modifiers,
-					stats: newStats,
-				},
+				properties: armourProperties.concat(property),
 			},
 		});
 	};
 
-	const handleChangeAuxiliaryStats = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		const { name, valueAsNumber } = e.currentTarget;
-
-		setAuxiliaryStats({
-			...auxiliaryStats,
-			[name as string]: valueAsNumber,
-		});
-
-		const newStats = {
-			...formValues.armour.modifiers?.auxiliaryStats,
-			[name as string]: valueAsNumber,
-		};
-
-		Object.keys(newStats).forEach((key) => {
-			if (!newStats[key as AuxiliaryStat]) {
-				delete newStats[key as AuxiliaryStat];
-			}
-		});
-
+	const handleUpdateProperty = (property: TProperty, index: number) => {
 		setFormValues({
 			...formValues,
 			armour: {
 				...formValues.armour,
-				modifiers: {
-					...formValues.armour.modifiers,
-					auxiliaryStats: newStats,
-				},
+				properties: armourProperties.map((e, i) =>
+					index === i ? property : e
+				),
 			},
 		});
 	};
 
-	const handleChangeResistances = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		const { name, valueAsNumber } = e.currentTarget;
-
-		setResistances({
-			...resistances,
-			[name as string]: valueAsNumber,
-		});
-
-		const newResistances = {
-			...formValues.armour.modifiers?.resistances,
-			[name as string]: valueAsNumber,
-		};
-
-		Object.keys(newResistances).forEach((key) => {
-			if (!newResistances[key as DamageType]) {
-				delete newResistances[key as DamageType];
-			}
-		});
+	const handleRemoveProperty = (property: TProperty, index: number) => {
+		const newProperties = [...armourProperties];
+		newProperties.splice(index, 1);
 
 		setFormValues({
 			...formValues,
 			armour: {
 				...formValues.armour,
-				modifiers: {
-					...formValues.armour.modifiers,
-					resistances: newResistances,
-				},
-			},
-		});
-	};
-
-	const handleChangeDamageBonuses = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		const { name, valueAsNumber } = e.currentTarget;
-
-		setDamageBonuses({
-			...damageBonuses,
-			[name as string]: valueAsNumber,
-		});
-
-		const newDamageBonuses = {
-			...formValues.armour.modifiers?.damage,
-			[name as string]: valueAsNumber,
-		};
-
-		Object.keys(newDamageBonuses).forEach((key) => {
-			if (!newDamageBonuses[key as DamageType]) {
-				delete newDamageBonuses[key as DamageType];
-			}
-		});
-
-		setFormValues({
-			...formValues,
-			armour: {
-				...formValues.armour,
-				modifiers: {
-					...formValues.armour.modifiers,
-					damage: newDamageBonuses,
-				},
+				properties: newProperties,
 			},
 		});
 	};
@@ -431,9 +275,11 @@ export const ArmourModal: React.FC = () => {
 							Armour Properties
 						</DialogContentText>
 						<Grid container spacing={2}>
-							<Grid item xs={4}>
+							<Grid item xs={6} md={3}>
 								<TextField
 									fullWidth
+									variant="filled"
+									size="small"
 									margin="dense"
 									name="defense"
 									label={`Defense (0-${MAX_DEFENSE})`}
@@ -448,9 +294,11 @@ export const ArmourModal: React.FC = () => {
 									}}
 								/>
 							</Grid>
-							<Grid item xs={4}>
+							<Grid item xs={6} md={3}>
 								<TextField
 									fullWidth
+									variant="filled"
+									size="small"
 									margin="dense"
 									name="level"
 									label={`Level (1-${MAX_ITEM_LEVEL})`}
@@ -464,9 +312,11 @@ export const ArmourModal: React.FC = () => {
 									}}
 								/>
 							</Grid>
-							<Grid item xs={4}>
+							<Grid item xs={6} md={3}>
 								<TextField
 									fullWidth
+									variant="filled"
+									size="small"
 									margin="dense"
 									name="price"
 									label={`Price (1-${MAX_GOLD_VALUE})`}
@@ -483,39 +333,38 @@ export const ArmourModal: React.FC = () => {
 							</Grid>
 						</Grid>
 					</Box>
-					<StatGroup
-						title="Stats (-10-10)"
-						stats={getStatsArray(stats)}
-						min={-10}
-						max={10}
-						handleChange={handleChangeStats}
-					/>
-					<StatGroup
-						title="Auxiliary Stats (%)"
-						stats={getAuxiliaryStatsArray(auxiliaryStats)}
-						min={-100}
-						max={100}
-						step={5}
-						handleChange={handleChangeAuxiliaryStats}
-					/>
-					<StatGroup
-						title="Resistances (%)"
-						stats={getResistancesArray(resistances)}
-						min={-100}
-						max={100}
-						step={5}
-						handleChange={handleChangeResistances}
-					/>
-					<StatGroup
-						title="Damage Bonuses (%)"
-						stats={getResistancesArray(damageBonuses)}
-						min={-100}
-						max={100}
-						step={5}
-						handleChange={handleChangeDamageBonuses}
-					/>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Armour Properties
+						</DialogContentText>
+						{hasProperties ? (
+							<Stack direction="row" spacing={1}>
+								{armourProperties.map((property, index) => (
+									<PropertyCardEdit
+										key={property.name + index}
+										property={property}
+										index={index}
+										onRemove={handleRemoveProperty}
+									/>
+								))}
+							</Stack>
+						) : (
+							<Typography>No properties</Typography>
+						)}
+					</Box>
 				</DialogContent>
 				<DialogActions>
+					<Button
+						variant="contained"
+						onClick={handleOpenPropertyModal}
+						color="secondary"
+					>
+						Add Property
+					</Button>
 					<Button onClick={handleClose} color="primary">
 						Cancel
 					</Button>
@@ -524,6 +373,11 @@ export const ArmourModal: React.FC = () => {
 					</Button>
 				</DialogActions>
 			</form>
+
+			<PropertyModal
+				onAddProperty={handleAddProperty}
+				onUpdateProperty={handleUpdateProperty}
+			/>
 		</Dialog>
 	);
 };

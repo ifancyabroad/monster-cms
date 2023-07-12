@@ -4,6 +4,7 @@ import {
 	Divider,
 	Grid,
 	IconButton,
+	Stack,
 	Typography,
 } from "@mui/material";
 import { useContext } from "react";
@@ -18,14 +19,9 @@ import {
 	openWeaponModal,
 } from "features/modals";
 import { WeaponPropertiesTable } from "./WeaponPropertiesTable";
-import { EffectCard, StatsTable } from "common/components";
+import { EffectCard, PropertyCard } from "common/components";
 import { AuthContext } from "common/context";
 import { deleteWeapon, selectWeaponById } from "./weaponsSlice";
-import {
-	getPartialAuxiliaryStatsArray,
-	getPartialResistancesArray,
-	getPartialStatsArray,
-} from "common/utils";
 
 interface IRouteParams {
 	id: string;
@@ -172,7 +168,7 @@ export const Weapon: React.FC = () => {
 					component="h5"
 					gutterBottom
 				>
-					Properties
+					Details
 				</Typography>
 
 				<Grid container spacing={3} marginBottom={3}>
@@ -195,61 +191,20 @@ export const Weapon: React.FC = () => {
 					component="h5"
 					gutterBottom
 				>
-					Bonuses
+					Properties
 				</Typography>
-
-				{weapon.modifiers ? (
-					<Grid container spacing={3} marginBottom={3}>
-						{weapon.modifiers.stats && (
-							<Grid item xs={12} md={3}>
-								<StatsTable
-									title="Stats"
-									stats={getPartialStatsArray(
-										weapon.modifiers.stats
-									)}
-									max={10}
-								/>
-							</Grid>
-						)}
-						{weapon.modifiers.auxiliaryStats && (
-							<Grid item xs={12} md={3}>
-								<StatsTable
-									title="Auxiliary Stats"
-									stats={getPartialAuxiliaryStatsArray(
-										weapon.modifiers.auxiliaryStats
-									)}
-									max={10}
-								/>
-							</Grid>
-						)}
-						{weapon.modifiers.resistances && (
-							<Grid item xs={12} md={3}>
-								<StatsTable
-									title="Resistances"
-									suffix="%"
-									stats={getPartialResistancesArray(
-										weapon.modifiers.resistances
-									)}
-								/>
-							</Grid>
-						)}
-						{weapon.modifiers.damage && (
-							<Grid item xs={12} md={3}>
-								<StatsTable
-									title="Damage Bonuses"
-									suffix="%"
-									stats={getPartialResistancesArray(
-										weapon.modifiers.damage
-									)}
-								/>
-							</Grid>
-						)}
-					</Grid>
+				{weapon.properties ? (
+					<Stack direction="row" spacing={1}>
+						{weapon.properties.map((property, index) => (
+							<PropertyCard
+								key={property.name + index}
+								property={property}
+							/>
+						))}
+					</Stack>
 				) : (
-					<Typography>No bonuses</Typography>
+					<Typography>No Properties</Typography>
 				)}
-
-				<Divider />
 			</Box>
 
 			<Box>
