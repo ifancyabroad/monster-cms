@@ -30,7 +30,7 @@ import {
 } from "common/utils";
 import { saveArmour, updateArmour } from "features/armours";
 import { PropertyModal } from "./PropertyModal";
-import { PropertyCardEdit } from "../../common/components/PropertyCard";
+import { EditPropertyCard } from "common/components/PropertyCard";
 
 const defaultValues: IBaseArmour = {
 	type: EquipmentType.Armour,
@@ -344,7 +344,7 @@ export const ArmourModal: React.FC = () => {
 						{hasProperties ? (
 							<Stack direction="row" flexWrap="wrap" spacing={1}>
 								{armourProperties.map((property, index) => (
-									<PropertyCardEdit
+									<EditPropertyCard
 										key={property.name + index}
 										property={property}
 										index={index}

@@ -218,19 +218,14 @@ export const Weapon: React.FC = () => {
 				</Typography>
 
 				{weapon.effects ? (
-					<Grid container spacing={2}>
+					<Stack direction="row" flexWrap="wrap" spacing={1}>
 						{weapon.effects.map((effect, index) => (
-							<Grid
+							<EffectCard
 								key={`${effect.type}-${index}`}
-								item
-								xs={12}
-								md={6}
-								lg={3}
-							>
-								<EffectCard {...effect} />
-							</Grid>
+								effect={effect}
+							/>
 						))}
-					</Grid>
+					</Stack>
 				) : (
 					<Typography>No weapon effects</Typography>
 				)}

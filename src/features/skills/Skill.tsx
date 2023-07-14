@@ -1,4 +1,11 @@
-import { Box, Divider, Grid, IconButton, Typography } from "@mui/material";
+import {
+	Box,
+	Divider,
+	Grid,
+	IconButton,
+	Stack,
+	Typography,
+} from "@mui/material";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -154,19 +161,14 @@ export const Skill: React.FC = () => {
 					Effects
 				</Typography>
 
-				<Grid container spacing={2}>
+				<Stack direction="row" flexWrap="wrap" spacing={1}>
 					{skill.effects.map((effect, index) => (
-						<Grid
+						<EffectCard
 							key={`${effect.type}-${index}`}
-							item
-							xs={12}
-							md={6}
-							lg={3}
-						>
-							<EffectCard {...effect} />
-						</Grid>
+							effect={effect}
+						/>
 					))}
-				</Grid>
+				</Stack>
 			</Box>
 
 			<ConfirmationModal

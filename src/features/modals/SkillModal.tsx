@@ -16,13 +16,14 @@ import {
 	FormControl,
 	Grid,
 	MenuItem,
+	Stack,
 	TextField,
 	Typography,
 } from "@mui/material";
 import { saveSkill, updateSkill } from "features/skills";
 import { IBaseSkill, ISaveSkill, ISkill, ISkillEffect } from "common/types";
 import { EffectModal } from "./EffectModal";
-import { EffectCard } from "./EffectCard";
+import { EditEffectCard } from "common/components/EffectCard";
 import {
 	SkillClass,
 	CLASSES,
@@ -341,27 +342,22 @@ export const SkillModal: React.FC = () => {
 						>
 							Skill Effects
 						</DialogContentText>
-						<Grid container spacing={1}>
-							{hasEffects ? (
-								formValues.skill.effects.map(
+						{hasEffects ? (
+							<Stack direction="row" flexWrap="wrap" spacing={1}>
+								{formValues.skill.effects.map(
 									(effect, index) => (
-										<Grid key={index} item xs={12} sm={6}>
-											<EffectCard
-												effect={effect}
-												index={index}
-												onRemove={handleRemoveEffect}
-											/>
-										</Grid>
+										<EditEffectCard
+											key={index}
+											effect={effect}
+											index={index}
+											onRemove={handleRemoveEffect}
+										/>
 									)
-								)
-							) : (
-								<Grid item xs={12}>
-									<Typography>
-										Please add some effects!
-									</Typography>
-								</Grid>
-							)}
-						</Grid>
+								)}
+							</Stack>
+						) : (
+							<Typography>No Effects</Typography>
+						)}
 					</Box>
 				</DialogContent>
 				<DialogActions>

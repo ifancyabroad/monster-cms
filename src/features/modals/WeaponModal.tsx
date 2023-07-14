@@ -29,7 +29,7 @@ import {
 	TProperty,
 } from "common/types";
 import { EffectModal } from "./EffectModal";
-import { EffectCard } from "./EffectCard";
+import { EditEffectCard } from "common/components/EffectCard";
 import {
 	DamageType,
 	EquipmentType,
@@ -48,7 +48,7 @@ import {
 } from "common/utils";
 import { saveWeapon, updateWeapon } from "features/weapons";
 import { PropertyModal } from "./PropertyModal";
-import { PropertyCardEdit } from "../../common/components/PropertyCard";
+import { EditPropertyCard } from "common/components/PropertyCard";
 
 const defaultWeaponValues: IBaseWeapon = {
 	type: EquipmentType.Weapon,
@@ -465,7 +465,7 @@ export const WeaponModal: React.FC = () => {
 						{hasProperties ? (
 							<Stack direction="row" flexWrap="wrap" spacing={1}>
 								{weaponProperties.map((property, index) => (
-									<PropertyCardEdit
+									<EditPropertyCard
 										key={property.name + index}
 										property={property}
 										index={index}
@@ -485,23 +485,20 @@ export const WeaponModal: React.FC = () => {
 						>
 							Weapon Effects
 						</DialogContentText>
-						<Grid container spacing={1}>
-							{hasEffects ? (
-								weaponEffects.map((effect, index) => (
-									<Grid key={index} item xs={12} sm={6}>
-										<EffectCard
-											effect={effect}
-											index={index}
-											onRemove={handleRemoveEffect}
-										/>
-									</Grid>
-								))
-							) : (
-								<Grid item xs={12}>
-									<Typography>No effects</Typography>
-								</Grid>
-							)}
-						</Grid>
+						{hasEffects ? (
+							<Stack direction="row" flexWrap="wrap" spacing={1}>
+								{weaponEffects.map((effect, index) => (
+									<EditEffectCard
+										key={index}
+										effect={effect}
+										index={index}
+										onRemove={handleRemoveEffect}
+									/>
+								))}
+							</Stack>
+						) : (
+							<Typography>No Effects</Typography>
+						)}
 					</Box>
 				</DialogContent>
 				<DialogActions>
