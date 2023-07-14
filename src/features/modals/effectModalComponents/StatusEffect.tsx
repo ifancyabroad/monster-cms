@@ -4,7 +4,7 @@ import { MAX_DURATION } from "common/utils";
 import { useEffectContext } from "common/context";
 import { PropertyModal } from "features/modals";
 import { TProperty } from "common/types";
-import { PropertyCardEdit } from "common/components";
+import { EditPropertyCard } from "common/components";
 
 export const StatusEffect: React.FC = () => {
 	const {
@@ -106,7 +106,7 @@ export const StatusEffect: React.FC = () => {
 				{hasProperties ? (
 					<Stack direction="row" flexWrap="wrap" spacing={1}>
 						{statusEffectProperties.map((property, index) => (
-							<PropertyCardEdit
+							<EditPropertyCard
 								key={property.name + index}
 								property={property}
 								index={index}

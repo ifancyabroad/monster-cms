@@ -10,7 +10,7 @@ interface IEditProps {
 	onRemove: (effect: TProperty, index: number) => void;
 }
 
-export const PropertyCardEdit: React.FC<IEditProps> = ({
+export const EditPropertyCard: React.FC<IEditProps> = ({
 	property,
 	index,
 	onRemove,
