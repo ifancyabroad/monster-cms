@@ -3,6 +3,7 @@ import { TProperty } from "common/types";
 import { openPropertyModal } from "../../../features/modals/modalsSlice";
 import { useAppDispatch } from "common/hooks";
 import { PROPERTY_CONFIG } from "common/utils/constants/config";
+import { prefixCheck } from "common/utils";
 
 interface IEditProps {
 	property: TProperty;
@@ -21,6 +22,8 @@ export const EditPropertyCard: React.FC<IEditProps> = ({
 		(prop) => prop.key === property.name
 	);
 
+	const checkedPrefix = prefixCheck(prefix, property.value);
+
 	const handleOpenPropertyModal = () => {
 		dispatch(openPropertyModal({ property, index }));
 	};
@@ -31,7 +34,7 @@ export const EditPropertyCard: React.FC<IEditProps> = ({
 
 	return (
 		<Chip
-			label={`${prefix}${property.value}${suffix} ${propertyConfig?.name}`}
+			label={`${checkedPrefix}${property.value}${suffix} ${propertyConfig?.name}`}
 			onClick={handleOpenPropertyModal}
 			onDelete={handleRemove}
 		/>
@@ -48,9 +51,11 @@ export const PropertyCard: React.FC<IProps> = ({ property }) => {
 		(prop) => prop.key === property.name
 	);
 
+	const checkedPrefix = prefixCheck(prefix, property.value);
+
 	return (
 		<Chip
-			label={`${prefix}${property.value}${suffix} ${propertyConfig?.name}`}
+			label={`${checkedPrefix}${property.value}${suffix} ${propertyConfig?.name}`}
 		/>
 	);
 };

@@ -194,7 +194,12 @@ export const Weapon: React.FC = () => {
 					Properties
 				</Typography>
 				{weapon.properties ? (
-					<Stack direction="row" flexWrap="wrap" spacing={1}>
+					<Stack
+						direction="row"
+						flexWrap="wrap"
+						spacing={1}
+						marginBottom={3}
+					>
 						{weapon.properties.map((property, index) => (
 							<PropertyCard
 								key={property.name + index}
@@ -203,8 +208,10 @@ export const Weapon: React.FC = () => {
 						))}
 					</Stack>
 				) : (
-					<Typography>No Properties</Typography>
+					<Typography marginBottom={3}>No Properties</Typography>
 				)}
+
+				<Divider />
 			</Box>
 
 			<Box>

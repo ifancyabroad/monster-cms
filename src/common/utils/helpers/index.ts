@@ -74,6 +74,13 @@ export const getAuxillaryResistancesArray = (stats: TDamageTypes) =>
 export const getKeyFromName = (name: string) =>
 	name.toLowerCase().replaceAll(" ", "_").trim();
 
+export const prefixCheck = (prefix: string, value: number) => {
+	if (prefix === "+" && value < 0) {
+		return "";
+	}
+	return prefix;
+};
+
 export * from "./skills";
 export * from "./monsters";
 export * from "./weapons";
