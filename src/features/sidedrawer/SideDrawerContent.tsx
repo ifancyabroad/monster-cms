@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from "common/hooks";
 import { AuthContext } from "common/context";
 import {
 	openArmourModal,
+	openClassModal,
 	openMonsterModal,
 	openSkillModal,
 	openWeaponModal,
@@ -67,10 +68,12 @@ export const SideDrawerContent: React.FC = () => {
 	const skillsList = useAppSelector((state) => state.skills.skills);
 	const weaponsList = useAppSelector((state) => state.weapons.weapons);
 	const armoursList = useAppSelector((state) => state.armours.armours);
+	const classesList = useAppSelector((state) => state.classes.classes);
 	const isMonsters = useRouteMatch("/monsters");
 	const isSkills = useRouteMatch("/skills");
 	const isWeapons = useRouteMatch("/weapons");
 	const isArmours = useRouteMatch("/armours");
+	const isClasses = useRouteMatch("/classes");
 
 	const addMonster = () => {
 		dispatch(openMonsterModal());
@@ -86,6 +89,10 @@ export const SideDrawerContent: React.FC = () => {
 
 	const addArmour = () => {
 		dispatch(openArmourModal());
+	};
+
+	const addClass = () => {
+		dispatch(openClassModal());
 	};
 
 	return (
@@ -219,12 +226,34 @@ export const SideDrawerContent: React.FC = () => {
 						))}
 					</List>
 				</Collapse>
-				<ListItemButton component={Link} to="/classes">
-					<ListItemIcon>
-						<ClassesIcon height={24} width={24} />
-					</ListItemIcon>
-					<ListItemText>Classes</ListItemText>
-				</ListItemButton>
+				<SideDrawerItem
+					title="Classes"
+					link="/classes"
+					icon={<ClassesIcon height={24} width={24} />}
+					onAddItem={addClass}
+				/>
+				<Collapse in={Boolean(isClasses)} unmountOnExit>
+					<List>
+						{classesList.map((characterClass, index) => (
+							<ListItemButton
+								sx={{
+									paddingLeft: 4,
+								}}
+								key={index}
+								component={Link}
+								to={`/classes/${characterClass.id}`}
+							>
+								<ListItemText
+									primary={characterClass.name}
+									primaryTypographyProps={{
+										variant: "body2",
+										color: "textSecondary",
+									}}
+								/>
+							</ListItemButton>
+						))}
+					</List>
+				</Collapse>
 			</List>
 		</div>
 	);

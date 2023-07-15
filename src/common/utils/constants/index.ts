@@ -185,6 +185,13 @@ export const CLASSES = [
 	SkillClass.Cleric,
 ] as const;
 
+export const CHARACTER_CLASSES = [
+	SkillClass.Warrior,
+	SkillClass.Mage,
+	SkillClass.Rogue,
+	SkillClass.Cleric,
+] as const;
+
 export const CLASS_NAME_MAP: Record<SkillClass, string> = {
 	[SkillClass.Common]: "Common",
 	[SkillClass.Unique]: "Unique",

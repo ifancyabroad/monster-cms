@@ -5,23 +5,16 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 import { dbMonsters, stImages } from "firebaseSetup";
-import {
-	IImagePath,
-	IMonster,
-	ISaveMonster,
-	IUpdateMonster,
-} from "common/types";
+import { IMonster, ISaveMonster, IUpdateMonster } from "common/types";
 
 interface IMonstersState {
 	monsters: IMonster[];
-	monsterImagePaths: IImagePath[];
 	status: "idle" | "loading" | "succeeded" | "failed";
 	error?: string;
 }
 
 const initialState: IMonstersState = {
 	monsters: [],
-	monsterImagePaths: [],
 	status: "idle",
 };
 

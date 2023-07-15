@@ -23,3 +23,4 @@ export const dbMonsters = firebase.database().ref("monsters");
 export const dbSkills = firebase.database().ref("skills");
 export const dbWeapons = firebase.database().ref("weapons");
 export const dbArmours = firebase.database().ref("armours");
+export const dbClasses = firebase.database().ref("classes");
