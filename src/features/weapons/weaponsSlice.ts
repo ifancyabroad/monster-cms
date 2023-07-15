@@ -5,19 +5,17 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 import { dbWeapons, stImages } from "firebaseSetup";
-import { IImagePath, ISaveWeapon, IUpdateWeapon, IWeapon } from "common/types";
+import { ISaveWeapon, IUpdateWeapon, IWeapon } from "common/types";
 import { WeaponSize } from "common/utils";
 
 interface IWeaponsState {
 	weapons: IWeapon[];
-	weaponImagePaths: IImagePath[];
 	status: "idle" | "loading" | "succeeded" | "failed";
 	error?: string;
 }
 
 const initialState: IWeaponsState = {
 	weapons: [],
-	weaponImagePaths: [],
 	status: "idle",
 };
 

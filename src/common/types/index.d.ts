@@ -1,14 +1,5 @@
 import { DamageType, EquipmentSlot, Stat } from "common/utils";
 
-export interface IDictionary<T> {
-	[K: string]: T;
-}
-
-export interface IImagePath {
-	id: string;
-	imagePath: string;
-}
-
 export type TOrder = "asc" | "desc";
 
 export type TStats = Record<Stat, number>;
@@ -21,3 +12,4 @@ export * from "./effect";
 export * from "./weapon";
 export * from "./armour";
 export * from "./property";
+export * from "./class";

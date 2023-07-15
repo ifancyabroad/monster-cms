@@ -5,18 +5,16 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 import { dbSkills, stImages } from "firebaseSetup";
-import { IImagePath, ISaveSkill, ISkill, IUpdateSkill } from "common/types";
+import { ISaveSkill, ISkill, IUpdateSkill } from "common/types";
 
 interface ISkillsState {
 	skills: ISkill[];
-	skillImagePaths: IImagePath[];
 	status: "idle" | "loading" | "succeeded" | "failed";
 	error?: string;
 }
 
 const initialState: ISkillsState = {
 	skills: [],
-	skillImagePaths: [],
 	status: "idle",
 };
 

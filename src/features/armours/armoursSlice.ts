@@ -5,18 +5,16 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 import { dbArmours, stImages } from "firebaseSetup";
-import { IArmour, IImagePath, ISaveArmour, IUpdateArmour } from "common/types";
+import { IArmour, ISaveArmour, IUpdateArmour } from "common/types";
 
 interface IArmoursState {
 	armours: IArmour[];
-	armourImagePaths: IImagePath[];
 	status: "idle" | "loading" | "succeeded" | "failed";
 	error?: string;
 }
 
 const initialState: IArmoursState = {
 	armours: [],
-	armourImagePaths: [],
 	status: "idle",
 };
 

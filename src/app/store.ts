@@ -5,6 +5,7 @@ import monstersReducer from "features/monsters/monstersSlice";
 import skillsReducer from "features/skills/skillsSlice";
 import weaponsReducer from "features/weapons/weaponsSlice";
 import armoursReducer from "features/armours/armoursSlice";
+import classesReducer from "features/classes/classesSlice";
 
 export const store = configureStore({
 	reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
 		skills: skillsReducer,
 		weapons: weaponsReducer,
 		armours: armoursReducer,
+		classes: classesReducer,
 	},
 });
 

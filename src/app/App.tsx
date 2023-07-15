@@ -1,9 +1,10 @@
 import { HOCLayout } from "common/components";
 import { Armour, Armours } from "features/armours";
-import { Classes } from "features/classes";
+import { Class, Classes } from "features/classes";
 import { Dashboard } from "features/dashboard";
 import {
 	ArmourModal,
+	ClassModal,
 	ErrorModal,
 	LoginModal,
 	MonsterModal,
@@ -31,11 +32,13 @@ function App() {
 					<Route path="/weapons" component={Weapons} />
 					<Route path="/armours/:id" component={Armour} />
 					<Route path="/armours" component={Armours} />
+					<Route path="/classes/:id" component={Class} />
 					<Route path="/classes" component={Classes} />
 				</Switch>
 			</HOCLayout>
 			<LoginModal />
 			<MonsterModal />
+			<ClassModal />
 			<SkillModal />
 			<WeaponModal />
 			<ArmourModal />

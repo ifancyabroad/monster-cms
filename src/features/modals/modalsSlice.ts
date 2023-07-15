@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
 	IArmour,
+	ICharacterClass,
 	IMonster,
 	ISkill,
 	ISkillEffect,
@@ -19,6 +20,10 @@ interface ModalsState {
 	monsterModal: {
 		open: boolean;
 		monster?: IMonster;
+	};
+	classModal: {
+		open: boolean;
+		characterClass?: ICharacterClass;
 	};
 	skillModal: {
 		open: boolean;
@@ -53,6 +58,9 @@ const initialState: ModalsState = {
 		open: false,
 	},
 	monsterModal: {
+		open: false,
+	},
+	classModal: {
 		open: false,
 	},
 	skillModal: {
@@ -113,6 +121,17 @@ export const modalsSlice = createSlice({
 		closeMonsterModal: (state) => {
 			state.monsterModal.open = false;
 			state.monsterModal.monster = undefined;
+		},
+		openClassModal: (
+			state,
+			action: PayloadAction<ICharacterClass | undefined>
+		) => {
+			state.classModal.open = true;
+			state.classModal.characterClass = action.payload;
+		},
+		closeClassModal: (state) => {
+			state.classModal.open = false;
+			state.classModal.characterClass = undefined;
 		},
 		openSkillModal: (state, action: PayloadAction<ISkill | undefined>) => {
 			state.skillModal.open = true;
@@ -195,6 +214,8 @@ export const {
 	closeErrorModal,
 	openMonsterModal,
 	closeMonsterModal,
+	openClassModal,
+	closeClassModal,
 	openSkillModal,
 	closeSkillModal,
 	openWeaponModal,
