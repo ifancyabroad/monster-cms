@@ -10,6 +10,7 @@ import {
 	Stat,
 	WeaponSize,
 	WeaponType,
+	ArmourType,
 } from "common/utils";
 
 export const DRAWER_TOP = 64;
@@ -242,7 +243,7 @@ export const WEAPON_SIZE_NAME_MAP: Record<WeaponSize, string> = {
 	[WeaponSize.TwoHanded]: "Two Handed",
 };
 
-export const ARMOUR_TYPES = [
+export const EQUIPMENT_ARMOUR_TYPES = [
 	EquipmentType.Amulet,
 	EquipmentType.Armour,
 	EquipmentType.Belt,
@@ -252,6 +253,18 @@ export const ARMOUR_TYPES = [
 	EquipmentType.Ring,
 	EquipmentType.Shield,
 ] as const;
+
+export const ARMOUR_TYPES = [
+	ArmourType.Heavy,
+	ArmourType.Medium,
+	ArmourType.Light,
+] as const;
+
+export const ARMOUR_TYPE_NAME_MAP: Record<ArmourType, string> = {
+	[ArmourType.Heavy]: "Heavy",
+	[ArmourType.Medium]: "Medium",
+	[ArmourType.Light]: "Light",
+};
 
 export const EQUIPMENT_TYPE_NAME_MAP: Record<
 	EquipmentType | WeaponType,

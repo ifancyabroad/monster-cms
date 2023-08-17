@@ -7,7 +7,7 @@ import {
 	TableRow,
 } from "@mui/material";
 import { IArmour } from "common/types";
-import { EQUIPMENT_TYPE_NAME_MAP } from "common/utils";
+import { ARMOUR_TYPE_NAME_MAP, EQUIPMENT_TYPE_NAME_MAP } from "common/utils";
 
 export const ArmourPropertiesTable: React.FC<IArmour> = (armour) => {
 	return (
@@ -24,6 +24,18 @@ export const ArmourPropertiesTable: React.FC<IArmour> = (armour) => {
 						</TableCell>
 						<TableCell align="right">
 							{EQUIPMENT_TYPE_NAME_MAP[armour.type]}
+						</TableCell>
+					</TableRow>
+					<TableRow>
+						<TableCell
+							component="th"
+							scope="row"
+							sx={{ fontWeight: "medium" }}
+						>
+							Armour Type
+						</TableCell>
+						<TableCell align="right">
+							{ARMOUR_TYPE_NAME_MAP[armour.armourType]}
 						</TableCell>
 					</TableRow>
 					<TableRow>

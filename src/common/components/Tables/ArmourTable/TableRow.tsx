@@ -8,6 +8,7 @@ import { TableAddActions } from "./TableAddActions";
 import { AuthContext } from "common/context";
 import { deleteArmour } from "features/armours";
 import { EquipmentTypeIcon } from "features/equipment";
+import { ARMOUR_TYPE_NAME_MAP } from "common/utils";
 
 interface IProps {
 	armour: IArmour;
@@ -51,6 +52,9 @@ export const TableRow: React.FC<IProps> = ({ armour, type }) => {
 				</TableCell>
 				<TableCell>
 					<EquipmentTypeIcon equipment={armour} width={32} />
+				</TableCell>
+				<TableCell align="left">
+					{ARMOUR_TYPE_NAME_MAP[armour.armourType]}
 				</TableCell>
 				<TableCell align="right">{armour.defense}</TableCell>
 				<TableCell align="right">{armour.price}</TableCell>

@@ -11,6 +11,8 @@ import { IArmourFilters } from "common/types";
 import SearchIcon from "@mui/icons-material/Search";
 import {
 	ARMOUR_TYPES,
+	ARMOUR_TYPE_NAME_MAP,
+	EQUIPMENT_ARMOUR_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
 	MAX_GOLD_VALUE,
 	MAX_SKILL_LEVEL,
@@ -64,9 +66,27 @@ export const TableFilters: React.FC<IProps> = ({
 						onChange={onChangeFilters}
 					>
 						<MenuItem value="all">All</MenuItem>
-						{ARMOUR_TYPES.map((type) => (
+						{EQUIPMENT_ARMOUR_TYPES.map((type) => (
 							<MenuItem key={type} value={type}>
 								{EQUIPMENT_TYPE_NAME_MAP[type]}
+							</MenuItem>
+						))}
+					</TextField>
+				</Grid>
+				<Grid item xs={6} md={2}>
+					<TextField
+						fullWidth
+						size="small"
+						select
+						label="Armour Type"
+						name="armourType"
+						value={filters.armourType}
+						onChange={onChangeFilters}
+					>
+						<MenuItem value="all">All</MenuItem>
+						{ARMOUR_TYPES.map((type) => (
+							<MenuItem key={type} value={type}>
+								{ARMOUR_TYPE_NAME_MAP[type]}
 							</MenuItem>
 						))}
 					</TextField>
