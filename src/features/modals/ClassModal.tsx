@@ -9,15 +9,16 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import {
 	Box,
 	Button,
+	Checkbox,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
 	FormControl,
-	Grid,
+	FormControlLabel,
+	FormGroup,
 	List,
-	MenuItem,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -35,6 +36,12 @@ import {
 	getStatsArray,
 	CHARACTER_CLASSES,
 	CLASS_NAME_MAP,
+	ArmourType,
+	WeaponType,
+	ARMOUR_TYPES,
+	ARMOUR_TYPE_NAME_MAP,
+	WEAPON_TYPES,
+	EQUIPMENT_TYPE_NAME_MAP,
 } from "common/utils";
 import { AddSkillsModal } from "./AddSkillsModal";
 import { EquipmentItem, SkillItem } from "./monsterModalComponents";
@@ -45,7 +52,9 @@ const defaultClassValues: IBaseCharacterClass = {
 	description: "",
 	name: "",
 	portrait: "",
-	skillClass: SkillClass.Warrior,
+	skillClasses: [SkillClass.Warrior],
+	armourTypes: [ArmourType.Heavy],
+	weaponTypes: [WeaponType.Sword],
 	skills: [],
 	stats: {
 		strength: 10,
@@ -92,6 +101,9 @@ export const ClassModal: React.FC = () => {
 		formValues.characterClass.equipment &&
 		Object.values(formValues.characterClass.equipment).filter(Boolean)
 			.length > 0;
+	const hasSkillClass = formValues.characterClass.skillClasses.length > 0;
+	const hasArmourType = formValues.characterClass.armourTypes.length > 0;
+	const hasWeaponType = formValues.characterClass.weaponTypes.length > 0;
 
 	useEffect(() => {
 		setFormValues({
@@ -143,6 +155,66 @@ export const ClassModal: React.FC = () => {
 		});
 	};
 
+	const handleChangeSkillClasses = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { checked, value } = e.currentTarget;
+		const skillClass = value as SkillClass;
+		const skillClasses = checked
+			? formValues.characterClass.skillClasses.concat(skillClass)
+			: formValues.characterClass.skillClasses.filter(
+					(skClass) => skClass !== skillClass
+			  );
+
+		setFormValues({
+			...formValues,
+			characterClass: {
+				...formValues.characterClass,
+				skillClasses,
+			},
+		});
+	};
+
+	const handleChangeArmourTypes = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { checked, value } = e.currentTarget;
+		const armourType = value as ArmourType;
+		const armourTypes = checked
+			? formValues.characterClass.armourTypes.concat(armourType)
+			: formValues.characterClass.armourTypes.filter(
+					(arType) => arType !== armourType
+			  );
+
+		setFormValues({
+			...formValues,
+			characterClass: {
+				...formValues.characterClass,
+				armourTypes,
+			},
+		});
+	};
+
+	const handleChangeWeaponTypes = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { checked, value } = e.currentTarget;
+		const weaponType = value as WeaponType;
+		const weaponTypes = checked
+			? formValues.characterClass.weaponTypes.concat(weaponType)
+			: formValues.characterClass.weaponTypes.filter(
+					(wpClass) => wpClass !== weaponType
+			  );
+
+		setFormValues({
+			...formValues,
+			characterClass: {
+				...formValues.characterClass,
+				weaponTypes,
+			},
+		});
+	};
+
 	const handleSaveClass = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
@@ -150,6 +222,33 @@ export const ClassModal: React.FC = () => {
 			if (!hasSkills) {
 				dispatch(
 					openErrorModal({ message: "Please add at least 1 skill." })
+				);
+				return;
+			}
+
+			if (!hasSkillClass) {
+				dispatch(
+					openErrorModal({
+						message: "Please include at least 1 skill class.",
+					})
+				);
+				return;
+			}
+
+			if (!hasArmourType) {
+				dispatch(
+					openErrorModal({
+						message: "Please include at least 1 armour type.",
+					})
+				);
+				return;
+			}
+
+			if (!hasWeaponType) {
+				dispatch(
+					openErrorModal({
+						message: "Please include at least 1 weapon type.",
+					})
 				);
 				return;
 			}
@@ -302,34 +401,85 @@ export const ClassModal: React.FC = () => {
 								component="h5"
 								gutterBottom
 							>
-								Skill Class
+								Skill Classes
 							</DialogContentText>
-							<Grid container spacing={2}>
-								<Grid item xs={6}>
-									<TextField
-										select
-										fullWidth
-										margin="dense"
-										name="skillClass"
-										label="Skill Class"
-										type="number"
-										value={
-											formValues.characterClass.skillClass
-										}
-										onChange={handleChange}
-										required
-									>
-										{CHARACTER_CLASSES.map((skillClass) => (
-											<MenuItem
-												key={skillClass}
+							<FormGroup row>
+								{CHARACTER_CLASSES.map((skillClass) => (
+									<FormControlLabel
+										key={skillClass}
+										control={
+											<Checkbox
 												value={skillClass}
-											>
-												{CLASS_NAME_MAP[skillClass]}
-											</MenuItem>
-										))}
-									</TextField>
-								</Grid>
-							</Grid>
+												checked={formValues.characterClass.skillClasses.includes(
+													skillClass
+												)}
+												onChange={
+													handleChangeSkillClasses
+												}
+											/>
+										}
+										label={CLASS_NAME_MAP[skillClass]}
+									/>
+								))}
+							</FormGroup>
+						</Box>
+						<Box my={3}>
+							<DialogContentText
+								variant="subtitle1"
+								component="h5"
+								gutterBottom
+							>
+								Armour Types
+							</DialogContentText>
+							<FormGroup row>
+								{ARMOUR_TYPES.map((armourType) => (
+									<FormControlLabel
+										key={armourType}
+										control={
+											<Checkbox
+												value={armourType}
+												checked={formValues.characterClass.armourTypes.includes(
+													armourType
+												)}
+												onChange={
+													handleChangeArmourTypes
+												}
+											/>
+										}
+										label={ARMOUR_TYPE_NAME_MAP[armourType]}
+									/>
+								))}
+							</FormGroup>
+						</Box>
+						<Box my={3}>
+							<DialogContentText
+								variant="subtitle1"
+								component="h5"
+								gutterBottom
+							>
+								Weapon Types
+							</DialogContentText>
+							<FormGroup row>
+								{WEAPON_TYPES.map((weaponType) => (
+									<FormControlLabel
+										key={weaponType}
+										control={
+											<Checkbox
+												value={weaponType}
+												checked={formValues.characterClass.weaponTypes.includes(
+													weaponType
+												)}
+												onChange={
+													handleChangeWeaponTypes
+												}
+											/>
+										}
+										label={
+											EQUIPMENT_TYPE_NAME_MAP[weaponType]
+										}
+									/>
+								))}
+							</FormGroup>
 						</Box>
 						<StatGroup
 							title="Stats (6-18)"
