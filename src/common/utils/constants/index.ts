@@ -38,6 +38,7 @@ export const AUXILIARY_STATS = [
 	AuxiliaryStat.Defence,
 	AuxiliaryStat.HitChance,
 	AuxiliaryStat.CritChance,
+	AuxiliaryStat.HitPoints,
 ] as const;
 
 export const RESISTANCES = [
@@ -94,12 +95,14 @@ export const AUXILIARY_STATS_ABBR_MAP: Record<AuxiliaryStat, string> = {
 	[AuxiliaryStat.Defence]: "DEF",
 	[AuxiliaryStat.HitChance]: "HIT",
 	[AuxiliaryStat.CritChance]: "CRT",
+	[AuxiliaryStat.HitPoints]: "HPS",
 };
 
 export const AUXILIARY_STATS_NAME_MAP: Record<AuxiliaryStat, string> = {
 	[AuxiliaryStat.Defence]: "Defence",
 	[AuxiliaryStat.HitChance]: "Hit Chance",
 	[AuxiliaryStat.CritChance]: "Crit Chance",
+	[AuxiliaryStat.HitPoints]: "Hit Points",
 };
 
 export const RESISTANCES_ABBR_MAP: Record<DamageType, string> = {

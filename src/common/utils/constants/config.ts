@@ -56,6 +56,11 @@ export const AUXILIARY_STAT_CONFIG: IPropertyConfig[] = [
 		abbr: "CRT",
 		name: "Crit Chance",
 	},
+	{
+		key: AuxiliaryStat.HitPoints,
+		abbr: "HPS",
+		name: "Hit Points",
+	},
 ];
 
 export const RESISTANCE_CONFIG: IPropertyConfig[] = [
