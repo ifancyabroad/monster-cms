@@ -36,6 +36,10 @@ const headCells: readonly HeadCell[] = [
 		label: "Type",
 	},
 	{
+		id: "armourType",
+		label: "Armour Type",
+	},
+	{
 		id: "defense",
 		align: "right",
 		label: "Defense",
@@ -108,6 +112,7 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 const defaultFilters: IArmourFilters = {
 	name: "",
 	type: "all",
+	armourType: "all",
 	price: 10000,
 	level: 9,
 };

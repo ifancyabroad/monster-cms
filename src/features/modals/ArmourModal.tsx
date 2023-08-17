@@ -21,12 +21,15 @@ import {
 } from "@mui/material";
 import { IArmour, IBaseArmour, ISaveArmour, TProperty } from "common/types";
 import {
-	ARMOUR_TYPES,
 	EquipmentType,
+	EQUIPMENT_ARMOUR_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
 	MAX_DEFENSE,
 	MAX_GOLD_VALUE,
 	MAX_ITEM_LEVEL,
+	ArmourType,
+	ARMOUR_TYPES,
+	ARMOUR_TYPE_NAME_MAP,
 } from "common/utils";
 import { saveArmour, updateArmour } from "features/armours";
 import { PropertyModal } from "./PropertyModal";
@@ -34,6 +37,7 @@ import { EditPropertyCard } from "common/components/PropertyCard";
 
 const defaultValues: IBaseArmour = {
 	type: EquipmentType.Armour,
+	armourType: ArmourType.Medium,
 	name: "",
 	description: "",
 	icon: "",
@@ -257,9 +261,26 @@ export const ArmourModal: React.FC = () => {
 									value={formValues.armour.type}
 									onChange={handleChange}
 								>
-									{ARMOUR_TYPES.map((type) => (
+									{EQUIPMENT_ARMOUR_TYPES.map((type) => (
 										<MenuItem key={type} value={type}>
 											{EQUIPMENT_TYPE_NAME_MAP[type]}
+										</MenuItem>
+									))}
+								</TextField>
+							</Grid>
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Armour Type"
+									name="armourType"
+									value={formValues.armour.armourType}
+									onChange={handleChange}
+								>
+									{ARMOUR_TYPES.map((type) => (
+										<MenuItem key={type} value={type}>
+											{ARMOUR_TYPE_NAME_MAP[type]}
 										</MenuItem>
 									))}
 								</TextField>

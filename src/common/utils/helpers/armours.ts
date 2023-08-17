@@ -34,8 +34,17 @@ export const applyArmoursFilters = (
 			.includes(filters.name.toLowerCase());
 		const typeFilter =
 			filters.type === "all" || armour.type === filters.type;
+		const armourTypeFilter =
+			filters.armourType === "all" ||
+			armour.armourType === filters.armourType;
 		const priceFilter = filters.price >= armour.price;
 		const levelFilter = filters.level >= armour.level;
-		return nameFilter && typeFilter && priceFilter && levelFilter;
+		return (
+			nameFilter &&
+			typeFilter &&
+			priceFilter &&
+			levelFilter &&
+			armourTypeFilter
+		);
 	};
 };

@@ -114,3 +114,9 @@ export enum PropertyType {
 	Resistance = "resistance",
 	Damage = "damage",
 }
+
+export enum ArmourType {
+	Heavy = "heavy",
+	Medium = "medium",
+	Light = "light",
+}

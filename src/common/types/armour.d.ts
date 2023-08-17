@@ -1,8 +1,9 @@
 import { TProperty } from "common/types";
-import { EquipmentType } from "common/utils";
+import { ArmourType, EquipmentType } from "common/utils";
 
 export interface IBaseArmour {
 	type: EquipmentType;
+	armourType: ArmourType;
 	name: string;
 	description: string;
 	icon: string;
@@ -29,6 +30,7 @@ export interface IUpdateArmour extends ISaveArmour {
 export interface IArmourFilters {
 	name: "";
 	type: EquipmentType | "all";
+	armourType: ArmourType | "all";
 	price: number;
 	level: number;
 }
