@@ -28,7 +28,6 @@ export const Login: React.FC = () => {
 				emailRef.current!.value,
 				passwordRef.current!.value
 			);
-			setIsLoading(false);
 		} catch (error) {
 			setIsLoading(false);
 			console.error(error);

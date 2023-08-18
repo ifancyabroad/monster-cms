@@ -24,7 +24,7 @@ function App() {
 	const user = useContext(AuthContext);
 
 	return (
-		<Router>
+		<Router basename="/admin">
 			{user ? (
 				<DatabaseListener>
 					<HOCLayout>
