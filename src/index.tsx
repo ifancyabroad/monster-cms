@@ -8,19 +8,16 @@ import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./theme";
 import { AuthProvider } from "./common/provider/AuthProvider";
-import { DatabaseListener } from "./common/components/DatabaseListener";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<AuthProvider>
-				<ThemeProvider theme={theme}>
-					<DatabaseListener>
-						<CssBaseline />
-						<App />
-					</DatabaseListener>
-				</ThemeProvider>
-			</AuthProvider>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<AuthProvider>
+					<App />
+				</AuthProvider>
+			</ThemeProvider>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById("root")
