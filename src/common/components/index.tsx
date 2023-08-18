@@ -6,3 +6,4 @@ export * from "./StatsTable";
 export * from "./Tables";
 export * from "./LinearProgressWithLabel";
 export * from "./PropertyCard";
+export * from "./PageLoader";
