@@ -16,8 +16,8 @@ phases:
             - yarn build
     post_build:
         commands:
-            - aws s3 cp --recursive --acl public-read ./build s3://browser-rpg-cms/
-            - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://browser-rpg-cms/
+            - aws s3 cp --recursive --acl public-read ./build s3://browser-rpg-cms/admin/
+            - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://browser-rpg-cms/admin/
             - aws cloudfront create-invalidation --distribution-id E1SBYI7G6KFV8U --paths /index.html
 artifacts:
     files:
