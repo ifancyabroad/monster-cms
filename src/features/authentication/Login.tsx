@@ -6,20 +6,14 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
-import { useAppDispatch } from "common/hooks";
-import { closeLoginModal } from "features/modals/modalsSlice";
 import { useRef, useState } from "react";
 import { auth } from "firebaseSetup";
+import { ReactComponent as Logo } from "assets/images/icons/sea-dragon.svg";
 
 export const Login: React.FC = () => {
-	const dispatch = useAppDispatch();
 	const [isLoading, setIsLoading] = useState(false);
 	const emailRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
-
-	const handleClose = () => {
-		dispatch(closeLoginModal());
-	};
 
 	const signIn = async () => {
 		try {
@@ -45,9 +39,19 @@ export const Login: React.FC = () => {
 		>
 			<Paper elevation={3} sx={{ p: 3 }}>
 				<Stack spacing={2}>
-					<Typography variant="h4" textAlign="center" gutterBottom>
-						Login
-					</Typography>
+					<Box
+						sx={{
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+							gap: 2,
+						}}
+					>
+						<Logo height={32} width={32} />
+						<Typography variant="h6" fontWeight="bold">
+							Monster Manual
+						</Typography>
+					</Box>
 					<Typography>
 						Please enter your email and password to login.
 					</Typography>
@@ -70,13 +74,12 @@ export const Login: React.FC = () => {
 						required
 					/>
 					<div>
-						<Button onClick={handleClose} color="primary">
-							Cancel
-						</Button>
 						<Button
 							onClick={signIn}
+							variant="contained"
 							color="primary"
 							disabled={isLoading}
+							fullWidth
 						>
 							Login
 						</Button>
