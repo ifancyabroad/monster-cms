@@ -190,12 +190,6 @@ export const MonstersTable: React.FC = () => {
 		});
 	};
 
-	// Avoid a layout jump when reaching the last page with empty rows.
-	const emptyRows =
-		page > 0
-			? Math.max(0, (1 + page) * rowsPerPage - monstersList.length)
-			: 0;
-
 	return (
 		<Fragment>
 			<Box sx={{ width: "100%" }}>
@@ -227,15 +221,6 @@ export const MonstersTable: React.FC = () => {
 									.map((row) => (
 										<TableRow key={row.id} monster={row} />
 									))}
-								{emptyRows > 0 && (
-									<MUITableRow
-										style={{
-											height: 53 * emptyRows,
-										}}
-									>
-										<TableCell colSpan={6} />
-									</MUITableRow>
-								)}
 							</TableBody>
 						</Table>
 					</TableContainer>

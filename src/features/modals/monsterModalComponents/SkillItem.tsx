@@ -7,7 +7,11 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectSkillById } from "features/skills/skillsSlice";
-import { getSkillType, SKILL_TYPE_NAME_MAP } from "common/utils";
+import {
+	ATTACK_SKILL_ID,
+	getSkillType,
+	SKILL_TYPE_NAME_MAP,
+} from "common/utils";
 import CloseIcon from "@mui/icons-material/Close";
 import { SkillIcon } from "features/skills/SkillIcon";
 
@@ -27,6 +31,7 @@ export const SkillItem: React.FC<IProps> = ({ id, onRemoveSkill }) => {
 		return null;
 	}
 
+	const isAttack = skill.id === ATTACK_SKILL_ID;
 	const secondaryText = `Level ${skill.level} ${
 		SKILL_TYPE_NAME_MAP[getSkillType(skill)]
 	}`;
@@ -34,13 +39,15 @@ export const SkillItem: React.FC<IProps> = ({ id, onRemoveSkill }) => {
 	return (
 		<ListItem
 			secondaryAction={
-				<IconButton
-					edge="end"
-					aria-label="remove skill"
-					onClick={handleRemoveSkill}
-				>
-					<CloseIcon />
-				</IconButton>
+				!isAttack && (
+					<IconButton
+						edge="end"
+						aria-label="remove skill"
+						onClick={handleRemoveSkill}
+					>
+						<CloseIcon />
+					</IconButton>
+				)
 			}
 		>
 			<ListItemAvatar>
