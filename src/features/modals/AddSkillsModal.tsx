@@ -20,7 +20,11 @@ import {
 } from "common/context";
 import { useSelector } from "react-redux";
 import { SkillIcon, selectSkillById } from "features/skills";
-import { SKILL_TYPE_NAME_MAP, getSkillType } from "common/utils";
+import {
+	ATTACK_SKILL_ID,
+	SKILL_TYPE_NAME_MAP,
+	getSkillType,
+} from "common/utils";
 import CloseIcon from "@mui/icons-material/Close";
 
 interface ISkillCardProps {
@@ -42,6 +46,7 @@ const SkillCard: React.FC<ISkillCardProps> = ({ id }) => {
 		return null;
 	}
 
+	const isAttack = skill.id === ATTACK_SKILL_ID;
 	const secondaryText = `Level ${skill.level} ${
 		SKILL_TYPE_NAME_MAP[getSkillType(skill)]
 	}`;
@@ -53,9 +58,11 @@ const SkillCard: React.FC<ISkillCardProps> = ({ id }) => {
 				title={skill.name}
 				subheader={secondaryText}
 				action={
-					<IconButton aria-label="remove" onClick={handleRemove}>
-						<CloseIcon />
-					</IconButton>
+					!isAttack && (
+						<IconButton aria-label="remove" onClick={handleRemove}>
+							<CloseIcon />
+						</IconButton>
+					)
 				}
 			/>
 		</Card>

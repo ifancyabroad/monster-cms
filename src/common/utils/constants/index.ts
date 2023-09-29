@@ -25,6 +25,8 @@ export const MAX_DAMAGE = 100;
 export const MAX_MULTIPLIER = 10;
 export const MAX_DEFENSE = 100;
 
+export const ATTACK_SKILL_ID = "-NfROP8bobODCeEQFrpd";
+
 export const STATS = [
 	Stat.Strength,
 	Stat.Dexterity,

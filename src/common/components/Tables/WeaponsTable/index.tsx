@@ -166,12 +166,6 @@ export const WeaponsTable: React.FC<IProps> = ({ type = "default" }) => {
 		});
 	};
 
-	// Avoid a layout jump when reaching the last page with empty rows.
-	const emptyRows =
-		page > 0
-			? Math.max(0, (1 + page) * rowsPerPage - weaponsList.length)
-			: 0;
-
 	return (
 		<Fragment>
 			<Box sx={{ width: "100%" }}>
@@ -207,15 +201,6 @@ export const WeaponsTable: React.FC<IProps> = ({ type = "default" }) => {
 											type={type}
 										/>
 									))}
-								{emptyRows > 0 && (
-									<MUITableRow
-										style={{
-											height: 53 * emptyRows,
-										}}
-									>
-										<TableCell colSpan={6} />
-									</MUITableRow>
-								)}
 							</TableBody>
 						</Table>
 					</TableContainer>

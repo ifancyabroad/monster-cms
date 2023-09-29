@@ -12,12 +12,16 @@ import {
 	TableSortLabel,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import { ISkillFilters, TOrder, TSkillsOrderBy } from "common/types";
+import { ISkill, ISkillFilters, TOrder, TSkillsOrderBy } from "common/types";
 import { Fragment, useContext, useState } from "react";
 import { useAppSelector } from "common/hooks";
 import { TableRow } from "./TableRow";
 import { TableFilters } from "./TableFilters";
-import { applySkillsFilters, getSkillsComparator } from "common/utils";
+import {
+	ATTACK_SKILL_ID,
+	applySkillsFilters,
+	getSkillsComparator,
+} from "common/utils";
 import { AuthContext } from "common/context";
 
 interface HeadCell {
@@ -167,11 +171,12 @@ export const SkillsTable: React.FC<IProps> = ({ type = "default" }) => {
 		});
 	};
 
-	// Avoid a layout jump when reaching the last page with empty rows.
-	const emptyRows =
-		page > 0
-			? Math.max(0, (1 + page) * rowsPerPage - skillsList.length)
-			: 0;
+	const filterAttackSkill = (skill: ISkill) => {
+		if (type === "addSkills") {
+			return skill.id !== ATTACK_SKILL_ID;
+		}
+		return true;
+	};
 
 	return (
 		<Fragment>
@@ -195,6 +200,7 @@ export const SkillsTable: React.FC<IProps> = ({ type = "default" }) => {
 							<TableBody>
 								{skillsList
 									.slice()
+									.filter(filterAttackSkill)
 									.filter(applySkillsFilters(filters))
 									.sort(getSkillsComparator(order, orderBy))
 									.slice(
@@ -208,15 +214,6 @@ export const SkillsTable: React.FC<IProps> = ({ type = "default" }) => {
 											type={type}
 										/>
 									))}
-								{emptyRows > 0 && (
-									<MUITableRow
-										style={{
-											height: 53 * emptyRows,
-										}}
-									>
-										<TableCell colSpan={6} />
-									</MUITableRow>
-								)}
 							</TableBody>
 						</Table>
 					</TableContainer>

@@ -5,7 +5,7 @@ import {
 	openAddSkillsModal,
 	openErrorModal,
 } from "features/modals/modalsSlice";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
 	Box,
 	Button,
@@ -42,6 +42,7 @@ import {
 	ARMOUR_TYPE_NAME_MAP,
 	WEAPON_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
+	ATTACK_SKILL_ID,
 } from "common/utils";
 import { AddSkillsModal } from "./AddSkillsModal";
 import { EquipmentItem, SkillItem } from "./monsterModalComponents";
@@ -55,7 +56,7 @@ const defaultClassValues: IBaseCharacterClass = {
 	skillClasses: [SkillClass.Warrior],
 	armourTypes: [ArmourType.Heavy],
 	weaponTypes: [WeaponType.Sword],
-	skills: [],
+	skills: [ATTACK_SKILL_ID],
 	stats: {
 		strength: 10,
 		dexterity: 10,
@@ -324,279 +325,255 @@ export const ClassModal: React.FC = () => {
 	};
 
 	return (
-		<Fragment>
-			<Dialog
-				open={open}
-				onClose={handleClose}
-				maxWidth="sm"
-				fullWidth
-				aria-labelledby="form-dialog-title"
-			>
-				<DialogTitle id="form-dialog-title">{title}</DialogTitle>
-				<form onSubmit={handleSaveClass}>
-					<DialogContent>
-						<DialogContentText>{subtitle}</DialogContentText>
-						<Box my={3}>
-							<FormControl>
-								<input
-									accept="image/*"
-									style={{ display: "none" }}
-									id="contained-button-file"
-									multiple
-									type="file"
-									onChange={handleChangeImage}
-								/>
-								<label htmlFor="contained-button-file">
-									<Button
-										variant="contained"
-										component="span"
+		<Dialog
+			open={open}
+			onClose={handleClose}
+			maxWidth="sm"
+			fullWidth
+			aria-labelledby="form-dialog-title"
+		>
+			<DialogTitle id="form-dialog-title">{title}</DialogTitle>
+			<form onSubmit={handleSaveClass}>
+				<DialogContent>
+					<DialogContentText>{subtitle}</DialogContentText>
+					<Box my={3}>
+						<FormControl>
+							<input
+								accept="image/*"
+								style={{ display: "none" }}
+								id="contained-button-file"
+								multiple
+								type="file"
+								onChange={handleChangeImage}
+							/>
+							<label htmlFor="contained-button-file">
+								<Button variant="contained" component="span">
+									Upload Image
+								</Button>
+								{formValues.image && (
+									<Typography
+										sx={{
+											marginLeft: 2,
+											display: "inline",
+										}}
 									>
-										Upload Image
-									</Button>
-									{formValues.image && (
-										<Typography
-											sx={{
-												marginLeft: 2,
-												display: "inline",
-											}}
-										>
-											{formValues.image.name}
-										</Typography>
-									)}
-								</label>
-							</FormControl>
-						</Box>
-						<Box my={3}>
-							<TextField
-								autoFocus
-								name="name"
-								label="Name"
-								value={formValues.characterClass.name}
-								onChange={handleChange}
-								fullWidth
-								required
-								inputProps={{
-									minLength: 3,
-									maxLength: 25,
-								}}
-							/>
-						</Box>
-						<Box my={3}>
-							<TextField
-								name="description"
-								label="Description"
-								value={formValues.characterClass.description}
-								onChange={handleChange}
-								fullWidth
-								multiline
-								minRows={4}
-								inputProps={{
-									maxLength: 200,
-								}}
-							/>
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Skill Classes
-							</DialogContentText>
-							<FormGroup row>
-								{CHARACTER_CLASSES.map((skillClass) => (
-									<FormControlLabel
-										key={skillClass}
-										control={
-											<Checkbox
-												value={skillClass}
-												checked={formValues.characterClass.skillClasses.includes(
-													skillClass
-												)}
-												onChange={
-													handleChangeSkillClasses
-												}
-											/>
-										}
-										label={CLASS_NAME_MAP[skillClass]}
-									/>
-								))}
-							</FormGroup>
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Armour Types
-							</DialogContentText>
-							<FormGroup row>
-								{ARMOUR_TYPES.map((armourType) => (
-									<FormControlLabel
-										key={armourType}
-										control={
-											<Checkbox
-												value={armourType}
-												checked={formValues.characterClass.armourTypes.includes(
-													armourType
-												)}
-												onChange={
-													handleChangeArmourTypes
-												}
-											/>
-										}
-										label={ARMOUR_TYPE_NAME_MAP[armourType]}
-									/>
-								))}
-							</FormGroup>
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Weapon Types
-							</DialogContentText>
-							<FormGroup row>
-								{WEAPON_TYPES.map((weaponType) => (
-									<FormControlLabel
-										key={weaponType}
-										control={
-											<Checkbox
-												value={weaponType}
-												checked={formValues.characterClass.weaponTypes.includes(
-													weaponType
-												)}
-												onChange={
-													handleChangeWeaponTypes
-												}
-											/>
-										}
-										label={
-											EQUIPMENT_TYPE_NAME_MAP[weaponType]
-										}
-									/>
-								))}
-							</FormGroup>
-						</Box>
-						<StatGroup
-							title="Stats (6-18)"
-							stats={getStatsArray(
-								formValues.characterClass.stats
-							)}
-							min={6}
-							max={18}
-							handleChange={handleChangeStats}
+										{formValues.image.name}
+									</Typography>
+								)}
+							</label>
+						</FormControl>
+					</Box>
+					<Box my={3}>
+						<TextField
+							autoFocus
+							name="name"
+							label="Name"
+							value={formValues.characterClass.name}
+							onChange={handleChange}
+							fullWidth
+							required
+							inputProps={{
+								minLength: 3,
+								maxLength: 25,
+							}}
 						/>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
+					</Box>
+					<Box my={3}>
+						<TextField
+							name="description"
+							label="Description"
+							value={formValues.characterClass.description}
+							onChange={handleChange}
+							fullWidth
+							multiline
+							minRows={4}
+							inputProps={{
+								maxLength: 200,
+							}}
+						/>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Skill Classes
+						</DialogContentText>
+						<FormGroup row>
+							{CHARACTER_CLASSES.map((skillClass) => (
+								<FormControlLabel
+									key={skillClass}
+									control={
+										<Checkbox
+											value={skillClass}
+											checked={formValues.characterClass.skillClasses.includes(
+												skillClass
+											)}
+											onChange={handleChangeSkillClasses}
+										/>
+									}
+									label={CLASS_NAME_MAP[skillClass]}
+								/>
+							))}
+						</FormGroup>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Armour Types
+						</DialogContentText>
+						<FormGroup row>
+							{ARMOUR_TYPES.map((armourType) => (
+								<FormControlLabel
+									key={armourType}
+									control={
+										<Checkbox
+											value={armourType}
+											checked={formValues.characterClass.armourTypes.includes(
+												armourType
+											)}
+											onChange={handleChangeArmourTypes}
+										/>
+									}
+									label={ARMOUR_TYPE_NAME_MAP[armourType]}
+								/>
+							))}
+						</FormGroup>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Weapon Types
+						</DialogContentText>
+						<FormGroup row>
+							{WEAPON_TYPES.map((weaponType) => (
+								<FormControlLabel
+									key={weaponType}
+									control={
+										<Checkbox
+											value={weaponType}
+											checked={formValues.characterClass.weaponTypes.includes(
+												weaponType
+											)}
+											onChange={handleChangeWeaponTypes}
+										/>
+									}
+									label={EQUIPMENT_TYPE_NAME_MAP[weaponType]}
+								/>
+							))}
+						</FormGroup>
+					</Box>
+					<StatGroup
+						title="Stats (6-18)"
+						stats={getStatsArray(formValues.characterClass.stats)}
+						min={6}
+						max={18}
+						handleChange={handleChangeStats}
+					/>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Starting Equipment
+						</DialogContentText>
+						{hasEquipment ? (
+							<List
+								sx={{
+									width: "100%",
+									bgcolor: "background.paper",
+								}}
 							>
-								Starting Equipment
-							</DialogContentText>
-							{hasEquipment ? (
-								<List
-									sx={{
-										width: "100%",
-										bgcolor: "background.paper",
-									}}
-								>
-									{EQUIPMENT_SLOTS.map((slot) => {
-										const equipment =
-											formValues.characterClass
-												.equipment &&
-											formValues.characterClass.equipment[
-												slot
-											];
+								{EQUIPMENT_SLOTS.map((slot) => {
+									const equipment =
+										formValues.characterClass.equipment &&
+										formValues.characterClass.equipment[
+											slot
+										];
 
-										const handleRemove = () => {
-											handleRemoveEquipment(slot);
-										};
+									const handleRemove = () => {
+										handleRemoveEquipment(slot);
+									};
 
-										if (!equipment) {
-											return null;
-										}
+									if (!equipment) {
+										return null;
+									}
 
-										return (
-											<EquipmentItem
-												key={slot}
-												id={equipment}
-												slot={slot}
-												onRemove={handleRemove}
-											/>
-										);
-									})}
-								</List>
-							) : (
-								<Typography>
-									Please add some equipment!
-								</Typography>
-							)}
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
+									return (
+										<EquipmentItem
+											key={slot}
+											id={equipment}
+											slot={slot}
+											onRemove={handleRemove}
+										/>
+									);
+								})}
+							</List>
+						) : (
+							<Typography>Please add some equipment!</Typography>
+						)}
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Starting Skills
+						</DialogContentText>
+						{hasSkills ? (
+							<List
+								sx={{
+									width: "100%",
+									bgcolor: "background.paper",
+								}}
 							>
-								Starting Skills
-							</DialogContentText>
-							{hasSkills ? (
-								<List
-									sx={{
-										width: "100%",
-										bgcolor: "background.paper",
-									}}
-								>
-									{formValues.characterClass.skills.map(
-										(skill) => (
-											<SkillItem
-												key={skill}
-												id={skill}
-												onRemoveSkill={
-													handleRemoveSkill
-												}
-											/>
-										)
-									)}
-								</List>
-							) : (
-								<Typography>Please add some skills!</Typography>
-							)}
-						</Box>
-					</DialogContent>
-					<DialogActions>
-						<Button
-							variant="contained"
-							onClick={handleOpenAddEquipmentModal}
-							color="secondary"
-						>
-							Add Equipment
-						</Button>
-						<Button
-							variant="contained"
-							onClick={handleOpenAddSkillsModal}
-							color="secondary"
-						>
-							Add Skills
-						</Button>
-						<Button onClick={handleClose} color="primary">
-							Cancel
-						</Button>
-						<Button
-							type="submit"
-							color="primary"
-							disabled={isLoading}
-						>
-							Save
-						</Button>
-					</DialogActions>
-				</form>
-			</Dialog>
+								{formValues.characterClass.skills.map(
+									(skill) => (
+										<SkillItem
+											key={skill}
+											id={skill}
+											onRemoveSkill={handleRemoveSkill}
+										/>
+									)
+								)}
+							</List>
+						) : (
+							<Typography>Please add some skills!</Typography>
+						)}
+					</Box>
+				</DialogContent>
+				<DialogActions>
+					<Button
+						variant="contained"
+						onClick={handleOpenAddEquipmentModal}
+						color="secondary"
+					>
+						Add Equipment
+					</Button>
+					<Button
+						variant="contained"
+						onClick={handleOpenAddSkillsModal}
+						color="secondary"
+					>
+						Add Skills
+					</Button>
+					<Button onClick={handleClose} color="primary">
+						Cancel
+					</Button>
+					<Button type="submit" color="primary" disabled={isLoading}>
+						Save
+					</Button>
+				</DialogActions>
+			</form>
 
 			<AddEquipmentModal
 				equipment={formValues.characterClass.equipment || {}}
@@ -606,6 +583,6 @@ export const ClassModal: React.FC = () => {
 				skills={formValues.characterClass.skills}
 				onSetSkills={handleSetSkills}
 			/>
-		</Fragment>
+		</Dialog>
 	);
 };

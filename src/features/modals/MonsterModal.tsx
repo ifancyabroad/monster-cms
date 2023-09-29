@@ -5,7 +5,7 @@ import {
 	openAddSkillsModal,
 	openErrorModal,
 } from "features/modals/modalsSlice";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
 	Box,
 	Button,
@@ -29,6 +29,7 @@ import {
 	EQUIPMENT_SLOTS,
 	getResistancesArray,
 	getStatsArray,
+	ATTACK_SKILL_ID,
 } from "common/utils";
 import { AddSkillsModal } from "./AddSkillsModal";
 import { EquipmentItem, SkillItem } from "./monsterModalComponents";
@@ -51,7 +52,7 @@ const defaultMonsterValues: IBaseMonster = {
 	description: "",
 	name: "",
 	portrait: "",
-	skills: [],
+	skills: [ATTACK_SKILL_ID],
 	stats: {
 		strength: 10,
 		dexterity: 10,
@@ -243,223 +244,212 @@ export const MonsterModal: React.FC = () => {
 	};
 
 	return (
-		<Fragment>
-			<Dialog
-				open={open}
-				onClose={handleClose}
-				maxWidth="sm"
-				fullWidth
-				aria-labelledby="form-dialog-title"
-			>
-				<DialogTitle id="form-dialog-title">{title}</DialogTitle>
-				<form onSubmit={handleSaveMonster}>
-					<DialogContent>
-						<DialogContentText>{subtitle}</DialogContentText>
-						<Box my={3}>
-							<FormControl>
-								<input
-									accept="image/*"
-									style={{ display: "none" }}
-									id="contained-button-file"
-									multiple
-									type="file"
-									onChange={handleChangeImage}
-								/>
-								<label htmlFor="contained-button-file">
-									<Button
-										variant="contained"
-										component="span"
-									>
-										Upload Image
-									</Button>
-									{formValues.image && (
-										<Typography
-											sx={{
-												marginLeft: 2,
-												display: "inline",
-											}}
-										>
-											{formValues.image.name}
-										</Typography>
-									)}
-								</label>
-							</FormControl>
-						</Box>
-						<Box my={3}>
-							<TextField
-								autoFocus
-								name="name"
-								label="Name"
-								value={formValues.monster.name}
-								onChange={handleChange}
-								fullWidth
-								required
-								inputProps={{
-									minLength: 3,
-									maxLength: 25,
-								}}
+		<Dialog
+			open={open}
+			onClose={handleClose}
+			maxWidth="sm"
+			fullWidth
+			aria-labelledby="form-dialog-title"
+		>
+			<DialogTitle id="form-dialog-title">{title}</DialogTitle>
+			<form onSubmit={handleSaveMonster}>
+				<DialogContent>
+					<DialogContentText>{subtitle}</DialogContentText>
+					<Box my={3}>
+						<FormControl>
+							<input
+								accept="image/*"
+								style={{ display: "none" }}
+								id="contained-button-file"
+								multiple
+								type="file"
+								onChange={handleChangeImage}
 							/>
-						</Box>
-						<Box my={3}>
-							<TextField
-								name="description"
-								label="Description"
-								value={formValues.monster.description}
-								onChange={handleChange}
-								fullWidth
-								multiline
-								minRows={4}
-								inputProps={{
-									maxLength: 200,
-								}}
-							/>
-						</Box>
-						<StatGroup
-							title="Stats (1-30)"
-							stats={getStatsArray(formValues.monster.stats)}
-							min={1}
-							max={30}
-							handleChange={handleChangeStats}
-						/>
-						<StatGroup
-							title="Resistances (%)"
-							stats={getResistancesArray(
-								formValues.monster.resistances
-							)}
-							min={-100}
-							max={100}
-							step={5}
-							handleChange={handleChangeResistances}
-						/>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Difficulty Rating (1-30)
-							</DialogContentText>
-							<Grid container spacing={2}>
-								<Grid item xs={4} md={2}>
-									<TextField
-										variant="filled"
-										size="small"
-										fullWidth
-										margin="dense"
-										name="challenge"
-										label="Rating"
-										type="number"
-										value={formValues.monster.challenge}
-										onChange={handleChange}
-										required
-										inputProps={{
-											min: 0,
-											max: 30,
+							<label htmlFor="contained-button-file">
+								<Button variant="contained" component="span">
+									Upload Image
+								</Button>
+								{formValues.image && (
+									<Typography
+										sx={{
+											marginLeft: 2,
+											display: "inline",
 										}}
-									/>
-								</Grid>
+									>
+										{formValues.image.name}
+									</Typography>
+								)}
+							</label>
+						</FormControl>
+					</Box>
+					<Box my={3}>
+						<TextField
+							autoFocus
+							name="name"
+							label="Name"
+							value={formValues.monster.name}
+							onChange={handleChange}
+							fullWidth
+							required
+							inputProps={{
+								minLength: 3,
+								maxLength: 25,
+							}}
+						/>
+					</Box>
+					<Box my={3}>
+						<TextField
+							name="description"
+							label="Description"
+							value={formValues.monster.description}
+							onChange={handleChange}
+							fullWidth
+							multiline
+							minRows={4}
+							inputProps={{
+								maxLength: 200,
+							}}
+						/>
+					</Box>
+					<StatGroup
+						title="Stats (1-30)"
+						stats={getStatsArray(formValues.monster.stats)}
+						min={1}
+						max={30}
+						handleChange={handleChangeStats}
+					/>
+					<StatGroup
+						title="Resistances (%)"
+						stats={getResistancesArray(
+							formValues.monster.resistances
+						)}
+						min={-100}
+						max={100}
+						step={5}
+						handleChange={handleChangeResistances}
+					/>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Difficulty Rating (1-30)
+						</DialogContentText>
+						<Grid container spacing={2}>
+							<Grid item xs={4} md={2}>
+								<TextField
+									variant="filled"
+									size="small"
+									fullWidth
+									margin="dense"
+									name="challenge"
+									label="Rating"
+									type="number"
+									value={formValues.monster.challenge}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 0,
+										max: 30,
+									}}
+								/>
 							</Grid>
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
+						</Grid>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Equipment
+						</DialogContentText>
+						{hasEquipment ? (
+							<List
+								sx={{
+									width: "100%",
+									bgcolor: "background.paper",
+								}}
 							>
-								Equipment
-							</DialogContentText>
-							{hasEquipment ? (
-								<List
-									sx={{
-										width: "100%",
-										bgcolor: "background.paper",
-									}}
-								>
-									{EQUIPMENT_SLOTS.map((slot) => {
-										const equipment =
-											formValues.monster.equipment &&
-											formValues.monster.equipment[slot];
+								{EQUIPMENT_SLOTS.map((slot) => {
+									const equipment =
+										formValues.monster.equipment &&
+										formValues.monster.equipment[slot];
 
-										const handleRemove = () => {
-											handleRemoveEquipment(slot);
-										};
+									const handleRemove = () => {
+										handleRemoveEquipment(slot);
+									};
 
-										if (!equipment) {
-											return null;
-										}
+									if (!equipment) {
+										return null;
+									}
 
-										return (
-											<EquipmentItem
-												key={slot}
-												id={equipment}
-												slot={slot}
-												onRemove={handleRemove}
-											/>
-										);
-									})}
-								</List>
-							) : (
-								<Typography>
-									Please add some equipment!
-								</Typography>
-							)}
-						</Box>
-						<Box my={3}>
-							<DialogContentText
-								variant="subtitle1"
-								component="h5"
-								gutterBottom
-							>
-								Skills
-							</DialogContentText>
-							{hasSkills ? (
-								<List
-									sx={{
-										width: "100%",
-										bgcolor: "background.paper",
-									}}
-								>
-									{formValues.monster.skills.map((skill) => (
-										<SkillItem
-											key={skill}
-											id={skill}
-											onRemoveSkill={handleRemoveSkill}
+									return (
+										<EquipmentItem
+											key={slot}
+											id={equipment}
+											slot={slot}
+											onRemove={handleRemove}
 										/>
-									))}
-								</List>
-							) : (
-								<Typography>Please add some skills!</Typography>
-							)}
-						</Box>
-					</DialogContent>
-					<DialogActions>
-						<Button
-							variant="contained"
-							onClick={handleOpenAddEquipmentModal}
-							color="secondary"
+									);
+								})}
+							</List>
+						) : (
+							<Typography>Please add some equipment!</Typography>
+						)}
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
 						>
-							Add Equipment
-						</Button>
-						<Button
-							variant="contained"
-							onClick={handleOpenAddSkillsModal}
-							color="secondary"
-						>
-							Add Skills
-						</Button>
-						<Button onClick={handleClose} color="primary">
-							Cancel
-						</Button>
-						<Button
-							type="submit"
-							color="primary"
-							disabled={isLoading}
-						>
-							Save
-						</Button>
-					</DialogActions>
-				</form>
-			</Dialog>
+							Skills
+						</DialogContentText>
+						{hasSkills ? (
+							<List
+								sx={{
+									width: "100%",
+									bgcolor: "background.paper",
+								}}
+							>
+								{formValues.monster.skills.map((skill) => (
+									<SkillItem
+										key={skill}
+										id={skill}
+										onRemoveSkill={handleRemoveSkill}
+									/>
+								))}
+							</List>
+						) : (
+							<Typography>Please add some skills!</Typography>
+						)}
+					</Box>
+				</DialogContent>
+				<DialogActions>
+					<Button
+						variant="contained"
+						onClick={handleOpenAddEquipmentModal}
+						color="secondary"
+					>
+						Add Equipment
+					</Button>
+					<Button
+						variant="contained"
+						onClick={handleOpenAddSkillsModal}
+						color="secondary"
+					>
+						Add Skills
+					</Button>
+					<Button onClick={handleClose} color="primary">
+						Cancel
+					</Button>
+					<Button type="submit" color="primary" disabled={isLoading}>
+						Save
+					</Button>
+				</DialogActions>
+			</form>
 
 			<AddEquipmentModal
 				equipment={formValues.monster.equipment || {}}
@@ -469,6 +459,6 @@ export const MonsterModal: React.FC = () => {
 				skills={formValues.monster.skills}
 				onSetSkills={handleSetSkills}
 			/>
-		</Fragment>
+		</Dialog>
 	);
 };
