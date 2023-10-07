@@ -4,6 +4,7 @@ import {
 	AUXILIARY_EFFECTS_NAME_MAP,
 	EffectType,
 	RESISTANCES_NAME_MAP,
+	STATS_NAME_MAP,
 	getPropertyConfig,
 } from "common/utils";
 import { Fragment } from "react";
@@ -16,12 +17,20 @@ export const EffectDetails: React.FC<ISkillEffect> = (effect) => (
 			</Box>
 			{effect.target}
 		</Typography>
-		{"accuracy" in effect && (
+		{"modifier" in effect && (
 			<Typography component="li" variant="body2">
 				<Box component="span" sx={{ fontWeight: "medium" }}>
-					Accuracy:{" "}
+					Modifier:{" "}
 				</Box>
-				{effect.accuracy}%
+				{effect.modifier && STATS_NAME_MAP[effect.modifier]}
+			</Typography>
+		)}
+		{"difficulty" in effect && (
+			<Typography component="li" variant="body2">
+				<Box component="span" sx={{ fontWeight: "medium" }}>
+					Difficulty:{" "}
+				</Box>
+				{effect.difficulty}/20
 			</Typography>
 		)}
 		{"damageType" in effect && (
