@@ -1,6 +1,13 @@
 import { Fragment } from "react";
-import { Box, Grid, Stack, TextField, Typography } from "@mui/material";
-import { MAX_DURATION } from "common/utils";
+import {
+	Box,
+	Grid,
+	MenuItem,
+	Stack,
+	TextField,
+	Typography,
+} from "@mui/material";
+import { MAX_DURATION, STATS, STATS_NAME_MAP } from "common/utils";
 import { useEffectContext } from "common/context";
 import { PropertyModal } from "features/modals";
 import { TProperty } from "common/types";
@@ -17,13 +24,24 @@ export const StatusEffect: React.FC = () => {
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, type, value, valueAsNumber } = e.target;
 		const finalValue = type === "number" ? valueAsNumber : value;
+		const payload = {
+			...statusEffectForm,
+			[name as string]: finalValue,
+		};
 
+		if (payload.modifier) {
+			payload.difficulty = payload.difficulty ?? 10;
+			dispatch({
+				type: "UPDATE",
+				payload,
+			});
+			return;
+		}
+
+		const { modifier, difficulty, ...updatedPayload } = statusEffectForm;
 		dispatch({
 			type: "UPDATE",
-			payload: {
-				...statusEffectForm,
-				[name as string]: finalValue,
-			},
+			payload: updatedPayload,
 		});
 	};
 
@@ -70,23 +88,6 @@ export const StatusEffect: React.FC = () => {
 						<TextField
 							fullWidth
 							margin="dense"
-							name="accuracy"
-							label="Accuracy (%)"
-							type="number"
-							value={statusEffectForm.accuracy}
-							onChange={handleChange}
-							required
-							inputProps={{
-								min: 0,
-								max: 100,
-								step: 5,
-							}}
-						/>
-					</Grid>
-					<Grid item xs={6}>
-						<TextField
-							fullWidth
-							margin="dense"
 							name="duration"
 							label={`Duration (1-${MAX_DURATION})`}
 							type="number"
@@ -99,6 +100,46 @@ export const StatusEffect: React.FC = () => {
 							}}
 						/>
 					</Grid>
+				</Grid>
+			</Box>
+			<Box my={3}>
+				<Grid container spacing={2}>
+					<Grid item xs={6}>
+						<TextField
+							fullWidth
+							select
+							margin="dense"
+							label="Modifier"
+							name="modifier"
+							value={statusEffectForm.modifier ?? ""}
+							onChange={handleChange}
+						>
+							<MenuItem value="">None</MenuItem>
+							{STATS.map((stat) => (
+								<MenuItem key={stat} value={stat}>
+									{STATS_NAME_MAP[stat]}
+								</MenuItem>
+							))}
+						</TextField>
+					</Grid>
+					{statusEffectForm.modifier && (
+						<Grid item xs={6}>
+							<TextField
+								fullWidth
+								margin="dense"
+								name="difficulty"
+								label="Difficulty (1-20)"
+								type="number"
+								value={statusEffectForm.difficulty}
+								onChange={handleChange}
+								required
+								inputProps={{
+									min: 1,
+									max: 20,
+								}}
+							/>
+						</Grid>
+					)}
 				</Grid>
 			</Box>
 

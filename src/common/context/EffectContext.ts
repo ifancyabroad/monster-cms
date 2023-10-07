@@ -1,5 +1,11 @@
 import { createContext, Dispatch, useContext } from "react";
-import { AuxiliaryEffect, DamageType, EffectType, Target } from "common/utils";
+import {
+	AuxiliaryEffect,
+	DamageType,
+	EffectType,
+	Stat,
+	Target,
+} from "common/utils";
 import {
 	IAuxiliaryEffect,
 	IDamageEffect,
@@ -51,7 +57,8 @@ const defaultStatusEffectValues: IStatusEffect = {
 	type: EffectType.Status,
 	target: Target.Enemy,
 	properties: [],
-	accuracy: 100,
+	modifier: Stat.Strength,
+	difficulty: 10,
 	duration: 5,
 };
 
@@ -59,7 +66,8 @@ const defaultAuxiliaryEffectValues: IAuxiliaryEffect = {
 	type: EffectType.Auxiliary,
 	target: Target.Enemy,
 	effect: AuxiliaryEffect.Stun,
-	accuracy: 50,
+	modifier: Stat.Strength,
+	difficulty: 10,
 	duration: 3,
 };
 
