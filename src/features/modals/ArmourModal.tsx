@@ -24,7 +24,7 @@ import {
 	EquipmentType,
 	EQUIPMENT_ARMOUR_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
-	MAX_DEFENSE,
+	MAX_DEFENCE,
 	MAX_GOLD_VALUE,
 	MAX_ITEM_LEVEL,
 	ArmourType,
@@ -43,7 +43,7 @@ const defaultValues: IBaseArmour = {
 	icon: "",
 	price: 100,
 	level: 1,
-	defense: 0,
+	defence: 0,
 	properties: [],
 };
 
@@ -302,15 +302,15 @@ export const ArmourModal: React.FC = () => {
 									variant="filled"
 									size="small"
 									margin="dense"
-									name="defense"
-									label={`Defense (0-${MAX_DEFENSE})`}
+									name="defence"
+									label={`Defence (0-${MAX_DEFENCE})`}
 									type="number"
-									value={formValues.armour.defense}
+									value={formValues.armour.defence}
 									onChange={handleChange}
 									required
 									inputProps={{
 										min: 0,
-										max: MAX_DEFENSE,
+										max: MAX_DEFENCE,
 										step: 5,
 									}}
 								/>
