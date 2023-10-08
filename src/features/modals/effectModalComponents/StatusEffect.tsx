@@ -128,14 +128,14 @@ export const StatusEffect: React.FC = () => {
 								fullWidth
 								margin="dense"
 								name="difficulty"
-								label="Difficulty (1-20)"
+								label="Difficulty (1-30)"
 								type="number"
 								value={statusEffectForm.difficulty}
 								onChange={handleChange}
 								required
 								inputProps={{
 									min: 1,
-									max: 20,
+									max: 30,
 								}}
 							/>
 						</Grid>
