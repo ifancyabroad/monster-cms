@@ -30,7 +30,7 @@ export const StatusEffect: React.FC = () => {
 		};
 
 		if (payload.modifier) {
-			payload.difficulty = payload.difficulty ?? 10;
+			payload.difficulty = payload.difficulty ?? 15;
 			dispatch({
 				type: "UPDATE",
 				payload,
