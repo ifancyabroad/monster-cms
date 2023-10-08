@@ -58,7 +58,7 @@ const defaultStatusEffectValues: IStatusEffect = {
 	target: Target.Enemy,
 	properties: [],
 	modifier: Stat.Strength,
-	difficulty: 10,
+	difficulty: 15,
 	duration: 5,
 };
 
@@ -67,7 +67,7 @@ const defaultAuxiliaryEffectValues: IAuxiliaryEffect = {
 	target: Target.Enemy,
 	effect: AuxiliaryEffect.Stun,
 	modifier: Stat.Strength,
-	difficulty: 10,
+	difficulty: 15,
 	duration: 3,
 };
 
