@@ -44,9 +44,9 @@ export const ArmourPropertiesTable: React.FC<IArmour> = (armour) => {
 							scope="row"
 							sx={{ fontWeight: "medium" }}
 						>
-							Defense
+							Defence
 						</TableCell>
-						<TableCell align="right">{armour.defense}</TableCell>
+						<TableCell align="right">{armour.defence}</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableCell
