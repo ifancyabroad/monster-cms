@@ -311,7 +311,6 @@ export const ArmourModal: React.FC = () => {
 									inputProps={{
 										min: 0,
 										max: MAX_DEFENCE,
-										step: 5,
 									}}
 								/>
 							</Grid>
