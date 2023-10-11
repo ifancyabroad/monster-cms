@@ -38,7 +38,7 @@ export const StatusEffect: React.FC = () => {
 			return;
 		}
 
-		const { modifier, difficulty, ...updatedPayload } = statusEffectForm;
+		const { modifier, difficulty, ...updatedPayload } = payload;
 		dispatch({
 			type: "UPDATE",
 			payload: updatedPayload,

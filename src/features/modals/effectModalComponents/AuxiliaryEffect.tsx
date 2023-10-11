@@ -38,7 +38,7 @@ export const AuxiliaryEffect: React.FC = () => {
 			return;
 		}
 
-		const { modifier, difficulty, ...updatedPayload } = auxiliaryEffectForm;
+		const { modifier, difficulty, ...updatedPayload } = payload;
 		dispatch({
 			type: "UPDATE",
 			payload: updatedPayload,
