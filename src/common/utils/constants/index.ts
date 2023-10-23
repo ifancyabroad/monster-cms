@@ -263,12 +263,14 @@ export const ARMOUR_TYPES = [
 	ArmourType.Heavy,
 	ArmourType.Medium,
 	ArmourType.Light,
+	ArmourType.Miscellaneous,
 ] as const;
 
 export const ARMOUR_TYPE_NAME_MAP: Record<ArmourType, string> = {
 	[ArmourType.Heavy]: "Heavy",
 	[ArmourType.Medium]: "Medium",
 	[ArmourType.Light]: "Light",
+	[ArmourType.Miscellaneous]: "Misc",
 };
 
 export const EQUIPMENT_TYPE_NAME_MAP: Record<
