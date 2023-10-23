@@ -120,4 +120,5 @@ export enum ArmourType {
 	Heavy = "heavy",
 	Medium = "medium",
 	Light = "light",
+	Miscellaneous = "misc",
 }
