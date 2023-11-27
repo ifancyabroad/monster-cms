@@ -43,7 +43,7 @@ const defaultMonsterValues: IBaseMonster = {
 		[DamageType.Piercing]: 0,
 		[DamageType.Fire]: 0,
 		[DamageType.Cold]: 0,
-		[DamageType.Lighting]: 0,
+		[DamageType.Lightning]: 0,
 		[DamageType.Radiant]: 0,
 		[DamageType.Necrotic]: 0,
 		[DamageType.Poison]: 0,
