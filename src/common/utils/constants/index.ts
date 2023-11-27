@@ -49,7 +49,7 @@ export const RESISTANCES = [
 	DamageType.Piercing,
 	DamageType.Cold,
 	DamageType.Fire,
-	DamageType.Lighting,
+	DamageType.Lightning,
 	DamageType.Radiant,
 	DamageType.Necrotic,
 	DamageType.Poison,
@@ -65,7 +65,7 @@ export const PHYSICAL_RESISTANCES = [
 export const ELEMENTAL_RESISTANCES = [
 	DamageType.Cold,
 	DamageType.Fire,
-	DamageType.Lighting,
+	DamageType.Lightning,
 ] as const;
 
 export const AUXILLARY_RESISTANCES = [
@@ -113,7 +113,7 @@ export const RESISTANCES_ABBR_MAP: Record<DamageType, string> = {
 	[DamageType.Piercing]: "PIE",
 	[DamageType.Cold]: "CLD",
 	[DamageType.Fire]: "FRE",
-	[DamageType.Lighting]: "LTG",
+	[DamageType.Lightning]: "LTG",
 	[DamageType.Radiant]: "RAD",
 	[DamageType.Necrotic]: "NEC",
 	[DamageType.Poison]: "PSN",
@@ -126,7 +126,7 @@ export const RESISTANCES_NAME_MAP: Record<DamageType, string> = {
 	[DamageType.Piercing]: "Piercing",
 	[DamageType.Cold]: "Cold",
 	[DamageType.Fire]: "Fire",
-	[DamageType.Lighting]: "Lighting",
+	[DamageType.Lightning]: "Lightning",
 	[DamageType.Radiant]: "Radiant",
 	[DamageType.Necrotic]: "Necrotic",
 	[DamageType.Poison]: "Poison",
@@ -139,7 +139,7 @@ export const RESISTANCES_COLOUR_MAP: Record<DamageType, string> = {
 	[DamageType.Piercing]: "#F2D1C9",
 	[DamageType.Cold]: "#92D5E6",
 	[DamageType.Fire]: "#E4572E",
-	[DamageType.Lighting]: "#F9DC5C",
+	[DamageType.Lightning]: "#F9DC5C",
 	[DamageType.Radiant]: "#F3FFBD",
 	[DamageType.Necrotic]: "#5A0B4D",
 	[DamageType.Poison]: "#157145",
