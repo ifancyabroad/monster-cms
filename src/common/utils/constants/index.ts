@@ -23,7 +23,6 @@ export const MAX_SKILL_USES = 20;
 export const MAX_DURATION = 20;
 export const MAX_DAMAGE = 100;
 export const MAX_MULTIPLIER = 10;
-export const MAX_DEFENCE = 100;
 
 export const ATTACK_SKILL_ID = "-NfROP8bobODCeEQFrpd";
 
@@ -37,10 +36,9 @@ export const STATS = [
 ] as const;
 
 export const AUXILIARY_STATS = [
-	AuxiliaryStat.Defence,
+	AuxiliaryStat.ArmourClass,
 	AuxiliaryStat.HitChance,
 	AuxiliaryStat.CritChance,
-	AuxiliaryStat.HitPoints,
 ] as const;
 
 export const RESISTANCES = [
@@ -94,17 +92,15 @@ export const STATS_NAME_MAP: Record<Stat, string> = {
 };
 
 export const AUXILIARY_STATS_ABBR_MAP: Record<AuxiliaryStat, string> = {
-	[AuxiliaryStat.Defence]: "DEF",
+	[AuxiliaryStat.ArmourClass]: "AC",
 	[AuxiliaryStat.HitChance]: "HIT",
 	[AuxiliaryStat.CritChance]: "CRT",
-	[AuxiliaryStat.HitPoints]: "HPS",
 };
 
 export const AUXILIARY_STATS_NAME_MAP: Record<AuxiliaryStat, string> = {
-	[AuxiliaryStat.Defence]: "Defence",
+	[AuxiliaryStat.ArmourClass]: "Armour Class",
 	[AuxiliaryStat.HitChance]: "Hit Chance",
 	[AuxiliaryStat.CritChance]: "Crit Chance",
-	[AuxiliaryStat.HitPoints]: "Hit Points",
 };
 
 export const RESISTANCES_ABBR_MAP: Record<DamageType, string> = {

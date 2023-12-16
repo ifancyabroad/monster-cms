@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import {
 	AppBar,
 	Box,
@@ -15,6 +15,7 @@ import { AuthContext } from "common/context";
 import { auth } from "firebaseSetup";
 import { AccountCircle, Login, Menu as MenuIcon } from "@mui/icons-material";
 import { ReactComponent as Logo } from "assets/images/icons/sea-dragon.svg";
+import { ScriptButton } from "common/components";
 
 export const Header = () => {
 	const dispatch = useAppDispatch();
@@ -79,7 +80,8 @@ export const Header = () => {
 					</Typography>
 				</Box>
 				{user ? (
-					<Fragment>
+					<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+						<ScriptButton />
 						<IconButton
 							aria-label="account menu"
 							color="inherit"
@@ -100,7 +102,7 @@ export const Header = () => {
 						>
 							<MenuItem onClick={signOut}>Sign Out</MenuItem>
 						</Menu>
-					</Fragment>
+					</Box>
 				) : (
 					<IconButton
 						aria-label="login"

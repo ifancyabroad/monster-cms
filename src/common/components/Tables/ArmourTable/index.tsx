@@ -40,9 +40,9 @@ const headCells: readonly HeadCell[] = [
 		label: "Armour Type",
 	},
 	{
-		id: "defence",
+		id: "armourClass",
 		align: "right",
-		label: "Defence",
+		label: "Armour Class",
 	},
 	{
 		id: "price",

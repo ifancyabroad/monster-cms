@@ -42,9 +42,9 @@ export const ATTRIBUTE_CONFIG: IPropertyConfig[] = [
 
 export const AUXILIARY_STAT_CONFIG: IPropertyConfig[] = [
 	{
-		key: AuxiliaryStat.Defence,
-		abbr: "DEF",
-		name: "Defence",
+		key: AuxiliaryStat.ArmourClass,
+		abbr: "AC",
+		name: "Armour Class",
 	},
 	{
 		key: AuxiliaryStat.HitChance,
@@ -55,11 +55,6 @@ export const AUXILIARY_STAT_CONFIG: IPropertyConfig[] = [
 		key: AuxiliaryStat.CritChance,
 		abbr: "CRT",
 		name: "Crit Chance",
-	},
-	{
-		key: AuxiliaryStat.HitPoints,
-		abbr: "HPS",
-		name: "Hit Points",
 	},
 ];
 
@@ -211,11 +206,11 @@ export const PROPERTY_CONFIG: Record<PropertyType, IPropertyTypeConfig> = {
 	},
 	[PropertyType.AuxiliaryStat]: {
 		name: "Auxiliary Stat",
-		min: -100,
-		max: 100,
-		step: 5,
+		min: -20,
+		max: 20,
+		step: 1,
 		prefix: "+",
-		suffix: "%",
+		suffix: "",
 		properties: AUXILIARY_STAT_CONFIG,
 	},
 	[PropertyType.Resistance]: {
