@@ -35,7 +35,8 @@ export const ArmourPropertiesTable: React.FC<IArmour> = (armour) => {
 							Armour Type
 						</TableCell>
 						<TableCell align="right">
-							{ARMOUR_TYPE_NAME_MAP[armour.armourType]}
+							{armour.armourType &&
+								ARMOUR_TYPE_NAME_MAP[armour.armourType]}
 						</TableCell>
 					</TableRow>
 					<TableRow>
@@ -44,9 +45,11 @@ export const ArmourPropertiesTable: React.FC<IArmour> = (armour) => {
 							scope="row"
 							sx={{ fontWeight: "medium" }}
 						>
-							Defence
+							Armour Class
 						</TableCell>
-						<TableCell align="right">{armour.defence}</TableCell>
+						<TableCell align="right">
+							{armour.armourClass}
+						</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableCell

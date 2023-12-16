@@ -3,13 +3,13 @@ import { ArmourType, EquipmentType } from "common/utils";
 
 export interface IBaseArmour {
 	type: EquipmentType;
-	armourType: ArmourType;
 	name: string;
 	description: string;
 	icon: string;
 	price: number;
 	level: number;
-	defence: number;
+	armourType?: ArmourType;
+	armourClass?: number;
 	properties?: TProperty[];
 }
 

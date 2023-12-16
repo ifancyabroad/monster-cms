@@ -24,7 +24,6 @@ import {
 	EquipmentType,
 	EQUIPMENT_ARMOUR_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
-	MAX_DEFENCE,
 	MAX_GOLD_VALUE,
 	MAX_ITEM_LEVEL,
 	ArmourType,
@@ -37,13 +36,13 @@ import { EditPropertyCard } from "common/components/PropertyCard";
 
 const defaultValues: IBaseArmour = {
 	type: EquipmentType.Armour,
-	armourType: ArmourType.Medium,
 	name: "",
 	description: "",
 	icon: "",
 	price: 100,
 	level: 1,
-	defence: 0,
+	armourType: ArmourType.Medium,
+	armourClass: 0,
 	properties: [],
 };
 
@@ -76,6 +75,7 @@ export const ArmourModal: React.FC = () => {
 		: "Add a new armour to the database.";
 	const armourProperties = formValues.armour.properties || [];
 	const hasProperties = armourProperties.length > 0;
+	const isChest = formValues.armour.type === EquipmentType.Armour;
 
 	useEffect(() => {
 		setFormValues({
@@ -155,16 +155,22 @@ export const ArmourModal: React.FC = () => {
 	const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
+			const {
+				armour: { armourClass, armourType, ...baseArmour },
+			} = formValues;
+			const filteredFormValues = isChest
+				? formValues
+				: { ...formValues, armour: baseArmour };
 
 			if (armour) {
 				const payload = {
-					...formValues,
+					...filteredFormValues,
 					id: armour.id,
 					oldImage: armour.icon,
 				};
 				await dispatch(updateArmour(payload)).unwrap();
 			} else {
-				await dispatch(saveArmour(formValues)).unwrap();
+				await dispatch(saveArmour(filteredFormValues)).unwrap();
 			}
 			dispatch(closeArmourModal());
 			setFormValues(defaultFormValues);
@@ -268,23 +274,25 @@ export const ArmourModal: React.FC = () => {
 									))}
 								</TextField>
 							</Grid>
-							<Grid item xs={6}>
-								<TextField
-									fullWidth
-									select
-									margin="dense"
-									label="Armour Type"
-									name="armourType"
-									value={formValues.armour.armourType}
-									onChange={handleChange}
-								>
-									{ARMOUR_TYPES.map((type) => (
-										<MenuItem key={type} value={type}>
-											{ARMOUR_TYPE_NAME_MAP[type]}
-										</MenuItem>
-									))}
-								</TextField>
-							</Grid>
+							{isChest && (
+								<Grid item xs={6}>
+									<TextField
+										fullWidth
+										select
+										margin="dense"
+										label="Armour Type"
+										name="armourType"
+										value={formValues.armour.armourType}
+										onChange={handleChange}
+									>
+										{ARMOUR_TYPES.map((type) => (
+											<MenuItem key={type} value={type}>
+												{ARMOUR_TYPE_NAME_MAP[type]}
+											</MenuItem>
+										))}
+									</TextField>
+								</Grid>
+							)}
 						</Grid>
 					</Box>
 					<Box my={3}>
@@ -296,24 +304,26 @@ export const ArmourModal: React.FC = () => {
 							Armour Properties
 						</DialogContentText>
 						<Grid container spacing={2}>
-							<Grid item xs={6} md={3}>
-								<TextField
-									fullWidth
-									variant="filled"
-									size="small"
-									margin="dense"
-									name="defence"
-									label={`Defence (0-${MAX_DEFENCE})`}
-									type="number"
-									value={formValues.armour.defence}
-									onChange={handleChange}
-									required
-									inputProps={{
-										min: 0,
-										max: MAX_DEFENCE,
-									}}
-								/>
-							</Grid>
+							{isChest && (
+								<Grid item xs={6} md={3}>
+									<TextField
+										fullWidth
+										variant="filled"
+										size="small"
+										margin="dense"
+										name="armourClass"
+										label={`Armour Class (0-20)`}
+										type="number"
+										value={formValues.armour.armourClass}
+										onChange={handleChange}
+										required
+										inputProps={{
+											min: 0,
+											max: 20,
+										}}
+									/>
+								</Grid>
+							)}
 							<Grid item xs={6} md={3}>
 								<TextField
 									fullWidth

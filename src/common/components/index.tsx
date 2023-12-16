@@ -7,3 +7,4 @@ export * from "./Tables";
 export * from "./LinearProgressWithLabel";
 export * from "./PropertyCard";
 export * from "./PageLoader";
+export * from "./ScriptButton";
