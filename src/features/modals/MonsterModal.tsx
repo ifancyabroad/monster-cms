@@ -9,12 +9,14 @@ import { useEffect, useMemo, useState } from "react";
 import {
 	Box,
 	Button,
+	Checkbox,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
 	FormControl,
+	FormControlLabel,
 	Grid,
 	List,
 	TextField,
@@ -30,6 +32,7 @@ import {
 	getResistancesArray,
 	getStatsArray,
 	ATTACK_SKILL_ID,
+	MAX_CHALLENGE_RATING,
 } from "common/utils";
 import { AddSkillsModal } from "./AddSkillsModal";
 import { EquipmentItem, SkillItem } from "./monsterModalComponents";
@@ -52,6 +55,7 @@ const defaultMonsterValues: IBaseMonster = {
 	description: "",
 	name: "",
 	portrait: "",
+	boss: false,
 	skills: [ATTACK_SKILL_ID],
 	stats: {
 		strength: 10,
@@ -110,8 +114,15 @@ export const MonsterModal: React.FC = () => {
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, type, value, valueAsNumber } = e.currentTarget;
-		const finalValue = type === "number" ? valueAsNumber : value;
+		const { name, type, value, valueAsNumber, checked } = e.currentTarget;
+
+		let finalValue: number | string | boolean = value;
+		if (type === "number") {
+			finalValue = valueAsNumber;
+		}
+		if (name === "boss") {
+			finalValue = checked;
+		}
 		setFormValues({
 			...formValues,
 			monster: {
@@ -334,7 +345,7 @@ export const MonsterModal: React.FC = () => {
 							component="h5"
 							gutterBottom
 						>
-							Difficulty Rating (1-30)
+							Difficulty Rating (1-{MAX_CHALLENGE_RATING})
 						</DialogContentText>
 						<Grid container spacing={2}>
 							<Grid item xs={4} md={2}>
@@ -350,9 +361,32 @@ export const MonsterModal: React.FC = () => {
 									onChange={handleChange}
 									required
 									inputProps={{
-										min: 0,
-										max: 30,
+										min: 1,
+										max: MAX_CHALLENGE_RATING,
 									}}
+								/>
+							</Grid>
+						</Grid>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Type
+						</DialogContentText>
+						<Grid container spacing={2}>
+							<Grid item xs={4} md={2}>
+								<FormControlLabel
+									control={
+										<Checkbox
+											name="boss"
+											checked={formValues.monster.boss}
+											onChange={handleChange}
+										/>
+									}
+									label="Boss"
 								/>
 							</Grid>
 						</Grid>
