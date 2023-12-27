@@ -2,28 +2,25 @@
 
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "common/hooks";
-import { IUpdateArmour } from "common/types";
-import { EquipmentType } from "common/utils";
-import { updateArmour } from "features/armours";
+import { IUpdateMonster } from "common/types";
+import { updateMonster } from "features/monsters";
 
 export const ScriptButton: React.FC = () => {
 	const dispatch = useAppDispatch();
-	const armours = useAppSelector((state) => state.armours.armours);
+	const monsters = useAppSelector((state) => state.monsters.monsters);
 
 	const run = () => {
-		armours.forEach(({ id, ...armour }) => {
-			armour.defence = null;
-			if (armour.type !== EquipmentType.Armour) {
-				armour.armourType = null;
-			}
-			const payload: IUpdateArmour = {
+		monsters.forEach(({ id, ...monster }) => {
+			monster.boss = false;
+
+			const payload: IUpdateMonster = {
 				id,
 				image: null,
-				oldImage: armour.icon,
-				armour,
+				oldImage: monster.portrait,
+				monster,
 			};
-			console.log("updateArmour", payload);
-			dispatch(updateArmour(payload));
+			console.log("updateMonster", payload);
+			dispatch(updateMonster(payload));
 		});
 	};
 

@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { IMonsterFilters } from "common/types";
 import SearchIcon from "@mui/icons-material/Search";
+import { MAX_CHALLENGE_RATING } from "common/utils";
 
 interface IProps {
 	filters: IMonsterFilters;
@@ -56,7 +57,7 @@ export const TableFilters: React.FC<IProps> = ({
 						valueLabelDisplay="auto"
 						step={1}
 						min={1}
-						max={30}
+						max={MAX_CHALLENGE_RATING}
 					/>
 				</Grid>
 			</Grid>

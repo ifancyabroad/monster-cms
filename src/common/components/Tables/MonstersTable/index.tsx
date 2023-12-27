@@ -21,6 +21,7 @@ import { TableFilters } from "./TableFilters";
 import {
 	applyMonstersFilters,
 	getMonstersComparator,
+	MAX_CHALLENGE_RATING,
 	Stat,
 	STATS_ABBR_MAP,
 	STATS_NAME_MAP,
@@ -141,7 +142,7 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 
 const defaultFilters: IMonsterFilters = {
 	name: "",
-	challenge: 30,
+	challenge: MAX_CHALLENGE_RATING,
 };
 
 export const MonstersTable: React.FC = () => {
