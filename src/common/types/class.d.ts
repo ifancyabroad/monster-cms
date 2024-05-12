@@ -5,6 +5,7 @@ export interface IBaseCharacterClass {
 	description: string;
 	name: string;
 	portrait: string;
+	icon: string;
 	skillClasses: SkillClass[];
 	armourTypes: ArmourType[];
 	weaponTypes: WeaponType[];
@@ -20,11 +21,13 @@ export interface ICharacterClass extends IBaseCharacterClass {
 export interface ISaveClass {
 	characterClass: IBaseCharacterClass;
 	image: File | null;
+	icon: File | null;
 }
 
 export interface IUpdateClass extends ISaveClass {
 	id: string;
 	oldImage?: string;
+	oldIcon?: string;
 }
 
 export interface IClassFilters {

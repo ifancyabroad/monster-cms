@@ -19,6 +19,7 @@ import {
 	FormControlLabel,
 	FormGroup,
 	List,
+	Stack,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -53,6 +54,7 @@ const defaultClassValues: IBaseCharacterClass = {
 	description: "",
 	name: "",
 	portrait: "",
+	icon: "",
 	skillClasses: [SkillClass.Warrior],
 	armourTypes: [ArmourType.Heavy],
 	weaponTypes: [WeaponType.Sword],
@@ -71,6 +73,7 @@ const defaultClassValues: IBaseCharacterClass = {
 const defaultFormValues: ISaveClass = {
 	characterClass: defaultClassValues,
 	image: null,
+	icon: null,
 };
 
 const getBaseClassValues = (characterClass: ICharacterClass) => {
@@ -110,6 +113,7 @@ export const ClassModal: React.FC = () => {
 		setFormValues({
 			characterClass: classValues || defaultClassValues,
 			image: null,
+			icon: null,
 		});
 	}, [classValues]);
 
@@ -138,6 +142,19 @@ export const ClassModal: React.FC = () => {
 			characterClass: {
 				...formValues.characterClass,
 				portrait,
+			},
+		});
+	};
+
+	const handleChangeIcon = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const icon = e.currentTarget.files?.item(0) || null;
+		const iconName = icon?.name || "";
+		setFormValues({
+			...formValues,
+			icon,
+			characterClass: {
+				...formValues.characterClass,
+				icon: iconName,
 			},
 		});
 	};
@@ -336,7 +353,7 @@ export const ClassModal: React.FC = () => {
 			<form onSubmit={handleSaveClass}>
 				<DialogContent>
 					<DialogContentText>{subtitle}</DialogContentText>
-					<Box my={3}>
+					<Stack spacing={1} my={3}>
 						<FormControl>
 							<input
 								accept="image/*"
@@ -362,7 +379,32 @@ export const ClassModal: React.FC = () => {
 								)}
 							</label>
 						</FormControl>
-					</Box>
+						<FormControl>
+							<input
+								accept="image/*"
+								style={{ display: "none" }}
+								id="contained-button-file-2"
+								multiple
+								type="file"
+								onChange={handleChangeIcon}
+							/>
+							<label htmlFor="contained-button-file-2">
+								<Button variant="contained" component="span">
+									Upload Icon
+								</Button>
+								{formValues.icon && (
+									<Typography
+										sx={{
+											marginLeft: 2,
+											display: "inline",
+										}}
+									>
+										{formValues.icon.name}
+									</Typography>
+								)}
+							</label>
+						</FormControl>
+					</Stack>
 					<Box my={3}>
 						<TextField
 							autoFocus

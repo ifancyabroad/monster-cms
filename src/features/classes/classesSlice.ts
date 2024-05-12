@@ -40,9 +40,18 @@ export const saveClass = createAsyncThunk(
 			if (payload.image) {
 				const imageRef = stImages
 					.child("classes")
-					.child(newClassRef.key!);
+					.child(newClassRef.key!)
+					.child("portrait");
 				await imageRef.put(payload.image);
 				newClass.portrait = await imageRef.getDownloadURL();
+			}
+			if (payload.icon) {
+				const iconRef = stImages
+					.child("classes")
+					.child(newClassRef.key!)
+					.child("icon");
+				await iconRef.put(payload.icon);
+				newClass.icon = await iconRef.getDownloadURL();
 			}
 			return await newClassRef.set(newClass);
 		} catch (error) {
@@ -61,9 +70,23 @@ export const updateClass = createAsyncThunk(
 				await deleteImage(payload.id);
 			}
 			if (payload.image) {
-				const imageRef = stImages.child("classes").child(payload.id);
+				const imageRef = stImages
+					.child("classes")
+					.child(payload.id)
+					.child("portrait");
 				await imageRef.put(payload.image);
 				newClass.portrait = await imageRef.getDownloadURL();
+			}
+			if (payload.icon && payload.oldIcon) {
+				await deleteImage(payload.id);
+			}
+			if (payload.icon) {
+				const iconRef = stImages
+					.child("classes")
+					.child(payload.id)
+					.child("icon");
+				await iconRef.put(payload.icon);
+				newClass.icon = await iconRef.getDownloadURL();
 			}
 			return await dbClasses.child(payload.id).update(newClass);
 		} catch (error) {
@@ -77,7 +100,7 @@ export const deleteClass = createAsyncThunk(
 	"classes/deleteClass",
 	async (payload: ICharacterClass) => {
 		try {
-			if (payload.portrait) {
+			if (payload.portrait || payload.icon) {
 				await deleteImage(payload.id);
 			}
 			return await dbClasses.child(payload.id).remove();

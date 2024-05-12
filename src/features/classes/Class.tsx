@@ -96,45 +96,68 @@ export const Class: React.FC = () => {
 					</Box>
 				)}
 			</Box>
-			<Box
-				sx={{
-					marginBottom: 3,
-					width: "100%",
-					maxWidth: 600,
-					aspectRatio: "1/1",
-				}}
-			>
-				{isLoading ? (
+			<Box display="flex" gap={3}>
+				<Box
+					sx={{
+						marginBottom: 3,
+						width: "100%",
+						maxWidth: 256,
+						aspectRatio: "1/1",
+					}}
+				>
+					{isLoading ? (
+						<Box
+							sx={{
+								height: "100%",
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+						>
+							<CircularProgress />
+						</Box>
+					) : characterClass.portrait ? (
+						<Box
+							component="img"
+							sx={{
+								maxWidth: "100%",
+								verticalAlign: "middle",
+							}}
+							src={characterClass.portrait}
+							alt={characterClass.name}
+						/>
+					) : (
+						<Box
+							component="img"
+							sx={{
+								maxWidth: "100%",
+								verticalAlign: "middle",
+							}}
+							src="https://via.placeholder.com/600"
+							alt={characterClass.name}
+						/>
+					)}
+				</Box>
+
+				{characterClass.icon && (
 					<Box
 						sx={{
+							marginBottom: 3,
 							height: "100%",
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
+							maxHeight: 256,
+							aspectRatio: "1/1",
 						}}
 					>
-						<CircularProgress />
+						<Box
+							component="img"
+							sx={{
+								maxHeight: "100%",
+								verticalAlign: "middle",
+							}}
+							src={characterClass.icon}
+							alt={characterClass.name}
+						/>
 					</Box>
-				) : characterClass.portrait ? (
-					<Box
-						component="img"
-						sx={{
-							maxWidth: "100%",
-							verticalAlign: "middle",
-						}}
-						src={characterClass.portrait}
-						alt={characterClass.name}
-					/>
-				) : (
-					<Box
-						component="img"
-						sx={{
-							maxWidth: "100%",
-							verticalAlign: "middle",
-						}}
-						src="https://via.placeholder.com/600"
-						alt={characterClass.name}
-					/>
 				)}
 			</Box>
 
