@@ -81,6 +81,7 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 	return (
 		<TableHead>
 			<MUITableRow>
+				<TableCell />
 				{headCells.map((headCell) => (
 					<TableCell
 						key={headCell.id}

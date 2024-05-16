@@ -12,6 +12,7 @@ import { ConfirmationModal } from "features/modals";
 import { TableDefaultActions } from "./TableDefaultActions";
 import { TableAddActions } from "./TableAddActions";
 import { AuthContext } from "common/context";
+import { SkillIcon } from "features/skills";
 
 interface IProps {
 	skill: ISkill;
@@ -46,6 +47,9 @@ export const TableRow: React.FC<IProps> = ({ skill, type }) => {
 	return (
 		<Fragment>
 			<MUITableRow hover tabIndex={-1}>
+				<TableCell>
+					<SkillIcon skill={skill} />
+				</TableCell>
 				<TableCell
 					component="th"
 					id={`skill-table-${skill.name}`}
