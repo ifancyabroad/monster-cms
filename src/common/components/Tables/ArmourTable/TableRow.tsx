@@ -7,7 +7,7 @@ import { TableDefaultActions } from "./TableDefaultActions";
 import { TableAddActions } from "./TableAddActions";
 import { AuthContext } from "common/context";
 import { deleteArmour } from "features/armours";
-import { EquipmentTypeIcon } from "features/equipment";
+import { EquipmentIcon, EquipmentTypeIcon } from "features/equipment";
 import { ARMOUR_TYPE_NAME_MAP } from "common/utils";
 
 interface IProps {
@@ -43,6 +43,9 @@ export const TableRow: React.FC<IProps> = ({ armour, type }) => {
 	return (
 		<Fragment>
 			<MUITableRow hover tabIndex={-1}>
+				<TableCell>
+					<EquipmentIcon equipment={armour} />
+				</TableCell>
 				<TableCell
 					component="th"
 					id={`table-${armour.name}`}

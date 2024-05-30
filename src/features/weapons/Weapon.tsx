@@ -1,6 +1,5 @@
 import {
 	Box,
-	CircularProgress,
 	Divider,
 	Grid,
 	IconButton,
@@ -22,6 +21,7 @@ import { WeaponPropertiesTable } from "./WeaponPropertiesTable";
 import { EffectCard, PropertyCard } from "common/components";
 import { AuthContext } from "common/context";
 import { deleteWeapon, selectWeaponById } from "./weaponsSlice";
+import { EquipmentIcon } from "features/equipment";
 
 interface IRouteParams {
 	id: string;
@@ -98,62 +98,33 @@ export const Weapon: React.FC = () => {
 
 			<Box
 				sx={{
-					marginBottom: 3,
-					width: "100%",
-					maxWidth: 600,
-					aspectRatio: "1/1",
-				}}
-			>
-				{isLoading ? (
-					<Box
-						sx={{
-							height: "100%",
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
-						}}
-					>
-						<CircularProgress />
-					</Box>
-				) : weapon.icon ? (
-					<Box
-						component="img"
-						sx={{
-							maxWidth: "100%",
-							verticalAlign: "middle",
-						}}
-						src={weapon.icon}
-						alt={weapon.name}
-					/>
-				) : (
-					<Box
-						component="img"
-						sx={{
-							maxWidth: "100%",
-							verticalAlign: "middle",
-						}}
-						src="https://via.placeholder.com/600"
-						alt={weapon.name}
-					/>
-				)}
-			</Box>
-
-			<Box
-				sx={{
 					marginBottom: 4,
 				}}
 			>
-				<Typography
-					variant="body2"
-					color="textSecondary"
-					component="h5"
-					gutterBottom
+				<Box
+					sx={{
+						display: "flex",
+						alignItems: "flex-start",
+						gap: 2,
+						marginBottom: 3,
+					}}
 				>
-					Description
-				</Typography>
-				<Typography variant="h5" paragraph>
-					{weapon.description || "No description available."}
-				</Typography>
+					<EquipmentIcon equipment={weapon} width={64} />
+
+					<Box>
+						<Typography
+							variant="body2"
+							color="textSecondary"
+							component="h5"
+							gutterBottom
+						>
+							Description
+						</Typography>
+						<Typography variant="h5" paragraph>
+							{weapon.description || "No description available."}
+						</Typography>
+					</Box>
+				</Box>
 				<Divider />
 			</Box>
 

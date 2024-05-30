@@ -1,6 +1,5 @@
 import {
 	Box,
-	CircularProgress,
 	Divider,
 	Grid,
 	IconButton,
@@ -22,6 +21,7 @@ import { ArmourPropertiesTable } from "./ArmourPropertiesTable";
 import { AuthContext } from "common/context";
 import { deleteArmour, selectArmourById } from "./armoursSlice";
 import { PropertyCard } from "common/components";
+import { EquipmentIcon } from "features/equipment";
 
 interface IRouteParams {
 	id: string;
@@ -98,62 +98,33 @@ export const Armour: React.FC = () => {
 
 			<Box
 				sx={{
-					marginBottom: 3,
-					width: "100%",
-					maxWidth: 600,
-					aspectRatio: "1/1",
-				}}
-			>
-				{isLoading ? (
-					<Box
-						sx={{
-							height: "100%",
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
-						}}
-					>
-						<CircularProgress />
-					</Box>
-				) : armour.icon ? (
-					<Box
-						component="img"
-						sx={{
-							maxWidth: "100%",
-							verticalAlign: "middle",
-						}}
-						src={armour.icon}
-						alt={armour.name}
-					/>
-				) : (
-					<Box
-						component="img"
-						sx={{
-							maxWidth: "100%",
-							verticalAlign: "middle",
-						}}
-						src="https://via.placeholder.com/600"
-						alt={armour.name}
-					/>
-				)}
-			</Box>
-
-			<Box
-				sx={{
 					marginBottom: 4,
 				}}
 			>
-				<Typography
-					variant="body2"
-					color="textSecondary"
-					component="h5"
-					gutterBottom
+				<Box
+					sx={{
+						display: "flex",
+						alignItems: "flex-start",
+						gap: 2,
+						marginBottom: 3,
+					}}
 				>
-					Description
-				</Typography>
-				<Typography variant="h5" paragraph>
-					{armour.description || "No description available."}
-				</Typography>
+					<EquipmentIcon equipment={armour} width={64} />
+
+					<Box>
+						<Typography
+							variant="body2"
+							color="textSecondary"
+							component="h5"
+							gutterBottom
+						>
+							Description
+						</Typography>
+						<Typography variant="h5" paragraph>
+							{armour.description || "No description available."}
+						</Typography>
+					</Box>
+				</Box>
 				<Divider />
 			</Box>
 
