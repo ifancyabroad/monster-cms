@@ -122,7 +122,7 @@ export const MonsterModal: React.FC = () => {
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, type, value, valueAsNumber, checked } = e.currentTarget;
+		const { name, type, value, valueAsNumber, checked } = e.target;
 
 		let finalValue: number | string | boolean = value;
 		if (type === "number") {
