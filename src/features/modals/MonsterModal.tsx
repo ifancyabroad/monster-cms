@@ -33,6 +33,7 @@ import {
 	getStatsArray,
 	ATTACK_SKILL_ID,
 	MAX_CHALLENGE_RATING,
+	MAX_DAMAGE,
 } from "common/utils";
 import { AddSkillsModal } from "./AddSkillsModal";
 import { EquipmentItem, SkillItem } from "./monsterModalComponents";
@@ -65,6 +66,9 @@ const defaultMonsterValues: IBaseMonster = {
 		wisdom: 10,
 		charisma: 10,
 	},
+	naturalArmourClass: 0,
+	naturalMinDamage: 1,
+	naturalMaxDamage: 4,
 	equipment: {},
 };
 
@@ -363,6 +367,73 @@ export const MonsterModal: React.FC = () => {
 									inputProps={{
 										min: 1,
 										max: MAX_CHALLENGE_RATING,
+									}}
+								/>
+							</Grid>
+						</Grid>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Natural Properties
+						</DialogContentText>
+						<Grid container spacing={2}>
+							<Grid item xs={4} md={2}>
+								<TextField
+									fullWidth
+									variant="filled"
+									size="small"
+									margin="dense"
+									name="naturalMinDamage"
+									label={`Min Dmg (1-${MAX_DAMAGE})`}
+									type="number"
+									value={formValues.monster.naturalMinDamage}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 1,
+										max: MAX_DAMAGE,
+									}}
+								/>
+							</Grid>
+							<Grid item xs={4} md={2}>
+								<TextField
+									fullWidth
+									variant="filled"
+									size="small"
+									margin="dense"
+									name="naturalMaxDamage"
+									label={`Max Dmg (1-${MAX_DAMAGE})`}
+									type="number"
+									value={formValues.monster.naturalMaxDamage}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 1,
+										max: MAX_DAMAGE,
+									}}
+								/>
+							</Grid>
+							<Grid item xs={4} md={2}>
+								<TextField
+									fullWidth
+									variant="filled"
+									size="small"
+									margin="dense"
+									name="naturalArmourClass"
+									label={`AC (0-20)`}
+									type="number"
+									value={
+										formValues.monster.naturalArmourClass
+									}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 0,
+										max: 20,
 									}}
 								/>
 							</Grid>

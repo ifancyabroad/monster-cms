@@ -10,6 +10,9 @@ export interface IBaseMonster {
 	boss: boolean;
 	skills: string[];
 	stats: TStats;
+	naturalArmourClass: number;
+	naturalMinDamage: number;
+	naturalMaxDamage: number;
 	equipment?: Partial<TEquipment>;
 }
 

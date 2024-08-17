@@ -108,7 +108,7 @@ export const Monster: React.FC = () => {
 				sx={{
 					marginBottom: 3,
 					width: "100%",
-					maxWidth: 600,
+					maxWidth: 400,
 					aspectRatio: "1/1",
 				}}
 			>

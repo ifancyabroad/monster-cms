@@ -11,7 +11,9 @@ export const ScriptButton: React.FC = () => {
 
 	const run = () => {
 		monsters.forEach(({ id, ...monster }) => {
-			monster.boss = false;
+			monster.naturalArmourClass = 0;
+			monster.naturalMinDamage = 1;
+			monster.naturalMaxDamage = 4;
 
 			const payload: IUpdateMonster = {
 				id,
