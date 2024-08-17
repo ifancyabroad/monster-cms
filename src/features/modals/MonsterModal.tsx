@@ -19,6 +19,7 @@ import {
 	FormControlLabel,
 	Grid,
 	List,
+	MenuItem,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -34,6 +35,8 @@ import {
 	ATTACK_SKILL_ID,
 	MAX_CHALLENGE_RATING,
 	MAX_DAMAGE,
+	RESISTANCES,
+	RESISTANCES_NAME_MAP,
 } from "common/utils";
 import { AddSkillsModal } from "./AddSkillsModal";
 import { EquipmentItem, SkillItem } from "./monsterModalComponents";
@@ -67,6 +70,7 @@ const defaultMonsterValues: IBaseMonster = {
 		charisma: 10,
 	},
 	naturalArmourClass: 0,
+	naturalDamageType: DamageType.Crushing,
 	naturalMinDamage: 1,
 	naturalMaxDamage: 4,
 	equipment: {},
@@ -381,7 +385,7 @@ export const MonsterModal: React.FC = () => {
 							Natural Properties
 						</DialogContentText>
 						<Grid container spacing={2}>
-							<Grid item xs={4} md={2}>
+							<Grid item xs={6} md={4}>
 								<TextField
 									fullWidth
 									variant="filled"
@@ -399,7 +403,7 @@ export const MonsterModal: React.FC = () => {
 									}}
 								/>
 							</Grid>
-							<Grid item xs={4} md={2}>
+							<Grid item xs={6} md={4}>
 								<TextField
 									fullWidth
 									variant="filled"
@@ -417,7 +421,7 @@ export const MonsterModal: React.FC = () => {
 									}}
 								/>
 							</Grid>
-							<Grid item xs={4} md={2}>
+							<Grid item xs={6} md={4}>
 								<TextField
 									fullWidth
 									variant="filled"
@@ -436,6 +440,26 @@ export const MonsterModal: React.FC = () => {
 										max: 20,
 									}}
 								/>
+							</Grid>
+							<Grid item xs={6} md={4}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Damage Type"
+									name="naturalDamageType"
+									value={formValues.monster.naturalDamageType}
+									onChange={handleChange}
+								>
+									{RESISTANCES.map((resistance) => (
+										<MenuItem
+											key={resistance}
+											value={resistance}
+										>
+											{RESISTANCES_NAME_MAP[resistance]}
+										</MenuItem>
+									))}
+								</TextField>
 							</Grid>
 						</Grid>
 					</Box>

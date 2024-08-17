@@ -1,5 +1,5 @@
 import { TDamageTypes, TEquipment, TStats } from "common/types";
-import { Stat } from "common/utils";
+import { DamageType, Stat } from "common/utils";
 
 export interface IBaseMonster {
 	challenge: number;
@@ -11,6 +11,7 @@ export interface IBaseMonster {
 	skills: string[];
 	stats: TStats;
 	naturalArmourClass: number;
+	naturalDamageType: DamageType;
 	naturalMinDamage: number;
 	naturalMaxDamage: number;
 	equipment?: Partial<TEquipment>;
