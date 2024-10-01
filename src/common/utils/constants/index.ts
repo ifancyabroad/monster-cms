@@ -233,6 +233,7 @@ export const WEAPON_TYPES = [
 	WeaponType.Spear,
 	WeaponType.Staff,
 	WeaponType.Sword,
+	WeaponType.Wand,
 ] as const;
 
 export const WEAPON_SIZES = [
@@ -293,6 +294,7 @@ export const EQUIPMENT_TYPE_NAME_MAP: Record<
 	[WeaponType.Spear]: "Spear",
 	[WeaponType.Staff]: "Staff",
 	[WeaponType.Sword]: "Sword",
+	[WeaponType.Wand]: "Wand",
 };
 
 export const EQUIPMENT_SLOT_TYPE_MAP: Record<EquipmentType, EquipmentSlot[]> = {

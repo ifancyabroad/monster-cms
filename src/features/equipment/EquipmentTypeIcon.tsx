@@ -22,6 +22,7 @@ import maceIcon from "assets/images/icons/flanged-mace.svg";
 import spearIcon from "assets/images/icons/barbed-spear.svg";
 import staffIcon from "assets/images/icons/wizard-staff.svg";
 import swordIcon from "assets/images/icons/broadsword.svg";
+import wandIcon from "assets/images/icons/crystal-wand.svg";
 import { Tooltip } from "@mui/material";
 import { IArmour, IWeapon } from "common/types";
 
@@ -45,6 +46,7 @@ const EQUIPMENT_TYPE_ICON_MAP: Record<EquipmentType | WeaponType, string> = {
 	[WeaponType.Spear]: spearIcon,
 	[WeaponType.Staff]: staffIcon,
 	[WeaponType.Sword]: swordIcon,
+	[WeaponType.Wand]: wandIcon,
 };
 
 interface IProps {
