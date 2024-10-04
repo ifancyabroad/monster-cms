@@ -49,7 +49,7 @@ export const Login: React.FC = () => {
 					>
 						<Logo height={32} width={32} />
 						<Typography variant="h6" fontWeight="bold">
-							Monster Manual
+							Browser Heroes
 						</Typography>
 					</Box>
 					<Typography>

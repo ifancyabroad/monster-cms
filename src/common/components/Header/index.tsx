@@ -76,7 +76,7 @@ export const Header = () => {
 				>
 					<Logo height={32} width={32} />
 					<Typography variant="h6" fontWeight="bold">
-						Monster Manual
+						Browser Heroes
 					</Typography>
 				</Box>
 				{user ? (
