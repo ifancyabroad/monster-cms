@@ -1,8 +1,9 @@
 import { TDamageTypes, TEquipment, TStats } from "common/types";
-import { DamageType, Stat } from "common/utils";
+import { DamageType, Stat, Zone } from "common/utils";
 
 export interface IBaseMonster {
 	challenge: number;
+	zone: Zone;
 	resistances: TDamageTypes;
 	description: string;
 	name: string;

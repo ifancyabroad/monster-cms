@@ -37,13 +37,16 @@ import {
 	MAX_DAMAGE,
 	RESISTANCES,
 	RESISTANCES_NAME_MAP,
+	Zone,
+	ZONES,
 } from "common/utils";
 import { AddSkillsModal } from "./AddSkillsModal";
 import { EquipmentItem, SkillItem } from "./monsterModalComponents";
 import { AddEquipmentModal } from "./AddEquipmentModal";
 
 const defaultMonsterValues: IBaseMonster = {
-	challenge: 1,
+	challenge: 10,
+	zone: Zone.Forest,
 	resistances: {
 		[DamageType.Slashing]: 0,
 		[DamageType.Crushing]: 0,
@@ -329,6 +332,39 @@ export const MonsterModal: React.FC = () => {
 								maxLength: 200,
 							}}
 						/>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Zone
+						</DialogContentText>
+						<Grid container spacing={2}>
+							<Grid item xs={12} md={4}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Zone"
+									name="zone"
+									value={formValues.monster.zone}
+									onChange={handleChange}
+									sx={{ textTransform: "capitalize" }}
+								>
+									{ZONES.map((zone) => (
+										<MenuItem
+											key={zone}
+											value={zone}
+											sx={{ textTransform: "capitalize" }}
+										>
+											{zone}
+										</MenuItem>
+									))}
+								</TextField>
+							</Grid>
+						</Grid>
 					</Box>
 					<StatGroup
 						title="Stats (1-30)"

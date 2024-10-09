@@ -122,3 +122,9 @@ export enum ArmourType {
 	Light = "light",
 	Miscellaneous = "misc",
 }
+
+export enum Zone {
+	Forest = "forest",
+	Hills = "hills",
+	Hell = "hell",
+}

@@ -81,6 +81,16 @@ const headCells: readonly HeadCell[] = [
 		align: "right",
 		label: "Challenge",
 	},
+	{
+		id: "boss",
+		align: "right",
+		label: "Boss",
+	},
+	{
+		id: "zone",
+		align: "right",
+		label: "Zone",
+	},
 ];
 
 interface EnhancedTableProps {

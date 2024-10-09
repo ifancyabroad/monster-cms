@@ -7,6 +7,8 @@ import { ConfirmationModal } from "features/modals";
 import { AuthContext } from "common/context";
 import { deleteMonster } from "features/monsters";
 import { TableDefaultActions } from "./TableDefaultActions";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 interface IProps {
 	monster: IMonster;
@@ -53,6 +55,16 @@ export const TableRow: React.FC<IProps> = ({ monster }) => {
 					</TableCell>
 				))}
 				<TableCell align="right">{monster.challenge}</TableCell>
+				<TableCell align="right">
+					{monster.boss ? (
+						<CheckCircleIcon color="success" />
+					) : (
+						<CancelIcon color="error" />
+					)}
+				</TableCell>
+				<TableCell align="right" sx={{ textTransform: "capitalize" }}>
+					{monster.zone}
+				</TableCell>
 				{user && (
 					<TableCell>
 						<TableDefaultActions

@@ -11,6 +11,7 @@ import {
 	WeaponSize,
 	WeaponType,
 	ArmourType,
+	Zone,
 } from "common/utils";
 
 export const DRAWER_TOP = 64;
@@ -18,7 +19,7 @@ export const DRAWER_WIDTH = 240;
 
 export const MAX_SKILL_LEVEL = 4;
 export const MAX_ITEM_LEVEL = 4;
-export const MAX_CHALLENGE_RATING = 5;
+export const MAX_CHALLENGE_RATING = 30;
 export const MAX_GOLD_VALUE = 10000;
 export const MAX_SKILL_USES = 20;
 export const MAX_DURATION = 20;
@@ -334,5 +335,7 @@ export const EQUIPMENT_SLOT_NAME_MAP: Record<EquipmentSlot, string> = {
 	[EquipmentSlot.Hand1]: "Main Hand",
 	[EquipmentSlot.Hand2]: "Off Hand",
 };
+
+export const ZONES = [Zone.Forest, Zone.Hills, Zone.Hell] as const;
 
 export * from "./config";
