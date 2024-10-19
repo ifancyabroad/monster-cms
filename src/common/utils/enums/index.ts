@@ -126,5 +126,7 @@ export enum ArmourType {
 export enum Zone {
 	Forest = "forest",
 	Hills = "hills",
-	Hell = "hell",
+	Volcano = "volvano",
+	Desert = "desert",
+	Ocean = "ocean",
 }

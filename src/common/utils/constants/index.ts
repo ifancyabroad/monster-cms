@@ -336,6 +336,12 @@ export const EQUIPMENT_SLOT_NAME_MAP: Record<EquipmentSlot, string> = {
 	[EquipmentSlot.Hand2]: "Off Hand",
 };
 
-export const ZONES = [Zone.Forest, Zone.Hills, Zone.Hell] as const;
+export const ZONES = [
+	Zone.Forest,
+	Zone.Desert,
+	Zone.Ocean,
+	Zone.Hills,
+	Zone.Volcano,
+] as const;
 
 export * from "./config";
