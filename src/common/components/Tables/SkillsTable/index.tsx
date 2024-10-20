@@ -49,11 +49,6 @@ const headCells: readonly HeadCell[] = [
 		label: "Max Uses",
 	},
 	{
-		id: "price",
-		align: "right",
-		label: "Value",
-	},
-	{
 		id: "level",
 		align: "right",
 		label: "Level",
@@ -129,7 +124,7 @@ interface IProps {
 export const SkillsTable: React.FC<IProps> = ({ type = "default" }) => {
 	const skillsList = useAppSelector((state) => state.skills.skills);
 	const [order, setOrder] = useState<TOrder>("asc");
-	const [orderBy, setOrderBy] = useState<TSkillsOrderBy>("name");
+	const [orderBy, setOrderBy] = useState<TSkillsOrderBy>("level");
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(25);
 	const [filters, setFilters] = useState<ISkillFilters>(defaultFilters);

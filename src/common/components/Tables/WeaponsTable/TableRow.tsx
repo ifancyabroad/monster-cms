@@ -59,6 +59,8 @@ export const TableRow: React.FC<IProps> = ({ weapon, type }) => {
 				<TableCell>{RESISTANCES_NAME_MAP[weapon.damageType]}</TableCell>
 				<TableCell>{WEAPON_SIZE_NAME_MAP[weapon.size]}</TableCell>
 				<TableCell align="right">{weapon.price}</TableCell>
+				<TableCell align="right">{weapon.min}</TableCell>
+				<TableCell align="right">{weapon.max}</TableCell>
 				<TableCell align="right">{weapon.level}</TableCell>
 				{user && (
 					<TableCell>

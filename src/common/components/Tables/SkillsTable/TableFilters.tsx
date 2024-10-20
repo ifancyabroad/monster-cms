@@ -12,7 +12,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import {
 	CLASSES,
 	CLASS_NAME_MAP,
-	MAX_GOLD_VALUE,
 	MAX_SKILL_LEVEL,
 	SKILL_TYPES,
 	SKILL_TYPE_NAME_MAP,
@@ -90,19 +89,6 @@ export const TableFilters: React.FC<IProps> = ({
 							</MenuItem>
 						))}
 					</TextField>
-				</Grid>
-				<Grid item xs={6} md={3}>
-					<Typography variant="body2">Price</Typography>
-					<Slider
-						size="small"
-						name="price"
-						value={filters.price}
-						onChange={onChangeSlider}
-						valueLabelDisplay="auto"
-						step={100}
-						min={100}
-						max={MAX_GOLD_VALUE}
-					/>
 				</Grid>
 				<Grid item xs={6} md={3}>
 					<Typography variant="body2">Level</Typography>

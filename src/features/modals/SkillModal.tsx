@@ -28,7 +28,6 @@ import {
 	SkillClass,
 	CLASSES,
 	CLASS_NAME_MAP,
-	MAX_GOLD_VALUE,
 	MAX_SKILL_LEVEL,
 	MAX_SKILL_USES,
 	SKILL_EFFECTS,
@@ -296,23 +295,6 @@ export const SkillModal: React.FC = () => {
 									inputProps={{
 										min: 0,
 										max: MAX_SKILL_LEVEL,
-									}}
-								/>
-							</Grid>
-							<Grid item xs={6}>
-								<TextField
-									fullWidth
-									margin="dense"
-									name="price"
-									label={`Price (0-${MAX_GOLD_VALUE})`}
-									type="number"
-									value={formValues.skill.price}
-									onChange={handleChange}
-									required
-									inputProps={{
-										min: 0,
-										max: MAX_GOLD_VALUE,
-										step: 10,
 									}}
 								/>
 							</Grid>

@@ -125,7 +125,7 @@ interface IProps {
 export const ArmoursTable: React.FC<IProps> = ({ type = "default" }) => {
 	const armoursList = useAppSelector((state) => state.armours.armours);
 	const [order, setOrder] = useState<TOrder>("asc");
-	const [orderBy, setOrderBy] = useState<TArmoursOrderBy>("name");
+	const [orderBy, setOrderBy] = useState<TArmoursOrderBy>("level");
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(25);
 	const [filters, setFilters] = useState<IArmourFilters>(defaultFilters);

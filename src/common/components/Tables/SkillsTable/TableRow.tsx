@@ -62,7 +62,6 @@ export const TableRow: React.FC<IProps> = ({ skill, type }) => {
 					{SKILL_TYPE_NAME_MAP[getSkillType(skill)]}
 				</TableCell>
 				<TableCell align="right">{skill.maxUses}</TableCell>
-				<TableCell align="right">{skill.price}</TableCell>
 				<TableCell align="right">{skill.level}</TableCell>
 				{user && (
 					<TableCell>

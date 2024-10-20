@@ -49,6 +49,16 @@ const headCells: readonly HeadCell[] = [
 		label: "Value",
 	},
 	{
+		id: "min",
+		align: "right",
+		label: "Min",
+	},
+	{
+		id: "max",
+		align: "right",
+		label: "Max",
+	},
+	{
 		id: "level",
 		align: "right",
 		label: "Level",
@@ -124,7 +134,7 @@ interface IProps {
 export const WeaponsTable: React.FC<IProps> = ({ type = "default" }) => {
 	const weaponsList = useAppSelector((state) => state.weapons.weapons);
 	const [order, setOrder] = useState<TOrder>("asc");
-	const [orderBy, setOrderBy] = useState<TWeaponsOrderBy>("name");
+	const [orderBy, setOrderBy] = useState<TWeaponsOrderBy>("level");
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(25);
 	const [filters, setFilters] = useState<IWeaponFilters>(defaultFilters);

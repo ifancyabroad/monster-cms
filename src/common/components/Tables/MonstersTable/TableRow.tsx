@@ -56,6 +56,11 @@ export const TableRow: React.FC<IProps> = ({ monster }) => {
 				))}
 				<TableCell align="right">{monster.challenge}</TableCell>
 				<TableCell align="right">
+					{monster.naturalArmourClass}
+				</TableCell>
+				<TableCell align="right">{monster.naturalMinDamage}</TableCell>
+				<TableCell align="right">{monster.naturalMaxDamage}</TableCell>
+				<TableCell align="right">
 					{monster.boss ? (
 						<CheckCircleIcon color="success" />
 					) : (

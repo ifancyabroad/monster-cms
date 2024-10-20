@@ -79,7 +79,26 @@ const headCells: readonly HeadCell[] = [
 	{
 		id: "challenge",
 		align: "right",
-		label: "Challenge",
+		label: "CR",
+		tooltip: "Challenge Rating",
+	},
+	{
+		id: "naturalArmourClass",
+		align: "right",
+		label: "AC",
+		tooltip: "Armour Class",
+	},
+	{
+		id: "naturalMinDamage",
+		align: "right",
+		label: "Min",
+		tooltip: "Minimum Damage",
+	},
+	{
+		id: "naturalMaxDamage",
+		align: "right",
+		label: "Max",
+		tooltip: "Maximum Damage",
 	},
 	{
 		id: "boss",
@@ -159,7 +178,7 @@ const defaultFilters: IMonsterFilters = {
 export const MonstersTable: React.FC = () => {
 	const monstersList = useAppSelector((state) => state.monsters.monsters);
 	const [order, setOrder] = useState<TOrder>("asc");
-	const [orderBy, setOrderBy] = useState<TMonstersOrderBy>("name");
+	const [orderBy, setOrderBy] = useState<TMonstersOrderBy>("challenge");
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(25);
 	const [filters, setFilters] = useState<IMonsterFilters>(defaultFilters);
