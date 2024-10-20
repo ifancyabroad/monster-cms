@@ -2,13 +2,14 @@ import {
 	Box,
 	Grid,
 	InputAdornment,
+	MenuItem,
 	Slider,
 	TextField,
 	Typography,
 } from "@mui/material";
 import { IMonsterFilters } from "common/types";
 import SearchIcon from "@mui/icons-material/Search";
-import { MAX_CHALLENGE_RATING } from "common/utils";
+import { MAX_CHALLENGE_RATING, ZONES } from "common/utils";
 
 interface IProps {
 	filters: IMonsterFilters;
@@ -46,6 +47,29 @@ export const TableFilters: React.FC<IProps> = ({
 							),
 						}}
 					/>
+				</Grid>
+				<Grid item xs={12} md={3}>
+					<TextField
+						fullWidth
+						size="small"
+						select
+						label="Zone"
+						name="zone"
+						value={filters.zone}
+						onChange={onChangeFilters}
+						sx={{ textTransform: "capitalize" }}
+					>
+						<MenuItem value="all">All</MenuItem>
+						{ZONES.map((zone) => (
+							<MenuItem
+								key={zone}
+								value={zone}
+								sx={{ textTransform: "capitalize" }}
+							>
+								{zone}
+							</MenuItem>
+						))}
+					</TextField>
 				</Grid>
 				<Grid item xs={12} md={3}>
 					<Typography variant="body2">Challenge</Typography>

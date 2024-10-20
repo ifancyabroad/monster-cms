@@ -46,6 +46,8 @@ export const applyMonstersFilters = (
 			.toLowerCase()
 			.includes(filters.name.toLowerCase());
 		const challengeFilter = filters.challenge >= monster.challenge;
-		return nameFilter && challengeFilter;
+		const zoneFilter =
+			filters.zone === "all" || filters.zone === monster.zone;
+		return nameFilter && challengeFilter && zoneFilter;
 	};
 };

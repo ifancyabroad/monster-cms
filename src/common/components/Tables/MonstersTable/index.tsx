@@ -152,6 +152,7 @@ const EnhancedTableHead: React.FC<EnhancedTableProps> = (props) => {
 
 const defaultFilters: IMonsterFilters = {
 	name: "",
+	zone: "all",
 	challenge: MAX_CHALLENGE_RATING,
 };
 

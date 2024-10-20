@@ -34,6 +34,7 @@ export interface IUpdateMonster extends ISaveMonster {
 
 export interface IMonsterFilters {
 	name: "";
+	zone: Zone | "all";
 	challenge: number;
 }
 
