@@ -7,7 +7,7 @@ export const HOCLayout: React.FC = ({ children }) => {
 		<div style={{ display: "flex" }}>
 			<Header />
 			<SideDrawer />
-			<Container sx={{ flexGrow: 1, padding: 3 }} maxWidth="lg">
+			<Container sx={{ flexGrow: 1, padding: 3 }} maxWidth={false}>
 				<Box sx={(theme) => theme.mixins.toolbar} />
 				{children}
 			</Container>
