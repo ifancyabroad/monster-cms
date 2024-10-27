@@ -430,7 +430,7 @@ export const ClassModal: React.FC = () => {
 							multiline
 							minRows={4}
 							inputProps={{
-								maxLength: 200,
+								maxLength: 300,
 							}}
 						/>
 					</Box>
