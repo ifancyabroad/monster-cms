@@ -54,6 +54,7 @@ const defaultClassValues: IBaseCharacterClass = {
 	description: "",
 	name: "",
 	portrait: "",
+	fallenImage: "",
 	icon: "",
 	skillClasses: [SkillClass.Warrior],
 	armourTypes: [ArmourType.Heavy],
@@ -73,6 +74,7 @@ const defaultClassValues: IBaseCharacterClass = {
 const defaultFormValues: ISaveClass = {
 	characterClass: defaultClassValues,
 	image: null,
+	fallenImage: null,
 	icon: null,
 };
 
@@ -113,6 +115,7 @@ export const ClassModal: React.FC = () => {
 		setFormValues({
 			characterClass: classValues || defaultClassValues,
 			image: null,
+			fallenImage: null,
 			icon: null,
 		});
 	}, [classValues]);
@@ -142,6 +145,21 @@ export const ClassModal: React.FC = () => {
 			characterClass: {
 				...formValues.characterClass,
 				portrait,
+			},
+		});
+	};
+
+	const handleChangeFallenImage = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const fallenImage = e.currentTarget.files?.item(0) || null;
+		const fallenImageName = fallenImage?.name || "";
+		setFormValues({
+			...formValues,
+			fallenImage,
+			characterClass: {
+				...formValues.characterClass,
+				fallenImage: fallenImageName,
 			},
 		});
 	};
@@ -276,6 +294,8 @@ export const ClassModal: React.FC = () => {
 					...formValues,
 					id: characterClass.id,
 					oldImage: characterClass.portrait,
+					oldFallenImage: characterClass.fallenImage,
+					oldIcon: characterClass.icon,
 				};
 				await dispatch(updateClass(payload)).unwrap();
 			} else {
@@ -375,6 +395,31 @@ export const ClassModal: React.FC = () => {
 										}}
 									>
 										{formValues.image.name}
+									</Typography>
+								)}
+							</label>
+						</FormControl>
+						<FormControl>
+							<input
+								accept="image/*"
+								style={{ display: "none" }}
+								id="contained-button-file-1"
+								multiple
+								type="file"
+								onChange={handleChangeFallenImage}
+							/>
+							<label htmlFor="contained-button-file-1">
+								<Button variant="contained" component="span">
+									Upload Image for fallen state
+								</Button>
+								{formValues.fallenImage && (
+									<Typography
+										sx={{
+											marginLeft: 2,
+											display: "inline",
+										}}
+									>
+										{formValues.fallenImage.name}
 									</Typography>
 								)}
 							</label>

@@ -23,9 +23,9 @@ export const fetchClasses = createAsyncThunk(
 	async (payload: ICharacterClass[]) => payload
 );
 
-const deleteImage = async (key: string) => {
+const deleteImage = async (key: string, type: string) => {
 	try {
-		await stImages.child("classes").child(key).delete();
+		await stImages.child("classes").child(key).child(type).delete();
 	} catch (error) {
 		console.error(error);
 	}
@@ -44,6 +44,14 @@ export const saveClass = createAsyncThunk(
 					.child("portrait");
 				await imageRef.put(payload.image);
 				newClass.portrait = await imageRef.getDownloadURL();
+			}
+			if (payload.fallenImage) {
+				const fallenImageRef = stImages
+					.child("classes")
+					.child(newClassRef.key!)
+					.child("fallenImage");
+				await fallenImageRef.put(payload.fallenImage);
+				newClass.fallenImage = await fallenImageRef.getDownloadURL();
 			}
 			if (payload.icon) {
 				const iconRef = stImages
@@ -67,7 +75,7 @@ export const updateClass = createAsyncThunk(
 		try {
 			const newClass = { ...payload.characterClass };
 			if (payload.image && payload.oldImage) {
-				await deleteImage(payload.id);
+				await deleteImage(payload.id, "portrait");
 			}
 			if (payload.image) {
 				const imageRef = stImages
@@ -77,8 +85,19 @@ export const updateClass = createAsyncThunk(
 				await imageRef.put(payload.image);
 				newClass.portrait = await imageRef.getDownloadURL();
 			}
+			if (payload.fallenImage && payload.oldFallenImage) {
+				await deleteImage(payload.id, "fallenImage");
+			}
+			if (payload.fallenImage) {
+				const fallenImageRef = stImages
+					.child("classes")
+					.child(payload.id)
+					.child("fallenImage");
+				await fallenImageRef.put(payload.fallenImage);
+				newClass.fallenImage = await fallenImageRef.getDownloadURL();
+			}
 			if (payload.icon && payload.oldIcon) {
-				await deleteImage(payload.id);
+				await deleteImage(payload.id, "icon");
 			}
 			if (payload.icon) {
 				const iconRef = stImages
@@ -100,9 +119,7 @@ export const deleteClass = createAsyncThunk(
 	"classes/deleteClass",
 	async (payload: ICharacterClass) => {
 		try {
-			if (payload.portrait || payload.icon) {
-				await deleteImage(payload.id);
-			}
+			await stImages.child("classes").child(payload.id).delete();
 			return await dbClasses.child(payload.id).remove();
 		} catch (error) {
 			console.error(error);

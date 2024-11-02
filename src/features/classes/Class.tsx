@@ -139,6 +139,27 @@ export const Class: React.FC = () => {
 					)}
 				</Box>
 
+				{characterClass.fallenImage && (
+					<Box
+						sx={{
+							marginBottom: 3,
+							height: "100%",
+							maxHeight: 256,
+							aspectRatio: "1/1",
+						}}
+					>
+						<Box
+							component="img"
+							sx={{
+								maxHeight: "100%",
+								verticalAlign: "middle",
+							}}
+							src={characterClass.fallenImage}
+							alt={`Fallen ${characterClass.name}`}
+						/>
+					</Box>
+				)}
+
 				{characterClass.icon && (
 					<Box
 						sx={{
