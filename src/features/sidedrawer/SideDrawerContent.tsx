@@ -11,8 +11,8 @@ import {
 	ListItemText,
 	ListSubheader,
 } from "@mui/material";
-import { useContext } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "common/hooks";
 import { AuthContext } from "common/context";
 import {
@@ -28,23 +28,45 @@ import { ReactComponent as MonstersIcon } from "assets/images/icons/imp-laugh.sv
 import { ReactComponent as SkillsIcon } from "assets/images/icons/bookmarklet.svg";
 import { ReactComponent as ClassesIcon } from "assets/images/icons/sheikah-eye.svg";
 
+enum Menu {
+	Monsters,
+	Skills,
+	Weapons,
+	Armours,
+	Classes,
+}
+
 interface ISideDrawerItemProps {
 	title: string;
 	link: string;
 	icon: JSX.Element;
+	menu: Menu;
 	onAddItem: () => void;
+	toggleMenu: (menu: Menu) => void;
 }
 
 const SideDrawerItem: React.FC<ISideDrawerItemProps> = ({
 	title,
 	link,
 	icon,
+	menu,
 	onAddItem,
+	toggleMenu,
 }) => {
 	const user = useContext(AuthContext);
+	const location = useLocation();
+
+	const handleToggle = () => {
+		toggleMenu(menu);
+	};
 
 	return (
-		<ListItemButton component={Link} to={link}>
+		<ListItemButton
+			component={Link}
+			to={link}
+			selected={location.pathname.includes(link)}
+			onClick={handleToggle}
+		>
 			<ListItemIcon>{icon}</ListItemIcon>
 			<ListItemText>{title}</ListItemText>
 			{user && (
@@ -69,11 +91,8 @@ export const SideDrawerContent: React.FC = () => {
 	const weaponsList = useAppSelector((state) => state.weapons.weapons);
 	const armoursList = useAppSelector((state) => state.armours.armours);
 	const classesList = useAppSelector((state) => state.classes.classes);
-	const isMonsters = useRouteMatch("/monsters");
-	const isSkills = useRouteMatch("/skills");
-	const isWeapons = useRouteMatch("/weapons");
-	const isArmours = useRouteMatch("/armours");
-	const isClasses = useRouteMatch("/classes");
+	const [active, setActive] = useState<Menu | null>(null);
+	const location = useLocation();
 
 	const addMonster = () => {
 		dispatch(openMonsterModal());
@@ -95,18 +114,34 @@ export const SideDrawerContent: React.FC = () => {
 		dispatch(openClassModal());
 	};
 
+	const toggleMenu = (menu: Menu) => {
+		if (active === menu) {
+			setActive(null);
+		} else {
+			setActive(menu);
+		}
+	};
+
 	return (
 		<div>
 			<Box sx={(theme) => theme.mixins.toolbar} />
 			<Divider />
 			<List>
-				<ListItemButton component={Link} to="/">
+				<ListItemButton
+					component={Link}
+					to="/"
+					selected={location.pathname === "/"}
+				>
 					<ListItemIcon>
 						<Dashboard />
 					</ListItemIcon>
 					<ListItemText>Dashboard</ListItemText>
 				</ListItemButton>
-				<ListItemButton component={Link} to="/settings">
+				<ListItemButton
+					component={Link}
+					to="/settings"
+					selected={location.pathname === "/settings"}
+				>
 					<ListItemIcon>
 						<Settings />
 					</ListItemIcon>
@@ -118,9 +153,11 @@ export const SideDrawerContent: React.FC = () => {
 					title="Monsters"
 					link="/monsters"
 					icon={<MonstersIcon height={24} width={24} />}
+					menu={Menu.Monsters}
 					onAddItem={addMonster}
+					toggleMenu={toggleMenu}
 				/>
-				<Collapse in={Boolean(isMonsters)} unmountOnExit>
+				<Collapse in={active === Menu.Monsters} unmountOnExit>
 					<List>
 						{monstersList.map((monster, index) => (
 							<ListItemButton
@@ -130,6 +167,10 @@ export const SideDrawerContent: React.FC = () => {
 								key={index}
 								component={Link}
 								to={`/monsters/${monster.id}`}
+								selected={
+									location.pathname ===
+									`/monsters/${monster.id}`
+								}
 							>
 								<ListItemText
 									primary={monster.name}
@@ -146,9 +187,11 @@ export const SideDrawerContent: React.FC = () => {
 					title="Skills"
 					link="/skills"
 					icon={<SkillsIcon height={24} width={24} />}
+					menu={Menu.Skills}
 					onAddItem={addSkill}
+					toggleMenu={toggleMenu}
 				/>
-				<Collapse in={Boolean(isSkills)} unmountOnExit>
+				<Collapse in={active === Menu.Skills} unmountOnExit>
 					<List>
 						{skillsList.map((skill, index) => (
 							<ListItemButton
@@ -158,6 +201,9 @@ export const SideDrawerContent: React.FC = () => {
 								key={index}
 								component={Link}
 								to={`/skills/${skill.id}`}
+								selected={
+									location.pathname === `/skills/${skill.id}`
+								}
 							>
 								<ListItemText
 									primary={skill.name}
@@ -174,9 +220,11 @@ export const SideDrawerContent: React.FC = () => {
 					title="Weapons"
 					link="/weapons"
 					icon={<WeaponsIcon height={24} width={24} />}
+					menu={Menu.Weapons}
 					onAddItem={addWeapon}
+					toggleMenu={toggleMenu}
 				/>
-				<Collapse in={Boolean(isWeapons)} unmountOnExit>
+				<Collapse in={active === Menu.Weapons} unmountOnExit>
 					<List>
 						{weaponsList.map((weapon, index) => (
 							<ListItemButton
@@ -186,6 +234,10 @@ export const SideDrawerContent: React.FC = () => {
 								key={index}
 								component={Link}
 								to={`/weapons/${weapon.id}`}
+								selected={
+									location.pathname ===
+									`/weapons/${weapon.id}`
+								}
 							>
 								<ListItemText
 									primary={weapon.name}
@@ -202,9 +254,11 @@ export const SideDrawerContent: React.FC = () => {
 					title="Armours"
 					link="/armours"
 					icon={<ArmourIcon height={24} width={24} />}
+					menu={Menu.Armours}
 					onAddItem={addArmour}
+					toggleMenu={toggleMenu}
 				/>
-				<Collapse in={Boolean(isArmours)} unmountOnExit>
+				<Collapse in={active === Menu.Armours} unmountOnExit>
 					<List>
 						{armoursList.map((armour, index) => (
 							<ListItemButton
@@ -214,6 +268,10 @@ export const SideDrawerContent: React.FC = () => {
 								key={index}
 								component={Link}
 								to={`/armours/${armour.id}`}
+								selected={
+									location.pathname ===
+									`/armours/${armour.id}`
+								}
 							>
 								<ListItemText
 									primary={armour.name}
@@ -230,9 +288,11 @@ export const SideDrawerContent: React.FC = () => {
 					title="Classes"
 					link="/classes"
 					icon={<ClassesIcon height={24} width={24} />}
+					menu={Menu.Classes}
 					onAddItem={addClass}
+					toggleMenu={toggleMenu}
 				/>
-				<Collapse in={Boolean(isClasses)} unmountOnExit>
+				<Collapse in={active === Menu.Classes} unmountOnExit>
 					<List>
 						{classesList.map((characterClass, index) => (
 							<ListItemButton
@@ -242,6 +302,10 @@ export const SideDrawerContent: React.FC = () => {
 								key={index}
 								component={Link}
 								to={`/classes/${characterClass.id}`}
+								selected={
+									location.pathname ===
+									`/classes/${characterClass.id}`
+								}
 							>
 								<ListItemText
 									primary={characterClass.name}
