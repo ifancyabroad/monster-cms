@@ -338,10 +338,15 @@ export const EQUIPMENT_SLOT_NAME_MAP: Record<EquipmentSlot, string> = {
 
 export const ZONES = [
 	Zone.Forest,
+	Zone.Castle,
 	Zone.Desert,
-	Zone.Ocean,
+	Zone.Plains,
 	Zone.Hills,
+	Zone.Ocean,
 	Zone.Volcano,
+	Zone.Mountain,
+	Zone.Dungeon,
+	Zone.Tower,
 ] as const;
 
 export * from "./config";
