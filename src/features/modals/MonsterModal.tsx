@@ -464,7 +464,7 @@ export const MonsterModal: React.FC = () => {
 									size="small"
 									margin="dense"
 									name="naturalArmourClass"
-									label={`AC (0-20)`}
+									label={`AC (0-30)`}
 									type="number"
 									value={
 										formValues.monster.naturalArmourClass
@@ -473,7 +473,7 @@ export const MonsterModal: React.FC = () => {
 									required
 									inputProps={{
 										min: 0,
-										max: 20,
+										max: 30,
 									}}
 								/>
 							</Grid>
