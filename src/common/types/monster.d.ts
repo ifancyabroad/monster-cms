@@ -13,7 +13,6 @@ export interface IBaseMonster {
 	stats: TStats;
 	tactics: Tactics;
 	naturalArmourClass: number;
-	naturalHitChance: number;
 	naturalDamageType: DamageType;
 	naturalMinDamage: number;
 	naturalMaxDamage: number;

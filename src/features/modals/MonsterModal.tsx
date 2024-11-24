@@ -75,8 +75,7 @@ const defaultMonsterValues: IBaseMonster = {
 		charisma: 10,
 	},
 	tactics: Tactics.Default,
-	naturalArmourClass: 0,
-	naturalHitChance: 0,
+	naturalArmourClass: 10,
 	naturalDamageType: DamageType.Crushing,
 	naturalMinDamage: 1,
 	naturalMaxDamage: 4,
@@ -425,7 +424,7 @@ export const MonsterModal: React.FC = () => {
 							Natural Properties
 						</DialogContentText>
 						<Grid container spacing={2}>
-							<Grid item xs={6} md={3}>
+							<Grid item xs={6} md={4}>
 								<TextField
 									fullWidth
 									variant="filled"
@@ -443,7 +442,7 @@ export const MonsterModal: React.FC = () => {
 									}}
 								/>
 							</Grid>
-							<Grid item xs={6} md={3}>
+							<Grid item xs={6} md={4}>
 								<TextField
 									fullWidth
 									variant="filled"
@@ -461,7 +460,7 @@ export const MonsterModal: React.FC = () => {
 									}}
 								/>
 							</Grid>
-							<Grid item xs={6} md={3}>
+							<Grid item xs={6} md={4}>
 								<TextField
 									fullWidth
 									variant="filled"
@@ -473,24 +472,6 @@ export const MonsterModal: React.FC = () => {
 									value={
 										formValues.monster.naturalArmourClass
 									}
-									onChange={handleChange}
-									required
-									inputProps={{
-										min: 0,
-										max: 30,
-									}}
-								/>
-							</Grid>
-							<Grid item xs={6} md={3}>
-								<TextField
-									fullWidth
-									variant="filled"
-									size="small"
-									margin="dense"
-									name="naturalHitChance"
-									label={`Hit Bonus (0-30)`}
-									type="number"
-									value={formValues.monster.naturalHitChance}
 									onChange={handleChange}
 									required
 									inputProps={{

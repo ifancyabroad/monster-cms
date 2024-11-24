@@ -11,8 +11,7 @@ export const ScriptButton: React.FC = () => {
 
 	const run = () => {
 		monsters.forEach(({ id, ...monster }) => {
-			monster.naturalHitChance = 0;
-			monster.tactics = "default";
+			monster.naturalHitChance = null;
 
 			const payload: IUpdateMonster = {
 				id,
