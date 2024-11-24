@@ -39,6 +39,8 @@ import {
 	RESISTANCES_NAME_MAP,
 	Zone,
 	ZONES,
+	Tactics,
+	TACTICS,
 } from "common/utils";
 import { AddSkillsModal } from "./AddSkillsModal";
 import { EquipmentItem, SkillItem } from "./monsterModalComponents";
@@ -72,7 +74,9 @@ const defaultMonsterValues: IBaseMonster = {
 		wisdom: 10,
 		charisma: 10,
 	},
+	tactics: Tactics.Default,
 	naturalArmourClass: 0,
+	naturalHitChance: 0,
 	naturalDamageType: DamageType.Crushing,
 	naturalMinDamage: 1,
 	naturalMaxDamage: 4,
@@ -421,7 +425,7 @@ export const MonsterModal: React.FC = () => {
 							Natural Properties
 						</DialogContentText>
 						<Grid container spacing={2}>
-							<Grid item xs={6} md={4}>
+							<Grid item xs={6} md={3}>
 								<TextField
 									fullWidth
 									variant="filled"
@@ -439,7 +443,7 @@ export const MonsterModal: React.FC = () => {
 									}}
 								/>
 							</Grid>
-							<Grid item xs={6} md={4}>
+							<Grid item xs={6} md={3}>
 								<TextField
 									fullWidth
 									variant="filled"
@@ -457,7 +461,7 @@ export const MonsterModal: React.FC = () => {
 									}}
 								/>
 							</Grid>
-							<Grid item xs={6} md={4}>
+							<Grid item xs={6} md={3}>
 								<TextField
 									fullWidth
 									variant="filled"
@@ -469,6 +473,24 @@ export const MonsterModal: React.FC = () => {
 									value={
 										formValues.monster.naturalArmourClass
 									}
+									onChange={handleChange}
+									required
+									inputProps={{
+										min: 0,
+										max: 30,
+									}}
+								/>
+							</Grid>
+							<Grid item xs={6} md={3}>
+								<TextField
+									fullWidth
+									variant="filled"
+									size="small"
+									margin="dense"
+									name="naturalHitChance"
+									label={`Hit (0-30)`}
+									type="number"
+									value={formValues.monster.naturalHitChance}
 									onChange={handleChange}
 									required
 									inputProps={{
@@ -493,6 +515,39 @@ export const MonsterModal: React.FC = () => {
 											value={resistance}
 										>
 											{RESISTANCES_NAME_MAP[resistance]}
+										</MenuItem>
+									))}
+								</TextField>
+							</Grid>
+						</Grid>
+					</Box>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Tactics
+						</DialogContentText>
+						<Grid container spacing={2}>
+							<Grid item xs={12} md={6}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Tactics"
+									name="tactics"
+									value={formValues.monster.tactics}
+									onChange={handleChange}
+									sx={{ textTransform: "capitalize" }}
+								>
+									{TACTICS.map((tactic) => (
+										<MenuItem
+											key={tactic}
+											value={tactic}
+											sx={{ textTransform: "capitalize" }}
+										>
+											{tactic}
 										</MenuItem>
 									))}
 								</TextField>

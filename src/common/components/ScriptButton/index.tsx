@@ -3,7 +3,6 @@
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "common/hooks";
 import { IUpdateMonster } from "common/types";
-import { DamageType } from "common/utils";
 import { updateMonster } from "features/monsters";
 
 export const ScriptButton: React.FC = () => {
@@ -12,7 +11,8 @@ export const ScriptButton: React.FC = () => {
 
 	const run = () => {
 		monsters.forEach(({ id, ...monster }) => {
-			monster.naturalDamageType = DamageType.Crushing;
+			monster.naturalHitChance = 0;
+			monster.tactics = "default";
 
 			const payload: IUpdateMonster = {
 				id,

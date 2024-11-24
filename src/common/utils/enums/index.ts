@@ -135,3 +135,8 @@ export enum Zone {
 	Dungeon = "dungeon",
 	Tower = "tower",
 }
+
+export enum Tactics {
+	Default = "default",
+	Caster = "caster",
+}

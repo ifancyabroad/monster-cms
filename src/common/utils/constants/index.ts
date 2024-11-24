@@ -12,6 +12,7 @@ import {
 	WeaponType,
 	ArmourType,
 	Zone,
+	Tactics,
 } from "common/utils";
 
 export const DRAWER_TOP = 64;
@@ -348,5 +349,7 @@ export const ZONES = [
 	Zone.Dungeon,
 	Zone.Tower,
 ] as const;
+
+export const TACTICS = [Tactics.Default, Tactics.Caster] as const;
 
 export * from "./config";
