@@ -89,6 +89,12 @@ const headCells: readonly HeadCell[] = [
 		tooltip: "Armour Class",
 	},
 	{
+		id: "naturalHitChance",
+		align: "right",
+		label: "Hit",
+		tooltip: "Hit Bonus",
+	},
+	{
 		id: "naturalMinDamage",
 		align: "right",
 		label: "Min",

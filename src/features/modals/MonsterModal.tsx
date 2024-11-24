@@ -488,7 +488,7 @@ export const MonsterModal: React.FC = () => {
 									size="small"
 									margin="dense"
 									name="naturalHitChance"
-									label={`Hit (0-30)`}
+									label={`Hit Bonus (0-30)`}
 									type="number"
 									value={formValues.monster.naturalHitChance}
 									onChange={handleChange}

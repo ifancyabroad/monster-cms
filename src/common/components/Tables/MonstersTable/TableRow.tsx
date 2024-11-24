@@ -58,6 +58,7 @@ export const TableRow: React.FC<IProps> = ({ monster }) => {
 				<TableCell align="right">
 					{monster.naturalArmourClass}
 				</TableCell>
+				<TableCell align="right">{monster.naturalHitChance}</TableCell>
 				<TableCell align="right">{monster.naturalMinDamage}</TableCell>
 				<TableCell align="right">{monster.naturalMaxDamage}</TableCell>
 				<TableCell align="right">
