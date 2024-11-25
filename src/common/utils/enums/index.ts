@@ -130,7 +130,7 @@ export enum Zone {
 	Desert = "desert",
 	Ocean = "ocean",
 	Castle = "castle",
-	Mountain = "mountain",
+	Abyss = "abyss",
 	Plains = "plains",
 	Dungeon = "dungeon",
 	Tower = "tower",
