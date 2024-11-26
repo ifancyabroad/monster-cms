@@ -1,5 +1,5 @@
 import { TEquipment } from "common/types";
-import { ArmourType, SkillClass, WeaponType } from "common/utils";
+import { ArmourType, SkillClass, Tactics, WeaponType } from "common/utils";
 
 export interface IBaseCharacterClass {
 	description: string;
@@ -12,6 +12,7 @@ export interface IBaseCharacterClass {
 	weaponTypes: WeaponType[];
 	skills: string[];
 	stats: TStats;
+	tactics: Tactics;
 	equipment?: Partial<TEquipment>;
 }
 

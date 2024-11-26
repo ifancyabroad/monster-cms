@@ -19,6 +19,7 @@ import {
 	FormControlLabel,
 	FormGroup,
 	List,
+	MenuItem,
 	Stack,
 	TextField,
 	Typography,
@@ -44,6 +45,8 @@ import {
 	WEAPON_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
 	ATTACK_SKILL_ID,
+	Tactics,
+	TACTICS,
 } from "common/utils";
 import { AddSkillsModal } from "./AddSkillsModal";
 import { EquipmentItem, SkillItem } from "./monsterModalComponents";
@@ -68,6 +71,7 @@ const defaultClassValues: IBaseCharacterClass = {
 		wisdom: 10,
 		charisma: 10,
 	},
+	tactics: Tactics.Default,
 	equipment: {},
 };
 
@@ -564,6 +568,35 @@ export const ClassModal: React.FC = () => {
 						max={18}
 						handleChange={handleChangeStats}
 					/>
+					<Box my={3}>
+						<DialogContentText
+							variant="subtitle1"
+							component="h5"
+							gutterBottom
+						>
+							Tactics
+						</DialogContentText>
+						<TextField
+							fullWidth
+							select
+							margin="dense"
+							label="Tactics"
+							name="tactics"
+							value={formValues.characterClass.tactics}
+							onChange={handleChange}
+							sx={{ textTransform: "capitalize", maxWidth: 200 }}
+						>
+							{TACTICS.map((tactic) => (
+								<MenuItem
+									key={tactic}
+									value={tactic}
+									sx={{ textTransform: "capitalize" }}
+								>
+									{tactic}
+								</MenuItem>
+							))}
+						</TextField>
+					</Box>
 					<Box my={3}>
 						<DialogContentText
 							variant="subtitle1"
