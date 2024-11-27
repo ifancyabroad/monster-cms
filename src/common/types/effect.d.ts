@@ -47,4 +47,8 @@ export type ISkillEffect =
 	| IStatusEffect
 	| IAuxiliaryEffect;
 
-export type IWeaponEffect = IDamageEffect | IStatusEffect | IAuxiliaryEffect;
+export type IWeaponEffect =
+	| IDamageEffect
+	| IHealEffect
+	| IStatusEffect
+	| IAuxiliaryEffect;

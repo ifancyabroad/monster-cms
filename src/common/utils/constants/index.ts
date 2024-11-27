@@ -155,6 +155,7 @@ export const SKILL_EFFECTS = [
 
 export const WEAPON_EFFECTS = [
 	EffectType.Damage,
+	EffectType.Heal,
 	EffectType.Status,
 	EffectType.Auxiliary,
 ] as const;
