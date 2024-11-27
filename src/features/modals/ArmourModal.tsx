@@ -76,6 +76,8 @@ export const ArmourModal: React.FC = () => {
 	const armourProperties = formValues.armour.properties || [];
 	const hasProperties = armourProperties.length > 0;
 	const isChest = formValues.armour.type === EquipmentType.Armour;
+	const isShield = formValues.armour.type === EquipmentType.Shield;
+	const hasArmourType = isChest || isShield;
 
 	useEffect(() => {
 		setFormValues({
@@ -158,9 +160,21 @@ export const ArmourModal: React.FC = () => {
 			const {
 				armour: { armourClass, armourType, ...baseArmour },
 			} = formValues;
-			const filteredFormValues = isChest
-				? formValues
-				: { ...formValues, armour: baseArmour };
+
+			const armourPayload: IBaseArmour = { ...baseArmour };
+
+			if (hasArmourType) {
+				armourPayload.armourType = armourType;
+			}
+
+			if (isChest) {
+				armourPayload.armourClass = armourClass;
+			}
+
+			const filteredFormValues: ISaveArmour = {
+				...formValues,
+				armour: armourPayload,
+			};
 
 			if (armour) {
 				const payload = {
@@ -274,7 +288,7 @@ export const ArmourModal: React.FC = () => {
 									))}
 								</TextField>
 							</Grid>
-							{isChest && (
+							{hasArmourType && (
 								<Grid item xs={6}>
 									<TextField
 										fullWidth
