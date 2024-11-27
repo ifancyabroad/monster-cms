@@ -350,6 +350,10 @@ export const ZONES = [
 	Zone.Tower,
 ] as const;
 
-export const TACTICS = [Tactics.Default, Tactics.Caster] as const;
+export const TACTICS = [
+	Tactics.Default,
+	Tactics.Caster,
+	Tactics.Concede,
+] as const;
 
 export * from "./config";
