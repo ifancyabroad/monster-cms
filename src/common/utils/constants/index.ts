@@ -19,7 +19,7 @@ export const DRAWER_TOP = 64;
 export const DRAWER_WIDTH = 240;
 
 export const MAX_SKILL_LEVEL = 4;
-export const MAX_ITEM_LEVEL = 4;
+export const MAX_ITEM_LEVEL = 5;
 export const MAX_CHALLENGE_RATING = 30;
 export const MAX_GOLD_VALUE = 10000;
 export const MAX_SKILL_USES = 20;
