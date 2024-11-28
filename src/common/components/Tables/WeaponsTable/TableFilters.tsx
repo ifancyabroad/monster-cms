@@ -12,7 +12,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import {
 	EQUIPMENT_TYPE_NAME_MAP,
 	MAX_GOLD_VALUE,
-	MAX_SKILL_LEVEL,
+	MAX_ITEM_LEVEL,
 	RESISTANCES,
 	RESISTANCES_NAME_MAP,
 	WEAPON_TYPES,
@@ -114,7 +114,7 @@ export const TableFilters: React.FC<IProps> = ({
 						valueLabelDisplay="auto"
 						step={1}
 						min={0}
-						max={MAX_SKILL_LEVEL}
+						max={MAX_ITEM_LEVEL}
 					/>
 				</Grid>
 			</Grid>

@@ -15,7 +15,7 @@ import {
 	EQUIPMENT_ARMOUR_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
 	MAX_GOLD_VALUE,
-	MAX_SKILL_LEVEL,
+	MAX_ITEM_LEVEL,
 } from "common/utils";
 
 interface IProps {
@@ -114,7 +114,7 @@ export const TableFilters: React.FC<IProps> = ({
 						valueLabelDisplay="auto"
 						step={1}
 						min={0}
-						max={MAX_SKILL_LEVEL}
+						max={MAX_ITEM_LEVEL}
 					/>
 				</Grid>
 			</Grid>
