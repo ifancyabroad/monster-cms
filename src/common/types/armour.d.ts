@@ -8,7 +8,7 @@ export interface IBaseArmour {
 	icon: string;
 	price: number;
 	level: number;
-	armourType?: ArmourType;
+	armourType: ArmourType;
 	armourClass?: number;
 	properties?: TProperty[];
 }

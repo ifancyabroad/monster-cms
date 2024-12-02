@@ -35,13 +35,13 @@ import { PropertyModal } from "./PropertyModal";
 import { EditPropertyCard } from "common/components/PropertyCard";
 
 const defaultValues: IBaseArmour = {
-	type: EquipmentType.Armour,
+	type: EquipmentType.Amulet,
 	name: "",
 	description: "",
 	icon: "",
 	price: 100,
 	level: 1,
-	armourType: ArmourType.Medium,
+	armourType: ArmourType.Miscellaneous,
 	armourClass: 0,
 	properties: [],
 };
@@ -76,8 +76,6 @@ export const ArmourModal: React.FC = () => {
 	const armourProperties = formValues.armour.properties || [];
 	const hasProperties = armourProperties.length > 0;
 	const isChest = formValues.armour.type === EquipmentType.Armour;
-	const isShield = formValues.armour.type === EquipmentType.Shield;
-	const hasArmourType = isChest || isShield;
 
 	useEffect(() => {
 		setFormValues({
@@ -158,14 +156,10 @@ export const ArmourModal: React.FC = () => {
 		try {
 			e.preventDefault();
 			const {
-				armour: { armourClass, armourType, ...baseArmour },
+				armour: { armourClass, ...baseArmour },
 			} = formValues;
 
 			const armourPayload: IBaseArmour = { ...baseArmour };
-
-			if (hasArmourType) {
-				armourPayload.armourType = armourType;
-			}
 
 			if (isChest) {
 				armourPayload.armourClass = armourClass;
@@ -288,25 +282,23 @@ export const ArmourModal: React.FC = () => {
 									))}
 								</TextField>
 							</Grid>
-							{hasArmourType && (
-								<Grid item xs={6}>
-									<TextField
-										fullWidth
-										select
-										margin="dense"
-										label="Armour Type"
-										name="armourType"
-										value={formValues.armour.armourType}
-										onChange={handleChange}
-									>
-										{ARMOUR_TYPES.map((type) => (
-											<MenuItem key={type} value={type}>
-												{ARMOUR_TYPE_NAME_MAP[type]}
-											</MenuItem>
-										))}
-									</TextField>
-								</Grid>
-							)}
+							<Grid item xs={6}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Armour Type"
+									name="armourType"
+									value={formValues.armour.armourType}
+									onChange={handleChange}
+								>
+									{ARMOUR_TYPES.map((type) => (
+										<MenuItem key={type} value={type}>
+											{ARMOUR_TYPE_NAME_MAP[type]}
+										</MenuItem>
+									))}
+								</TextField>
+							</Grid>
 						</Grid>
 					</Box>
 					<Box my={3}>
