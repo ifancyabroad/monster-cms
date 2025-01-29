@@ -5,7 +5,13 @@ import {
 	MenuItem,
 	TextField,
 } from "@mui/material";
-import { MAX_DAMAGE, RESISTANCES, RESISTANCES_NAME_MAP } from "common/utils";
+import {
+	MAX_DAMAGE,
+	RESISTANCES,
+	RESISTANCES_NAME_MAP,
+	STATS,
+	STATS_NAME_MAP,
+} from "common/utils";
 import { useEffectContext } from "common/context";
 
 export const DamageEffect: React.FC = () => {
@@ -33,7 +39,7 @@ export const DamageEffect: React.FC = () => {
 				Effect Properties
 			</DialogContentText>
 			<Grid container spacing={2}>
-				<Grid item xs={12} md={4}>
+				<Grid item xs={12} md={3}>
 					<TextField
 						fullWidth
 						select
@@ -50,7 +56,7 @@ export const DamageEffect: React.FC = () => {
 						))}
 					</TextField>
 				</Grid>
-				<Grid item xs={6} md={4}>
+				<Grid item xs={6} md={3}>
 					<TextField
 						fullWidth
 						margin="dense"
@@ -66,7 +72,7 @@ export const DamageEffect: React.FC = () => {
 						}}
 					/>
 				</Grid>
-				<Grid item xs={6} md={4}>
+				<Grid item xs={6} md={3}>
 					<TextField
 						fullWidth
 						margin="dense"
@@ -81,6 +87,24 @@ export const DamageEffect: React.FC = () => {
 							max: MAX_DAMAGE,
 						}}
 					/>
+				</Grid>
+				<Grid item xs={12} md={3}>
+					<TextField
+						fullWidth
+						select
+						margin="dense"
+						label="Modifier"
+						name="modifier"
+						value={damageEffectForm.modifier ?? ""}
+						onChange={handleChange}
+					>
+						<MenuItem value="">None</MenuItem>
+						{STATS.map((stat) => (
+							<MenuItem key={stat} value={stat}>
+								{STATS_NAME_MAP[stat]}
+							</MenuItem>
+						))}
+					</TextField>
 				</Grid>
 			</Grid>
 		</Box>

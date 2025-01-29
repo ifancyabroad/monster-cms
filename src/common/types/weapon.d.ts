@@ -1,4 +1,5 @@
 import {
+	CharacterClass,
 	DamageType,
 	EquipmentType,
 	WeaponSize,
@@ -18,6 +19,7 @@ export interface IBaseWeapon {
 	damageType: DamageType;
 	min: number;
 	max: number;
+	characterClass?: CharacterClass;
 	effects?: IWeaponEffect[];
 	properties?: TProperty[];
 }

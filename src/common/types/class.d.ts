@@ -1,5 +1,11 @@
 import { TEquipment } from "common/types";
-import { ArmourType, SkillClass, Tactics, WeaponType } from "common/utils";
+import {
+	ArmourType,
+	SkillClass,
+	Stat,
+	Tactics,
+	WeaponType,
+} from "common/utils";
 
 export interface IBaseCharacterClass {
 	description: string;
@@ -38,4 +44,4 @@ export interface IClassFilters {
 	name: "";
 }
 
-export type TClassesOrderBy = keyof ICharacterClass;
+export type TClassesOrderBy = keyof ICharacterClass | Stat;

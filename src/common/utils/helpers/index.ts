@@ -87,3 +87,4 @@ export * from "./weapons";
 export * from "./armours";
 export * from "./equipment";
 export * from "./properties";
+export * from "./classes";

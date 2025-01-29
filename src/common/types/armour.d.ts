@@ -1,5 +1,5 @@
 import { TProperty } from "common/types";
-import { ArmourType, EquipmentType } from "common/utils";
+import { ArmourType, CharacterClass, EquipmentType } from "common/utils";
 
 export interface IBaseArmour {
 	type: EquipmentType;
@@ -10,6 +10,7 @@ export interface IBaseArmour {
 	level: number;
 	armourType: ArmourType;
 	armourClass?: number;
+	characterClass?: CharacterClass;
 	properties?: TProperty[];
 }
 

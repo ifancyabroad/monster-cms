@@ -2,7 +2,11 @@ import { TableCell, TableRow as MUITableRow } from "@mui/material";
 import { Fragment, useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "common/hooks";
 import { IWeapon } from "common/types";
-import { RESISTANCES_NAME_MAP, WEAPON_SIZE_NAME_MAP } from "common/utils";
+import {
+	CLASS_NAME_MAP,
+	RESISTANCES_NAME_MAP,
+	WEAPON_SIZE_NAME_MAP,
+} from "common/utils";
 import { ConfirmationModal } from "features/modals";
 import { TableDefaultActions } from "./TableDefaultActions";
 import { TableAddActions } from "./TableAddActions";
@@ -58,6 +62,10 @@ export const TableRow: React.FC<IProps> = ({ weapon, type }) => {
 				</TableCell>
 				<TableCell>{RESISTANCES_NAME_MAP[weapon.damageType]}</TableCell>
 				<TableCell>{WEAPON_SIZE_NAME_MAP[weapon.size]}</TableCell>
+				<TableCell>
+					{weapon.characterClass &&
+						CLASS_NAME_MAP[weapon.characterClass]}
+				</TableCell>
 				<TableCell align="right">{weapon.price}</TableCell>
 				<TableCell align="right">{weapon.min}</TableCell>
 				<TableCell align="right">{weapon.max}</TableCell>

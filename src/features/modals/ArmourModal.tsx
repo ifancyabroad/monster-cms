@@ -29,6 +29,8 @@ import {
 	ArmourType,
 	ARMOUR_TYPES,
 	ARMOUR_TYPE_NAME_MAP,
+	CHARACTER_CLASSES,
+	CLASS_NAME_MAP,
 } from "common/utils";
 import { saveArmour, updateArmour } from "features/armours";
 import { PropertyModal } from "./PropertyModal";
@@ -265,7 +267,7 @@ export const ArmourModal: React.FC = () => {
 							Armour Type
 						</DialogContentText>
 						<Grid container spacing={2}>
-							<Grid item xs={6}>
+							<Grid item xs={4}>
 								<TextField
 									fullWidth
 									select
@@ -282,7 +284,7 @@ export const ArmourModal: React.FC = () => {
 									))}
 								</TextField>
 							</Grid>
-							<Grid item xs={6}>
+							<Grid item xs={4}>
 								<TextField
 									fullWidth
 									select
@@ -295,6 +297,23 @@ export const ArmourModal: React.FC = () => {
 									{ARMOUR_TYPES.map((type) => (
 										<MenuItem key={type} value={type}>
 											{ARMOUR_TYPE_NAME_MAP[type]}
+										</MenuItem>
+									))}
+								</TextField>
+							</Grid>
+							<Grid item xs={4}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Class"
+									name="characterClass"
+									value={formValues.armour.characterClass}
+									onChange={handleChange}
+								>
+									{CHARACTER_CLASSES.map((cl) => (
+										<MenuItem key={cl} value={cl}>
+											{CLASS_NAME_MAP[cl]}
 										</MenuItem>
 									))}
 								</TextField>

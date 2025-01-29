@@ -45,6 +45,8 @@ import {
 	WEAPON_SIZE_NAME_MAP,
 	WEAPON_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
+	CHARACTER_CLASSES,
+	CLASS_NAME_MAP,
 } from "common/utils";
 import { saveWeapon, updateWeapon } from "features/weapons";
 import { PropertyModal } from "./PropertyModal";
@@ -314,7 +316,7 @@ export const WeaponModal: React.FC = () => {
 							Weapon Type
 						</DialogContentText>
 						<Grid container spacing={2}>
-							<Grid item xs={12} md={4}>
+							<Grid item xs={12} md={6}>
 								<TextField
 									fullWidth
 									select
@@ -331,7 +333,27 @@ export const WeaponModal: React.FC = () => {
 									))}
 								</TextField>
 							</Grid>
-							<Grid item xs={12} md={4}>
+							<Grid item xs={12} md={6}>
+								<TextField
+									fullWidth
+									select
+									margin="dense"
+									label="Damage Type"
+									name="damageType"
+									value={formValues.weapon.damageType}
+									onChange={handleChange}
+								>
+									{RESISTANCES.map((resistance) => (
+										<MenuItem
+											key={resistance}
+											value={resistance}
+										>
+											{RESISTANCES_NAME_MAP[resistance]}
+										</MenuItem>
+									))}
+								</TextField>
+							</Grid>
+							<Grid item xs={12} md={6}>
 								<TextField
 									fullWidth
 									select
@@ -348,22 +370,19 @@ export const WeaponModal: React.FC = () => {
 									))}
 								</TextField>
 							</Grid>
-							<Grid item xs={12} md={4}>
+							<Grid item xs={12} md={6}>
 								<TextField
 									fullWidth
 									select
 									margin="dense"
-									label="Damage Type"
-									name="damageType"
-									value={formValues.weapon.damageType}
+									label="Class"
+									name="characterClass"
+									value={formValues.weapon.characterClass}
 									onChange={handleChange}
 								>
-									{RESISTANCES.map((resistance) => (
-										<MenuItem
-											key={resistance}
-											value={resistance}
-										>
-											{RESISTANCES_NAME_MAP[resistance]}
+									{CHARACTER_CLASSES.map((cl) => (
+										<MenuItem key={cl} value={cl}>
+											{CLASS_NAME_MAP[cl]}
 										</MenuItem>
 									))}
 								</TextField>
