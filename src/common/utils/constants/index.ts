@@ -186,25 +186,37 @@ export const CLASSES = [
 	SkillClass.Common,
 	SkillClass.Unique,
 	SkillClass.Warrior,
+	SkillClass.Barbarian,
 	SkillClass.Mage,
 	SkillClass.Rogue,
+	SkillClass.Assassin,
 	SkillClass.Cleric,
+	SkillClass.Warlock,
+	SkillClass.Occultist,
 ] as const;
 
 export const CHARACTER_CLASSES = [
 	SkillClass.Warrior,
+	SkillClass.Barbarian,
 	SkillClass.Mage,
+	SkillClass.Warlock,
 	SkillClass.Rogue,
+	SkillClass.Assassin,
 	SkillClass.Cleric,
+	SkillClass.Occultist,
 ] as const;
 
 export const CLASS_NAME_MAP: Record<SkillClass, string> = {
 	[SkillClass.Common]: "Common",
 	[SkillClass.Unique]: "Unique",
 	[SkillClass.Warrior]: "Warrior",
+	[SkillClass.Barbarian]: "Barbarian",
 	[SkillClass.Mage]: "Mage",
+	[SkillClass.Warlock]: "Warlock",
 	[SkillClass.Rogue]: "Rogue",
+	[SkillClass.Assassin]: "Assassin",
 	[SkillClass.Cleric]: "Cleric",
+	[SkillClass.Occultist]: "Occultist",
 };
 
 export const SKILL_TYPES = [

@@ -23,9 +23,13 @@ export enum SkillClass {
 	Common = "common",
 	Unique = "unique",
 	Warrior = "warrior",
+	Barbarian = "barbarian",
 	Rogue = "rogue",
+	Assassin = "assassin",
 	Mage = "mage",
+	Warlock = "warlock",
 	Cleric = "cleric",
+	Occultist = "occultist",
 }
 
 export enum CharacterClass {
