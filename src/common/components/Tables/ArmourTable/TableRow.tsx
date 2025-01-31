@@ -8,7 +8,8 @@ import { TableAddActions } from "./TableAddActions";
 import { AuthContext } from "common/context";
 import { deleteArmour } from "features/armours";
 import { EquipmentIcon, EquipmentTypeIcon } from "features/equipment";
-import { ARMOUR_TYPE_NAME_MAP, CLASS_NAME_MAP } from "common/utils";
+import { ARMOUR_TYPE_NAME_MAP } from "common/utils";
+import { selectClassById } from "features/classes";
 
 interface IProps {
 	armour: IArmour;
@@ -22,6 +23,7 @@ export const TableRow: React.FC<IProps> = ({ armour, type }) => {
 	const isLoading = useAppSelector(
 		(state) => state.skills.status === "loading"
 	);
+	const classById = useAppSelector(selectClassById);
 
 	const handleDelete = () => {
 		setConfirmationModalOpen(true);
@@ -62,7 +64,7 @@ export const TableRow: React.FC<IProps> = ({ armour, type }) => {
 				</TableCell>
 				<TableCell align="left">
 					{armour.characterClass &&
-						CLASS_NAME_MAP[armour.characterClass]}
+						classById(armour.characterClass)?.name}
 				</TableCell>
 				<TableCell align="right">{armour.armourClass}</TableCell>
 				<TableCell align="right">{armour.price}</TableCell>

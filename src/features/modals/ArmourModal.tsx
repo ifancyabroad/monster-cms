@@ -29,8 +29,6 @@ import {
 	ArmourType,
 	ARMOUR_TYPES,
 	ARMOUR_TYPE_NAME_MAP,
-	CHARACTER_CLASSES,
-	CLASS_NAME_MAP,
 } from "common/utils";
 import { saveArmour, updateArmour } from "features/armours";
 import { PropertyModal } from "./PropertyModal";
@@ -78,6 +76,7 @@ export const ArmourModal: React.FC = () => {
 	const armourProperties = formValues.armour.properties || [];
 	const hasProperties = armourProperties.length > 0;
 	const isChest = formValues.armour.type === EquipmentType.Armour;
+	const classes = useAppSelector((state) => state.classes.classes);
 
 	useEffect(() => {
 		setFormValues({
@@ -311,9 +310,9 @@ export const ArmourModal: React.FC = () => {
 									value={formValues.armour.characterClass}
 									onChange={handleChange}
 								>
-									{CHARACTER_CLASSES.map((cl) => (
-										<MenuItem key={cl} value={cl}>
-											{CLASS_NAME_MAP[cl]}
+									{classes.map((cl) => (
+										<MenuItem key={cl.id} value={cl.id}>
+											{cl.name}
 										</MenuItem>
 									))}
 								</TextField>

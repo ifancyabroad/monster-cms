@@ -2,17 +2,14 @@ import { TableCell, TableRow as MUITableRow } from "@mui/material";
 import { Fragment, useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "common/hooks";
 import { IWeapon } from "common/types";
-import {
-	CLASS_NAME_MAP,
-	RESISTANCES_NAME_MAP,
-	WEAPON_SIZE_NAME_MAP,
-} from "common/utils";
+import { RESISTANCES_NAME_MAP, WEAPON_SIZE_NAME_MAP } from "common/utils";
 import { ConfirmationModal } from "features/modals";
 import { TableDefaultActions } from "./TableDefaultActions";
 import { TableAddActions } from "./TableAddActions";
 import { AuthContext } from "common/context";
 import { deleteWeapon } from "features/weapons";
 import { EquipmentIcon, EquipmentTypeIcon } from "features/equipment";
+import { selectClassById } from "features/classes";
 
 interface IProps {
 	weapon: IWeapon;
@@ -26,6 +23,7 @@ export const TableRow: React.FC<IProps> = ({ weapon, type }) => {
 	const isLoading = useAppSelector(
 		(state) => state.skills.status === "loading"
 	);
+	const classById = useAppSelector(selectClassById);
 
 	const handleDelete = () => {
 		setConfirmationModalOpen(true);
@@ -64,7 +62,7 @@ export const TableRow: React.FC<IProps> = ({ weapon, type }) => {
 				<TableCell>{WEAPON_SIZE_NAME_MAP[weapon.size]}</TableCell>
 				<TableCell>
 					{weapon.characterClass &&
-						CLASS_NAME_MAP[weapon.characterClass]}
+						classById(weapon.characterClass)?.name}
 				</TableCell>
 				<TableCell align="right">{weapon.price}</TableCell>
 				<TableCell align="right">{weapon.min}</TableCell>

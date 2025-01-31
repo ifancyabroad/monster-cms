@@ -45,8 +45,6 @@ import {
 	WEAPON_SIZE_NAME_MAP,
 	WEAPON_TYPES,
 	EQUIPMENT_TYPE_NAME_MAP,
-	CHARACTER_CLASSES,
-	CLASS_NAME_MAP,
 } from "common/utils";
 import { saveWeapon, updateWeapon } from "features/weapons";
 import { PropertyModal } from "./PropertyModal";
@@ -102,6 +100,7 @@ export const WeaponModal: React.FC = () => {
 	const hasEffects = weaponEffects.length > 0;
 	const weaponProperties = formValues.weapon.properties || [];
 	const hasProperties = weaponProperties.length > 0;
+	const classes = useAppSelector((state) => state.classes.classes);
 
 	useEffect(() => {
 		setFormValues({
@@ -380,9 +379,9 @@ export const WeaponModal: React.FC = () => {
 									value={formValues.weapon.characterClass}
 									onChange={handleChange}
 								>
-									{CHARACTER_CLASSES.map((cl) => (
-										<MenuItem key={cl} value={cl}>
-											{CLASS_NAME_MAP[cl]}
+									{classes.map((cl) => (
+										<MenuItem key={cl.id} value={cl.id}>
+											{cl.name}
 										</MenuItem>
 									))}
 								</TextField>
