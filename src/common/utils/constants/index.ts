@@ -174,6 +174,10 @@ export const AUXILIARY_EFFECTS = [
 	AuxiliaryEffect.Bleed,
 	AuxiliaryEffect.Disarm,
 	AuxiliaryEffect.Silence,
+	AuxiliaryEffect.Blind,
+	AuxiliaryEffect.Frenzy,
+	AuxiliaryEffect.Charm,
+	AuxiliaryEffect.Cripple,
 ] as const;
 
 export const AUXILIARY_EFFECTS_NAME_MAP: Record<AuxiliaryEffect, string> = {
@@ -182,6 +186,10 @@ export const AUXILIARY_EFFECTS_NAME_MAP: Record<AuxiliaryEffect, string> = {
 	[AuxiliaryEffect.Bleed]: "Bleed",
 	[AuxiliaryEffect.Disarm]: "Disarm",
 	[AuxiliaryEffect.Silence]: "Silence",
+	[AuxiliaryEffect.Blind]: "Blind",
+	[AuxiliaryEffect.Frenzy]: "Frenzy",
+	[AuxiliaryEffect.Charm]: "Charm",
+	[AuxiliaryEffect.Cripple]: "Cripple",
 };
 
 export const CLASSES = [
