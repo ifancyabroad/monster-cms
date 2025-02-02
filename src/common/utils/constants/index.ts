@@ -177,7 +177,10 @@ export const AUXILIARY_EFFECTS = [
 	AuxiliaryEffect.Blind,
 	AuxiliaryEffect.Frenzy,
 	AuxiliaryEffect.Charm,
+	AuxiliaryEffect.Haste,
 	AuxiliaryEffect.Cripple,
+	AuxiliaryEffect.Bless,
+	AuxiliaryEffect.Curse,
 ] as const;
 
 export const AUXILIARY_EFFECTS_NAME_MAP: Record<AuxiliaryEffect, string> = {
