@@ -7,6 +7,10 @@ import { RootState } from "app/store";
 import { dbSkills, stImages } from "firebaseSetup";
 import { ISaveSkill, ISkill, IUpdateSkill } from "common/types";
 
+const metadata = {
+	cacheControl: "public, max-age=2592000", // Cache for 1 month
+};
+
 interface ISkillsState {
 	skills: ISkill[];
 	status: "idle" | "loading" | "succeeded" | "failed";
@@ -41,7 +45,7 @@ export const saveSkill = createAsyncThunk(
 				const imageRef = stImages
 					.child("skills")
 					.child(newSkillRef.key!);
-				await imageRef.put(payload.image);
+				await imageRef.put(payload.image, metadata);
 				newSkill.icon = await imageRef.getDownloadURL();
 			}
 			return await newSkillRef.set(newSkill);
@@ -62,7 +66,7 @@ export const updateSkill = createAsyncThunk(
 			}
 			if (payload.image) {
 				const imageRef = stImages.child("skills").child(payload.id);
-				await imageRef.put(payload.image);
+				await imageRef.put(payload.image, metadata);
 				newSkill.icon = await imageRef.getDownloadURL();
 			}
 			return await dbSkills.child(payload.id).update(newSkill);

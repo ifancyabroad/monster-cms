@@ -8,6 +8,10 @@ import { dbWeapons, stImages } from "firebaseSetup";
 import { ISaveWeapon, IUpdateWeapon, IWeapon } from "common/types";
 import { WeaponSize } from "common/utils";
 
+const metadata = {
+	cacheControl: "public, max-age=2592000", // Cache for 1 month
+};
+
 interface IWeaponsState {
 	weapons: IWeapon[];
 	status: "idle" | "loading" | "succeeded" | "failed";
@@ -42,7 +46,7 @@ export const saveWeapon = createAsyncThunk(
 				const imageRef = stImages
 					.child("weapons")
 					.child(newWeaponRef.key!);
-				await imageRef.put(payload.image);
+				await imageRef.put(payload.image, metadata);
 				newWeapon.icon = await imageRef.getDownloadURL();
 			}
 			return await newWeaponRef.set(newWeapon);
@@ -63,7 +67,7 @@ export const updateWeapon = createAsyncThunk(
 			}
 			if (payload.image) {
 				const imageRef = stImages.child("weapons").child(payload.id);
-				await imageRef.put(payload.image);
+				await imageRef.put(payload.image, metadata);
 				newWeapon.icon = await imageRef.getDownloadURL();
 			}
 			return await dbWeapons.child(payload.id).update(newWeapon);

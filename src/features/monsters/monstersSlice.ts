@@ -7,6 +7,10 @@ import { RootState } from "app/store";
 import { dbMonsters, stImages } from "firebaseSetup";
 import { IMonster, ISaveMonster, IUpdateMonster } from "common/types";
 
+const metadata = {
+	cacheControl: "public, max-age=2592000", // Cache for 1 month
+};
+
 interface IMonstersState {
 	monsters: IMonster[];
 	status: "idle" | "loading" | "succeeded" | "failed";
@@ -41,7 +45,7 @@ export const saveMonster = createAsyncThunk(
 				const imageRef = stImages
 					.child("monsters")
 					.child(newMonsterRef.key!);
-				await imageRef.put(payload.image);
+				await imageRef.put(payload.image, metadata);
 				newMonster.portrait = await imageRef.getDownloadURL();
 			}
 			return await newMonsterRef.set(newMonster);
@@ -62,7 +66,7 @@ export const updateMonster = createAsyncThunk(
 			}
 			if (payload.image) {
 				const imageRef = stImages.child("monsters").child(payload.id);
-				await imageRef.put(payload.image);
+				await imageRef.put(payload.image, metadata);
 				newMonster.portrait = await imageRef.getDownloadURL();
 			}
 			return await dbMonsters.child(payload.id).update(newMonster);

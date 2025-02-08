@@ -7,6 +7,10 @@ import { RootState } from "app/store";
 import { dbClasses, stImages } from "firebaseSetup";
 import { ICharacterClass, ISaveClass, IUpdateClass } from "common/types";
 
+const metadata = {
+	cacheControl: "public, max-age=2592000", // Cache for 1 month
+};
+
 interface IClassesState {
 	classes: ICharacterClass[];
 	status: "idle" | "loading" | "succeeded" | "failed";
@@ -42,7 +46,7 @@ export const saveClass = createAsyncThunk(
 					.child("classes")
 					.child(newClassRef.key!)
 					.child("portrait");
-				await imageRef.put(payload.image);
+				await imageRef.put(payload.image, metadata);
 				newClass.portrait = await imageRef.getDownloadURL();
 			}
 			if (payload.fallenImage) {
@@ -50,7 +54,7 @@ export const saveClass = createAsyncThunk(
 					.child("classes")
 					.child(newClassRef.key!)
 					.child("fallenImage");
-				await fallenImageRef.put(payload.fallenImage);
+				await fallenImageRef.put(payload.fallenImage, metadata);
 				newClass.fallenImage = await fallenImageRef.getDownloadURL();
 			}
 			if (payload.icon) {
@@ -58,7 +62,7 @@ export const saveClass = createAsyncThunk(
 					.child("classes")
 					.child(newClassRef.key!)
 					.child("icon");
-				await iconRef.put(payload.icon);
+				await iconRef.put(payload.icon, metadata);
 				newClass.icon = await iconRef.getDownloadURL();
 			}
 			return await newClassRef.set(newClass);
@@ -82,7 +86,7 @@ export const updateClass = createAsyncThunk(
 					.child("classes")
 					.child(payload.id)
 					.child("portrait");
-				await imageRef.put(payload.image);
+				await imageRef.put(payload.image, metadata);
 				newClass.portrait = await imageRef.getDownloadURL();
 			}
 			if (payload.fallenImage && payload.oldFallenImage) {
@@ -93,7 +97,7 @@ export const updateClass = createAsyncThunk(
 					.child("classes")
 					.child(payload.id)
 					.child("fallenImage");
-				await fallenImageRef.put(payload.fallenImage);
+				await fallenImageRef.put(payload.fallenImage, metadata);
 				newClass.fallenImage = await fallenImageRef.getDownloadURL();
 			}
 			if (payload.icon && payload.oldIcon) {
@@ -104,7 +108,7 @@ export const updateClass = createAsyncThunk(
 					.child("classes")
 					.child(payload.id)
 					.child("icon");
-				await iconRef.put(payload.icon);
+				await iconRef.put(payload.icon, metadata);
 				newClass.icon = await iconRef.getDownloadURL();
 			}
 			return await dbClasses.child(payload.id).update(newClass);

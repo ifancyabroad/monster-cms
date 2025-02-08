@@ -7,6 +7,10 @@ import { RootState } from "app/store";
 import { dbArmours, stImages } from "firebaseSetup";
 import { IArmour, ISaveArmour, IUpdateArmour } from "common/types";
 
+const metadata = {
+	cacheControl: "public, max-age=2592000", // Cache for 1 month
+};
+
 interface IArmoursState {
 	armours: IArmour[];
 	status: "idle" | "loading" | "succeeded" | "failed";
@@ -41,7 +45,7 @@ export const saveArmour = createAsyncThunk(
 				const imageRef = stImages
 					.child("armours")
 					.child(newArmourRef.key!);
-				await imageRef.put(payload.image);
+				await imageRef.put(payload.image, metadata);
 				newArmour.icon = await imageRef.getDownloadURL();
 			}
 			return await newArmourRef.set(newArmour);
@@ -62,7 +66,7 @@ export const updateArmour = createAsyncThunk(
 			}
 			if (payload.image) {
 				const imageRef = stImages.child("armours").child(payload.id);
-				await imageRef.put(payload.image);
+				await imageRef.put(payload.image, metadata);
 				newArmour.icon = await imageRef.getDownloadURL();
 			}
 			return await dbArmours.child(payload.id).update(newArmour);
